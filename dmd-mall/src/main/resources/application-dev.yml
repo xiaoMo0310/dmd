@@ -1,13 +1,6 @@
-server:
-  port: 8443 #开发环境会开启https
-  ssl:
-    key-store: keystore.p12
-    key-alias: tomcat
-    key-store-password: 123456
-    key-store-type: PKCS12
-
 spring:
   datasource:
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.0.219:3306/mall?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
@@ -38,6 +31,5 @@ spring:
 logging:
   level:
     org.springframework.data.mongodb.core: debug
-    com.macro.mall.mapper: debug
-    com.macro.mall.portal.dao: debug
+    com.dmd.mall.mapper: debug
 

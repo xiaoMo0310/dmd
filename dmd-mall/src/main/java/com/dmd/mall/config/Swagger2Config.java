@@ -61,7 +61,7 @@ public class Swagger2Config {
                 .groupName("论坛API")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.dmd.mall.web.ptf"))
+                .apis(RequestHandlerSelectors.basePackage("com.dmd.mall.web.cms"))
                 .paths(PathSelectors.any())
                 .build()
                 //配置鉴权信息

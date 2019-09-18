@@ -1,4 +1,4 @@
- <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
@@ -30,14 +30,14 @@
             <property name="nullCatalogMeansCurrent" value="true" />
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.macro.mall.model" targetProject="dmd-mall\src\main\java"/>
+        <javaModelGenerator targetPackage="com.dmd.mall.model.domain" targetProject="dmd-mall\src\main\java"/>
 
-        <sqlMapGenerator targetPackage="com.macro.mall.mapper" targetProject="dmd-mall\src\main\resources"/>
+        <sqlMapGenerator targetPackage="com.dmd.mall.mapper" targetProject="dmd-mall\src\main\resources"/>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.dmd.mall.mapper"
                              targetProject="dmd-mall\src\main\java"/>
         <!--生成全部表tableName设为%-->
-        <table tableName="">
+        <table tableName="exc_exception_log">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
     </context>

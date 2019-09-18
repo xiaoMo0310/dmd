@@ -1,14 +1,19 @@
+server:
+  port: 8000
+  tomcat:
+    uri-encoding: UTF-8
+    remote-ip-header: x-forwarded-for
+  use-forward-headers: true
 spring:
+  application:
+    name: @pom.artifactId@
   profiles:
-    active: dev #默认为开发环境
+    active: @profileActive@
 
 mybatis:
   mapper-locations:
     - classpath:dao/*.xml
     - classpath*:com/**/mapper/*.xml
-
-http:
-  port: 8085 # http服务端口
 
 # 自定义redis key
 redis:

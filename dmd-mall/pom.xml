@@ -59,6 +59,10 @@
             <groupId>com.dmd.mall</groupId>
             <artifactId>dmd-common-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

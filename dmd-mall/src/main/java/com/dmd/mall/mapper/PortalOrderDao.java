@@ -3,6 +3,7 @@ package com.dmd.mall.mapper;
 import com.dmd.mall.model.domain.OmsOrderDetail;
 import com.dmd.mall.model.OmsOrderItem;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * 前台订单自定义Dao
  * Created by macro on 2018/9/4.
  */
+@Repository
 public interface PortalOrderDao {
     /**
      * 获取订单及下单商品详情
