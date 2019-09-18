@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/dmd-admin/dmd-admin.iml" filepath="$PROJECT_DIR$/dmd-admin/dmd-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dmd-common/dmd-common.iml" filepath="$PROJECT_DIR$/dmd-common/dmd-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dmd-common/dmd-common-base/dmd-common-base.iml" filepath="$PROJECT_DIR$/dmd-common/dmd-common-base/dmd-common-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dmd-common/dmd-common-config/dmd-common-config.iml" filepath="$PROJECT_DIR$/dmd-common/dmd-common-config/dmd-common-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dmd-common/dmd-common-core/dmd-common-core.iml" filepath="$PROJECT_DIR$/dmd-common/dmd-common-core/dmd-common-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dmd-common/dmd-common-util/dmd-common-util.iml" filepath="$PROJECT_DIR$/dmd-common/dmd-common-util/dmd-common-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dmd-generator/dmd-generator.iml" filepath="$PROJECT_DIR$/dmd-generator/dmd-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dmd-mall/dmd-mall.iml" filepath="$PROJECT_DIR$/dmd-mall/dmd-mall.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dmd-master.iml" filepath="$PROJECT_DIR$/dmd-master.iml" />
+    </modules>
+  </component>
+</project>
