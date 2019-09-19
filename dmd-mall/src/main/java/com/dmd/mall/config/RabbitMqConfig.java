@@ -10,6 +10,18 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 消息队列配置
  * Created by macro on 2018/9/14.
+ * <p>
+ * 订单消息实际消费队列所绑定的交换机
+ * <p>
+ * 订单延迟队列队列所绑定的交换机
+ * <p>
+ * 订单实际消费队列
+ * <p>
+ * 订单延迟队列（死信队列）
+ * <p>
+ * 将订单队列绑定到交换机
+ * <p>
+ * 将订单延迟队列绑定到交换机
  *//*
 
 @Configuration
@@ -17,8 +29,8 @@ public class RabbitMqConfig {
 
     */
 /**
-     * 订单消息实际消费队列所绑定的交换机
-     *//*
+ * 订单消息实际消费队列所绑定的交换机
+ *//*
 
     @Bean
     DirectExchange orderDirect() {
@@ -30,8 +42,8 @@ public class RabbitMqConfig {
 
     */
 /**
-     * 订单延迟队列队列所绑定的交换机
-     *//*
+ * 订单延迟队列队列所绑定的交换机
+ *//*
 
     @Bean
     DirectExchange orderTtlDirect() {
@@ -43,8 +55,8 @@ public class RabbitMqConfig {
 
     */
 /**
-     * 订单实际消费队列
-     *//*
+ * 订单实际消费队列
+ *//*
 
     @Bean
     public Queue orderQueue() {
@@ -53,8 +65,8 @@ public class RabbitMqConfig {
 
     */
 /**
-     * 订单延迟队列（死信队列）
-     *//*
+ * 订单延迟队列（死信队列）
+ *//*
 
     @Bean
     public Queue orderTtlQueue() {
@@ -67,8 +79,8 @@ public class RabbitMqConfig {
 
     */
 /**
-     * 将订单队列绑定到交换机
-     *//*
+ * 将订单队列绑定到交换机
+ *//*
 
     @Bean
     Binding orderBinding(DirectExchange orderDirect,Queue orderQueue){
@@ -80,8 +92,8 @@ public class RabbitMqConfig {
 
     */
 /**
-     * 将订单延迟队列绑定到交换机
-     *//*
+ * 将订单延迟队列绑定到交换机
+ *//*
 
     @Bean
     Binding orderTtlBinding(DirectExchange orderTtlDirect,Queue orderTtlQueue){

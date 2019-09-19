@@ -26,7 +26,7 @@ import java.util.List;
 public class Swagger2Config {
 
     @Bean
-    public Docket createUserApi(){
+    public Docket createUserApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("用户API")
                 .apiInfo(apiInfo())
@@ -40,8 +40,9 @@ public class Swagger2Config {
 //				.globalOperationParameters(pars)
                 .enable(true);
     }
+
     @Bean
-    public Docket createMallApi(){
+    public Docket createMallApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("商城API")
                 .apiInfo(apiInfo())
@@ -56,7 +57,7 @@ public class Swagger2Config {
     }
 
     @Bean
-    public Docket createPlatAPI(){
+    public Docket createPlatAPI() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("论坛API")
                 .apiInfo(apiInfo())
@@ -71,7 +72,7 @@ public class Swagger2Config {
     }
 
     @Bean
-    public Docket createOtherAPI(){
+    public Docket createOtherAPI() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("全部API")
                 .apiInfo(apiInfo())
@@ -100,6 +101,7 @@ public class Swagger2Config {
 
     /**
      * 认证信息配置
+     *
      * @return
      */
     private List<ApiKey> securitySchemes() {

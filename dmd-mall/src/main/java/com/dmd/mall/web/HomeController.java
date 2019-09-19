@@ -28,7 +28,7 @@ public class HomeController {
     @Autowired
     private HomeService homeService;
 
-    @ApiOperation(value="首页内容页信息展示", notes="根据url的id来指定更新对象，并根据传过来的user信息来更新用户详细信息")
+    @ApiOperation(value = "首页内容页信息展示", notes = "根据url的id来指定更新对象，并根据传过来的user信息来更新用户详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long"),
             @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User")
@@ -63,7 +63,7 @@ public class HomeController {
     public CommonResult<List<CmsSubject>> getSubjectList(@RequestParam(required = false) Long cateId,
                                                          @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
                                                          @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
-        List<CmsSubject> subjectList = homeService.getSubjectList(cateId,pageSize,pageNum);
+        List<CmsSubject> subjectList = homeService.getSubjectList(cateId, pageSize, pageNum);
         return CommonResult.success(subjectList);
     }
 }

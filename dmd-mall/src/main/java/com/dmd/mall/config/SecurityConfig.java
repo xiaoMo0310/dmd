@@ -23,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UmsMemberService memberService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();//开启basic认证登录后可以调用需要认证的接口
@@ -46,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
                 UmsMember member = memberService.getByUsername(username);
-                if(member!=null){
+                if (member != null) {
                     return new MemberDetails(member);
                 }
                 throw new UsernameNotFoundException("用户名或密码错误");

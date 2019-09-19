@@ -23,9 +23,9 @@ import java.util.Date;
 @Table(name = "exc_exception_log")
 @Alias(value = "ExcExceptionLog")
 @ApiModel
-public class ExcExceptionLog{
+public class ExcExceptionLog {
 
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

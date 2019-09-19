@@ -43,8 +43,8 @@ public class UmsMemberController {
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult updatePassword(@RequestParam String telephone,
-                                 @RequestParam String password,
-                                 @RequestParam String authCode) {
-        return memberService.updatePassword(telephone,password,authCode);
+                                       @RequestParam String password,
+                                       @RequestParam String authCode) {
+        return memberService.updatePassword(telephone, password, authCode);
     }
 }
