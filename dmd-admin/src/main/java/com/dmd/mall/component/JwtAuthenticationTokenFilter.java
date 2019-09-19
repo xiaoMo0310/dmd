@@ -1,6 +1,6 @@
 package com.dmd.mall.component;
 
-import com.dmd.mall.util.JwtTokenUtil;
+import com.dmd.mall.utils.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

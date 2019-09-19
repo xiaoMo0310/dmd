@@ -1,12 +1,12 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.DateUtil;
+import com.dmd.mall.mapper.*;
+import com.dmd.mall.model.*;
 import com.dmd.mall.model.domain.FlashPromotionProduct;
 import com.dmd.mall.model.domain.HomeContentResult;
 import com.dmd.mall.model.domain.HomeFlashPromotion;
-import com.dmd.mall.mapper.*;
-import com.dmd.mall.model.*;
 import com.dmd.mall.service.HomeService;
-import com.dmd.mall.util.DateUtil;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

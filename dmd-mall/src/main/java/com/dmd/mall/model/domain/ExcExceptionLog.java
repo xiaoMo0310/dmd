@@ -1,16 +1,13 @@
 package com.dmd.mall.model.domain;
 
-import com.dmd.core.mybatis.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 
@@ -23,14 +20,16 @@ import java.util.Date;
  * @since 2019-09-18
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "exc_exception_log")
 @Alias(value = "ExcExceptionLog")
 @ApiModel
-public class ExcExceptionLog extends BaseEntity {
+public class ExcExceptionLog{
 
 private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "application_name")
     @ApiModelProperty("系统应用名")

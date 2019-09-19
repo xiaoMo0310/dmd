@@ -1,4 +1,4 @@
-package com.dmd.mall.util;
+package com.dmd.mall.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

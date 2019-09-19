@@ -4,7 +4,7 @@ import com.dmd.mall.dto.UmsAdminParam;
 import com.dmd.mall.mapper.*;
 import com.dmd.mall.model.*;
 import com.dmd.mall.service.UmsAdminService;
-import com.dmd.mall.util.JwtTokenUtil;
+import com.dmd.mall.utils.JwtTokenUtil;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
