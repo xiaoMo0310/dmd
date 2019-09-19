@@ -9,7 +9,10 @@ spring:
     name: @pom.artifactId@
   profiles:
     active: @profileActive@
-
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
 mybatis:
   mapper-locations:
     - classpath:dao/*.xml
