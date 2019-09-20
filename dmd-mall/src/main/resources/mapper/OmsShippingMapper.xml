@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.OmsShippingMapper">
+
+<!-- 通用查询映射结果 -->
+<resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.OmsShipping">
+        <result column="id" property="id"/>
+
+        <result column="version" property="version"/>
+        <result column="user_id" property="userId"/>
+        <result column="receiver_name" property="receiverName"/>
+        <result column="receiver_phone_no" property="receiverPhoneNo"/>
+        <result column="receiver_mobile_no" property="receiverMobileNo"/>
+        <result column="province_id" property="provinceId"/>
+        <result column="province_name" property="provinceName"/>
+        <result column="city_id" property="cityId"/>
+        <result column="city_name" property="cityName"/>
+        <result column="district_id" property="districtId"/>
+        <result column="district_name" property="districtName"/>
+        <result column="detail_address" property="detailAddress"/>
+        <result column="receiver_zip_code" property="receiverZipCode"/>
+        <result column="default_address" property="defaultAddress"/>
+
+        <result column="creator" property="creator"/>
+        <result column="creator_id" property="creatorId"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="last_operator" property="lastOperator"/>
+        <result column="last_operator_id" property="lastOperatorId"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+            id,
+            creator,
+            creator_id AS creatorId,
+            created_time AS createdTime,
+            last_operator AS lastOperator,
+            last_operator_id AS lastOperatorId,
+            update_time AS updateTime,
+            version, user_id AS userId, receiver_name AS receiverName, receiver_phone_no AS receiverPhoneNo, receiver_mobile_no AS receiverMobileNo, province_id AS provinceId, province_name AS provinceName, city_id AS cityId, city_name AS cityName, district_id AS districtId, district_name AS districtName, detail_address AS detailAddress, receiver_zip_code AS receiverZipCode, default_address AS defaultAddress
+    </sql>
+
+    <delete id="deleteByShippingIdUserId" parameterType="map">
+        DELETE FROM oms_shipping
+        WHERE id = #{shippingId}
+              AND user_id = #{userId}
+    </delete>
+    <select id="selectByShippingIdUserId" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from oms_shipping
+        where id = #{shippingId}
+        and user_id = #{userId}
+    </select>
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from oms_shipping
+        where user_id = #{userId}
+    </select>
+    <select id="selectDefaultAddressByUserId"
+            resultType="com.dmd.mall.model.domain.OmsShipping">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from oms_shipping
+        where id = #{shippingId}
+        and default = 1
+    </select>
+</mapper>

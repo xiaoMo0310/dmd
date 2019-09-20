@@ -1,12 +1,13 @@
 package com.dmd.mall;
 
+
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
-import com.baomidou.mybatisplus.generator.config.rules.DbType;
+import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.Map;
 public class CodeGeneration {
 
     public static void main(String[] args) {
-        mybatisPlusCodeGeneratro(new String[]{"oms_shipping"});
+        mybatisPlusCodeGeneratro(new String[]{"ums_role"});
     }
 
     /**
@@ -64,12 +65,12 @@ public class CodeGeneration {
         dsc .setTypeConvert(new MySqlTypeConvert() {
             // 自定义数据库表字段类型转换【可选】
             @Override
-            public DbColumnType processTypeConvert(String fieldType) {
+            public IColumnType processTypeConvert(GlobalConfig gc, String fieldType) {
                 //System.out.println("转换类型：" + fieldType);
                 // if ( fieldType.toLowerCase().contains( "tinyint" ) ) {
                 // return DbColumnType.BOOLEAN;
                 // }
-                return super.processTypeConvert(fieldType);
+                return super.processTypeConvert(gc, fieldType);
             }
         });
 
@@ -78,11 +79,11 @@ public class CodeGeneration {
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         // strategy.setTablePrefix(new String[] { "sys_" });// 此处可以修改为您的表前缀
-        strategy.setVersionFieldName("version");
         // 表名生成策略
         strategy.setNaming(NamingStrategy.underline_to_camel);
         // 需要生成的表
         strategy.setInclude(tables);
+        strategy.setVersionFieldName("version");
         // 【实体】是否为lombok模型（默认 false）<a href="https://projectlombok.org/">document</a>
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
@@ -102,7 +103,7 @@ public class CodeGeneration {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.dmd.mall");
+        pc.setParent("com.dmd.mall.");
         pc.setController("web");
         pc.setService("service");
         pc.setServiceImpl("service.impl");
@@ -120,9 +121,9 @@ public class CodeGeneration {
                 this.setMap(map);
             }
         };
-        // 调整 xml 生成目录
+        // 调整 xml 生成目录演示
         List<FileOutConfig> focList = new ArrayList<FileOutConfig>();
-        focList.add(new FileOutConfig("/templatesMybatis/mapper.xml.java.vm") {
+        focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 return "dmd-mall\\src\\main\\resources\\mapper\\" + tableInfo.getEntityName() + "Mapper.xml";

@@ -40,7 +40,7 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	@Column(name = "created_time")
+	@Column(name = "created_time", updatable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date createdTime;
@@ -60,7 +60,7 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 更新时间
 	 */
-	@Column(name = "update_time")
+	@Column(name = "update_time", insertable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date updateTime;
