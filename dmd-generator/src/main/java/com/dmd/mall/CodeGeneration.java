@@ -24,7 +24,7 @@ import java.util.Map;
 public class CodeGeneration {
 
     public static void main(String[] args) {
-        mybatisPlusCodeGeneratro(new String[]{"tables"});
+        mybatisPlusCodeGeneratro(new String[]{"oms_shipping"});
     }
 
     /**
@@ -78,8 +78,11 @@ public class CodeGeneration {
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         // strategy.setTablePrefix(new String[] { "sys_" });// 此处可以修改为您的表前缀
-        strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(tables); // 需要生成的表
+        strategy.setVersionFieldName("version");
+        // 表名生成策略
+        strategy.setNaming(NamingStrategy.underline_to_camel);
+        // 需要生成的表
+        strategy.setInclude(tables);
         // 【实体】是否为lombok模型（默认 false）<a href="https://projectlombok.org/">document</a>
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
@@ -94,7 +97,7 @@ public class CodeGeneration {
         // // 自定义 service 实现类父类
         strategy.setSuperServiceImplClass("com.dmd.core.support.BaseService");
         // 自定义 controller 父类
-        // .setSuperControllerClass("com.baomidou.demo.TestController")
+        strategy.setSuperControllerClass("com.dmd.core.support.BaseController");
         mpg.setStrategy(strategy);
 
         // 包配置
@@ -117,9 +120,9 @@ public class CodeGeneration {
                 this.setMap(map);
             }
         };
-        // 调整 xml 生成目录演示
+        // 调整 xml 生成目录
         List<FileOutConfig> focList = new ArrayList<FileOutConfig>();
-        focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
+        focList.add(new FileOutConfig("/templatesMybatis/mapper.xml.java.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 return "dmd-mall\\src\\main\\resources\\mapper\\" + tableInfo.getEntityName() + "Mapper.xml";
@@ -135,6 +138,7 @@ public class CodeGeneration {
         tc.setController("/templatesMybatis/controller.java.vm");
         tc.setServiceImpl("/templatesMybatis/serviceImpl.java.vm");
         tc.setMapper("/templatesMybatis/mapper.java.vm");
+        //tc.setXml("/templatesMybatis/xml.java.vm");
         mpg.setTemplate(tc);
 
         // 执行生成
