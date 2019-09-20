@@ -14,10 +14,19 @@ spring:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
 mybatis:
-  mapper-locations:
-    - classpath:mapper/*.xml
-    - classpath*:com/**/mapper/*.xml
-
+  type-aliases-package: com.dmd.mall.model.domain
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+mapper:
+  mappers: com.dmd.core.mybatis.MyMapper
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 # 自定义redis key
 redis:
   key:

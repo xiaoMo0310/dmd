@@ -30,12 +30,12 @@
             <property name="nullCatalogMeansCurrent" value="true" />
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.dmd.mall.model.domain" targetProject="dmd-mall\src\main\java"/>
+        <javaModelGenerator targetPackage="com.dmd.mall.model.domain" targetProject="dmd-generator\src\main\java"/>
 
-        <sqlMapGenerator targetPackage="mapper" targetProject="dmd-mall\src\main\resources"/>
+        <sqlMapGenerator targetPackage="mapper" targetProject="dmd-generator\src\main\resources"/>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dmd.mall.mapper"
-                             targetProject="dmd-mall\src\main\java"/>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="mapper"
+                             targetProject="dmd-generator\src\main\java"/>
         <!--生成全部表tableName设为%-->
         <table tableName="exc_exception_log">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
