@@ -15,7 +15,7 @@ spring:
       suffix: .jsp
 mybatis:
   mapper-locations:
-    - classpath:dao/*.xml
+    - classpath:mapper/*.xml
     - classpath*:com/**/mapper/*.xml
 
 # 自定义redis key
