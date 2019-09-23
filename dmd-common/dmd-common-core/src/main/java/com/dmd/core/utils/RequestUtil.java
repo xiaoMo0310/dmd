@@ -98,7 +98,7 @@ public class RequestUtil {
 	public static LoginAuthDto getLoginUser() {
 		LoginAuthDto loginAuthDto = (LoginAuthDto) ThreadLocalMap.get(GlobalConstant.Sys.TOKEN_AUTH_DTO);
 		if (PublicUtil.isEmpty(loginAuthDto)) {
-			throw new BusinessException(ErrorCodeEnum.UAC10011039);
+			throw new BusinessException(ErrorCodeEnum.UMS10011039);
 		}
 		return loginAuthDto;
 
@@ -115,7 +115,7 @@ public class RequestUtil {
 
 		String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 		if (org.apache.commons.lang.StringUtils.isEmpty(authHeader)) {
-			throw new BusinessException(ErrorCodeEnum.UAC10011040);
+			throw new BusinessException(ErrorCodeEnum.UMS10011040);
 		}
 		return authHeader;
 	}

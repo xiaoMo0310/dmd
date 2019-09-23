@@ -57,7 +57,7 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
 
     @Override
     public PageInfo queryListWithPageByUserId(Long userId, int pageNum, int pageSize) {
-        Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
+        Preconditions.checkArgument(userId != null, ErrorCodeEnum.UMS10011001.msg());
         PageHelper.startPage(pageNum, pageSize);
         //TODO 写死 不维护收人列表
         List<OmsShipping> OmsShippingList = this.selectByUserId(1L);
@@ -66,7 +66,7 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
 
     @Override
     public List<OmsShipping> selectByUserId(Long userId) {
-        Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
+        Preconditions.checkArgument(userId != null, ErrorCodeEnum.UMS10011001.msg());
         return omsShippingMapper.selectByUserId(userId);
     }
 

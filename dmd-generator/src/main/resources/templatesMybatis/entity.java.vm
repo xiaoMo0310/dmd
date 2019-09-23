@@ -8,18 +8,19 @@ import java.io.Serializable;
 import ${pkg};
 #end
 #if(${entityLombokModel})
-
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.ibatis.type.Alias;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.Column;
 import javax.persistence.Table;
-
+#end
+#if(${field.propertyType.equals("Date")})
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+#end
+#if(${cfg.swagger2})
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 #end
 
 /**
@@ -37,6 +38,8 @@ import javax.persistence.Table;
 #if(${table.convert})
 @Table(name = "${table.name}")
 @Alias(value = "${entity}")
+#end
+#if(${cfg.swagger2})
 @ApiModel
 #end
 #if(${superEntityClass})

@@ -36,7 +36,7 @@ public class BaseController {
 		loginAuthDto.setLoginName("yang");
 
 		if (PublicUtil.isEmpty(loginAuthDto)) {
-			throw new BusinessException(ErrorCodeEnum.UAC10011041);
+			throw new BusinessException(ErrorCodeEnum.UMS10011041);
 		}
 		return loginAuthDto;
 	}

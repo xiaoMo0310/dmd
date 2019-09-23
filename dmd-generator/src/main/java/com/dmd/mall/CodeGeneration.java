@@ -1,13 +1,11 @@
 package com.dmd.mall;
 
 
-import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
-import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
+import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ import java.util.Map;
 public class CodeGeneration {
 
     public static void main(String[] args) {
-        mybatisPlusCodeGeneratro(new String[]{"ums_role"});
+        mybatisPlusCodeGeneratro(new String[]{"ums_favorites"});
     }
 
     /**
@@ -44,6 +42,7 @@ public class CodeGeneration {
         gc.setEnableCache(false);// XML 二级缓存s
         gc.setBaseResultMap(true);// XML ResultMap
         gc.setBaseColumnList(true);// XML columList
+        gc.setOpen(false);
         gc.setAuthor("YangAnsheng");// 作者
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setControllerName("%sController");
@@ -62,7 +61,7 @@ public class CodeGeneration {
         dsc.setUrl("jdbc:mysql://192.168.0.219:3306/mall");
 
         //文件类型的转换
-        dsc .setTypeConvert(new MySqlTypeConvert() {
+        /*dsc .setTypeConvert(new MySqlTypeConvert() {
             // 自定义数据库表字段类型转换【可选】
             @Override
             public IColumnType processTypeConvert(GlobalConfig gc, String fieldType) {
@@ -72,7 +71,7 @@ public class CodeGeneration {
                 // }
                 return super.processTypeConvert(gc, fieldType);
             }
-        });
+        });*/
 
         mpg.setDataSource(dsc);
 
@@ -81,6 +80,7 @@ public class CodeGeneration {
         // strategy.setTablePrefix(new String[] { "sys_" });// 此处可以修改为您的表前缀
         // 表名生成策略
         strategy.setNaming(NamingStrategy.underline_to_camel);
+        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         // 需要生成的表
         strategy.setInclude(tables);
         strategy.setVersionFieldName("version");
@@ -88,7 +88,7 @@ public class CodeGeneration {
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         // 自定义实体，公共字段
-        strategy.setSuperEntityColumns(new String[]{"id","creator","creator_id","created_time","last_operator","last_operator_id","update_time"});
+        strategy.setSuperEntityColumns(new String[]{"id","version","creator","creator_id","created_time","last_operator","last_operator_id","update_time"});
         // 自定义实体父类
         strategy.setSuperEntityClass("com.dmd.core.mybatis.BaseEntity");
         // // 自定义 mapper 父类
@@ -103,7 +103,7 @@ public class CodeGeneration {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.dmd.mall.");
+        pc.setParent("com.dmd.mall");
         pc.setController("web");
         pc.setService("service");
         pc.setServiceImpl("service.impl");
@@ -117,7 +117,8 @@ public class CodeGeneration {
             @Override
             public void initMap() {
                 Map<String, Object> map = new HashMap<String, Object>();
-                map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-rb");
+                map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
+                map.put("swagger2", true);
                 this.setMap(map);
             }
         };
@@ -126,6 +127,7 @@ public class CodeGeneration {
         focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
+                System.out.println(tableInfo);
                 return "dmd-mall\\src\\main\\resources\\mapper\\" + tableInfo.getEntityName() + "Mapper.xml";
             }
         });
@@ -137,9 +139,9 @@ public class CodeGeneration {
         TemplateConfig tc = new TemplateConfig();
         tc.setEntity("/templatesMybatis/entity.java.vm");
         tc.setController("/templatesMybatis/controller.java.vm");
+        tc.setService("/templatesMybatis/service.java.vm");
         tc.setServiceImpl("/templatesMybatis/serviceImpl.java.vm");
         tc.setMapper("/templatesMybatis/mapper.java.vm");
-        //tc.setXml("/templatesMybatis/xml.java.vm");
         mpg.setTemplate(tc);
 
         // 执行生成

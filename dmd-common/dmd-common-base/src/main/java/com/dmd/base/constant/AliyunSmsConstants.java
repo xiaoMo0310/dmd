@@ -45,7 +45,7 @@ public class AliyunSmsConstants {
 		public static boolean isSmsTemplate(String smsTemplateCode) {
 
 			if (StringUtils.isEmpty(smsTemplateCode)) {
-				throw new BusinessException(ErrorCodeEnum.UAC10011020);
+				throw new BusinessException(ErrorCodeEnum.UMS10011020);
 			}
 			List<String> templetCodeList = getTemplateCodeList();
 

@@ -47,6 +47,17 @@ public class UmsBizException extends BusinessException {
     /**
      * Instantiates a new Ums rpc exception.
      *
+     * @param code the code
+     * @param msg  the msg
+     */
+    public UmsBizException( String msg) {
+        super(msg);
+        log.info("<== UmsRpcException, message:" + super.getMessage());
+    }
+
+    /**
+     * Instantiates a new Ums rpc exception.
+     *
      * @param codeEnum the code enum
      */
     public UmsBizException(ErrorCodeEnum codeEnum) {
