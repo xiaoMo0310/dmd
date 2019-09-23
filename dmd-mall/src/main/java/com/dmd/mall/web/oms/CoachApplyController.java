@@ -46,9 +46,9 @@ public class CoachApplyController {
 
         int count = coachApplyService.addCoachApply(coachApplyBean);
         if (count > 0) {
-            return CommonResult.success(count);
+            return CommonResult.success(count,"提交申请成功");
         }
-        return CommonResult.failed();
+        return CommonResult.failed("提交申请失败");
     }
 
 }
