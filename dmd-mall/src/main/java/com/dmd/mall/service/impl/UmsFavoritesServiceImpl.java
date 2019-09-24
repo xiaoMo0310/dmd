@@ -31,7 +31,7 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
     public int saveAttentionMessage(LoginAuthDto loginAuthDto, UmsFavorites umsFavorites) {
         Preconditions.checkArgument(loginAuthDto.getUserId().equals(umsFavorites.getUserId()), ErrorCodeEnum.UMS10011003.msg());
         //查询是否关注
-        if(checkAttention(loginAuthDto.getUserId(), umsFavorites.getTargetId())){
+        if(checkAttention(loginAuthDto.getUserId(), umsFavorites.getTargetId(), umsFavorites.getFavoriteType())){
             throw new UmsBizException("已关注");
         }
         int resultInt;
@@ -45,10 +45,11 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
     }
 
     @Override
-    public Boolean checkAttention(Long userId, Long targetId) {
+    public Boolean checkAttention(Long userId, Long targetId, Integer favoriteType) {
         UmsFavorites umsFavorites = new UmsFavorites();
         umsFavorites.setUserId(userId);
         umsFavorites.setTargetId(targetId);
+        umsFavorites.setFavoriteType(favoriteType);
         int count = umsFavoritesMapper.selectCount(umsFavorites);
         return count > 0;
     }

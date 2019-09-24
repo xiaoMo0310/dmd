@@ -9,6 +9,7 @@ import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class OmsShippingController extends BaseController {
      */
     @PostMapping("/addShipping")
     @ApiOperation(httpMethod = "POST", value = "增加收货人地址")
-    @ApiParam(name = "shipping", value = "收货人地址信息")
+    @ApiImplicitParam(name ="shipping", value = "收货人地址信息", dataType = "OmsShipping")
     public Wrapper addShipping(@RequestBody OmsShipping shipping) {
 
         logger.info("addShipping - 增加收货人地址. shipping={}", shipping);
@@ -59,7 +60,8 @@ public class OmsShippingController extends BaseController {
     @PostMapping("/deleteShipping/{shippingId}")
     @ApiOperation(httpMethod = "POST", value = "删除收货人地址")
     @ApiParam(name = "shippingId", value = "收货人地址id")
-    public Wrapper deleteShipping(@PathVariable Integer shippingId) {
+    @ApiImplicitParam(name ="shippingId", value = "收货人地址id", dataType = "long", paramType = "path")
+    public Wrapper deleteShipping(@PathVariable Long shippingId) {
         Long userId = getLoginAuthDto().getUserId();
         logger.info("deleteShipping - 删除收货人地址. userId={}, shippingId={}", userId, shippingId);
         int result = omsShippingService.deleteShipping(userId, shippingId);
@@ -75,7 +77,7 @@ public class OmsShippingController extends BaseController {
      */
     @PostMapping("/updateShipping")
     @ApiOperation(httpMethod = "POST", value = "编辑收货人地址")
-    @ApiParam(name = "shipping", value = "收货人地址信息")
+    @ApiImplicitParam(name ="shipping", value = "收货人地址信息", dataType = "OmsShipping")
     public Wrapper updateShipping(@RequestBody OmsShipping shipping) {
         logger.info("updateShipping - 编辑收货人地址. shipping={}", shipping);
         int result = omsShippingService.saveShipping(getLoginAuthDto(), shipping);
@@ -91,7 +93,7 @@ public class OmsShippingController extends BaseController {
      */
     @PostMapping("/setDefaultAddress/{addressId}")
     @ApiOperation(httpMethod = "POST", value = "设置默认收货地址")
-    @ApiParam(name = "shippingId", value = "收货人地址id")
+    @ApiImplicitParam(name ="shippingId", value = "收货人地址id", dataType = "long", paramType = "path")
     public Wrapper setDefaultAddress(@PathVariable Long shippingId) {
         logger.info("updateShipping - 设置默认地址. addressId={}", shippingId);
         int result = omsShippingService.setDefaultAddress(getLoginAuthDto(), shippingId);
@@ -107,7 +109,7 @@ public class OmsShippingController extends BaseController {
      */
     @PostMapping("/selectShippingById/{shippingId}")
     @ApiOperation(httpMethod = "POST", value = "根据Id查询收货人地址")
-    @ApiParam(name = "shippingId", value = "收货人地址id")
+    @ApiImplicitParam(name ="shippingId", value = "收货人地址id", dataType = "long", paramType = "path")
     public Wrapper<OmsShipping> selectShippingById(@PathVariable Long shippingId) {
         Long userId = getLoginAuthDto().getUserId();
         logger.info("selectShippingById - 根据Id查询收货人地址. userId={}, shippingId={}", userId, shippingId);
@@ -124,7 +126,7 @@ public class OmsShippingController extends BaseController {
      */
     @PostMapping("queryUserShippingListWithPage")
     @ApiOperation(httpMethod = "POST", value = "分页查询当前用户收货人地址列表")
-    @ApiParam(name = "baseQuery", value = "分页数据")
+    @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery")
     public Wrapper<PageInfo> queryUserShippingListWithPage(@RequestBody BaseQuery baseQuery) {
         Long userId = getLoginAuthDto().getUserId();
         logger.info("queryUserShippingListWithPage - 分页查询当前用户收货人地址列表.userId={} shipping={}", userId, baseQuery);

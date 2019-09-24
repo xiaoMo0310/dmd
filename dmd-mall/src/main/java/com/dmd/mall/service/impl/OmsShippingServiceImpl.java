@@ -46,7 +46,7 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
     }
 
     @Override
-    public int deleteShipping(Long userId, Integer shippingId) {
+    public int deleteShipping(Long userId, Long shippingId) {
         return omsShippingMapper.deleteByShippingIdUserId(userId, shippingId);
     }
 

@@ -35,7 +35,7 @@ public class UmsFavoritesController extends BaseController {
      */
     @PostMapping("/attention/save")
     @ApiOperation(httpMethod = "POST", value = "编辑用户关注的信息")
-    @ApiParam(name ="umsFavorites", value = "用户关注的信息,修改需要提供id")
+    @ApiImplicitParam(name ="umsFavorites", value = "用户关注的信息,修改需要提供id", dataType = "UmsFavorites")
     public Wrapper saveAttentionMessage(@RequestBody UmsFavorites umsFavorites) {
         logger.info("addAttentionMessage - 添加用户关注的信息. umsFavorites={}", umsFavorites);
         int result = umsFavoritesService.saveAttentionMessage(getLoginAuthDto(), umsFavorites);
@@ -47,13 +47,14 @@ public class UmsFavoritesController extends BaseController {
      * @param targetId
      * @return the wrapper
      */
-    @PostMapping("/attention/check/{targetId}")
+    @PostMapping("/attention/check/{targetId}/{favoriteType}")
     @ApiOperation(httpMethod = "POST", value = "判断用户时候关注用户 商品 商铺")
-    @ApiParam(name = "targetId", value = "目标对象id")
-    public Wrapper<Boolean> checkAttention(@PathVariable Long targetId) {
+    @ApiImplicitParams({@ApiImplicitParam(name ="targetId", value = "目标对象id", dataType = "Long", paramType = "path"),
+                        @ApiImplicitParam(name ="favoriteType", value = "关注类型(0:用户 1:商品 2:店铺)", dataType = "int", paramType = "path")})
+    public Wrapper<Boolean> checkAttention(@PathVariable Long targetId, @PathVariable Integer favoriteType) {
         Long userId = getLoginAuthDto().getUserId();
         logger.info("checkAttention - 判断用户时候关注用户 商品 商铺. userId={}, targetId={}", userId, targetId);
-        Boolean flag = umsFavoritesService.checkAttention(userId, targetId);
+        Boolean flag = umsFavoritesService.checkAttention(userId, targetId, favoriteType);
         return WrapMapper.ok(flag);
     }
 

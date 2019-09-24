@@ -28,5 +28,5 @@ public interface UmsFavoritesService extends IService<UmsFavorites> {
      * @param targetId
      * @return
      */
-    Boolean checkAttention(Long userId,Long targetId);
+    Boolean checkAttention(Long userId,Long targetId, Integer favoriteType);
 }

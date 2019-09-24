@@ -35,7 +35,7 @@ public interface OmsShippingService extends IService<OmsShipping> {
      *
      * @return the int
      */
-    int deleteShipping(Long userId, Integer shippingId);
+    int deleteShipping(Long userId, Long shippingId);
 
     /**
      * 根据Id查询收货人地址.
