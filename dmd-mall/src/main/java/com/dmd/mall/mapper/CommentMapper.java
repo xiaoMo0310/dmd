@@ -22,4 +22,6 @@ public interface CommentMapper {
     int addComment(CommentBean commentBean);
 
     Integer queryComment(Long id);
+
+    int updateCommentDelflag(@Param("commentId") Long commentId,@Param("userId")Long userId);
 }

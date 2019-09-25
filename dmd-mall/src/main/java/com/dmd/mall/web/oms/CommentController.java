@@ -67,4 +67,22 @@ public class CommentController {
         }
         return CommonResult.failed("回复失败");
     }
+
+    /**
+     * 我只能删我的回复和评论无法删除别人的回复
+     */
+    @ApiOperation("逻辑删除评论与回复")
+    @RequestMapping(value = "/updateCommentDelflag",method = RequestMethod.GET)
+    @ResponseBody                            //评论id
+    public CommonResult updateCommentDelflag(@RequestParam Long commentId,
+                                             //登录人id,判断此发布回复和评论的用户是否为是我,发布回复和评论的用户id是否是我的用户id。是则删除。否则失败
+                                             @RequestParam Long userId
+    ){
+        int count = commentService.updateCommentDelflag(commentId,userId);
+        if (count > 0) {
+            return CommonResult.success(count,"删除成功");
+        }
+        return CommonResult.failed("删除失败");
+    }
+
 }

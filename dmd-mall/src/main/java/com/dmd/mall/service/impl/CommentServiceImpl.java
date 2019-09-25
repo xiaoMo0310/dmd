@@ -106,4 +106,9 @@ public class CommentServiceImpl implements CommentService{
         return commentMapper.addComment(commentBean);
     }
 
+    @Override
+    public int updateCommentDelflag(Long commentId,Long userId) {
+        return commentMapper.updateCommentDelflag(commentId,userId);
+    }
+
 }
