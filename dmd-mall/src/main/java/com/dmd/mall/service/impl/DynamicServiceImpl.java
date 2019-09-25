@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DynamicMapper;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.service.DynamicService;
@@ -22,6 +23,9 @@ public class DynamicServiceImpl implements DynamicService{
     @Autowired
     private DynamicMapper dynamicMapper;
 
+    @Autowired
+    private CommentMapper commentMapper;
+
     @Override
     public List<DynamicBean> queryDynamic(Long userId) {
         return dynamicMapper.queryDynamic(userId);
@@ -40,11 +44,7 @@ public class DynamicServiceImpl implements DynamicService{
 
     @Override
     public Integer queryComment(Long id) {
-        //留言数
-
-        //回复数
-
-        return null;
+        return commentMapper.queryComment(id);
     }
 
     @Override

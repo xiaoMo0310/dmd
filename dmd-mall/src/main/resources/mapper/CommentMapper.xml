@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.CommentMapper">
+
+   <!--通用查询映射结果-->
+    <resultMap id="commentMap" type="com.dmd.mall.model.domain.CommentBean">
+        <result column="commentId" property="commentId" />
+        <result column="lw_name" property="commentName" />
+        <result column="lw_head_portrait" property="commentHeadPortrait" />
+        <result column="lw_date" property="createTime" />
+        <result column="lw_content" property="content" />
+        <result column="lw_comment_type" property="type" />
+        <result column="ip_address" property="ipAddress" />
+        <result column="status" property="status" />
+        <result column="delflag" property="delflag" />
+        <result column="lw_for_uid" property="forUid" />
+        <result column="lw_for_dynamic_id" property="forDynamicId" />
+        <result column="lw_userid" property="userId" />
+        <result column="lw_for_pid" property="forPid" />
+    </resultMap>
+
+    <select id="queryCommentById" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT commentId FROM dmd_dynamic_comment WHERE lw_for_dynamic_id = #{forDynamicId}
+    </select>
+
+    <select id="findCommentListById" parameterType="java.lang.Long" resultMap="commentMap">
+        SELECT commentId,lw_name,lw_head_portrait,lw_date,lw_content,lw_comment_type,ip_address,status,delflag,lw_for_uid,lw_for_dynamic_id,lw_userid,lw_for_pid FROM dmd_dynamic_comment WHERE lw_for_pid = #{forPid}
+    </select>
+
+    <insert id="addComment" parameterType="com.dmd.mall.model.domain.CommentBean">
+        INSERT INTO dmd_dynamic_comment
+        (
+        lw_name,
+        lw_head_portrait,
+        lw_date,
+        lw_content,
+        lw_comment_type,
+        ip_address,
+        status,
+        delflag,
+        lw_for_uid,
+        lw_for_dynamic_id,
+        lw_userid,
+        lw_for_pid)
+        VALUES
+        (
+        #{commentName,jdbcType=VARCHAR},
+        #{commentHeadPortrait,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{content,jdbcType=VARCHAR},
+        #{type,jdbcType=INTEGER},
+        #{ipAddress,jdbcType=VARCHAR},
+        #{status,jdbcType=INTEGER},
+        #{delflag,jdbcType=INTEGER},
+        #{forUid,jdbcType=BIGINT},
+        #{forDynamicId,jdbcType=BIGINT},
+        #{userId,jdbcType=BIGINT},
+        #{forPid,jdbcType=BIGINT})
+
+    </insert>
+
+    <select id="queryComment" parameterType="java.lang.Long" resultType="int">
+        SELECT COUNT(1) FROM dmd_dynamic_comment
+        WHERE lw_for_dynamic_id = #{value}
+    </select>
+</mapper>

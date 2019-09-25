@@ -23,4 +23,5 @@ public interface DynamicMapper {
     int updateCancelPraise(Long id);
 
     int updateDynamicrShare(Long id);
+
 }
