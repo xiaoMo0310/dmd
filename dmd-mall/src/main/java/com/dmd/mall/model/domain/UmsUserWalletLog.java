@@ -37,15 +37,19 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("钱包账户id")
     private Long walletId;
 
+    @Column(name = "single_number")
+    @ApiModelProperty("充值支付单号")
+    private String singleNumber;
+
     @ApiModelProperty("操作金额")
     private BigDecimal money;
 
     @ApiModelProperty("操作类型(1:增加 2:减少)")
     private Integer type;
 
-    @Column(name = "money_type")
-    @ApiModelProperty("金额类型(1:微信充值 2:支付宝充值 3:银联充值 4:邀请 5:消费支出 6:提现)")
-    private Integer moneyType;
+    @Column(name = "source_destination")
+    @ApiModelProperty("来源去向(1:微信  2:支付宝 3:银联 4:邀请 5:消费)")
+    private Integer sourceDestination;
 
     @ApiModelProperty("状态(1:有效 2:无效)")
     private Integer status;
@@ -56,6 +60,5 @@ private static final long serialVersionUID = 1L;
     @Column(name = "ip_source")
     @ApiModelProperty("操作来源ip")
     private String ipSource;
-
 
 }

@@ -2,8 +2,11 @@ package com.dmd.mall.mapper;
 
 import com.dmd.mall.model.domain.UmsUserWalletLog;
 import com.dmd.core.mybatis.MyMapper;
+import com.dmd.mall.model.vo.UmsWalletLogVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UmsUserWalletLogMapper extends MyMapper<UmsUserWalletLog> {
 
+    List<UmsWalletLogVo> selectWalletLogMessage(Long userId);
 }
