@@ -72,7 +72,7 @@ public class DynamicController {
     }
 
     /**
-     * 查询评论数（未完成）
+     * 查询评论数
      * @param 动态id
      * @return
      */
