@@ -24,4 +24,6 @@ public interface CommentMapper {
     Integer queryComment(Long id);
 
     int updateCommentDelflag(@Param("commentId") Long commentId,@Param("userId")Long userId);
+
+    void updateComment(Long id);
 }

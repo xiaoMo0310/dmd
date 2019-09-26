@@ -27,4 +27,6 @@ public interface DynamicService {
     int updateCancelPraise(Long id);
 
     int updateDynamicrShare(Long id);
+
+    int updateDynamicDelflag(Long id);
 }

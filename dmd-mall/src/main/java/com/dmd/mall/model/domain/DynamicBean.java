@@ -1,5 +1,7 @@
 package com.dmd.mall.model.domain;
 
+import io.swagger.models.auth.In;
+
 import java.util.Date;
 
 /**
@@ -37,6 +39,16 @@ public class DynamicBean {
     private Integer topicId;
     //所在话题的名称
     private String topicName;
+    //是否删除
+    private Integer delflag;
+
+    public Integer getDelflag() {
+        return delflag;
+    }
+
+    public void setDelflag(Integer delflag) {
+        this.delflag = delflag;
+    }
 
     public String getTopicName() {
         return topicName;
@@ -158,6 +170,7 @@ public class DynamicBean {
                 ", userId=" + userId +
                 ", topicId=" + topicId +
                 ", topicName='" + topicName + '\'' +
+                ", delflag=" + delflag +
                 '}';
     }
 }

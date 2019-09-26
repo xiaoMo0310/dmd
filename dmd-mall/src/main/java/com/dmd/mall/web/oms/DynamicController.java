@@ -77,7 +77,7 @@ public class DynamicController {
      * @return
      */
     @ApiOperation("查询我的动态评论数")
-    @RequestMapping(value = "/selectDynamicrComment",method = RequestMethod.GET)
+    @RequestMapping(value = "/selectDynamicComment",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<Integer> queryComment(@RequestParam Long id){
         Integer commentNum = dynamicService.queryComment(id);
@@ -109,7 +109,7 @@ public class DynamicController {
      * @return
      */
     @ApiOperation("点赞数(喜欢)")
-    @RequestMapping(value = "/updateDynamicrLikePraise",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateDynamicLikePraise",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult updateLikePraise(@RequestParam Long id){
         int count = dynamicService.updateLikePraise(id);
@@ -125,7 +125,7 @@ public class DynamicController {
      * @return
      */
     @ApiOperation("点赞数(不喜欢)")
-    @RequestMapping(value = "/updateDynamicrCancelPraise",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateDynamicCancelPraise",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult updateCancelPraise(@RequestParam Long id){
         int count = dynamicService.updateCancelPraise(id);
@@ -142,7 +142,7 @@ public class DynamicController {
      * @return
      */
     @ApiOperation("分享数+1")
-    @RequestMapping(value = "/updateDynamicrShare",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateDynamicShare",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult updateDynamicrShare(@RequestParam Long id){
         int count = dynamicService.updateDynamicrShare(id);
@@ -151,4 +151,21 @@ public class DynamicController {
         }
         return CommonResult.failed("分享失败");
     }
+
+    /**
+     * 动态删除
+     * @param 动态id
+     * @return
+     */
+    @ApiOperation("动态删除")
+    @RequestMapping(value = "/updateDynamicDelflag",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateDynamicDelflag(@RequestParam Long id){
+        int count = dynamicService.updateDynamicDelflag(id);
+        if (count > 0) {
+            return CommonResult.success(count,"删除成功");
+        }
+        return CommonResult.failed("删除失败");
+    }
+
 }

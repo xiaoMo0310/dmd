@@ -24,4 +24,5 @@ public interface DynamicMapper {
 
     int updateDynamicrShare(Long id);
 
+    int updateDynamicDelflag(Long id);
 }

@@ -80,4 +80,8 @@
     <update id="updateCommentDelflag" parameterType="map">
         UPDATE dmd_dynamic_comment SET delflag = 1 WHERE commentId = #{commentId} AND lw_userid = #{userId}
     </update>
+
+    <update id="updateComment" parameterType="java.lang.Long">
+        UPDATE dmd_dynamic_comment SET delflag = 1 WHERE lw_for_dynamic_id = #{value}
+    </update>
 </mapper>

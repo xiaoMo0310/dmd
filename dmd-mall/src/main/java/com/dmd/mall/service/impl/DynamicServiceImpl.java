@@ -66,4 +66,12 @@ public class DynamicServiceImpl implements DynamicService{
     public int updateDynamicrShare(Long id) {
         return dynamicMapper.updateDynamicrShare(id);
     }
+
+    @Override
+    public int updateDynamicDelflag(Long id) {
+        //动态删除时对应的动态下评论也全部删除
+        commentMapper.updateComment(id);
+        return dynamicMapper.updateDynamicDelflag(id);
+    }
+
 }
