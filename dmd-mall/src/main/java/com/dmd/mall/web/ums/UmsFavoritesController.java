@@ -28,16 +28,15 @@ public class UmsFavoritesController extends BaseController {
     private UmsFavoritesService umsFavoritesService;
 
     /**
-     * 添加用户关注的信息
+     * 编辑用户关注的信息
      * @param umsFavorites
-     *
      * @return the wrapper
      */
     @PostMapping("/attention/save")
     @ApiOperation(httpMethod = "POST", value = "编辑用户关注的信息")
     @ApiImplicitParam(name ="umsFavorites", value = "用户关注的信息,修改需要提供id", dataType = "UmsFavorites")
     public Wrapper saveAttentionMessage(@RequestBody UmsFavorites umsFavorites) {
-        logger.info("addAttentionMessage - 添加用户关注的信息. umsFavorites={}", umsFavorites);
+        logger.info("saveAttentionMessage - 添加用户关注的信息. umsFavorites={}", umsFavorites);
         int result = umsFavoritesService.saveAttentionMessage(getLoginAuthDto(), umsFavorites);
         return handleResult(result);
     }

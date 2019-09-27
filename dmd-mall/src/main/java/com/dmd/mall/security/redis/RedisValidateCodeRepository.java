@@ -25,12 +25,10 @@ public class RedisValidateCodeRepository implements ValidateCodeRepository {
 	@Autowired
 	private RedisTemplate<Object, Object> redisTemplate;
 
-
 	@Override
 	public void save(ServletWebRequest request, ValidateCode code) {
 		redisTemplate.opsForValue().set(buildKey(request), code, 30, TimeUnit.MINUTES);
 	}
-
 
 	@Override
 	public ValidateCode get(ServletWebRequest request) {

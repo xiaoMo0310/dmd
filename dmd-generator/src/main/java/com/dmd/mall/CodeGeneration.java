@@ -17,13 +17,13 @@ import java.util.Map;
  *
  * mybatisPlus代码生成器
  * @Author: YangAnsheng
- * @Date: 2019/2/14 12:29
+ * @Date: 2019/9/22 12:29
  */
 
 public class CodeGeneration {
 
     public static void main(String[] args) {
-        mybatisPlusCodeGeneratro(new String[]{"ums_favorites"});
+        mybatisPlusCodeGeneratro(new String[]{"pms_course_product"});
     }
 
     /**
