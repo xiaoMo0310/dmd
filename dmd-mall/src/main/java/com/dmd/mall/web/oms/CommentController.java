@@ -35,7 +35,10 @@ public class CommentController {
     @ApiOperation("查询全部我的动态下评论")
     @RequestMapping(value = "/selectCommentAll",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<CommentBean>> queryCommentAll(@RequestParam Long forDynamicId) {
+    public CommonResult<List<CommentBean>> queryCommentAll(
+                                                            //动态ID
+                                                            @RequestParam Long forDynamicId
+    ) {
         List<CommentBean> CommentList = commentService.queryCommentAll(forDynamicId);
         return CommonResult.success(CommentList);
     }
