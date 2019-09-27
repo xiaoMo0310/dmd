@@ -4,6 +4,7 @@ import com.dmd.base.result.CommonResult;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,11 +14,12 @@ import java.io.IOException;
 /**
  * Created by macro on 2018/8/6.
  */
+@Component("goAuthenticationFailureHandler")
 public class GoAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         response.setHeader("Content-Type", "application/json;charset=utf-8");
-        response.getWriter().print(JSONUtil.parse(CommonResult.failed("登录失败：" + exception.getMessage())));
+        response.getWriter().print(JSONUtil.parse(CommonResult.failed("登录失败："+exception.getMessage())));
         response.getWriter().flush();
     }
 }

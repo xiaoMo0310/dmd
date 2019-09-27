@@ -1,15 +1,22 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.domain.MemberDetails;
 import com.dmd.mall.mapper.UmsMemberLevelMapper;
 import com.dmd.mall.mapper.UmsMemberMapper;
 import com.dmd.mall.model.UmsMember;
 import com.dmd.mall.model.UmsMemberExample;
 import com.dmd.mall.model.UmsMemberLevel;
 import com.dmd.mall.model.UmsMemberLevelExample;
+import com.dmd.mall.model.domain.MemberDetails;
+import com.dmd.mall.security.redis.ValidateCodeRepository;
+import com.dmd.mall.security.sms.ValidateCode;
+import com.dmd.mall.security.sms.ValidateCodeException;
 import com.dmd.mall.service.RedisService;
 import com.dmd.mall.service.UmsMemberService;
+import com.dmd.mall.util.CodeValidateUtil;
+import com.dmd.mall.util.MailUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -19,7 +26,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.ServletWebRequest;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -30,8 +40,11 @@ import java.util.Random;
  */
 @Service
 public class UmsMemberServiceImpl implements UmsMemberService {
+    private Logger logger= LoggerFactory.getLogger(getClass());
     @Autowired
     private UmsMemberMapper memberMapper;
+    @Autowired
+    private ValidateCodeRepository validateCodeRepository;
     @Autowired
     private UmsMemberLevelMapper memberLevelMapper;
     @Autowired
@@ -42,6 +55,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     private String REDIS_KEY_PREFIX_AUTH_CODE;
     @Value("${redis.key.expire.authCode}")
     private Long AUTH_CODE_EXPIRE_SECONDS;
+    private static final String SESSION_KEY="smsCode";
 
     @Override
     public UmsMember getByUsername(String username) {
@@ -60,10 +74,13 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
-    public CommonResult register(String username, String password, String telephone, String authCode) {
+    public CommonResult register(String username, String password, String telephone, String authCode, HttpServletRequest request) {
         //验证验证码
-        if (!verifyAuthCode(authCode, telephone)) {
-            return CommonResult.failed("验证码错误");
+        ValidateCode validateCode=validateCodeRepository.get(new ServletWebRequest(request));
+        try {
+            CodeValidateUtil.vailDateCode(validateCode,authCode);
+        }catch (ValidateCodeException e){
+            return CommonResult.failed(e.getMessage());
         }
         //查询是否已有该用户
         UmsMemberExample example = new UmsMemberExample();
@@ -93,20 +110,31 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
-    public CommonResult generateAuthCode(String telephone) {
+    public CommonResult generateAuthCode(String telephone,HttpServletRequest request) {
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
             sb.append(random.nextInt(10));
         }
-        //验证码绑定手机号并存储到redis
-        redisService.set(REDIS_KEY_PREFIX_AUTH_CODE + telephone, sb.toString());
-        redisService.expire(REDIS_KEY_PREFIX_AUTH_CODE + telephone, AUTH_CODE_EXPIRE_SECONDS);
-        return CommonResult.success(sb.toString(), "获取验证码成功");
+        //验证码绑定设备id并存储到redis
+        ValidateCode validateCode=new ValidateCode(sb.toString(),AUTH_CODE_EXPIRE_SECONDS);
+        validateCodeRepository.save(new ServletWebRequest(request),validateCode);
+        if (telephone.contains("@")){
+            try {
+                MailUtil.send_mail(telephone,sb.toString());
+            } catch (MessagingException e) {
+                logger.info(e.getMessage()+"发送邮件失败");
+                return CommonResult.failed( "验证码发送失败"+e);
+            }
+        }else {
+            //发送手机验证码的逻辑
+            logger.info("这里写手机验证码发送的逻辑");
+        }
+        return CommonResult.success(sb.toString(), "获取验证码成功");//在真实环境下需要把验证码的数据改成null不该也行可以让app再证一次
     }
 
     @Override
-    public CommonResult updatePassword(String telephone, String password, String authCode) {
+    public CommonResult updatePassword(String telephone, String password, String authCode,HttpServletRequest request) {
         UmsMemberExample example = new UmsMemberExample();
         example.createCriteria().andPhoneEqualTo(telephone);
         List<UmsMember> memberList = memberMapper.selectByExample(example);
@@ -114,8 +142,11 @@ public class UmsMemberServiceImpl implements UmsMemberService {
             return CommonResult.failed("该账号不存在");
         }
         //验证验证码
-        if (!verifyAuthCode(authCode, telephone)) {
-            return CommonResult.failed("验证码错误");
+        ValidateCode validateCode=validateCodeRepository.get(new ServletWebRequest(request));
+        try {
+            CodeValidateUtil.vailDateCode(validateCode,authCode);
+        }catch (ValidateCodeException e){
+            return CommonResult.failed(e.getMessage());
         }
         UmsMember umsMember = memberList.get(0);
         umsMember.setPassword(passwordEncoder.encode(password));
@@ -139,13 +170,27 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         memberMapper.updateByPrimaryKeySelective(record);
     }
 
-    //对输入的验证码进行校验
-    private boolean verifyAuthCode(String authCode, String telephone) {
-        if (StringUtils.isEmpty(authCode)) {
-            return false;
+
+    //短信登陆时如果没有注册进行注册的方法
+    @Override
+    public UmsMember register(String username) {
+        //没有该用户进行添加操作
+        UmsMember umsMember = new UmsMember();
+        umsMember.setUsername(username);
+        umsMember.setPassword(passwordEncoder.encode("123456"));
+        umsMember.setCreateTime(new Date());
+        umsMember.setStatus(1);
+        //获取默认会员等级并设置
+        UmsMemberLevelExample levelExample = new UmsMemberLevelExample();
+        levelExample.createCriteria().andDefaultStatusEqualTo(1);
+        List<UmsMemberLevel> memberLevelList = memberLevelMapper.selectByExample(levelExample);
+        if (!CollectionUtils.isEmpty(memberLevelList)) {
+            umsMember.setMemberLevelId(memberLevelList.get(0).getId());
         }
-        String realAuthCode = redisService.get(REDIS_KEY_PREFIX_AUTH_CODE + telephone);
-        return authCode.equals(realAuthCode);
+        memberMapper.insert(umsMember);
+        umsMember.setPassword(null);
+        CommonResult.success(null, "登陆成功");
+        return umsMember;
     }
 
 }

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 会员登录注册管理Controller
  * Created by macro on 2018/8/3.
@@ -28,23 +30,25 @@ public class UmsMemberController {
     public CommonResult register(@RequestParam String username,
                                  @RequestParam String password,
                                  @RequestParam String telephone,
-                                 @RequestParam String authCode) {
-        return memberService.register(username, password, telephone, authCode);
+                                 @RequestParam String authCode,
+                                 HttpServletRequest request) {
+        return memberService.register(username, password, telephone, authCode,request);
     }
 
     @ApiOperation("获取验证码")
     @RequestMapping(value = "/getAuthCode", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult getAuthCode(@RequestParam String telephone) {
-        return memberService.generateAuthCode(telephone);
+    public CommonResult getAuthCode(@RequestParam String mobile, HttpServletRequest request) {
+        return memberService.generateAuthCode(mobile,request);
     }
 
-    @ApiOperation("修改密码")
+    @ApiOperation("修改密码")//这里先不测试
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult updatePassword(@RequestParam String telephone,
                                        @RequestParam String password,
-                                       @RequestParam String authCode) {
-        return memberService.updatePassword(telephone, password, authCode);
+                                       @RequestParam String authCode,
+                                       HttpServletRequest request) {
+        return memberService.updatePassword(telephone, password, authCode,request);
     }
 }

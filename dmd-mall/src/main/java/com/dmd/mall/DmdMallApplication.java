@@ -11,7 +11,6 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
 @EnableScheduling
-@EnableWebSecurity
 @EnableSwagger2
 @EnableTransactionManagement
 @MapperScan("com.dmd.mall.mapper")
