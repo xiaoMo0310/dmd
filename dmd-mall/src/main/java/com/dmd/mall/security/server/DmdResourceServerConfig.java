@@ -46,8 +46,8 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .permitAll()
                 .antMatchers(
                         "/sso/*",//登录注册
-                        "/oauth/*",
-                        "/qqLogin/*"
+
+                        "/**"
 //                        "/home/**",//首页接口
 //                        "/login"
                 )
