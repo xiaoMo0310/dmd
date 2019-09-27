@@ -12,8 +12,13 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableAuthorizationServer
@@ -23,17 +28,24 @@ public class DmdAuthorizationServerConfig extends AuthorizationServerConfigurerA
     private MyUserDetailsService myUserDetailsService;
     @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
+    @Autowired
+    private TokenEnhancer jwtTokenEnhancer;
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.accessTokenConverter(jwtAccessTokenConverter)
-                .userDetailsService(myUserDetailsService);
+        endpoints.userDetailsService(myUserDetailsService);
+        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+        List<TokenEnhancer> enhancers = new ArrayList<>();
+        enhancers.add(jwtTokenEnhancer);
+        enhancers.add(jwtAccessTokenConverter);
+        enhancerChain.setTokenEnhancers(enhancers);
+        endpoints.tokenEnhancer(enhancerChain).accessTokenConverter(jwtAccessTokenConverter);
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory().withClient("dmd").secret("$2a$10$z6SpAlsdHhTRswyFa/R3mucOk8Dgp76TxdjITmR7pPUDAFeVx.4wm")
-                .accessTokenValiditySeconds(600)
+                .accessTokenValiditySeconds(90000)
                 .refreshTokenValiditySeconds(999999999)
                 .authorizedGrantTypes("refresh_token","password","authorization_code")
                 .scopes("all");

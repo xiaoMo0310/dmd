@@ -568,7 +568,8 @@ public enum ErrorCodeEnum {
 	/**
 	 * Tpc 100500015 error code enum.
 	 */
-	TPC100500015(10050015, "消息PID不能为空, messageKey=%s"),;
+	TPC100500015(10050015, "消息PID不能为空, messageKey=%s"),
+	TPC100500016(10050016,"该手机号已经绑定其他账号，请更换手机号");
 	private int code;
 	private String msg;
 

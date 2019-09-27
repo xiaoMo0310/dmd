@@ -1,5 +1,7 @@
 package com.dmd.base.result;
 
+import com.dmd.base.enums.ErrorCodeEnum;
+
 /**
  * 通用返回对象
  * Created by macro on 2019/4/19.
@@ -43,6 +45,13 @@ public class CommonResult<T> {
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode) {
         return new CommonResult<T>(errorCode.getCode(), errorCode.getMessage(), null);
+    }
+    /**
+     * 失败返回结果
+     * @param resultCode 错误码
+     */
+    public static <T> CommonResult<T> failed(ErrorCodeEnum resultCode) {
+        return new CommonResult<T>(resultCode.code(), resultCode.msg(), null);
     }
 
     /**

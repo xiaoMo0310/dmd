@@ -34,7 +34,7 @@ redis:
       authCode: "portal:authCode:"
       orderId: "portal:orderId:"
     expire:
-      authCode: 90 # 验证码超期时间
+      authCode: 90000 # 验证码超期时间
 
 dmd:
   enableSqlLogInterceptor: false

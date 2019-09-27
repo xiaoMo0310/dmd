@@ -1,5 +1,6 @@
 package com.dmd.mall.security;
 
+import com.dmd.mall.security.server.TokenJwtEnhancer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -31,5 +32,9 @@ public class TokenStoreConfig {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey("dmd");
         return converter;
+    }
+    @Bean
+    public TokenEnhancer jwtTokenEnhancer(){
+        return new TokenJwtEnhancer();
     }
 }
