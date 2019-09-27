@@ -41,20 +41,20 @@ public class CommentServiceImpl implements CommentService{
         return list;*/
         //所有留言新增时父id为0.所有的回复对应的都是他儿子，两层分级
         Integer id = 0;
-        List<CommentBean> node = getNode(Long.valueOf(id));
+        List<CommentBean> node = getNode(Long.valueOf(id),forDynamicId);
         return node;
 
     }
 
 
 
-    private List<CommentBean> getNode(Long forPid) {
-        List<CommentBean> findCommentListByPId = commentMapper.findCommentListById(forPid);
+    private List<CommentBean> getNode(Long forPid,Long forDynamicId) {
+        List<CommentBean> findCommentListByPId = commentMapper.findCommentListById(forPid,forDynamicId);
         System.out.println(findCommentListByPId);
         for (CommentBean commentBean : findCommentListByPId) {
             Long id2 = commentBean.getCommentId();
             System.out.println(id2);
-            List<CommentBean> nodes = getNode(id2);
+            List<CommentBean> nodes = getNode(id2,forDynamicId);
             commentBean.setChildren(nodes) ;
         }
         return findCommentListByPId;

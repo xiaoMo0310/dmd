@@ -23,7 +23,7 @@
         SELECT commentId FROM dmd_dynamic_comment WHERE lw_for_dynamic_id = #{forDynamicId}
     </select>
 
-    <select id="findCommentListById" parameterType="java.lang.Long" resultMap="commentMap">
+    <select id="findCommentListById" parameterType="map" resultMap="commentMap">
         SELECT
         commentId,
         lw_name,
@@ -37,7 +37,7 @@
         lw_userid,
         lw_for_pid
         FROM dmd_dynamic_comment
-        WHERE lw_for_pid = #{forPid} AND delflag = 0
+        WHERE lw_for_pid = #{forPid} AND delflag = 0 AND lw_for_dynamic_id = #{forDynamicId}
     </select>
 
     <insert id="addComment" parameterType="com.dmd.mall.model.domain.CommentBean">

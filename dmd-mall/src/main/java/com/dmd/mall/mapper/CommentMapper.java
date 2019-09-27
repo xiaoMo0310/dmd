@@ -17,7 +17,7 @@ import java.util.List;
 public interface CommentMapper {
     List<Long> queryCommentById(Long forDynamicId);
 
-    List<CommentBean> findCommentListById(Long forPid);
+    List<CommentBean> findCommentListById(@Param("forPid")Long forPid,@Param("forDynamicId") Long forDynamicId);
 
     int addComment(CommentBean commentBean);
 

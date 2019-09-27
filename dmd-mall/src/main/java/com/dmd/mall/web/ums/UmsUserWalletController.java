@@ -87,9 +87,9 @@ public class UmsUserWalletController extends BaseController {
     @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery")
     public Wrapper<UmsWalletVo> queryWalletMessage(@RequestBody BaseQuery baseQuery) {
         UmsWalletVo umsWalletVo = umsUserWalletService.queryWalletMessage(getLoginAuthDto(), baseQuery);
-        /*if(umsWalletVo == null){
+        if(umsWalletVo == null){
             throw new UmsBizException(ErrorCodeEnum.GL9999404);
-        }*/
+        }
         return WrapMapper.ok(umsWalletVo);
     }
 }

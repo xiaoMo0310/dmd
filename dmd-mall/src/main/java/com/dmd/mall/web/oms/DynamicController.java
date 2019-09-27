@@ -153,7 +153,7 @@ public class DynamicController {
     }
 
     /**
-     * 动态删除
+     * 动态删除(逻辑删除)
      * @param 动态id
      * @return
      */
