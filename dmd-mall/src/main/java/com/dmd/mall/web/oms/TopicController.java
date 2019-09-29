@@ -79,7 +79,7 @@ public class TopicController {
     }
 
     /**
-     * 话题下最新动态查询，按照点赞数排序，点赞数一样按照时间先后排序
+     * 话题下最新动态查询，按照点赞数排序,点赞数一样的按照时间先后排序
      * @param 话题id
      * @return
      */
@@ -92,5 +92,6 @@ public class TopicController {
         List<DynamicBean> dynamicList = dynamicService.selectTopicByDynamicHeat(id);
         return CommonResult.success(dynamicList);
     }
+
 
 }
