@@ -36,7 +36,12 @@ public interface UmsMemberService {
      * 修改密码
      */
     @Transactional
-    CommonResult updatePassword(String telephone, String password, String authCode,HttpServletRequest request);
+    CommonResult updatePassword(String telephone, String oldPassword,String newPassword,String confirmPassword);
+    /**
+     * 修改密码
+     */
+    @Transactional
+    CommonResult findPassword(String telephone, String password,String confirmPassword, String authCode,HttpServletRequest request);
 
     /**
      * 获取当前登录会员
@@ -47,7 +52,14 @@ public interface UmsMemberService {
      * 根据会员id修改会员积分
      */
     void updateIntegration(Long id, Integer integration);
-
+    /**
+     * 在手机号或邮箱登陆时，没有账号的话注册账号用的
+     * */
     @Transactional
     UmsMember register(String username);
+
+    /**
+     * 修改个人资料
+     * */
+    CommonResult updatePersonalData(UmsMember umsMember);
 }

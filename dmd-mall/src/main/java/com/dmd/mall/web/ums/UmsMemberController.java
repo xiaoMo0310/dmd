@@ -41,14 +41,14 @@ public class UmsMemberController {
     public CommonResult getAuthCode(@RequestParam String mobile, HttpServletRequest request) {
         return memberService.generateAuthCode(mobile,request);
     }
-
-    @ApiOperation("修改密码")//这里先不测试
-    @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
+    @ApiOperation("找回密码")
+    @RequestMapping(value = "/findPassword", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updatePassword(@RequestParam String telephone,
+    public CommonResult findPassword(@RequestParam String telephone,
                                        @RequestParam String password,
+                                       @RequestParam String confirmPassword,
                                        @RequestParam String authCode,
                                        HttpServletRequest request) {
-        return memberService.updatePassword(telephone, password, authCode,request);
+        return memberService.findPassword(telephone, password,confirmPassword, authCode,request);
     }
 }

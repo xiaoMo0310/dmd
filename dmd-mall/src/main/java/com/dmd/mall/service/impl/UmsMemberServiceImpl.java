@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.mapper.UmsMemberLevelMapper;
 import com.dmd.mall.mapper.UmsMemberMapper;
@@ -15,6 +16,7 @@ import com.dmd.mall.service.RedisService;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.CodeValidateUtil;
 import com.dmd.mall.util.MailUtil;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,24 +136,20 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
-    public CommonResult updatePassword(String telephone, String password, String authCode,HttpServletRequest request) {
-        UmsMemberExample example = new UmsMemberExample();
-        example.createCriteria().andPhoneEqualTo(telephone);
-        List<UmsMember> memberList = memberMapper.selectByExample(example);
-        if (CollectionUtils.isEmpty(memberList)) {
-            return CommonResult.failed("该账号不存在");
-        }
+    public CommonResult findPassword(String telephone, String password,String confirmPassword, String authCode,HttpServletRequest request) {
         //验证验证码
-        ValidateCode validateCode=validateCodeRepository.get(new ServletWebRequest(request));
         try {
+            ValidateCode validateCode=validateCodeRepository.get(new ServletWebRequest(request));
             CodeValidateUtil.vailDateCode(validateCode,authCode);
         }catch (ValidateCodeException e){
             return CommonResult.failed(e.getMessage());
         }
-        UmsMember umsMember = memberList.get(0);
-        umsMember.setPassword(passwordEncoder.encode(password));
-        memberMapper.updateByPrimaryKeySelective(umsMember);
-        return CommonResult.success(null, "密码修改成功");
+        return verification(telephone,null,password,confirmPassword);
+    }
+
+    @Override
+    public CommonResult updatePassword(String telephone, String oldPassword, String newPassword,String confirmPassword) {
+        return verification(telephone,oldPassword,newPassword,confirmPassword);
     }
 
     @Override
@@ -193,4 +191,43 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         return umsMember;
     }
 
+    private CommonResult verification(String telephone,String oldPassword,String newPassword,String confirmPassword){
+        UmsMemberExample example = new UmsMemberExample();
+        example.createCriteria().andUsernameEqualTo(telephone);
+        List<UmsMember> memberList = memberMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(memberList)) {
+            return CommonResult.failed("该账号不存在");
+        }
+        if (!newPassword.equals(confirmPassword)){
+            return CommonResult.failed("两次输入的密码不一致");
+        }
+        UmsMember umsMember = memberList.get(0);
+        if (oldPassword!=null&&!passwordEncoder.matches(oldPassword,umsMember.getPassword())){
+            return CommonResult.failed("原密码不正确");
+        }
+        umsMember.setPassword(passwordEncoder.encode(newPassword));
+        memberMapper.updateByPrimaryKeySelective(umsMember);
+        return CommonResult.success(null, "密码修改成功");
+    }
+    //更新个人信息
+    @Override
+    public CommonResult updatePersonalData(UmsMember umsMember ){
+        UmsMemberExample example = new UmsMemberExample();
+        example.createCriteria().andUsernameEqualTo(umsMember.getUsername());
+        List<UmsMember> memberList = memberMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(memberList)) {
+            return CommonResult.failed("该账号不存在");
+        }
+        try {
+            memberMapper.updateByExampleSelective(umsMember,example);
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            if (e.getCause().getMessage().contains("Duplicate entry '13720096444' for key 'idx_phone")){
+                return CommonResult.failed(ErrorCodeEnum.getEnum(10050016));
+            }else {
+                return CommonResult.failed("更新个人信息时候的未知异常，请联系后台开发人员"+e.getMessage());
+            }
+        }
+        return CommonResult.success(umsMember);
+    }
 }
