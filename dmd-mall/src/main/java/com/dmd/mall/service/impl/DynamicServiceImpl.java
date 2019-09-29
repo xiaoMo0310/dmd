@@ -74,4 +74,19 @@ public class DynamicServiceImpl implements DynamicService{
         return dynamicMapper.updateDynamicDelflag(id);
     }
 
+    @Override
+    public List<DynamicBean> queryTopicByDynamicTime(Integer id) {
+        return dynamicMapper.queryTopicByDynamicTime(id);
+    }
+
+    @Override
+    public List<DynamicBean> selectTopicByDynamicHeat(Integer id) {
+        return dynamicMapper.selectTopicByDynamicHeat(id);
+    }
+
+    @Override
+    public List<DynamicBean> queryDynamicById(Long id) {
+        return dynamicMapper.queryDynamicById(id);
+    }
+
 }

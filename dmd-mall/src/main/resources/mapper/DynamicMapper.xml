@@ -52,4 +52,23 @@
     <update id="updateDynamicDelflag" parameterType="java.lang.Long">
         UPDATE dmd_dynamic SET delflag = 1 WHERE r_id = #{value}
     </update>
+
+    <select id="queryTopicByDynamicTime" parameterType="int" resultMap="dynamicMap">
+        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid  = dt.id WHERE  dy.r_topicid = #{value} AND delflag = 0 ORDER BY r_createtime DESC
+    </select>
+
+    <select id="selectTopicByDynamicHeat" parameterType="int" resultMap="dynamicMap">
+        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid  = dt.id WHERE  dy.r_topicid = #{value} AND delflag = 0 ORDER BY r_praise DESC , r_createtime DESC
+    </select>
+
+
+    <select id="queryDynamicById" resultMap="dynamicMap" parameterType="java.lang.Long">
+        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid  = dt.id WHERE  dy.r_id = #{value} AND delflag = 0
+    </select>
 </mapper>

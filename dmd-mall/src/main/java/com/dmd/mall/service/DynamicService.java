@@ -29,4 +29,10 @@ public interface DynamicService {
     int updateDynamicrShare(Long id);
 
     int updateDynamicDelflag(Long id);
+
+    List<DynamicBean> queryTopicByDynamicTime(Integer id);
+
+    List<DynamicBean> selectTopicByDynamicHeat(Integer id);
+
+    List<DynamicBean> queryDynamicById(Long id);
 }

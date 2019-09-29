@@ -3,6 +3,7 @@ package com.dmd.mall.web.oms;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.TopicBean;
+import com.dmd.mall.service.DynamicService;
 import com.dmd.mall.service.TopicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,9 @@ public class TopicController {
 
     @Autowired
     private TopicService topicService;
+
+    @Autowired
+    private DynamicService dynamicService;
 
 
     /**
@@ -57,4 +61,36 @@ public class TopicController {
         List<TopicBean> topicList = topicService.queryTopicById(id);
         return CommonResult.success(topicList);
     }
+
+
+    /**
+     * 话题下最新动态查询，按照发布时间排序
+     * @param 话题id
+     * @return
+     */
+    @ApiOperation("话题下最新动态查询")
+    @RequestMapping(value = "/selectTopicByDynamicTime",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<DynamicBean>> queryTopicByDynamicTime( //话题ID
+                                                                    @RequestParam Integer id
+    ){
+        List<DynamicBean> dynamicList = dynamicService.queryTopicByDynamicTime(id);
+        return CommonResult.success(dynamicList);
+    }
+
+    /**
+     * 话题下最新动态查询，按照点赞数排序，点赞数一样按照时间先后排序
+     * @param 话题id
+     * @return
+     */
+    @ApiOperation("话题下最热动态查询")
+    @RequestMapping(value = "/selectTopicByDynamicHeat",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<DynamicBean>> selectTopicByDynamicHeat( //话题ID
+                                                                    @RequestParam Integer id
+    ){
+        List<DynamicBean> dynamicList = dynamicService.selectTopicByDynamicHeat(id);
+        return CommonResult.success(dynamicList);
+    }
+
 }
