@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.PmsShopProductMapper">
+    <select id="getShopProduct" resultType="com.dmd.mall.model.PmsProduct">
+        select id,sale,original_price,name,pic
+        from pms_product
+        where delete_status=0 and publish_status=1
+        <if test="minPrice!=null">
+            and original_price &gt;= #{minPrice}
+        </if>
+        <if test="maxPrice!=null">
+            and original_price &lt;= #{maxPrice}
+        </if>
+        <if test="type!=null">
+            and product_category_id=#{type}
+        </if>
+        <if test="sortType!=null">
+            order by #{sortType}
+        </if>
+    </select>
+
+    <select id="getShopAdvertise" resultType="com.dmd.mall.model.SmsHomeAdvertise">
+        select id,pic,url
+        from sms_home_advertise
+        where start_time&gt;#{startTime} and end_time&lt;#{endTime}
+    </select>
+    <select id="shopProductDetails" resultMap="pmsShopDetails">
+        select (select count(1) from pms_comment pc where product_id=pp.id) comment_count,pp.id,sale,original_price,shop_id,detail_mobile_html,description,stock,ppa.name,ppa.input_list,album_pics,ppa.id ppa_id
+        from pms_product pp
+        inner join pms_product_attribute_category ppac on ppac.id=pp.product_attribute_category_id
+        inner join pms_product_attribute ppa on ppa.product_attribute_category_id=ppac.id
+        where delete_status=0 and publish_status=1 and pp.id=#{id}
+    </select>
+    <resultMap id="pmsShopDetails" type="com.dmd.mall.model.domain.PmsShopDetails">
+        <id column="id" property="id"/>
+        <collection property="productAttributes" javaType="java.util.ArrayList" ofType="com.dmd.mall.model.PmsProductAttribute" >
+            <id column="ppa_id" property="id"/>
+        </collection>
+    </resultMap>
+    <select id="shopComment" resultType="com.dmd.mall.model.PmsComment">
+        select member_ip,product_attribute,member_icon,pics,content,read_count,id
+        from pms_comment where product_id=#{id}
+    </select>
+</mapper>

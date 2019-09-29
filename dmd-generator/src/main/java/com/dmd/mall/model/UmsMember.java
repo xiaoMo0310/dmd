@@ -61,6 +61,16 @@ public class UmsMember implements Serializable {
     @ApiModelProperty(value = "历史积分数量")
     private Integer historyIntegration;
 
+    @ApiModelProperty(value = "身份证")
+    private String identityCard;
+
+    @ApiModelProperty(value = "身高")
+    private String stature;
+
+    @ApiModelProperty(value = "体重")
+    private String weight;
+
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -215,6 +225,30 @@ public class UmsMember implements Serializable {
         this.historyIntegration = historyIntegration;
     }
 
+    public String getIdentityCard() {
+        return identityCard;
+    }
+
+    public void setIdentityCard(String identityCard) {
+        this.identityCard = identityCard;
+    }
+
+    public String getStature() {
+        return stature;
+    }
+
+    public void setStature(String stature) {
+        this.stature = stature;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -240,6 +274,9 @@ public class UmsMember implements Serializable {
         sb.append(", growth=").append(growth);
         sb.append(", luckeyCount=").append(luckeyCount);
         sb.append(", historyIntegration=").append(historyIntegration);
+        sb.append(", identityCard=").append(identityCard);
+        sb.append(", stature=").append(stature);
+        sb.append(", weight=").append(weight);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

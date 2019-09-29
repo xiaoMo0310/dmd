@@ -1,12 +1,13 @@
 package com.dmd.mall.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-
 public class PmsProduct implements Serializable {
+
     private Long id;
 
     private Long brandId;
