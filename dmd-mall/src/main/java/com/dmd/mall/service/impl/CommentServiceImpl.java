@@ -11,6 +11,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import sun.net.util.IPAddressUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,11 +73,18 @@ public class CommentServiceImpl implements CommentService{
         //评论类型为评论0=评论  1=回复
         commentBean.setType(0);
         //评论ip地址为本地地址
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+       /* ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
         //获取ip地址是封装好的一个类
-        String ip = IpaddressUtils.getIp(request);
-        commentBean.setIpAddress(ip);
+        String ip = IpaddressUtils.getIp(request);*/
+        try {
+            InetAddress ia = InetAddress.getLocalHost();
+            String hostAddress = ia.getHostAddress();
+            commentBean.setIpAddress(hostAddress);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
         //评论状态默认正常 状态（0=正常 1=待审核 2=禁止）
         commentBean.setStatus(0);
         //逻辑删除默认为否
@@ -94,11 +103,17 @@ public class CommentServiceImpl implements CommentService{
         //评论类型为评论0=评论  1=回复
         commentBean.setType(1);
         //评论ip地址为本地地址
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        /*ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
         //获取ip地址是封装好的一个类
-        String ip = IpaddressUtils.getIp(request);
-        commentBean.setIpAddress(ip);
+        String ip = IpaddressUtils.getIp(request);*/
+        try {
+            InetAddress ia = InetAddress.getLocalHost();
+            String hostAddress = ia.getHostAddress();
+            commentBean.setIpAddress(hostAddress);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         //回复状态默认正常 状态（0=正常 1=待审核 2=禁止）
         commentBean.setStatus(0);
         //逻辑删除默认为否
