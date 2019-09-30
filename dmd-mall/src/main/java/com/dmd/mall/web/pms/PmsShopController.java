@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/shop")
-@Api(value = "商场", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@Api(value = "商场", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,description = "商场",tags = "PmsShopController")
 public class PmsShopController {
     @Autowired
     private PmsShopService pmsShopService;
@@ -36,7 +36,7 @@ public class PmsShopController {
         Map<String,Object> map = pmsShopService.shopProductDetails(mapParam);
         return CommonResult.success(map);
     }
-    @ApiOperation("商品详情和商品评论")
+    @ApiOperation("全部商品评论")
     @RequestMapping(value = "/shopProductComment", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult<PageInfo<PmsComment>> shopProductComment(@RequestBody Map<String,Object> mapParam) {

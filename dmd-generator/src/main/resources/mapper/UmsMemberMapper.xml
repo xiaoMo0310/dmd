@@ -6,7 +6,7 @@
     <result column="member_level_id" jdbcType="BIGINT" property="memberLevelId" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickname" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -81,7 +81,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, member_level_id, username, password, nickname, phone, status, create_time, icon, 
+    id, member_level_id, username, password, nick_name, phone, status, create_time, icon,
     gender, birthday, city, job, personalized_signature, source_type, integration, growth, 
     luckey_count, history_integration
   </sql>
@@ -120,7 +120,7 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into ums_member (member_level_id, username, password, 
-      nickname, phone, status, 
+      nick_name, phone, status,
       create_time, icon, gender, 
       birthday, city, job, personalized_signature, 
       source_type, integration, growth, 
@@ -148,7 +148,7 @@
         password,
       </if>
       <if test="nickname != null">
-        nickname,
+        nick_name,
       </if>
       <if test="phone != null">
         phone,
@@ -272,7 +272,7 @@
         password = #{record.password,jdbcType=VARCHAR},
       </if>
       <if test="record.nickname != null">
-        nickname = #{record.nickname,jdbcType=VARCHAR},
+        nick_name = #{record.nickname,jdbcType=VARCHAR},
       </if>
       <if test="record.phone != null">
         phone = #{record.phone,jdbcType=VARCHAR},
@@ -336,7 +336,7 @@
       member_level_id = #{record.memberLevelId,jdbcType=BIGINT},
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      nickname = #{record.nickname,jdbcType=VARCHAR},
+      nick_name = #{record.nickname,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -368,7 +368,7 @@
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="nickname != null">
-        nickname = #{nickname,jdbcType=VARCHAR},
+        nick_name = #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
@@ -420,7 +420,7 @@
     set member_level_id = #{memberLevelId,jdbcType=BIGINT},
       username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
+      nick_name = #{nickname,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

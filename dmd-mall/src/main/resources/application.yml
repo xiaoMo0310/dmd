@@ -5,6 +5,8 @@ server:
     remote-ip-header: x-forwarded-for
   use-forward-headers: true
 spring:
+  jackson:
+    default-property-inclusion: NON_NULL
   application:
     name: @pom.artifactId@
   profiles:

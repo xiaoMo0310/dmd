@@ -27,7 +27,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/pms")
-@Api(value = "课程产品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@Api(value = "课程产品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,description = "课程产品",tags = "PmsCourseProductController")
 public class PmsCourseProductController extends BaseController {
 
     @Autowired
