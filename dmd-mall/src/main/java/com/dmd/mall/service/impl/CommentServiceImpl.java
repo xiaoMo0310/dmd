@@ -2,8 +2,10 @@ package com.dmd.mall.service.impl;
 
 import com.dmd.IpaddressUtils;
 import com.dmd.mall.mapper.CommentMapper;
+import com.dmd.mall.mapper.DynamicMapper;
 import com.dmd.mall.model.domain.CommentBean;
 import com.dmd.mall.service.CommentService;
+import com.dmd.mall.service.DynamicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -29,6 +31,9 @@ public class CommentServiceImpl implements CommentService{
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private DynamicMapper dynamicMapper;
 
     @Override
     public List<CommentBean> queryCommentAll(Long forDynamicId) {
@@ -89,6 +94,8 @@ public class CommentServiceImpl implements CommentService{
         commentBean.setStatus(0);
         //逻辑删除默认为否
         commentBean.setDelflag(0);
+        //发布评论，动态评论数加1
+        dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
         return commentMapper.addComment(commentBean);
     }
 
@@ -118,11 +125,14 @@ public class CommentServiceImpl implements CommentService{
         commentBean.setStatus(0);
         //逻辑删除默认为否
         commentBean.setDelflag(0);
+        dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
         return commentMapper.addComment(commentBean);
     }
 
     @Override
-    public int updateCommentDelflag(Long commentId,Long userId) {
+    public int updateCommentDelflag(Long commentId,Long userId,Long DynamicId) {
+        //相应动态评论数量-1
+        dynamicMapper.reduceCommentNum(DynamicId);
         return commentMapper.updateCommentDelflag(commentId,userId);
     }
 

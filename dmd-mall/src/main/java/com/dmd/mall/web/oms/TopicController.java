@@ -48,6 +48,19 @@ public class TopicController {
         return CommonResult.success(topicList);
     }
 
+    /**
+     * 分页查询话题分类，热度排序
+     * @param userId
+     * @return
+     */
+    @ApiOperation("话题分类查询,按照热度(话题下动态数量)排序")
+    @RequestMapping(value = "/selectTopic",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<TopicBean>> queryTopic() {
+        List<TopicBean> topicList = topicService.queryTopic();
+        return CommonResult.success(topicList);
+    }
+
 
     /**
      * 话题详情查询

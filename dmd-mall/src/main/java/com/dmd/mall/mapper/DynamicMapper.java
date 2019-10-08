@@ -31,4 +31,10 @@ public interface DynamicMapper {
     List<DynamicBean> selectTopicByDynamicHeat(Integer id);
 
     List<DynamicBean> queryDynamicById(Long id);
+
+    int addDynamic(DynamicBean dynamicBean);
+
+    void addrCommentNum(Long forDynamicId);
+
+    void reduceCommentNum(Long dynamicId);
 }

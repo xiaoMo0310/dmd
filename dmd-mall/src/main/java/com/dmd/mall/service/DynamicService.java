@@ -35,4 +35,7 @@ public interface DynamicService {
     List<DynamicBean> selectTopicByDynamicHeat(Integer id);
 
     List<DynamicBean> queryDynamicById(Long id);
+
+    int addDynamic(DynamicBean dynamicBean);
+
 }

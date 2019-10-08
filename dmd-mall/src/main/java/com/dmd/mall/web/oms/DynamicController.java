@@ -7,10 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -179,5 +176,33 @@ public class DynamicController {
     public CommonResult<List<DynamicBean>> queryDynamicById(@RequestParam Long id) {
         List<DynamicBean> dynamicList = dynamicService.queryDynamicById(id);
         return CommonResult.success(dynamicList);
+    }
+
+    /**
+     * 发布动态
+     * @param dynamicBean
+     * @return
+     */
+    @ApiOperation("发布动态")
+    @RequestMapping(value = "/addDynamic",method = RequestMethod.POST)
+    @ResponseBody                                                       //token获取用户id
+    public CommonResult addDynamic(@RequestBody DynamicBean dynamicBean //HttpServletRequest request
+                                                                        //前台传用户id
+                                                                        //String userId
+        ){
+
+        //获取用户id
+        //String token = request.getHeader("token");
+        //token配置类获取用户token
+        //JWTResult result = JWTUtils.checkToken(token);
+        //获取登陆id
+        //Long userId = result.getUserId();
+        //关联用户ID
+        dynamicBean.setUserId((long)(1));
+        int count = dynamicService.addDynamic(dynamicBean);
+        if (count > 0) {
+            return CommonResult.success(count,"发布成功");
+        }
+        return CommonResult.failed("发布失败");
     }
 }

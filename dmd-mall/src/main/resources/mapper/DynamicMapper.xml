@@ -71,4 +71,41 @@
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id WHERE  dy.r_id = #{value} AND delflag = 0
     </select>
+
+    <insert id="addDynamic" parameterType="com.dmd.mall.model.domain.DynamicBean">
+        INSERT INTO dmd_dynamic(
+        r_author,
+        r_head_portrait,
+        r_content,
+        r_createtime,
+        r_address,
+        r_picture,
+        r_praise,
+        r_share_num,
+        r_comment_num,
+        r_userid,
+        r_topicid,
+        delflag)
+        VALUES (
+        #{dynamicAuthor,jdbcType=VARCHAR},
+        #{dynamicHeadPortrait,jdbcType=VARCHAR},
+        #{dynamicContent,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{dynamicAddress,jdbcType=VARCHAR},
+        #{dynamicPicture,jdbcType=VARCHAR},
+        #{dynamicPraise,jdbcType=INTEGER},
+        #{dynamicSharenum,jdbcType=INTEGER},
+        #{dynamicCommentnum,jdbcType=INTEGER},
+        #{userId,jdbcType=BIGINT},
+        #{topicId,jdbcType=INTEGER},
+        #{delflag,jdbcType=INTEGER})
+    </insert>
+
+    <update id="addrCommentNum" parameterType="java.lang.Long">
+         UPDATE dmd_dynamic SET  r_comment_num = r_comment_num + 1 where r_id = #{value}
+    </update>
+
+    <update id="reduceCommentNum" parameterType="java.lang.Long">
+         UPDATE dmd_dynamic SET  r_comment_num = r_comment_num - 1 where r_id = #{value} and r_comment_num > 0
+    </update>
 </mapper>
