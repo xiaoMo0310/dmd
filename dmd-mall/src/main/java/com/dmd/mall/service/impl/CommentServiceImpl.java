@@ -125,6 +125,7 @@ public class CommentServiceImpl implements CommentService{
         commentBean.setStatus(0);
         //逻辑删除默认为否
         commentBean.setDelflag(0);
+        //发布回复，动态评论数加1
         dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
         return commentMapper.addComment(commentBean);
     }

@@ -101,17 +101,20 @@ public class DynamicServiceImpl implements DynamicService{
 
     @Override
     public int addDynamic(DynamicBean dynamicBean) {
-        //判断用户是否选择话题类型,如果选择,话题下动态数量+1
+        //判断用户是否选择话题类型,如果选择,话题下的动态数量+1
         if (dynamicBean.getTopicId() != null){
             topicMapper.addTopicNum(dynamicBean.getTopicId());
         }
+        //发布时间为当前时间
         dynamicBean.setCreateTime(new Date());
+        //点赞数默认为0
         dynamicBean.setDynamicPraise(0);
+        //分享数默认为0
         dynamicBean.setDynamicSharenum(0);
+        //评论数默认为0
         dynamicBean.setDynamicCommentnum(0);
+        //逻辑删除默认为0不删除
         dynamicBean.setDelflag(0);
         return dynamicMapper.addDynamic(dynamicBean);
     }
-
-
 }
