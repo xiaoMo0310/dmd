@@ -69,7 +69,7 @@ public class IntegralGiftsController {
     }
 
     /**
-     * 添加积分好礼
+     * 添加/修改积分好礼
      * @param integralGiftsBean
      * @return
      */
