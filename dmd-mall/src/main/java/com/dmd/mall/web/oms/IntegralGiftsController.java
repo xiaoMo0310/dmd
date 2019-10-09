@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Controller
 @Api(tags = "IntegralGiftsController", description = "首页-积分好礼")
-@RequestMapping("/dynamic")
+@RequestMapping("/integralGifts")
 public class IntegralGiftsController {
 
     @Autowired
@@ -57,13 +57,13 @@ public class IntegralGiftsController {
 
     /**
      * 根据礼品id查询好礼详情
-     * @param 礼品id
+     * @param 礼品 id
      * @return
      */
     @ApiOperation("根据礼品id查询好礼详情")
     @RequestMapping(value = "/selectIntegralGiftsById",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<IntegralGiftsBean>> queryIntegralGiftsById(Long id) {
+    public CommonResult<List<IntegralGiftsBean>> queryIntegralGiftsById(@RequestParam Long id) {
         List<IntegralGiftsBean> integralGiftsList = integralGiftsService.queryIntegralGiftsById(id);
         return CommonResult.success(integralGiftsList);
     }
@@ -73,15 +73,49 @@ public class IntegralGiftsController {
      * @param integralGiftsBean
      * @return
      */
-    @ApiOperation("添加积分好礼")
+    @ApiOperation("添加/修改积分好礼")
     @RequestMapping(value = "/addIntegralGifts",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult addIntegralGifts(@RequestBody IntegralGiftsBean integralGiftsBean) {
-        int count = integralGiftsService.addIntegralGifts(integralGiftsBean);
-        if (count > 0) {
-            return CommonResult.success(count,"添加成功");
+
+        try {
+            //有id修改,无id新增
+            if(integralGiftsBean.getId()==null) {
+
+                int count = integralGiftsService.addIntegralGifts(integralGiftsBean);
+                if (count > 0) {
+                    return CommonResult.success(count,"添加成功");
+                }
+                return CommonResult.failed("添加失败");
+            }
+            else{
+
+                int count = integralGiftsService.updateIntegralGiftsById(integralGiftsBean);
+                if (count > 0) {
+                    return CommonResult.success(count,"修改成功");
+                }
+                return CommonResult.failed("修改失败");
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return CommonResult.failed();
         }
-        return CommonResult.failed("添加失败");
+    }
+
+
+
+    /**
+     * 回显积分好礼
+     * @param 积分礼品 id
+     * @return
+     */
+    @ApiOperation("回显积分好礼")
+    @RequestMapping(value = "/findIntegralGiftsInfoById",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<IntegralGiftsBean> findIntegralGiftsInfoById(@RequestParam Long id){
+        IntegralGiftsBean integralGiftsBean = integralGiftsService.findIntegralGiftsInfoById(id);
+        return CommonResult.success(integralGiftsBean);
     }
 
 }

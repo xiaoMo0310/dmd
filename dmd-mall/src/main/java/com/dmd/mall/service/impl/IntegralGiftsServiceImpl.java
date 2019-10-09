@@ -43,7 +43,19 @@ public class IntegralGiftsServiceImpl implements IntegralGiftsService{
     public int addIntegralGifts(IntegralGiftsBean integralGiftsBean) {
         //添加时间为当前时间
         integralGiftsBean.setCreateTime(new Date());
+        integralGiftsBean.setUpdateTime(null);
         return integralGiftsMapper.addIntegralGifts(integralGiftsBean);
+    }
+
+    @Override
+    public IntegralGiftsBean findIntegralGiftsInfoById(Long id) {
+        return integralGiftsMapper.findIntegralGiftsInfoById(id);
+    }
+
+    @Override
+    public int updateIntegralGiftsById(IntegralGiftsBean integralGiftsBean) {
+        integralGiftsBean.setUpdateTime(new Date());
+        return integralGiftsMapper.updateIntegralGiftsById(integralGiftsBean);
     }
 
 

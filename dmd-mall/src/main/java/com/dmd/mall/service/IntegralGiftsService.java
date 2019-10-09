@@ -19,4 +19,8 @@ public interface IntegralGiftsService {
     List<IntegralGiftsBean> queryIntegralGiftsById(Long id);
 
     int addIntegralGifts(IntegralGiftsBean integralGiftsBean);
+
+    IntegralGiftsBean findIntegralGiftsInfoById(Long id);
+
+    int updateIntegralGiftsById(IntegralGiftsBean integralGiftsBean);
 }

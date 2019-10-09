@@ -22,7 +22,7 @@ import java.util.Date;
 
 @Controller
 @Api(tags = "MyfileController", description = "文件上传")
-@RequestMapping("/upload")
+@RequestMapping("/uploadFile")
 public class MyfileController {
 
     @ApiOperation("视频与图片上传")
