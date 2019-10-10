@@ -2,13 +2,10 @@ package com.dmd.mall.service.impl;
 
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.mapper.UmsMemberLevelMapper;
 import com.dmd.mall.mapper.UmsMemberMapper;
-import com.dmd.mall.model.UmsMember;
-import com.dmd.mall.model.UmsMemberExample;
-import com.dmd.mall.model.UmsMemberLevel;
-import com.dmd.mall.model.UmsMemberLevelExample;
 import com.dmd.mall.model.domain.MemberDetails;
+import com.dmd.mall.model.domain.UmsMember;
+import com.dmd.mall.model.domain.UmsMemberExample;
 import com.dmd.mall.security.redis.ValidateCodeRepository;
 import com.dmd.mall.security.sms.ValidateCode;
 import com.dmd.mall.security.sms.ValidateCodeException;
@@ -16,7 +13,6 @@ import com.dmd.mall.service.RedisService;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.CodeValidateUtil;
 import com.dmd.mall.util.MailUtil;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +23,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.mail.MessagingException;
@@ -47,8 +42,8 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     private UmsMemberMapper memberMapper;
     @Autowired
     private ValidateCodeRepository validateCodeRepository;
-    @Autowired
-    private UmsMemberLevelMapper memberLevelMapper;
+    /*@Autowired
+    private UmsMemberLevelMapper memberLevelMapper;*/
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -100,12 +95,12 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         umsMember.setCreateTime(new Date());
         umsMember.setStatus(1);
         //获取默认会员等级并设置
-        UmsMemberLevelExample levelExample = new UmsMemberLevelExample();
+        /*UmsMemberLevelExample levelExample = new UmsMemberLevelExample();
         levelExample.createCriteria().andDefaultStatusEqualTo(1);
         List<UmsMemberLevel> memberLevelList = memberLevelMapper.selectByExample(levelExample);
         if (!CollectionUtils.isEmpty(memberLevelList)) {
             umsMember.setMemberLevelId(memberLevelList.get(0).getId());
-        }
+        }*/
         memberMapper.insert(umsMember);
         umsMember.setPassword(null);
         return CommonResult.success(null, "注册成功");
@@ -178,13 +173,13 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         umsMember.setPassword(passwordEncoder.encode("123456"));
         umsMember.setCreateTime(new Date());
         umsMember.setStatus(1);
-        //获取默认会员等级并设置
+        /*//获取默认会员等级并设置
         UmsMemberLevelExample levelExample = new UmsMemberLevelExample();
         levelExample.createCriteria().andDefaultStatusEqualTo(1);
         List<UmsMemberLevel> memberLevelList = memberLevelMapper.selectByExample(levelExample);
         if (!CollectionUtils.isEmpty(memberLevelList)) {
             umsMember.setMemberLevelId(memberLevelList.get(0).getId());
-        }
+        }*/
         memberMapper.insert(umsMember);
         umsMember.setPassword(null);
         CommonResult.success(null, "登陆成功");

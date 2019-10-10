@@ -21,4 +21,5 @@ public interface TopicMapper {
     void addTopicNum(Integer topicId);
 
     void reduceTopicNum(Integer topicId);
+
 }

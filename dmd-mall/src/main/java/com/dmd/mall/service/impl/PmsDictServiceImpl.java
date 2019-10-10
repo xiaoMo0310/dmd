@@ -31,10 +31,6 @@ public class PmsDictServiceImpl extends BaseService<PmsDict> implements PmsDictS
     @Autowired
     private PmsDictMapper pmsDictMapper;
 
-    /**
-     * 查询所有的加工类型
-     * @return
-     */
     @Override
     public List<PmsDictVo> findAllProcessingType(String key) {
         PmsDict queryMdcDict = new PmsDict();

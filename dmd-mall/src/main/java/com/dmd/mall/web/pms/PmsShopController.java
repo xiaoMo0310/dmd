@@ -1,8 +1,7 @@
 package com.dmd.mall.web.pms;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.PmsComment;
-import com.dmd.mall.model.PmsProduct;
+import com.dmd.mall.model.domain.PmsComment;
 import com.dmd.mall.service.PmsShopService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController

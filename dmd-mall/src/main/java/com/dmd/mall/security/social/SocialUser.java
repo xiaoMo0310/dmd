@@ -1,6 +1,6 @@
 package com.dmd.mall.security.social;
 
-import com.dmd.mall.model.UmsMember;
+import com.dmd.mall.model.domain.UmsMember;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.social.security.SocialUserDetails;
 

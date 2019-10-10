@@ -1,9 +1,9 @@
 package com.dmd.mall.mapper;
 
-import com.dmd.mall.model.PmsComment;
-import com.dmd.mall.model.PmsProduct;
+import com.dmd.mall.model.domain.PmsComment;
+import com.dmd.mall.model.domain.PmsProduct;
 import com.dmd.mall.model.domain.PmsShopDetails;
-import com.dmd.mall.model.SmsHomeAdvertise;
+import com.dmd.mall.model.domain.SmsHomeAdvertise;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -28,7 +28,6 @@ public class PmsCourseProduct extends BaseEntity {
 
 private static final long serialVersionUID = 1L;
 
-
     @Column(name = "shop_id")
     @ApiModelProperty("店铺id")
     private Long shopId;

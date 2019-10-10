@@ -63,4 +63,11 @@ public class UmsUserWalletServiceImpl extends BaseService<UmsUserWallet> impleme
         umsWalletVo.setUserWalletLogs(new PageInfo<>(umsWalletLogVos));
         return umsWalletVo;
     }
+
+    @Override
+    public void saveWalletMessage(UmsUserWallet umsUserWallet) {
+        //添加钱包的数据
+        Preconditions.checkArgument(umsUserWallet.getUserId() != null, "用户Id不能为空" );
+    }
+
 }

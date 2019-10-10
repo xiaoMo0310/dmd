@@ -1,9 +1,13 @@
 package com.dmd.mall.component;
 
+import com.dmd.RedisKeyUtil;
+import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.result.CommonResult;
+import com.dmd.mall.model.domain.MemberDetails;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by macro on 2018/8/6.
@@ -31,6 +36,8 @@ public class GoAuthenticationSuccessHandler implements AuthenticationSuccessHand
     private ClientDetailsService clientDetailsService;
     @Autowired
     private AuthorizationServerTokenServices authorizationServerTokenServices;
+    @Autowired
+    private RedisTemplate redisTemplate;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String header = request.getHeader("Authorization");
@@ -51,6 +58,14 @@ public class GoAuthenticationSuccessHandler implements AuthenticationSuccessHand
         OAuth2Request oAuth2Request=tokenRequest.createOAuth2Request(clientDetails);
         OAuth2Authentication oAuth2Authentication=new OAuth2Authentication(oAuth2Request,authentication);
         OAuth2AccessToken token=authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
+
+        //保存用户数据
+        MemberDetails principal = (MemberDetails) authentication.getPrincipal();
+        LoginAuthDto loginAuthDto = new LoginAuthDto(principal.getUmsMember().getId(), principal.getUmsMember().getUsername(), principal.getUmsMember().getNickname());
+        // 记录token日志
+        String accessToken = token.getValue();
+        // 存入redis数据库
+        redisTemplate.opsForValue().set(RedisKeyUtil.getAccessTokenKey(accessToken), loginAuthDto, 9000, TimeUnit.SECONDS);
 
         response.setHeader("Content-Type", "application/json;charset=utf-8");
         response.getWriter().print(JSONUtil.parse(CommonResult.success(token,"登录成功")));

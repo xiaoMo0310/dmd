@@ -1,9 +1,9 @@
 package com.dmd.mall.model.domain;
 
-import com.dmd.mall.model.UmsMember;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.social.security.SocialUserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,7 +12,7 @@ import java.util.Collection;
  * 会员详情封装
  * Created by macro on 2018/8/3.
  */
-public class MemberDetails implements UserDetails {
+public class MemberDetails implements UserDetails, SocialUserDetails {
     private UmsMember umsMember;
 
     public MemberDetails(UmsMember umsMember) {
@@ -57,5 +57,10 @@ public class MemberDetails implements UserDetails {
 
     public UmsMember getUmsMember() {
         return umsMember;
+    }
+
+    @Override
+    public String getUserId() {
+        return null;
     }
 }

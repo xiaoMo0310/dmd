@@ -47,7 +47,7 @@ public class LogAspect {
 	/**
 	 * Log annotation.
 	 */
-	@Pointcut("@annotation(com.paascloud.core.annotation.LogAnnotation)")
+	@Pointcut("@annotation(com.dmd.core.annotation.LogAnnotation)")
 	public void logAnnotation() {
 	}
 
@@ -107,9 +107,6 @@ public class LogAspect {
 			operationLogDto.setOs(os);
 			operationLogDto.setBrowser(browser);
 			operationLogDto.setRequestUrl(requestURI);
-
-			operationLogDto.setGroupId(loginUser.getGroupId());
-			operationLogDto.setGroupName(loginUser.getGroupName());
 			operationLogDto.setCreatedTime(new Date());
 			operationLogDto.setCreator(loginUser.getUserName());
 			operationLogDto.setCreatorId(loginUser.getUserId());
@@ -121,7 +118,7 @@ public class LogAspect {
 
 			getControllerMethodDescription(relog, operationLogDto, result, joinPoint);
 			threadLocal.remove();
-			taskExecutor.execute(() -> this.restTemplate.postForObject("http://paascloud-provider-uac/auth/saveLog", operationLogDto, Integer.class));
+			taskExecutor.execute(() -> this.restTemplate.postForObject("http://dmd-mall/sso/saveLog", operationLogDto, Integer.class));
 		} catch (Exception ex) {
 			log.error("获取注解类出现异常={}", ex.getMessage(), ex);
 		}

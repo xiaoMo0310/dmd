@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.PmsComment;
+import com.dmd.mall.model.domain.PmsComment;
 import com.github.pagehelper.PageInfo;
 
 import java.util.Map;

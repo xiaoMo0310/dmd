@@ -41,6 +41,7 @@ public class UmsMemberController {
     public CommonResult getAuthCode(@RequestParam String mobile, HttpServletRequest request) {
         return memberService.generateAuthCode(mobile,request);
     }
+
     @ApiOperation("找回密码")
     @RequestMapping(value = "/findPassword", method = RequestMethod.POST)
     @ResponseBody

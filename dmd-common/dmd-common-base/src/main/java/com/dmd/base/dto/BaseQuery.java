@@ -25,7 +25,7 @@ public class BaseQuery implements Serializable {
 	private Integer pageSize = 10;
 
 	/**
-	 * 排序
+	 * 排序 例:xxx asc, xxx desc
 	 */
 	private String orderBy;
 }

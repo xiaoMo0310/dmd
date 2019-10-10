@@ -5,6 +5,7 @@ import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseService;
 import com.dmd.mall.mapper.PmsCourseProductMapper;
 import com.dmd.mall.model.domain.PmsCourseProduct;
+import com.dmd.mall.model.vo.PmsCourseListVo;
 import com.dmd.mall.model.vo.PmsCourseProductVo;
 import com.dmd.mall.model.vo.PmsDictVo;
 import com.dmd.mall.service.PmsCourseProductService;
@@ -55,20 +56,28 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         List<PmsDictVo> courseTypes = pmsDictService.findAllProcessingType("course_type");
         return courseTypes.stream().map(courseType -> {
                     //根据类型id查询过商品的信息
-                    PageInfo<PmsCourseProductVo> courseProductByType = findCourseProductByType(baseQuery.getPageNum(), baseQuery.getPageSize(), courseType.getDictKey());
+                    PageInfo<PmsCourseListVo> courseProductByType = findCourseProductByType(baseQuery.getPageNum(), baseQuery.getPageSize(), courseType.getDictKey());
                     return courseProductByType;
                 }).collect(Collectors.toList());
     }
 
-    public PageInfo<PmsCourseProductVo> findCourseProductByType(Integer pageNum, Integer pageSize, String type){
+    @Override
+    public PmsCourseProductVo findcourseProductById(LoginAuthDto loginAuthDto, Long id) {
+        PmsCourseProduct pmsCourseProduct = pmsCourseProductMapper.selectByPrimaryKey(id);
+        PmsCourseProductVo courseProductVo = new PmsCourseProductVo();
+        BeanUtils.copyProperties(pmsCourseProduct, courseProductVo);
+        return courseProductVo;
+    }
+
+    public PageInfo<PmsCourseListVo> findCourseProductByType(Integer pageNum, Integer pageSize, String type){
         PmsCourseProduct pmsCourseProduct = new PmsCourseProduct();
         pmsCourseProduct.setProductType(type);
         pmsCourseProduct.setStatus(1);
         pmsCourseProduct.setApprovalStatus(2);
         PageHelper.startPage(pageNum, pageSize);
         List<PmsCourseProduct> courseProducts = pmsCourseProductMapper.select(pmsCourseProduct);
-        List<PmsCourseProductVo> courseProductVos = courseProducts.stream().map(courseProduct -> {
-            PmsCourseProductVo courseProductVo = new PmsCourseProductVo();
+        List<PmsCourseListVo> courseProductVos = courseProducts.stream().map(courseProduct -> {
+            PmsCourseListVo courseProductVo = new PmsCourseListVo();
             BeanUtils.copyProperties(courseProduct, courseProductVo);
             return courseProductVo;
         }).collect(Collectors.toList());
