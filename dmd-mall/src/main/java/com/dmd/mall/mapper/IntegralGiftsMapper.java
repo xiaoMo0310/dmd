@@ -22,4 +22,6 @@ public interface IntegralGiftsMapper {
     IntegralGiftsBean findIntegralGiftsInfoById(Long id);
 
     int updateIntegralGiftsById(IntegralGiftsBean integralGiftsBean);
+
+    int deleteIntegralGiftsById(Long id);
 }

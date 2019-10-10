@@ -118,4 +118,22 @@ public class IntegralGiftsController {
         return CommonResult.success(integralGiftsBean);
     }
 
+    /**
+     * 删除积分好礼
+     * @param id
+     * @return
+     */
+    @ApiOperation("删除积分好礼")
+    @RequestMapping(value = "/deleteIntegralGiftsById",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult deleteIntegralGiftsById(@RequestParam Long id){
+        int count = integralGiftsService.deleteIntegralGiftsById(id);
+        if (count > 0) {
+            return CommonResult.success(count,"删除成功");
+        }
+        return CommonResult.failed("删除失败");
+    }
+
+
+
 }

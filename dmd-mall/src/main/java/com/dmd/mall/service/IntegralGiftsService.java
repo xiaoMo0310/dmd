@@ -23,4 +23,6 @@ public interface IntegralGiftsService {
     IntegralGiftsBean findIntegralGiftsInfoById(Long id);
 
     int updateIntegralGiftsById(IntegralGiftsBean integralGiftsBean);
+
+    int deleteIntegralGiftsById(Long id);
 }

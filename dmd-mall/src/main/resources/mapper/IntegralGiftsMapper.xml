@@ -54,4 +54,8 @@
         updatetime = #{updateTime}
         where id = #{id}
     </update>
+
+    <delete id="deleteIntegralGiftsById" parameterType="java.lang.Long">
+        DELETE FROM dmd_integral_gift WHERE id = #{id}
+    </delete>
 </mapper>

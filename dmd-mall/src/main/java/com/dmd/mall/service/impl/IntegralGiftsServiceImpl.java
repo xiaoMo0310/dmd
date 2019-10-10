@@ -58,5 +58,10 @@ public class IntegralGiftsServiceImpl implements IntegralGiftsService{
         return integralGiftsMapper.updateIntegralGiftsById(integralGiftsBean);
     }
 
+    @Override
+    public int deleteIntegralGiftsById(Long id) {
+        return integralGiftsMapper.deleteIntegralGiftsById(id);
+    }
+
 
 }
