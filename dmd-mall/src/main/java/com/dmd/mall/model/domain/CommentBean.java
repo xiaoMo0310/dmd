@@ -58,7 +58,10 @@ public class CommentBean {
      * 在哪个动态下评论,关联动态表
      */
     private Long forDynamicId;
-
+    /**
+     * 在哪个日志下评论,关联日志表
+     */
+    private Long forDiveLogId;
     /**
      * 评论人id
      */
@@ -183,6 +186,14 @@ public class CommentBean {
         this.children = children;
     }
 
+    public Long getForDiveLogId() {
+        return forDiveLogId;
+    }
+
+    public void setForDiveLogId(Long forDiveLogId) {
+        this.forDiveLogId = forDiveLogId;
+    }
+
     @Override
     public String toString() {
         return "CommentBean{" +
@@ -197,6 +208,7 @@ public class CommentBean {
                 ", delflag=" + delflag +
                 ", forUid=" + forUid +
                 ", forDynamicId=" + forDynamicId +
+                ", forDiveLogId=" + forDiveLogId +
                 ", userId=" + userId +
                 ", forPid=" + forPid +
                 ", children=" + children +

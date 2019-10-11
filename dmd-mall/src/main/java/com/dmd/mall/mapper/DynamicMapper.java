@@ -37,4 +37,8 @@ public interface DynamicMapper {
     void addrCommentNum(Long forDynamicId);
 
     void reduceCommentNum(Long dynamicId);
+
+    List<DynamicBean> queryDynamicTime();
+
+    List<DynamicBean> queryDynamicHeat();
 }

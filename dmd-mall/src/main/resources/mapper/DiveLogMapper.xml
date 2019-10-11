@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.DiveLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="diveLogMap" type="com.dmd.mall.model.domain.DiveLogBean">
+        <result column="id" property="id" />
+        <result column="diving_number" property="divingNumber" />
+        <result column="maximum_depth" property="maximumDepth" />
+        <result column="average_depth" property="average_depth" />
+        <result column="depth_type" property="depthType" />
+        <result column="minimum_temperature" property="minimumTemperature" />
+        <result column="average_temperature" property="average_temperature" />
+        <result column="temperature_type" property="temperatureType" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="dive_sites" property="diveSites" />
+        <result column="diving_idea" property="divingIdea" />
+        <result column="diving_pictures" property="divingPictures" />
+        <result column="additional_weight" property="additionalWeight" />
+        <result column="water_way" property="waterWay" />
+        <result column="scenery" property="scenery" />
+        <result column="weather" property="weather" />
+        <result column="flow" property="flow" />
+        <result column="visibility" property="visibility" />
+        <result column="animal_photos" property="animalPhotos" />
+        <result column="clothing_brand" property="clothingBrand" />
+        <result column="airbottle_brand" property="airbottleBrand" />
+        <result column="mask_brand" property="maskBrand" />
+        <result column="watches_brand" property="watchesBrand" />
+        <result column="camera_brand" property="cameraBrand" />
+        <result column="fins_brand" property="finsBrand" />
+        <result column="createtime" property="createtime" />
+        <result column="edittime" property="edittime" />
+        <result column="delflag" property="delflag" />
+        <result column="author" property="author" />
+        <result column="user_head_portrait" property="userHeadPortrait" />
+        <result column="user_id" property="userId" />
+        <result column="praise_num" property="praiseNum" />
+        <result column="share_num" property="shareNum" />
+        <result column="comment_num" property="commentNum" />
+    </resultMap>
+
+
+    <update id="addrCommentNum" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET  comment_num = comment_num + 1 where id = #{value}
+    </update>
+
+    <update id="reduceCommentNum" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET  comment_num = comment_num - 1 where id = #{value} and comment_num > 0
+    </update>
+</mapper>

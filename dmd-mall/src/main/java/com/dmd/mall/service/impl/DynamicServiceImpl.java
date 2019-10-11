@@ -117,4 +117,14 @@ public class DynamicServiceImpl implements DynamicService{
         dynamicBean.setDelflag(0);
         return dynamicMapper.addDynamic(dynamicBean);
     }
+
+    @Override
+    public List<DynamicBean> queryDynamicTime() {
+        return dynamicMapper.queryDynamicTime();
+    }
+
+    @Override
+    public List<DynamicBean> queryDynamicHeat() {
+        return dynamicMapper.queryDynamicHeat();
+    }
 }

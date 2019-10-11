@@ -38,4 +38,7 @@ public interface DynamicService {
 
     int addDynamic(DynamicBean dynamicBean);
 
+    List<DynamicBean> queryDynamicTime();
+
+    List<DynamicBean> queryDynamicHeat();
 }
