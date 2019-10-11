@@ -4,6 +4,7 @@ import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.CommentBean;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.service.CommentService;
+import com.dmd.mall.service.DiveLogCommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class CommentController {
         return CommonResult.success(CommentList);
     }
 
-    @ApiOperation("新增我的评论/留言")
+    @ApiOperation("新增我的动态评论/留言")
     @RequestMapping(value = "/addComment",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult addComment(@RequestBody CommentBean commentBean) {
@@ -54,7 +55,7 @@ public class CommentController {
         return CommonResult.failed("评论失败");
     }
 
-    @ApiOperation("新增评论回复")
+    @ApiOperation("新增动态评论回复")
     @RequestMapping(value = "/addCommentReply",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult addCommentReply(@RequestBody CommentBean commentBean,
@@ -74,11 +75,11 @@ public class CommentController {
     /**
      * 我只能删我的回复和评论无法删除别人的回复
      */
-    @ApiOperation("逻辑删除评论与回复")
+    @ApiOperation("逻辑删除动态评论与回复")
     @RequestMapping(value = "/updateCommentDelflag",method = RequestMethod.GET)
     @ResponseBody                            //评论id
     public CommonResult updateCommentDelflag(@RequestParam Long commentId,
-                                             //登录人id,判断此发布回复和评论的用户是否为是我,发布回复和评论的用户id是否是我的用户id。是则删除。否则失败
+                                             //登录人id,判断此发布回复和评论的用户是否为是我,发布回复和评论的用户id是否是我的用户id
                                              @RequestParam Long userId,
                                              //动态ID
                                              @RequestParam Long DynamicId
