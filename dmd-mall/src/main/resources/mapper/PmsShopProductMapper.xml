@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dmd.mall.mapper.PmsShopProductMapper">
     <select id="getShopProduct" resultType="com.dmd.mall.model.domain.PmsProduct">
-        select id,sale,original_price,name,pic
+        select id,sale,price,name,pic
         from pms_product
         where delete_status=0 and publish_status=1
         <if test="minPrice!=null">
@@ -13,6 +13,9 @@
         </if>
         <if test="type!=null">
             and product_category_id=#{type}
+        </if>
+        <if test="shipAddress!=null">
+            and ship_address=#{shipAddress}
         </if>
         <if test="sortType!=null">
             order by #{sortType}
@@ -25,7 +28,7 @@
         where start_time&gt;#{startTime} and end_time&lt;#{endTime}
     </select>
     <select id="shopProductDetails" resultMap="pmsShopDetails">
-        select (select count(1) from pms_comment pc where product_id=pp.id) comment_count,pp.id,sale,original_price,shop_id,detail_mobile_html,description,stock,ppa.name,ppa.input_list,album_pics,ppa.id ppa_id
+        select (select count(1) from pms_comment pc where product_id=pp.id) comment_count,pp.id,sale,price,shop_id,detail_html,description,stock,ppa.name,ppa.input_list,album_pics,ppa.id ppa_id
         from pms_product pp
         inner join pms_product_attribute_category ppac on ppac.id=pp.product_attribute_category_id
         inner join pms_product_attribute ppa on ppa.product_attribute_category_id=ppac.id
