@@ -205,4 +205,28 @@ public class DynamicController {
         }
         return CommonResult.failed("发布失败");
     }
+
+    /**
+     * 首页--最新动态
+     * @return
+     */
+    @ApiOperation("首页--最新动态查询")
+    @RequestMapping(value = "/selectDynamicTime",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<DynamicBean>> queryDynamicTime() {
+        List<DynamicBean> dynamicList = dynamicService.queryDynamicTime();
+        return CommonResult.success(dynamicList);
+    }
+
+    /**
+     * 首页--最热动态
+     * @return
+     */
+    @ApiOperation("首页--最热动态查询")
+    @RequestMapping(value = "/selectDynamicHeat",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<DynamicBean>> queryDynamicHeat() {
+        List<DynamicBean> dynamicList = dynamicService.queryDynamicHeat();
+        return CommonResult.success(dynamicList);
+    }
 }

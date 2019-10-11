@@ -22,7 +22,6 @@ public class DiveLogController {
     @Autowired
     private DiveLogService diveLogService;
 
-    
 
 
 }

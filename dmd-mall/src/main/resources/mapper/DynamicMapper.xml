@@ -108,4 +108,16 @@
     <update id="reduceCommentNum" parameterType="java.lang.Long">
          UPDATE dmd_dynamic SET  r_comment_num = r_comment_num - 1 where r_id = #{value} and r_comment_num > 0
     </update>
+
+    <select id="queryDynamicTime" resultMap="dynamicMap">
+        SELECT dy.r_id,dy.r_picture,r_author,r_head_portrait,r_praise
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid  = dt.id WHERE delflag = 0 AND dy.r_picture is not null ORDER BY r_createtime DESC
+    </select>
+
+    <select id="queryDynamicHeat" resultMap="dynamicMap">
+        SELECT dy.r_id,dy.r_picture,r_author,r_head_portrait,r_praise
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid  = dt.id WHERE delflag = 0 AND dy.r_picture is not null ORDER BY r_praise DESC , r_createtime DESC
+    </select>
 </mapper>
