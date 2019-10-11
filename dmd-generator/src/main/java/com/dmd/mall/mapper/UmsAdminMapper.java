@@ -2,10 +2,14 @@ package com.dmd.mall.mapper;
 
 import com.dmd.mall.model.UmsAdmin;
 import com.dmd.mall.model.UmsAdminExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Mapper
+@Component
 public interface UmsAdminMapper {
     long countByExample(UmsAdminExample example);
 
@@ -28,4 +32,6 @@ public interface UmsAdminMapper {
     int updateByPrimaryKeySelective(UmsAdmin record);
 
     int updateByPrimaryKey(UmsAdmin record);
+
+    List<UmsAdmin> selectByUserName(String username);
 }

@@ -79,9 +79,11 @@ public class CommentController {
     @ResponseBody                            //评论id
     public CommonResult updateCommentDelflag(@RequestParam Long commentId,
                                              //登录人id,判断此发布回复和评论的用户是否为是我,发布回复和评论的用户id是否是我的用户id。是则删除。否则失败
-                                             @RequestParam Long userId
+                                             @RequestParam Long userId,
+                                             //动态ID
+                                             @RequestParam Long DynamicId
     ){
-        int count = commentService.updateCommentDelflag(commentId,userId);
+        int count = commentService.updateCommentDelflag(commentId,userId,DynamicId);
         if (count > 0) {
             return CommonResult.success(count,"删除成功");
         }

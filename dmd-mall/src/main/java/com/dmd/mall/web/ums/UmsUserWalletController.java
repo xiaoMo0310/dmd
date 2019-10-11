@@ -43,7 +43,6 @@ public class UmsUserWalletController extends BaseController {
     /**
      * 检验用户账户支付密码
      * @param object
-     *
      * @return the wrapper
      */
     @PostMapping("/accountPassword/check")
@@ -64,7 +63,6 @@ public class UmsUserWalletController extends BaseController {
     /**
      * 修改用户账户支付密码
      * @param object
-     *
      * @return the wrapper
      */
     @PostMapping("/accountPassword/edit")
@@ -91,6 +89,18 @@ public class UmsUserWalletController extends BaseController {
             throw new UmsBizException(ErrorCodeEnum.GL9999404);
         }
         return WrapMapper.ok(umsWalletVo);
+    }
+
+    /**
+     *添加用户钱包的信息
+     * @return the wrapper
+     */
+    @PostMapping("/walletMessage/save")
+    @ApiOperation(httpMethod = "POST", value = "添加用户钱包的信息")
+    @ApiImplicitParam(name ="umsUserWallet", value = "钱包信息", dataType = "UmsUserWallet")
+    public Wrapper<UmsWalletVo> saveWalletMessage(@RequestBody UmsUserWallet umsUserWallet) {
+        umsUserWalletService.saveWalletMessage(umsUserWallet);
+        return WrapMapper.ok();
     }
 }
 

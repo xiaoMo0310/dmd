@@ -1,8 +1,7 @@
 package com.dmd.mall.security.usesdetailsservice;
 
-import com.dmd.mall.model.UmsMember;
 import com.dmd.mall.model.domain.MemberDetails;
-import com.dmd.mall.security.social.SocialUser;
+import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.service.UmsMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -41,6 +40,6 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
     @Override
     public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
         UmsMember member = memberService.getByUsername(userId);
-        return new SocialUser(member);
+        return new MemberDetails(member);
     }
 }

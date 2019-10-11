@@ -1,7 +1,7 @@
 package com.dmd.mall.service;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.UmsMember;
+import com.dmd.mall.model.domain.UmsMember;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;

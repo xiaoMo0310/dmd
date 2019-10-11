@@ -187,6 +187,9 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <select id="selectByUserName" resultType="com.dmd.mall.model.UmsAdmin" parameterType="string">
+    select * from ums_admin where username = #{username}
+  </select>
   <update id="updateByExampleSelective" parameterType="map">
     update ums_admin
     <set>

@@ -32,4 +32,10 @@ public class TopicServiceImpl implements TopicService{
     public List<TopicBean> queryTopicById(Integer id) {
         return topicMapper.queryTopicById(id);
     }
+
+    @Override
+    public List<TopicBean> queryTopic() {
+
+        return topicMapper.queryTopic();
+    }
 }

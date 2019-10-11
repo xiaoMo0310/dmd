@@ -2,12 +2,14 @@ package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DynamicMapper;
+import com.dmd.mall.mapper.TopicMapper;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.service.DynamicService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +27,9 @@ public class DynamicServiceImpl implements DynamicService{
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private TopicMapper topicMapper;
 
     @Override
     public List<DynamicBean> queryDynamic(Long userId) {
@@ -71,6 +76,11 @@ public class DynamicServiceImpl implements DynamicService{
     public int updateDynamicDelflag(Long id) {
         //动态删除时对应的动态下评论也全部删除
         commentMapper.updateComment(id);
+        //动态删除时判断是否有话题id，如果有话题id则话题下动态数量减1
+        List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamicById(id);
+        if (dynamicBeanList.get(0).getTopicId() != null){
+            topicMapper.reduceTopicNum(dynamicBeanList.get(0).getTopicId());
+        }
         return dynamicMapper.updateDynamicDelflag(id);
     }
 
@@ -89,4 +99,22 @@ public class DynamicServiceImpl implements DynamicService{
         return dynamicMapper.queryDynamicById(id);
     }
 
+    @Override
+    public int addDynamic(DynamicBean dynamicBean) {
+        //判断用户是否选择话题类型,如果选择,话题下的动态数量+1
+        if (dynamicBean.getTopicId() != null){
+            topicMapper.addTopicNum(dynamicBean.getTopicId());
+        }
+        //发布时间为当前时间
+        dynamicBean.setCreateTime(new Date());
+        //点赞数默认为0
+        dynamicBean.setDynamicPraise(0);
+        //分享数默认为0
+        dynamicBean.setDynamicSharenum(0);
+        //评论数默认为0
+        dynamicBean.setDynamicCommentnum(0);
+        //逻辑删除默认为0不删除
+        dynamicBean.setDelflag(0);
+        return dynamicMapper.addDynamic(dynamicBean);
+    }
 }

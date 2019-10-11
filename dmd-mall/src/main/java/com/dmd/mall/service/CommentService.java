@@ -18,5 +18,5 @@ public interface CommentService {
 
     int addCommentReply(CommentBean commentBean, Long commentId, Long forUid);
 
-    int updateCommentDelflag(Long commentId,Long userId);
+    int updateCommentDelflag(Long commentId,Long userId,Long DynamicId);
 }

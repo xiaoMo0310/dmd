@@ -15,4 +15,11 @@ public interface TopicMapper {
     List<TopicBean> queryTopicPage();
 
     List<TopicBean> queryTopicById(Integer id);
+
+    List<TopicBean> queryTopic();
+
+    void addTopicNum(Integer topicId);
+
+    void reduceTopicNum(Integer topicId);
+
 }

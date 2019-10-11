@@ -15,4 +15,6 @@ public interface TopicService {
     List<TopicBean> queryTopicPage(Integer pageNum, Integer pageSize);
 
     List<TopicBean> queryTopicById(Integer id);
+
+    List<TopicBean> queryTopic();
 }

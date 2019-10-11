@@ -20,4 +20,17 @@
     <select id="queryTopicById" resultMap="topicMap" parameterType="int">
         SELECT id,topicName,topicNum,topicDescribes,createTime,topicPicture FROM dmd_dynamic_topic WHERE id = #{value}
     </select>
+
+
+    <select id="queryTopic" resultMap="topicMap">
+        SELECT id,topicName,topicPicture,topicNum FROM dmd_dynamic_topic ORDER BY topicNum DESC
+    </select>
+
+    <update id="addTopicNum" parameterType="int">
+        UPDATE dmd_dynamic_topic SET topicNum = topicNum +1 WHERE id = #{value}
+    </update>
+
+    <update id="reduceTopicNum" parameterType="int">
+        UPDATE dmd_dynamic_topic SET topicNum = topicNum -1 WHERE id = #{value} and topicNum > 0
+    </update>
 </mapper>

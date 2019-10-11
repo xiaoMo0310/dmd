@@ -28,13 +28,6 @@ public class BaseController {
 	 */
 	protected LoginAuthDto getLoginAuthDto() {
 		LoginAuthDto loginAuthDto = (LoginAuthDto) ThreadLocalMap.get(GlobalConstant.Sys.TOKEN_AUTH_DTO);
-		//todo 数据写死
-		if(loginAuthDto == null){
-			loginAuthDto = new LoginAuthDto();
-		}
-		loginAuthDto.setUserId(1L);
-		loginAuthDto.setLoginName("yang");
-
 		if (PublicUtil.isEmpty(loginAuthDto)) {
 			throw new BusinessException(ErrorCodeEnum.UMS10011041);
 		}

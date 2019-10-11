@@ -2,11 +2,8 @@ package com.dmd.mall.web.ums;
 
 import com.dmd.FileUtil;
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.UmsMember;
-import com.dmd.mall.model.domain.MemberDetails;
+import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.service.UmsMemberService;
-import com.dmd.mall.util.JwtUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 
 @Controller
 @Api(tags = "UmsMemberAuthenticationController", description = "登陆后会员的操作接口")

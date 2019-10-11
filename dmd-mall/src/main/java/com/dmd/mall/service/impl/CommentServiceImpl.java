@@ -2,8 +2,10 @@ package com.dmd.mall.service.impl;
 
 import com.dmd.IpaddressUtils;
 import com.dmd.mall.mapper.CommentMapper;
+import com.dmd.mall.mapper.DynamicMapper;
 import com.dmd.mall.model.domain.CommentBean;
 import com.dmd.mall.service.CommentService;
+import com.dmd.mall.service.DynamicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -11,6 +13,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import sun.net.util.IPAddressUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +31,9 @@ public class CommentServiceImpl implements CommentService{
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private DynamicMapper dynamicMapper;
 
     @Override
     public List<CommentBean> queryCommentAll(Long forDynamicId) {
@@ -71,15 +78,24 @@ public class CommentServiceImpl implements CommentService{
         //评论类型为评论0=评论  1=回复
         commentBean.setType(0);
         //评论ip地址为本地地址
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+       /* ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
         //获取ip地址是封装好的一个类
-        String ip = IpaddressUtils.getIp(request);
-        commentBean.setIpAddress(ip);
+        String ip = IpaddressUtils.getIp(request);*/
+        try {
+            InetAddress ia = InetAddress.getLocalHost();
+            String hostAddress = ia.getHostAddress();
+            commentBean.setIpAddress(hostAddress);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
         //评论状态默认正常 状态（0=正常 1=待审核 2=禁止）
         commentBean.setStatus(0);
         //逻辑删除默认为否
         commentBean.setDelflag(0);
+        //发布评论，动态评论数加1
+        dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
         return commentMapper.addComment(commentBean);
     }
 
@@ -94,20 +110,30 @@ public class CommentServiceImpl implements CommentService{
         //评论类型为评论0=评论  1=回复
         commentBean.setType(1);
         //评论ip地址为本地地址
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        /*ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
         //获取ip地址是封装好的一个类
-        String ip = IpaddressUtils.getIp(request);
-        commentBean.setIpAddress(ip);
+        String ip = IpaddressUtils.getIp(request);*/
+        try {
+            InetAddress ia = InetAddress.getLocalHost();
+            String hostAddress = ia.getHostAddress();
+            commentBean.setIpAddress(hostAddress);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         //回复状态默认正常 状态（0=正常 1=待审核 2=禁止）
         commentBean.setStatus(0);
         //逻辑删除默认为否
         commentBean.setDelflag(0);
+        //发布回复，动态评论数加1
+        dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
         return commentMapper.addComment(commentBean);
     }
 
     @Override
-    public int updateCommentDelflag(Long commentId,Long userId) {
+    public int updateCommentDelflag(Long commentId,Long userId,Long DynamicId) {
+        //相应动态评论数量-1
+        dynamicMapper.reduceCommentNum(DynamicId);
         return commentMapper.updateCommentDelflag(commentId,userId);
     }
 

@@ -1,6 +1,5 @@
 package com.dmd.mall.model.domain;
 
-import com.dmd.mall.model.PmsProduct;
 import lombok.Getter;
 import lombok.Setter;
 

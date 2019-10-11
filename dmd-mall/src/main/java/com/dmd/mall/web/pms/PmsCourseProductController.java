@@ -4,6 +4,7 @@ package com.dmd.mall.web.pms;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.domain.PmsCourseProduct;
+import com.dmd.mall.model.vo.PmsCourseProductVo;
 import com.dmd.mall.service.PmsCourseProductService;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
@@ -49,15 +50,28 @@ public class PmsCourseProductController extends BaseController {
 
     /**
      * 分页查询所有课程产品的信息
-     * @param
+     * @param baseQuery
      * @return
      */
     @GetMapping("/courseProduct/findPage")
-    @ApiOperation(httpMethod = "POST", value = "分页查询所有课程产品的信息")
+    @ApiOperation(httpMethod = "POST", value = "分页查询所有课程产品的列表信息")
     @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery")
     public Wrapper findAttentionMessage(@RequestBody BaseQuery baseQuery) {
         List<PageInfo> list = pmsCourseProductService.findcourseProduct(baseQuery, getLoginAuthDto());
         return WrapMapper.ok(list);
+    }
+
+    /**
+     * 根据id查询详细的信息
+     * @param
+     * @returnid
+     */
+    @GetMapping("/courseProduct/{id}")
+    @ApiOperation(httpMethod = "POST", value = "分页查询所有课程产品的列表信息")
+    @ApiImplicitParam(name ="id", value = "主键id", dataType = "long")
+    public Wrapper findAttentionMessage(@RequestParam Long id) {
+        PmsCourseProductVo courseProductVo = pmsCourseProductService.findcourseProductById(getLoginAuthDto(), id);
+        return WrapMapper.ok(courseProductVo);
     }
 }
 

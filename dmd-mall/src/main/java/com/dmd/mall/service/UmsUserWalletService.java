@@ -31,4 +31,10 @@ public interface UmsUserWalletService extends IService<UmsUserWallet> {
      * @return
      */
     UmsWalletVo queryWalletMessage(LoginAuthDto loginAuthDto, BaseQuery baseQuery);
+
+    /**
+     * 添加用户的钱包信息并记录日志信息 todo 待完善
+     * @param umsUserWallet
+     */
+    void saveWalletMessage(UmsUserWallet umsUserWallet);
 }

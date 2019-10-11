@@ -3,11 +3,9 @@ package com.dmd.mall.mapper;
 import com.dmd.mall.model.PmsProduct;
 import com.dmd.mall.model.PmsProductExample;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface PmsProductMapper {
     long countByExample(PmsProductExample example);
 

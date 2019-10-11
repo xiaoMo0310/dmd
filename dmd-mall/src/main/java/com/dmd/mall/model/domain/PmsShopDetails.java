@@ -1,6 +1,5 @@
 package com.dmd.mall.model.domain;
 
-import com.dmd.mall.model.PmsProductAttribute;
 import lombok.Data;
 
 import java.io.Serializable;

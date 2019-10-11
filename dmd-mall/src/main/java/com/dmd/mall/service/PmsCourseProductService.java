@@ -4,6 +4,7 @@ import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.PmsCourseProduct;
+import com.dmd.mall.model.vo.PmsCourseProductVo;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -27,9 +28,17 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
     int saveCourseProductMessage(LoginAuthDto loginAuthDto, PmsCourseProduct courseProduct);
 
     /**
-     *
+     * 分页查询所有课程产品的信息
      * @param loginAuthDto
      * @return
      */
     List<PageInfo> findcourseProduct(BaseQuery baseQuery, LoginAuthDto loginAuthDto);
+
+    /**
+     *根据id查询详细的信息
+     * @param loginAuthDto
+     * @param id
+     * @return
+     */
+    PmsCourseProductVo findcourseProductById(LoginAuthDto loginAuthDto, Long id);
 }

@@ -20,7 +20,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: TopicController
  * @projectName dmd-master
- * @description: TODO 首页-话题
+ * @description: TODO 首页--话题
  * @date 2019/9/2910:41
  */
 @Controller
@@ -45,6 +45,19 @@ public class TopicController {
     @ResponseBody
     public CommonResult<List<TopicBean>> queryTopicPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
         List<TopicBean> topicList = topicService.queryTopicPage(pageNum,pageSize);
+        return CommonResult.success(topicList);
+    }
+
+    /**
+     * 分页查询话题分类，热度排序
+     * @param userId
+     * @return
+     */
+    @ApiOperation("话题分类查询,按照热度(话题下动态数量)排序")
+    @RequestMapping(value = "/selectTopic",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<TopicBean>> queryTopic() {
+        List<TopicBean> topicList = topicService.queryTopic();
         return CommonResult.success(topicList);
     }
 
