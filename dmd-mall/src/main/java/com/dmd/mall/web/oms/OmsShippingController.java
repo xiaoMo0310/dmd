@@ -102,9 +102,7 @@ public class OmsShippingController extends BaseController {
 
     /**
      * 根据Id查询收货人地址.
-     *
      * @param shippingId the shipping id
-     *
      * @return the wrapper
      */
     @PostMapping("/selectShippingById/{shippingId}")
