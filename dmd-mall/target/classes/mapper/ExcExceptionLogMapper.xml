@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.ExcExceptionLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.ExcExceptionLog">
+    <result column="id" property="id" />
+        <result column="application_name" property="applicationName" />
+        <result column="exception_simple_name" property="exceptionSimpleName" />
+        <result column="exception_message" property="exceptionMessage" />
+        <result column="exception_cause" property="exceptionCause" />
+        <result column="exception_stack" property="exceptionStack" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    id,
+    creator,
+    creator_id AS creatorId,
+        application_name AS applicationName, exception_simple_name AS exceptionSimpleName, exception_message AS exceptionMessage, exception_cause AS exceptionCause, exception_stack AS exceptionStack, create_time AS createTime
+    </sql>
+
+</mapper>
