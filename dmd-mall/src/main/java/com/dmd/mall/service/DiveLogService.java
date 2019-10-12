@@ -1,5 +1,11 @@
 package com.dmd.mall.service;
 
+import com.dmd.mall.model.domain.DiveLogAirbottleBean;
+import com.dmd.mall.model.domain.DiveLogAndAirbottle;
+import com.dmd.mall.model.domain.DiveLogBean;
+
+import java.util.List;
+
 /**
  * @author ChenYanbing
  * @title: DiveLogService
@@ -8,4 +14,11 @@ package com.dmd.mall.service;
  * @date 2019/10/1113:49
  */
 public interface DiveLogService {
+    List<DiveLogBean> queryDiveLogAll(Long userId);
+
+    List<DiveLogBean> queryDiveLogById(Long id);
+
+    List<DiveLogAirbottleBean> queryDiveLogAirbottleByDiveLogId(Long id);
+
+    int addDiveLog(DiveLogAndAirbottle diveLogAndAirbottle);
 }
