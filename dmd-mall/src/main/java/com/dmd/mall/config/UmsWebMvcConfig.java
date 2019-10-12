@@ -12,9 +12,10 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * The class Web mvc config.
- *
- * @author paascloud.net @gmail.com
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/10/11 13:27
+ * @Description 
  */
 @Configuration
 public class UmsWebMvcConfig extends WebMvcConfigurationSupport {
@@ -33,7 +34,7 @@ public class UmsWebMvcConfig extends WebMvcConfigurationSupport {
 		super.addInterceptors(registry);
 		registry.addInterceptor(vueViewInterceptor)
 				.addPathPatterns("/**")
-				.excludePathPatterns("/swagger-resources/**", "*.js", "/**/*.js", "*.css", "/**/*.css", "*.html", "/**/*.html");
+				.excludePathPatterns("/swagger-resources/**", "*.js", "/**/*.js", "*.css", "/**/*.css", "/*.html", "/**/*.html", "*.html", "/webjars/**");
 	}
 
 	@Override

@@ -27,5 +27,5 @@ public class BaseQuery implements Serializable {
 	/**
 	 * 排序 例:xxx asc, xxx desc
 	 */
-	private String orderBy;
+	private String orderBy = "update_time desc";
 }

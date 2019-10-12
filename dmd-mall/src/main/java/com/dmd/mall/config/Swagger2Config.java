@@ -112,7 +112,7 @@ public class Swagger2Config {
         return new ArrayList(
                 Collections.singleton(SecurityContext.builder()
                         .securityReferences(defaultAuth())
-                        .forPaths(PathSelectors.regex("^(?!auth).*$"))
+                        .forPaths(PathSelectors.regex("^(?!sso).*$"))
                         .build())
         );
     }

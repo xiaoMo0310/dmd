@@ -1,12 +1,13 @@
 package com.dmd.mall.mapper;
 
-import com.dmd.mall.model.domain.PmsProduct;
 import com.dmd.core.mybatis.MyMapper;
+import com.dmd.mall.model.domain.PmsProduct;
 import com.dmd.mall.model.dto.SortDto;
-import com.dmd.mall.model.vo.PmsShipProductListVo;
+import com.dmd.mall.model.vo.PmsProductListVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -21,5 +22,7 @@ import java.util.List;
 @Component
 public interface PmsProductsMapper extends MyMapper<PmsProduct> {
 
-    List<PmsShipProductListVo> selectShipSleepsProduct(SortDto sortDto);
+    List<PmsProductListVo> selectShipSleepsProduct(@PathParam("sortDto") SortDto sortDto,@PathParam("categoryId") Long categoryId);
+
+    List<PmsProductListVo> selectProductByShopId(@PathParam("sortDto") SortDto sortDto, @PathParam("shopId") Long shopId);
 }

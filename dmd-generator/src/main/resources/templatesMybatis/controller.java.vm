@@ -32,7 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Controller
 #end
 @RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
-@Api(value = "XXXX", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@Api(tags = "${table.controllerName}", description = "XXXX", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 #if(${kotlin})
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 

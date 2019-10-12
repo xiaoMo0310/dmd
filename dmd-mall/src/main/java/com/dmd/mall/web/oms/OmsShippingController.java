@@ -91,7 +91,7 @@ public class OmsShippingController extends BaseController {
      *
      * @return the default address
      */
-    @PostMapping("/setDefaultAddress/{addressId}")
+    @PostMapping("/setDefaultAddress/{shippingId}")
     @ApiOperation(httpMethod = "POST", value = "设置默认收货地址")
     @ApiImplicitParam(name ="shippingId", value = "收货人地址id", dataType = "long", paramType = "path")
     public Wrapper setDefaultAddress(@PathVariable Long shippingId) {
