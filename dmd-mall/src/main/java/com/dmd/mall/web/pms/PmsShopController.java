@@ -2,6 +2,7 @@ package com.dmd.mall.web.pms;
 
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.PmsComment;
+import com.dmd.mall.model.domain.SmsHomeAdvertise;
 import com.dmd.mall.service.PmsShopService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -44,4 +46,12 @@ public class PmsShopController {
         PageInfo<PmsComment> map = pmsShopService.shopProductComment(id,page,pageSize);
         return CommonResult.success(map);
     }
+    @ApiOperation("轮播图")
+    @RequestMapping(value = "/shopAdvertise", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<List<SmsHomeAdvertise>> shopAdvertise(@RequestBody Map<String,Object> mapParam) {
+        List<SmsHomeAdvertise> map =pmsShopService.getShopAdvertise(mapParam);
+        return CommonResult.success(map);
+    }
+
 }

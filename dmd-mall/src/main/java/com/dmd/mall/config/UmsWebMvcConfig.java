@@ -2,13 +2,17 @@ package com.dmd.mall.config;
 
 import com.dmd.core.config.PcObjectMapper;
 import com.dmd.core.interceptor.TokenInterceptor;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import javax.annotation.Resource;
+import java.net.HttpURLConnection;
 import java.util.List;
 
 /**
@@ -39,7 +43,12 @@ public class UmsWebMvcConfig extends WebMvcConfigurationSupport {
 
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
+				.serializationInclusion(JsonInclude.Include.NON_NULL);
+		converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
 		PcObjectMapper.buidMvcMessageConverter(converters);
 	}
+
+
 
 }
