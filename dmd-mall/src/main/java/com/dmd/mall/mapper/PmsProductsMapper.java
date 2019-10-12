@@ -24,4 +24,5 @@ public interface PmsProductsMapper extends MyMapper<PmsProduct> {
 
     List<PmsProductListVo> selectShipSleepsProduct(@PathParam("sortDto") SortDto sortDto,@PathParam("categoryId") Long categoryId);
 
+    List<PmsProductListVo> selectProductByShopId(@PathParam("sortDto") SortDto sortDto, @PathParam("shopId") Long shopId);
 }

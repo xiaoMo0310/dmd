@@ -69,4 +69,11 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
         pmsProductVo.setComments(comments);
         return pmsProductVo;
     }
+
+    @Override
+    public PageInfo findProductByShopId(SortDto sortDto, Long shopId) {
+        PageHelper.startPage(sortDto.getPageNum(), sortDto.getPageSize());
+        List<PmsProductListVo> shipSleepsProducts = pmsProductMapper.selectProductByShopId(sortDto, shopId);
+        return new PageInfo(shipSleepsProducts);
+    }
 }

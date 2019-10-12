@@ -32,8 +32,4 @@ public class DmdMallApplication {
          );
     }
 
-    /*@Bean
-    public BCryptPasswordEncoder createBCryptPasswordEncoder(){
-        return new BCryptPasswordEncoder();
-    }*/
 }

@@ -28,4 +28,12 @@ public interface PmsProductService extends IService<PmsProduct> {
      * @return
      */
     PmsProductVo findShipSleepsMessage(Long id);
+
+    /**
+     * 分页查询店铺商品的列表信息
+     * @param sortDto
+     * @param shopId
+     * @return
+     */
+    PageInfo findProductByShopId(SortDto sortDto, Long shopId);
 }

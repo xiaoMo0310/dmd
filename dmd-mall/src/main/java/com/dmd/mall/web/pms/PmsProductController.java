@@ -10,6 +10,7 @@ import com.dmd.wrapper.Wrapper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -45,6 +46,16 @@ public class PmsProductController extends BaseController {
     public Wrapper<PmsProductVo> findShipSleepsMessage(@PathVariable Long id) {
         PmsProductVo pmsProductVo = pmsProductService.findShipSleepsMessage(id);
         return WrapMapper.ok(pmsProductVo);
+    }
+
+    @PostMapping("/shipSleepsProduct/findPage/{shopId}")
+    @ApiOperation(httpMethod = "POST", value = "分页查询店铺商品的列表信息")
+    @ApiImplicitParam(name ="sortDto", value = "排序分页数据", dataType = "SortDto")
+    @ApiImplicitParams({@ApiImplicitParam(name ="sortDto", value = "排序分页数据", dataType = "SortDto"),
+                        @ApiImplicitParam(name ="shopId", value = "商铺id", dataType = "shopId", paramType = "path")})
+    public Wrapper findProductByShopId(@RequestBody SortDto sortDto, @PathVariable Long shopId) {
+        PageInfo list = pmsProductService.findProductByShopId(sortDto, shopId);
+        return WrapMapper.ok(list);
     }
 }
 
