@@ -17,7 +17,7 @@ import java.math.BigDecimal;
  * </p>
  *
  * @author YangAnsheng
- * @since 2019-10-10
+ * @since 2019-10-12
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -48,6 +48,9 @@ private static final long serialVersionUID = 1L;
     @Column(name = "product_category_id")
     @ApiModelProperty("商品分类id")
     private Long productCategoryId;
+    @Column(name = "product_attribute_category_id")
+    @ApiModelProperty("")
+    private Long productAttributeCategoryId;
 
     @Column(name = "product_category_name")
     @ApiModelProperty("商品分类名称")
@@ -106,6 +109,12 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("商品描述")
     private String description;
 
+    @ApiModelProperty("商品内容")
+    private String content;
+
+    @ApiModelProperty("商品详情")
+    private String detail;
+
     @ApiModelProperty("库存")
     private Integer stock;
 
@@ -123,13 +132,13 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("以逗号分割的产品服务：1->无忧退货；2->快速退款；3->免费包邮")
     private String serviceIds;
 
-    @Column(name = "detail_html")
-    @ApiModelProperty("产品详情网页内容")
-    private String detailHtml;
-
     @Column(name = "ship_address")
     @ApiModelProperty("发货(出发)地址(商铺地址或手动输入)")
     private String shipAddress;
+
+    @Column(name = "album_pics")
+    @ApiModelProperty("画册图片，连产品图片限制为5张，以逗号分割")
+    private String albumPics;
 
 
 }

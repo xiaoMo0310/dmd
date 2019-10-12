@@ -16,13 +16,13 @@ import java.util.List;
  * </p>
  *
  * @author YangAnsheng
- * @since 2019-10-10
+ * @since 2019-10-12
  */
 @Mapper
 @Component
-public interface PmsProductsMapper extends MyMapper<PmsProduct> {
+public interface PmsProductMapper extends MyMapper<PmsProduct> {
 
-    List<PmsProductListVo> selectShipSleepsProduct(@PathParam("sortDto") SortDto sortDto,@PathParam("categoryId") Long categoryId);
+    List<PmsProductListVo> selectShipSleepsProduct(@PathParam("sortDto") SortDto sortDto, @PathParam("categoryId") Long categoryId);
 
     List<PmsProductListVo> selectProductByShopId(@PathParam("sortDto") SortDto sortDto, @PathParam("shopId") Long shopId);
 }

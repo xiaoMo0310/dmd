@@ -1,8 +1,10 @@
 package com.dmd.mall.web.pms;
 
 
+import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.dto.SortDto;
+import com.dmd.mall.model.vo.PmsCourseProductVo;
 import com.dmd.mall.model.vo.PmsProductVo;
 import com.dmd.mall.service.PmsProductService;
 import com.dmd.wrapper.WrapMapper;
@@ -15,6 +17,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -56,6 +60,22 @@ public class PmsProductController extends BaseController {
     public Wrapper findProductByShopId(@RequestBody SortDto sortDto, @PathVariable Long shopId) {
         PageInfo list = pmsProductService.findProductByShopId(sortDto, shopId);
         return WrapMapper.ok(list);
+    }
+
+    @GetMapping("/courseProduct/findPage")
+    @ApiOperation(httpMethod = "POST", value = "分页查询所有课程产品的列表信息")
+    @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery")
+    public Wrapper findAttentionMessage(@RequestBody BaseQuery baseQuery) {
+        List<PageInfo> list = pmsProductService.findCourseProduct(baseQuery, getLoginAuthDto());
+        return WrapMapper.ok(list);
+    }
+
+    @GetMapping("/courseProduct/{id}")
+    @ApiOperation(httpMethod = "POST", value = "分页查询所有课程产品的列表信息")
+    @ApiImplicitParam(name ="id", value = "主键id", dataType = "long", paramType = "path")
+    public Wrapper findAttentionMessage(@RequestParam Long id) {
+        PmsCourseProductVo courseProductVo = pmsProductService.findCourseProductById(getLoginAuthDto(), id);
+        return WrapMapper.ok(courseProductVo);
     }
 }
 
