@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 
 @Data
-public class PmsShipProductListVo implements Serializable {
+public class PmsProductListVo implements Serializable {
 
     private String id;
 

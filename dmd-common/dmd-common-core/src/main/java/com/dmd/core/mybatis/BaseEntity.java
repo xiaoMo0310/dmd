@@ -23,10 +23,6 @@ public class BaseEntity implements Serializable {
 	private Long id;
 
 	/**
-	 * 版本号
-	 */
-	private Integer version;
-	/**
 	 * 创建人
 	 */
 	private String creator;

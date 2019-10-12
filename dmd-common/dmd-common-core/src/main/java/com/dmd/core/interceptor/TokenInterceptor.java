@@ -32,7 +32,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 	private RedisTemplate<String, Object> redisTemplate;
 
 	private static final String OPTIONS = "OPTIONS";
-	private static final String AUTH_PATH1 = "/auth";
+	private static final String AUTH_PATH1 = "/sso";
 	private static final String AUTH_PATH2 = "/oauth";
 	private static final String AUTH_PATH3 = "/error";
 	private static final String AUTH_PATH4 = "/api";
@@ -125,6 +125,5 @@ public class TokenInterceptor implements HandlerInterceptor {
 		NoNeedAccessAuthentication responseBody = AnnotationUtils.findAnnotation(method, NoNeedAccessAuthentication.class);
 		return responseBody != null;
 	}
-
 }
   
