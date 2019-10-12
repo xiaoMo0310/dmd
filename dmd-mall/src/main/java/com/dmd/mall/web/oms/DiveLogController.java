@@ -19,7 +19,7 @@ import java.util.Map;
  * @author ChenYanbing
  * @title: DiveLogController
  * @projectName dmd-masters
- * @description: TODO
+ * @description: TODO 我的日志
  * @date 2019/10/129:09
  */
 @Controller
