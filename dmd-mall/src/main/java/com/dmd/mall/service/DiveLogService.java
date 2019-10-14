@@ -21,4 +21,14 @@ public interface DiveLogService {
     List<DiveLogAirbottleBean> queryDiveLogAirbottleByDiveLogId(Long id);
 
     int addDiveLog(DiveLogAndAirbottle diveLogAndAirbottle);
+
+    int updateLikePraise(Long id);
+
+    int updateCancelPraise(Long id);
+
+    Integer queryPraise(Long id);
+
+    int updateDiveLogShare(Long id);
+
+    Integer queryShare(Long id);
 }

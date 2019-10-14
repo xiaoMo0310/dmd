@@ -255,4 +255,24 @@
             )
         </foreach>
     </insert>
+
+    <update id="updateLikePraise" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET  praise_num = praise_num + 1 where id = #{id}
+    </update>
+
+    <update id="updateCancelPraise" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET  praise_num = praise_num - 1 where id = #{id} and praise_num > 0
+    </update>
+
+    <select id="queryPraise" parameterType="java.lang.Long" resultType="int">
+        SELECT praise_num FROM dmd_dive_log WHERE id = #{id}
+    </select>
+
+    <update id="updateDiveLogShare" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET share_num = share_num + 1 WHERE id = #{id}
+    </update>
+
+    <select id="queryShare" parameterType="java.lang.Long" resultType="int">
+        SELECT share_num FROM dmd_dive_log WHERE id = #{id}
+    </select>
 </mapper>
