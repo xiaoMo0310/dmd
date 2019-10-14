@@ -1,5 +1,11 @@
 package com.dmd.mall.mapper;
 
+import com.dmd.mall.model.domain.DiveLogAirbottleBean;
+import com.dmd.mall.model.domain.DiveLogBean;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
 /**
  * @author ChenYanbing
  * @title: DiveLogMapper
@@ -11,4 +17,14 @@ public interface DiveLogMapper {
     void addrCommentNum(Long forDiveLogId);
 
     void reduceCommentNum(Long forDiveLogId);
+
+    List<DiveLogBean> queryDiveLogAll(Long userId);
+
+    List<DiveLogBean> queryDiveLogById(Long id);
+
+    List<DiveLogAirbottleBean> queryDiveLogAirbottleByDiveLogId(Long id);
+
+    void addDiveLog(DiveLogBean diveLogBean);
+
+    int addDiveLogAirbottle(@Param("diveLogAirbottleList")List<DiveLogAirbottleBean> diveLogAirbottleList);
 }

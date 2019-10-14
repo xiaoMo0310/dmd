@@ -18,7 +18,11 @@ import java.util.Map;
  * 购物车表 服务实现类
  * </p>
  *
+<<<<<<< HEAD
  * @author 王海成
+=======
+ * @author YangAnsheng
+>>>>>>> origin/master
  * @since 2019-10-12
  */
 @Service

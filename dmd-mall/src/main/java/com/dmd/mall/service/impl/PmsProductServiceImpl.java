@@ -1,26 +1,25 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.base.dto.BaseQuery;
+import com.dmd.base.dto.LoginAuthDto;
+import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
-import com.dmd.mall.mapper.PmsCommentMapper;
-import com.dmd.mall.mapper.PmsProductSkuMapper;
-import com.dmd.mall.mapper.PmsProductsMapper;
-import com.dmd.mall.mapper.UmsShopMapper;
-import com.dmd.mall.model.domain.PmsComment;
-import com.dmd.mall.model.domain.PmsProduct;
-import com.dmd.mall.model.domain.PmsSkuStock;
-import com.dmd.mall.model.domain.UmsShop;
+import com.dmd.mall.exceptions.PmsBizException;
+import com.dmd.mall.mapper.*;
+import com.dmd.mall.model.domain.*;
 import com.dmd.mall.model.dto.SortDto;
-import com.dmd.mall.model.vo.PmsProductListVo;
-import com.dmd.mall.model.vo.PmsProductVo;
+import com.dmd.mall.model.vo.*;
 import com.dmd.mall.service.PmsProductService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -35,13 +34,15 @@ import java.util.List;
 public class PmsProductServiceImpl extends BaseService<PmsProduct> implements PmsProductService {
 
     @Autowired
-    private PmsProductsMapper pmsProductMapper;
+    private PmsProductMapper pmsProductMapper;
     @Autowired
     private PmsCommentMapper pmsCommentMapper;
     @Autowired
     private PmsProductSkuMapper pmsProductSkuMapper;
     @Autowired
     private UmsShopMapper umsShopMapper;
+    @Autowired
+    private PmsProductCategoryMapper productCategoryMapper;
 
     @Override
     public PageInfo findShipSleepsProduct(SortDto sortDto) {
@@ -76,4 +77,40 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
         List<PmsProductListVo> shipSleepsProducts = pmsProductMapper.selectProductByShopId(sortDto, shopId);
         return new PageInfo(shipSleepsProducts);
     }
+
+    @Override
+    public List<PageInfo> findCourseProduct(BaseQuery baseQuery, LoginAuthDto loginAuthDto) {
+        //查询课程分类下的所有的分类
+        PmsProductCategory pmsProductCategory = new PmsProductCategory();
+        pmsProductCategory.setParentId(56L);
+        List<PmsProductCategory> productCategories = productCategoryMapper.select(pmsProductCategory);
+        if(CollectionUtils.isEmpty(productCategories)){
+            throw new PmsBizException(ErrorCodeEnum.GL9999404, 56L);
+        }
+        return productCategories.stream().map(productCategory -> {
+            PmsProduct pmsProduct = new PmsProduct();
+            pmsProduct.setProductCategoryId(productCategory.getId());
+            pmsProduct.setVerifyStatus(1);
+            pmsProduct.setDeleteStatus(0);
+            pmsProduct.setPublishStatus(1);
+            PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
+            List<PmsProduct> courseProducts = pmsProductMapper.select(pmsProduct);
+            List<PmsCourseListVo> courseProductVos = courseProducts.stream().map(courseProduct -> {
+                PmsCourseListVo courseProductVo = new PmsCourseListVo();
+                BeanUtils.copyProperties(courseProduct, courseProductVo);
+                return courseProductVo;
+            }).collect(Collectors.toList());
+            return new PageInfo<>(courseProductVos);
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public PmsCourseProductVo findCourseProductById(LoginAuthDto loginAuthDto, Long id) {
+        PmsProduct pmsCourseProduct = pmsProductMapper.selectByPrimaryKey(id);
+        PmsCourseProductVo courseProductVo = new PmsCourseProductVo();
+        BeanUtils.copyProperties(pmsCourseProduct, courseProductVo);
+        return courseProductVo;
+    }
+
+
 }

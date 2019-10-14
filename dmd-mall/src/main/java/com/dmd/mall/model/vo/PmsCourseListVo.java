@@ -26,7 +26,7 @@ public class PmsCourseListVo {
     /**
      * 产品图片(多个使用 , 隔开)
      */
-    private String image;
+    private String pic;
 
     /**
      * 产品的价格
@@ -34,13 +34,13 @@ public class PmsCourseListVo {
     private BigDecimal price;
 
     /**
-     * 产品类型(1:入门 2:进阶 3:专业)
+     * 分类id
      */
-    private Integer productType;
+    private Long productCategoryId;
 
     /**
      * 产品类型名称
      */
-    private String productTypeName;
+    private String productCategoryName;
 
 }

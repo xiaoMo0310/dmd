@@ -153,7 +153,18 @@ public class DiveLogBean {
      * 评论数(默认0)
      */
     private Integer commentNum;
+    /**
+     * 潜水类型(0=水肺潜水，1=自由潜水)
+     */
+    private Integer diveType;
 
+    public Integer getDiveType() {
+        return diveType;
+    }
+
+    public void setDiveType(Integer diveType) {
+        this.diveType = diveType;
+    }
 
     public Long getId() {
         return id;
@@ -436,7 +447,7 @@ public class DiveLogBean {
     }
 
     @Override
-    public String  toString() {
+    public String toString() {
         return "DiveLogBean{" +
                 "id=" + id +
                 ", divingNumber=" + divingNumber +
@@ -473,6 +484,7 @@ public class DiveLogBean {
                 ", praiseNum=" + praiseNum +
                 ", shareNum=" + shareNum +
                 ", commentNum=" + commentNum +
+                ", diveType=" + diveType +
                 '}';
     }
 }
