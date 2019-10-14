@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.WordFilter;
 import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DynamicMapper;
 import com.dmd.mall.mapper.TopicMapper;
@@ -115,6 +116,10 @@ public class DynamicServiceImpl implements DynamicService{
         dynamicBean.setDynamicCommentnum(0);
         //逻辑删除默认为0不删除
         dynamicBean.setDelflag(0);
+        //敏感词过滤*****
+        String content = WordFilter.doFilter(dynamicBean.getDynamicContent());
+        System.out.println(content);
+        dynamicBean.setDynamicContent(content);
         return dynamicMapper.addDynamic(dynamicBean);
     }
 

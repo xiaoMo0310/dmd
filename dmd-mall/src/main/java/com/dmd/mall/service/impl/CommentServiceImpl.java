@@ -1,6 +1,7 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.IpaddressUtils;
+import com.dmd.WordFilter;
 import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DynamicMapper;
 import com.dmd.mall.model.domain.CommentBean;
@@ -94,6 +95,10 @@ public class CommentServiceImpl implements CommentService{
         commentBean.setStatus(0);
         //逻辑删除默认为否
         commentBean.setDelflag(0);
+        //敏感词过滤*****
+        String content = WordFilter.doFilter(commentBean.getContent());
+        System.out.println(content);
+        commentBean.setContent(content);
         //发布评论，动态评论数加1
         dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
         return commentMapper.addComment(commentBean);
@@ -125,6 +130,10 @@ public class CommentServiceImpl implements CommentService{
         commentBean.setStatus(0);
         //逻辑删除默认为否
         commentBean.setDelflag(0);
+        //敏感词过滤*****
+        String content = WordFilter.doFilter(commentBean.getContent());
+        System.out.println(content);
+        commentBean.setContent(content);
         //发布回复，动态评论数加1
         dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
         return commentMapper.addComment(commentBean);

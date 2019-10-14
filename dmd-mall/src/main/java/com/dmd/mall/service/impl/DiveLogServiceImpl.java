@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.WordFilter;
 import com.dmd.mall.mapper.DiveLogMapper;
 import com.dmd.mall.model.domain.DiveLogAirbottleBean;
 import com.dmd.mall.model.domain.DiveLogAndAirbottle;
@@ -48,6 +49,10 @@ public class DiveLogServiceImpl implements DiveLogService{
         diveLogBean.setPraiseNum(0);
         diveLogBean.setCommentNum(0);
         diveLogBean.setShareNum(0);
+        //敏感词过滤*****
+        String content = WordFilter.doFilter(diveLogBean.getDivingIdea());
+        System.out.println(content);
+        diveLogBean.setDivingIdea(content);
         diveLogMapper.addDiveLog(diveLogBean);
         //获取到新增完成之后的日志Id
         Long diveLogId = diveLogBean.getId();
