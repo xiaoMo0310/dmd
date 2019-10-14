@@ -43,6 +43,5 @@ public class PmsDictController extends BaseController {
         int result = pmsDictService.saveMdcDict(pmsDict, getLoginAuthDto());
         return handleResult(result);
     }
-
 }
 

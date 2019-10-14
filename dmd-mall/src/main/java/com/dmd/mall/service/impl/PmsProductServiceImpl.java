@@ -38,7 +38,7 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
     @Autowired
     private PmsCommentMapper pmsCommentMapper;
     @Autowired
-    private PmsProductSkuMapper pmsProductSkuMapper;
+    private PmsSkuStockMapper pmsProductSkuMapper;
     @Autowired
     private UmsShopMapper umsShopMapper;
     @Autowired
@@ -47,15 +47,15 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
     @Override
     public PageInfo findShipSleepsProduct(SortDto sortDto) {
         PageHelper.startPage(sortDto.getPageNum(), sortDto.getPageSize());
-        List<PmsProductListVo> shipSleepsProducts = pmsProductMapper.selectShipSleepsProduct(sortDto, 55L);
+        List<PmsProductListVo> shipSleepsProducts = pmsProductMapper.selectShipSleepsProduct(sortDto, 2);
         return new PageInfo(shipSleepsProducts);
     }
 
     @Override
-    public PmsProductVo findShipSleepsMessage(Long id) {
+    public PmsProductVo findShipSleepsMessage(Long productId) {
         PmsProductVo pmsProductVo = new PmsProductVo();
         //查询商品的详细信息
-        PmsProduct pmsProduct = pmsProductMapper.selectByPrimaryKey(id);
+        PmsProduct pmsProduct = pmsProductMapper.selectByPrimaryKey(productId);
         BeanUtils.copyProperties(pmsProduct, pmsProductVo);
         //查询商铺的信息
         UmsShop umsShop = umsShopMapper.selectByPrimaryKey(pmsProduct.getShopId());
@@ -63,10 +63,12 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
         pmsProductVo.setShopName(umsShop.getName());
         pmsProductVo.setLogo(umsShop.getLogo());
         //查询sku的数据信息
-        List<PmsSkuStock> pmsProductSkuVos = pmsProductSkuMapper.selectSkuMessageByProductId(id);
-        pmsProductVo.setProductSkuList(pmsProductSkuVos);
+        if(pmsProduct.getProductType() != 3){
+            List<PmsSkuStock> pmsProductSkuVos = pmsProductSkuMapper.selectSkuMessageByProductId(productId);
+            pmsProductVo.setProductSkuList(pmsProductSkuVos);
+        }
         //查询评价的信息(最新五条)
-        List<PmsComment> comments = pmsCommentMapper.selectCommentMessageByProductId(id);
+        List<PmsComment> comments = pmsCommentMapper.selectCommentMessageByProductId(productId);
         pmsProductVo.setComments(comments);
         return pmsProductVo;
     }
@@ -91,6 +93,7 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
             PmsProduct pmsProduct = new PmsProduct();
             pmsProduct.setProductCategoryId(productCategory.getId());
             pmsProduct.setVerifyStatus(1);
+            pmsProduct.setProductType(3);
             pmsProduct.setDeleteStatus(0);
             pmsProduct.setPublishStatus(1);
             PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
@@ -103,14 +106,4 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
             return new PageInfo<>(courseProductVos);
         }).collect(Collectors.toList());
     }
-
-    @Override
-    public PmsCourseProductVo findCourseProductById(LoginAuthDto loginAuthDto, Long id) {
-        PmsProduct pmsCourseProduct = pmsProductMapper.selectByPrimaryKey(id);
-        PmsCourseProductVo courseProductVo = new PmsCourseProductVo();
-        BeanUtils.copyProperties(pmsCourseProduct, courseProductVo);
-        return courseProductVo;
-    }
-
-
 }

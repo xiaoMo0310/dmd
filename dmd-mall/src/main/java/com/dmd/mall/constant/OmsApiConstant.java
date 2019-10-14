@@ -4,35 +4,13 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * The class Omc api constant.
- *
- * @author paascloud.net@gmail.com
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/10/14 17:08
+ * @Description
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OmsApiConstant {
-
-	/**
-	 * The interface Cart.
-	 */
-	public interface Cart {
-		/**
-		 * 即购物车选中状态
-		 */
-		int CHECKED = 1;
-
-		/**
-		 * 购物车中未选中状态
-		 */
-		int UN_CHECKED = 0;
-		/**
-		 * The constant LIMIT_NUM_FAIL.
-		 */
-		String LIMIT_NUM_FAIL = "LIMIT_NUM_FAIL";
-		/**
-		 * The constant LIMIT_NUM_SUCCESS.
-		 */
-		String LIMIT_NUM_SUCCESS = "LIMIT_NUM_SUCCESS";
-	}
 
 	/**
 	 * The interface Shipping.

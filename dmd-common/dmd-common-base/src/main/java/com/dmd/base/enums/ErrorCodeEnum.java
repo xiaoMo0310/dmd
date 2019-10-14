@@ -330,138 +330,138 @@ public enum ErrorCodeEnum {
 	 */
 	UMS10015009(10015009, "找不到上级组织, groupId=%s"),
 	/**
-	 * OMS 10021001 error code enum.
+	 * PMS 10021001 error code enum.
 	 */
 // 1002 数据中心
-	OMS10021001(10021001, "获取地址信息失败"),
+	PMS10021001(10021001, "获取地址信息失败"),
 	/**
-	 * OMS 10021002 error code enum.
+	 * PMS 10021002 error code enum.
 	 */
-	OMS10021002(10021002, "找不到该地址信息"),
+	PMS10021002(10021002, "找不到该地址信息"),
 	/**
-	 * OMS 10021003 error code enum.
+	 * PMS 10021003 error code enum.
 	 */
-	OMS10021003(10021003, "获取商品信息失败"),
+	PMS10021003(10021003, "获取商品信息失败"),
 	/**
-	 * OMS 10021004 error code enum.
+	 * PMS 10021004 error code enum.
 	 */
-	OMS10021004(10021004, "找不到该商品信息,productId=%s"),
+	PMS10021004(10021004, "找不到该商品信息,productId=%s"),
 	/**
-	 * OMS 10021015 error code enum.
+	 * PMS 10021015 error code enum.
 	 */
-	OMS10021015(10021015, "商品不是在线售卖状态, productId=%s"),
+	PMS10021015(10021015, "商品不是在线售卖状态, productId=%s"),
 	/**
-	 * OMS 10021016 error code enum.
+	 * PMS 10021016 error code enum.
 	 */
-	OMS10021016(10021016, "商品库存不足, productId=%s"),
+	PMS10021016(10021016, "商品库存不足, productId=%s"),
 	/**
-	 * OMS 10021017 error code enum.
+	 * PMS 10021017 error code enum.
 	 */
-	OMS10021017(10021017, "产品已下架或者删除, productId=%s"),
+	PMS10021017(10021017, "产品已下架或者删除, productId=%s"),
 	/**
-	 * OMS 10021018 error code enum.
+	 * PMS 10021018 error code enum.
 	 */
-	OMS10021018(10021018, "找不到数据字典信息, dictId=%s"),
+	PMS10021018(10021018, "找不到数据字典信息, dictId=%s"),
 	/**
-	 * OMS 10021019 error code enum.
+	 * PMS 10021019 error code enum.
 	 */
-	OMS10021019(10021019, "更新字典状态失败, dictId=%s"),
+	PMS10021019(10021019, "更新字典状态失败, dictId=%s"),
 	/**
-	 * OMS 10021020 error code enum.
+	 * PMS 10021020 error code enum.
 	 */
-	OMS10021020(10021020, "上级数据字典不存在, dictId=%s"),
+	PMS10021020(10021020, "上级数据字典不存在, dictId=%s"),
 	/**
-	 * OMS 10021021 error code enum.
+	 * PMS 10021021 error code enum.
 	 */
-	OMS10021021(10021021, "商品ID不能为空"),
+	PMS10021021(10021021, "商品ID不能为空"),
 	/**
-	 * OMS 10021024 error code enum.
+	 * PMS 10021024 error code enum.
 	 */
-	OMS10021024(10021024, "商品编码不能为空"),
+	PMS10021024(10021024, "商品编码不能为空"),
 
 	/**
-	 * OMS 10023001 error code enum.
+	 * PMS 10023001 error code enum.
 	 */
-	OMS10023001(10023001, "找不到商品分类信息, categoryId=%s"),
+	PMS10023001(10023001, "找不到商品分类信息, categoryId=%s"),
 
 	/**
-	 * OMS 10023002 error code enum.
+	 * PMS 10023002 error code enum.
 	 */
-	OMS10023002(10023002, "上级商品分类不存在, categoryId=%s"),
+	PMS10023002(10023002, "上级商品分类不存在, categoryId=%s"),
 
 	/**
-	 * OMS 10023003 error code enum.
+	 * PMS 10023003 error code enum.
 	 */
-	OMS10023003(10023003, "更新商品分类状态失败, categoryId=%s"),
+	PMS10023003(10023003, "更新商品分类状态失败, categoryId=%s"),
 	/**
-	 * OMS 10021022 error code enum.
+	 * PMS 10021022 error code enum.
 	 */
-	OMS10021022(10021022, "更新商品信息失败, productId=%s"),
+	PMS10021022(10021022, "更新商品信息失败, productId=%s"),
 	/**
-	 * OMS 10021023 error code enum.
+	 * PMS 10021023 error code enum.
 	 */
-	OMS10021023(10021023, "删除商品信息失败, productId=%s"),
+	PMS10021023(10021023, "删除商品信息失败, productId=%s"),
 	/**
-	 * Omc 10031001 error code enum.
+	 * OMS 10031001 error code enum.
 	 */
 // 1003 订单中心
-	OMC10031001(10031001, "购物车为空, userId=%s"),
+	OMS10031001(10031001, "购物车为空, userId=%s"),
 	/**
-	 * Omc 10031002 error code enum.
+	 * OMS 10031002 error code enum.
 	 */
-	OMC10031002(10031002, "生成订单失败"),
+	OMS10031002(10031002, "生成订单失败"),
 	/**
-	 * Omc 10031003 error code enum.
+	 * OMS 10031003 error code enum.
 	 */
-	OMC10031003(10031003, "该用户此订单不存在"),
+	OMS10031003(10031003, "该用户此订单不存在"),
 	/**
-	 * Omc 10031004 error code enum.
+	 * OMS 10031004 error code enum.
 	 */
-	OMC10031004(10031004, "已付款, 无法取消订单"),
+	OMS10031004(10031004, "已付款, 无法取消订单"),
 	/**
-	 * Omc 10031005 error code enum.
+	 * OMS 10031005 error code enum.
 	 */
-	OMC10031005(10031005, "找不到订单信息, orderNo=%s"),
+	OMS10031005(10031005, "找不到订单信息, orderNo=%s"),
 	/**
-	 * Omc 10031006 error code enum.
+	 * OMS 10031006 error code enum.
 	 */
-	OMC10031006(10031006, "清空购物车失败"),
+	OMS10031006(10031006, "清空购物车失败"),
 	/**
-	 * Omc 10031007 error code enum.
+	 * OMS 10031007 error code enum.
 	 */
-	OMC10031007(10031007, "不存在默认地址"),
+	OMS10031007(10031007, "不存在默认地址"),
 	/**
-	 * Omc 10031008 error code enum.
+	 * OMS 10031008 error code enum.
 	 */
-	OMC10031008(10031008, "更新默认地址失败, addressId=%s"),
+	OMS10031008(10031008, "更新默认地址失败, addressId=%s"),
 	/**
-	 * Omc 10031009 error code enum.
+	 * OMS 10031009 error code enum.
 	 */
-	OMC10031009(10031009, "批量插入订单明细失败"),
+	OMS10031009(10031009, "批量插入订单明细失败"),
 	/**
-	 * Omc 10031010 error code enum.
+	 * OMS 10031010 error code enum.
 	 */
-	OMC10031010(10031010, "非快乐学习网的订单, 回调忽略"),
+	OMS10031010(10031010, "非快乐学习网的订单, 回调忽略"),
 	/**
-	 * Omc 10031011 error code enum.
+	 * OMS 10031011 error code enum.
 	 */
-	OMC10031011(10031011, "支付宝重复调用"),
+	OMS10031011(10031011, "支付宝重复调用"),
 	/**
-	 * Omc 10031012 error code enum.
+	 * OMS 10031012 error code enum.
 	 */
-	OMC10031012(10031012, "上传失败"),
+	OMS10031012(10031012, "上传失败"),
 	/**
-	 * Omc 10031013 error code enum.
+	 * OMS 10031013 error code enum.
 	 */
-	OMC10031013(10031013, "获取附件地址失败"),
+	OMS10031013(10031013, "获取附件地址失败"),
 	/**
-	 * Omc 10031014 error code enum.
+	 * OMS 10031014 error code enum.
 	 */
-	OMC10031014(10031014, "更新购物车数据失败, cartId=%s"),
+	OMS10031014(10031014, "更新购物车数据失败, cartId=%s"),
 	/**
-	 * Omc 10031016 error code enum.
+	 * OMS 10031016 error code enum.
 	 */
-	OMC10031016(10031016, "更新购物车数据失败, cartId=%s"),
+	OMS10031016(10031016, "更新购物车数据失败, cartId=%s"),
 	/**
 	 * Opc 10040001 error code enum.
 	 */

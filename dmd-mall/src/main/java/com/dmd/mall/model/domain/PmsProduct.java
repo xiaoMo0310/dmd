@@ -82,6 +82,10 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("审核状态：0->未审核；1->审核通过")
     private Integer verifyStatus;
 
+    @Column(name = "product_type")
+    @ApiModelProperty("商品类型(1:普通商品 2:船宿商品 3:课程商品)")
+    private Integer productType;
+
     @ApiModelProperty("排序")
     private Integer sort;
 
