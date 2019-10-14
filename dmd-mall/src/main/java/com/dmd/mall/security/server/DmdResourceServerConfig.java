@@ -46,7 +46,13 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .permitAll()
                 .antMatchers(
                         "/sso/*",//登录注册
-
+                        "/*.html",
+                        "/favicon.ico",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js",
+                        "/swagger-resources/**",
+                        "/v2/api-docs/**",
                         "/**"
 //                        "/home/**",//首页接口
 //                        "/login"

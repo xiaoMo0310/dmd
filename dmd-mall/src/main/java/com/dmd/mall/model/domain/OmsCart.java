@@ -1,22 +1,21 @@
 package com.dmd.mall.model.domain;
 
+import java.math.BigDecimal;
 import com.dmd.core.mybatis.BaseEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.ibatis.type.Alias;
-
 import javax.persistence.Column;
 import javax.persistence.Table;
-import java.math.BigDecimal;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
  * 购物车表
  * </p>
  *
- * @author YangAnsheng
+ * @author 王海成
  * @since 2019-10-12
  */
 @Data
@@ -88,7 +87,7 @@ private static final long serialVersionUID = 1L;
     private String productSn;
 
     @Column(name = "product_attr")
-    @ApiModelProperty("商品销售属性:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]")
+    @ApiModelProperty("商品销售属性:[{'key':'颜色','value':'颜色'},{'key':'容量','value':'4G'}]")
     private String productAttr;
 
 

@@ -40,5 +40,34 @@
         update_time,
         product_id, product_sku_id, member_id, shop_id, quantity, price, product_pic, product_name, product_sub_title, product_sku_code, member_nickname, delete_status, product_category_id, product_brand, product_sn, product_attr
     </sql>
-
+    <!--根据用户id查询购物车-->
+    <select id="findOmsCart" resultType="com.dmd.mall.model.domain.OmsCart">
+        select <include refid="Base_Column_List"/>
+        from oms_cart where delete_status=0 and member_id=#{memberId}
+    </select>
+    <!--根据id查询购物车-->
+    <select id="findOmsCartById" resultType="com.dmd.mall.model.domain.OmsCart">
+        select <include refid="Base_Column_List"/>
+        from oms_cart where delete_status=0 and id in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+        </foreach>
+    </select>
+    <!--生成购物车-->
+    <insert id="addOmsCart">
+        insert into oms_cart(product_id,product_sku_id,member_id,shop_id,quantity,price,product_pic,product_name,product_sub_title,product_sku_code,delete_status,product_category_id,product_brand,product_sn,product_attr,created_time,update_time) values (#{productId},#{productSkuId},#{memberId},#{shopId},#{quantity},#{price},#{productPic},#{productName},#{productSubTitle},#{productSkuCode},0,#{productCategoryId},#{productBrand},#{productSn},#{productAttr},#{createdTime},#{updateTime})
+    </insert>
+    <!--修改购物车商品的数量和购物是否被删除-->
+    <update id="updateOmsCart">
+        update oms_cart
+        set
+        <if test="quantity!=null">
+            quantity=#{quantity},
+        </if>
+        <if test="quantity!=null">
+            delete_status=#{deleteStatus},
+        </if>
+            update_time=#{updateTime}
+        where id=#{id}
+    </update>
 </mapper>
