@@ -1,7 +1,6 @@
 package com.dmd.mall.web.oms;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.domain.CommentBean;
 import com.dmd.mall.model.domain.DiveLogAirbottleBean;
 import com.dmd.mall.model.domain.DiveLogAndAirbottle;
 import com.dmd.mall.model.domain.DiveLogBean;
@@ -188,4 +187,19 @@ public class DiveLogController {
         return CommonResult.success(praiseNum);
     }
 
+    /**
+     * 潜水日志逻辑删除
+     * @param id
+     * @return
+     */
+    @ApiOperation("潜水日志逻辑删除")
+    @RequestMapping(value = "/updateDiveLogDelflag",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateDiveLogDelflag(@RequestParam Long id){
+        int count = diveLogService.updateDiveLogDelflag(id);
+        if (count > 0) {
+            return CommonResult.success(count,"删除成功");
+        }
+        return CommonResult.failed("删除失败");
+    }
 }

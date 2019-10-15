@@ -72,6 +72,8 @@
         UPDATE dmd_dynamic_comment SET delflag = 1 WHERE commentId = #{commentId} AND lw_userid = #{userId}
     </update>
 
-
+    <update id="updateDiveLogDelflag" parameterType="java.lang.Long">
+        UPDATE dmd_dynamic_comment SET delflag = 1 WHERE lw_for_diveLog_id = #{id}
+    </update>
 
 </mapper>

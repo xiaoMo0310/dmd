@@ -16,6 +16,7 @@
         <result column="product_id" property="productId" />
         <result column="product_pic" property="productPic" />
         <result column="product_name" property="productName" />
+        <result column="product_type" property="productType" />
         <result column="product_brand" property="productBrand" />
         <result column="product_sn" property="productSn" />
         <result column="product_price" property="productPrice" />
@@ -38,7 +39,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        order_id, order_sn, product_id, product_pic, product_name, product_brand, product_sn, product_price, product_quantity, product_sku_id, product_sku_code, product_category_id, integration_amount, real_amount, product_attr, total_price totalPrice
+        order_id, order_sn, product_id, product_pic, product_name, product_brand, product_sn, product_price, product_quantity, product_sku_id, product_sku_code, product_category_id, integration_amount, real_amount, product_attr, total_price totalPrice, product_type productType
     </sql>
 
 </mapper>

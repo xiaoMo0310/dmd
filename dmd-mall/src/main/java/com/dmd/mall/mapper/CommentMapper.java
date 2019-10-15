@@ -19,11 +19,11 @@ public interface CommentMapper {
 
     List<CommentBean> findCommentListById(@Param("forPid")Long forPid,@Param("forDynamicId") Long forDynamicId);
 
-    int addComment(CommentBean commentBean);
+    void addComment(CommentBean commentBean);
 
     Integer queryComment(Long id);
 
-    int updateCommentDelflag(@Param("commentId") Long commentId,@Param("userId")Long userId);
+    void updateCommentDelflag(@Param("commentId") Long commentId,@Param("userId")Long userId);
 
     void updateComment(Long id);
 }

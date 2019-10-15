@@ -275,4 +275,12 @@
     <select id="queryShare" parameterType="java.lang.Long" resultType="int">
         SELECT share_num FROM dmd_dive_log WHERE id = #{id}
     </select>
+
+    <update id="updateDiveLogDelflag" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET delflag = 1 WHERE id = #{id}
+    </update>
+
+    <update id="updateDiveLogAirbottleDelflag" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log_airbottle SET delflag = 1 WHERE dive_log_id = #{id}
+    </update>
 </mapper>

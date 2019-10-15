@@ -40,5 +40,8 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("对象id")
     private Long targetId;
 
+    @ApiModelProperty("关注的状态(1:已关注 2:取消关注)")
+    private Integer status;
+
 
 }

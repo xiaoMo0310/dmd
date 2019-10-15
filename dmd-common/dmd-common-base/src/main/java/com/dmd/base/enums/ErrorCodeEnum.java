@@ -463,6 +463,22 @@ public enum ErrorCodeEnum {
 	 */
 	OMS10031016(10031016, "更新购物车数据失败, cartId=%s"),
 	/**
+	 * OMS 10031015 error code enum.
+	 */
+	OMS10031015(10031015, "使用积分出现错误"),
+	/**
+	 * OMS 10031017 error code enum.
+	 */
+	OMS10031017(10031017, "订单商铺金额错误"),
+	/**
+	 * OMS 10031018 error code enum.
+	 */
+	OMS10031018(10031018, "订单商铺运费错误"),
+	/**
+	 * OMS 10031019 error code enum.
+	 */
+	OMS10031019(10031019, "订单总金额错误"),
+	/**
 	 * Opc 10040001 error code enum.
 	 */
 // 1004 对接中心

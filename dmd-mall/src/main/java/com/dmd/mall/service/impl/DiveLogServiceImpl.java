@@ -1,6 +1,7 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.WordFilter;
+import com.dmd.mall.mapper.DiveLogCommentMapper;
 import com.dmd.mall.mapper.DiveLogMapper;
 import com.dmd.mall.model.domain.DiveLogAirbottleBean;
 import com.dmd.mall.model.domain.DiveLogAndAirbottle;
@@ -24,6 +25,9 @@ public class DiveLogServiceImpl implements DiveLogService{
 
     @Autowired
     private DiveLogMapper diveLogMapper;
+
+    @Autowired
+    private DiveLogCommentMapper diveLogCommentMapper;
 
     @Override
     public List<DiveLogBean> queryDiveLogAll(Long userId) {
@@ -94,5 +98,16 @@ public class DiveLogServiceImpl implements DiveLogService{
     @Override
     public Integer queryShare(Long id) {
         return diveLogMapper.queryShare(id);
+    }
+
+    @Override
+    public int updateDiveLogDelflag(Long id) {
+
+        //删除潜水日志
+        diveLogMapper.updateDiveLogDelflag(id);
+        //删除潜水日志对应的气瓶消耗删除
+        diveLogMapper.updateDiveLogAirbottleDelflag(id);
+        //删除潜水日志对应日志下评论删除
+        return diveLogCommentMapper.updateDiveLogDelflag(id);
     }
 }

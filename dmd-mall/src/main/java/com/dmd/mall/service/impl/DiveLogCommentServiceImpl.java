@@ -82,9 +82,9 @@ public class DiveLogCommentServiceImpl implements DiveLogCommentService{
         String content = WordFilter.doFilter(commentBean.getContent());
         System.out.println(content);
         commentBean.setContent(content);
+        diveLogCommentMapper.addComment(commentBean);
         //发布评论，日志评论数加1
-        diveLogMapper.addrCommentNum(commentBean.getForDiveLogId());
-        return diveLogCommentMapper.addComment(commentBean);
+        return diveLogMapper.addrCommentNum(commentBean.getForDiveLogId());
     }
 
     @Override
@@ -117,16 +117,16 @@ public class DiveLogCommentServiceImpl implements DiveLogCommentService{
         String content = WordFilter.doFilter(commentBean.getContent());
         System.out.println(content);
         commentBean.setContent(content);
+        diveLogCommentMapper.addComment(commentBean);
         //发布回复，日志评论数加1
-        diveLogMapper.addrCommentNum(commentBean.getForDiveLogId());
-        return diveLogCommentMapper.addComment(commentBean);
+        return diveLogMapper.addrCommentNum(commentBean.getForDiveLogId());
     }
 
     @Override
     public int updateCommentDelflag(Long commentId, Long userId, Long forDiveLogId) {
+        diveLogCommentMapper.updateCommentDelflag(commentId,userId);
         //日志评论数量-1
-        diveLogMapper.reduceCommentNum(forDiveLogId);
-        return diveLogCommentMapper.updateCommentDelflag(commentId,userId);
+        return diveLogMapper.reduceCommentNum(forDiveLogId);
     }
 
 }

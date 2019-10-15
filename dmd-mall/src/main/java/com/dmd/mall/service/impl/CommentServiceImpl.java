@@ -99,9 +99,9 @@ public class CommentServiceImpl implements CommentService{
         String content = WordFilter.doFilter(commentBean.getContent());
         System.out.println(content);
         commentBean.setContent(content);
+        commentMapper.addComment(commentBean);
         //发布评论，动态评论数加1
-        dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
-        return commentMapper.addComment(commentBean);
+        return dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
     }
 
     @Override
@@ -134,16 +134,16 @@ public class CommentServiceImpl implements CommentService{
         String content = WordFilter.doFilter(commentBean.getContent());
         System.out.println(content);
         commentBean.setContent(content);
+        commentMapper.addComment(commentBean);
         //发布回复，动态评论数加1
-        dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
-        return commentMapper.addComment(commentBean);
+        return dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
     }
 
     @Override
     public int updateCommentDelflag(Long commentId,Long userId,Long DynamicId) {
+        commentMapper.updateCommentDelflag(commentId,userId);
         //相应动态评论数量-1
-        dynamicMapper.reduceCommentNum(DynamicId);
-        return commentMapper.updateCommentDelflag(commentId,userId);
+        return dynamicMapper.reduceCommentNum(DynamicId);
     }
 
 }

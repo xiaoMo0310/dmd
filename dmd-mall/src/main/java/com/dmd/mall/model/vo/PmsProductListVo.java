@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 @Data
 public class PmsProductListVo implements Serializable {
 
+    private static final long serialVersionUID = -676407263839970612L;
     private String id;
 
     /**

@@ -4,6 +4,7 @@ package com.dmd.mall.model.vo;
 import com.dmd.mall.model.domain.PmsComment;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,9 @@ import java.util.List;
  */
 
 @Data
-public class PmsProductVo {
+public class PmsProductVo implements Serializable {
 
+    private static final long serialVersionUID = -5479818911345372991L;
     /**
      * 商品id
      */

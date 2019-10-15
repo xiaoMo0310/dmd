@@ -31,4 +31,6 @@ public interface DiveLogService {
     int updateDiveLogShare(Long id);
 
     Integer queryShare(Long id);
+
+    int updateDiveLogDelflag(Long id);
 }

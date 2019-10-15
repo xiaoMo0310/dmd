@@ -2,6 +2,7 @@ package com.dmd.mall.model.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -12,7 +13,8 @@ import java.util.Date;
  * @Description 钱包记录 vo
  */
 @Data
-public class UmsWalletLogVo {
+public class UmsWalletLogVo implements Serializable {
+    private static final long serialVersionUID = 5571398237104208295L;
     /**
      * 操作金额
      */
