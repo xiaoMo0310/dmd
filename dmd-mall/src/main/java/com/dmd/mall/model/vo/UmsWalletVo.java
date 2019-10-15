@@ -3,6 +3,7 @@ package com.dmd.mall.model.vo;
 import com.github.pagehelper.PageInfo;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -12,8 +13,9 @@ import java.math.BigDecimal;
  * @Description 用户钱包vo类
  */
 @Data
-public class UmsWalletVo {
+public class UmsWalletVo implements Serializable {
 
+    private static final long serialVersionUID = 8665210949129897554L;
     /**
      *钱包总的金额
      */

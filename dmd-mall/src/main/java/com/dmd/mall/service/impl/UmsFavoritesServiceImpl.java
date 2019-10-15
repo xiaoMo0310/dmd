@@ -50,6 +50,7 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
         umsFavorites.setUserId(userId);
         umsFavorites.setTargetId(targetId);
         umsFavorites.setFavoriteType(favoriteType);
+        umsFavorites.setStatus(1);
         int count = umsFavoritesMapper.selectCount(umsFavorites);
         return count > 0;
     }

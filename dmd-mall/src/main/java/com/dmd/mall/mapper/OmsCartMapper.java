@@ -20,7 +20,7 @@ import java.util.List;
 @Component
 public interface OmsCartMapper extends MyMapper<OmsCart> {
 
-    List<OmsCart> selectCartByUserIdAndCartId(@Param("userId") Long userId, @Param("cartIds") List<Long> cartIds);
+    List<OmsCart> selectCartByUserIdAndCartId(@Param("userId") Long userId, @Param("shopId") Long shopId, @Param("cartIds") List<Long> cartIds);
     public List<OmsCart> findOmsCart(@Param("memberId") Integer memberId);
     public List<OmsCart> findOmsCartById(@Param("ids") List<Integer> ids);
     public int addOmsCart(OmsCart omsCart);

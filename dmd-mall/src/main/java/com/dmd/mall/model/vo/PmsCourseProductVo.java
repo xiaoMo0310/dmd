@@ -2,6 +2,7 @@ package com.dmd.mall.model.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -11,8 +12,9 @@ import java.math.BigDecimal;
  * @Description 课程商品 vo
  */
 @Data
-public class PmsCourseProductVo {
+public class PmsCourseProductVo implements Serializable {
 
+    private static final long serialVersionUID = -9112126058154349341L;
     /**
      * 店铺id
      */

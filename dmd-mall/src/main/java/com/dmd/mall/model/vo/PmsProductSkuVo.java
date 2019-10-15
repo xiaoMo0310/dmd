@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @Data
 public class PmsProductSkuVo extends BaseVo {
 
+    private static final long serialVersionUID = -2331848973904757213L;
     /**
      * 商品id
      */

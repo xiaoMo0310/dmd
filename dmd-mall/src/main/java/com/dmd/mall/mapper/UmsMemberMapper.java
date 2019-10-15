@@ -2,10 +2,14 @@ package com.dmd.mall.mapper;
 
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.domain.UmsMemberExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
+@Mapper
 public interface UmsMemberMapper {
     long countByExample(UmsMemberExample example);
 

@@ -12,7 +12,6 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.UmsUserWalletLog">
     <result column="id" property="id" />
-    <result column="version" property="version" />
     <result column="creator" property="creator" />
     <result column="creator_id" property="creatorId" />
     <result column="created_time" property="createdTime" />
