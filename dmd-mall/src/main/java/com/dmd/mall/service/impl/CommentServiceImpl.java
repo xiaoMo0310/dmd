@@ -141,8 +141,8 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public int updateCommentDelflag(Long commentId,Long userId,Long DynamicId) {
-        //相应动态评论数量-1
         commentMapper.updateCommentDelflag(commentId,userId);
+        //相应动态评论数量-1
         return dynamicMapper.reduceCommentNum(DynamicId);
     }
 

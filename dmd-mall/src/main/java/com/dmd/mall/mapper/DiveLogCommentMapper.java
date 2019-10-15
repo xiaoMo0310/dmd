@@ -19,4 +19,6 @@ public interface DiveLogCommentMapper {
     void addComment(CommentBean commentBean);
 
     void updateCommentDelflag(@Param("commentId") Long commentId,@Param("userId")Long userId);
+
+    int updateDiveLogDelflag(Long id);
 }
