@@ -6,6 +6,11 @@ import com.dmd.core.support.BaseService;
 import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.mapper.OmsCartMapper;
 import com.dmd.mall.mapper.OmsShippingMapper;
+import com.dmd.mall.mapper.PmsShopProductMapper;
+import com.dmd.mall.model.domain.OmsCart;
+import com.dmd.mall.mapper.OmsCartMapper;
+import com.dmd.mall.model.domain.OmsShipping;
+import com.dmd.mall.model.domain.PmsShopDetails;
 import com.dmd.mall.model.domain.*;
 import com.dmd.mall.model.vo.OrderCreateVo;
 import com.dmd.mall.service.OmsCartService;
@@ -18,6 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -25,6 +33,7 @@ import java.util.*;
  * <p>
  * 购物车表 服务实现类
  * </p>
+ *
  * @author 王海成
  * @since 2019-10-12
  */
@@ -36,6 +45,8 @@ public class OmsCartServiceImpl extends BaseService<OmsCart> implements OmsCartS
     @Autowired
     private OmsCartMapper omsCartMapper;
     @Autowired
+    private PmsShopProductMapper pmsShopProductMapper;
+    @Autowired
     private PmsProductService pmsProductService;
     @Autowired
     private PmsSkuStockService pmsSkuStockService;
@@ -43,12 +54,12 @@ public class OmsCartServiceImpl extends BaseService<OmsCart> implements OmsCartS
     private UmsShopService umsShopService;
 
     @Override
-    public List<OmsCart> findOmsCart(Integer memberId) {
+    public List<OmsCart> findOmsCart(Long memberId) {
         return omsCartMapper.findOmsCart(memberId);
     }
 
     @Override
-    public List<OmsCart> findOmsCartById(List<Integer> ids) {
+    public List<OmsCart> findOmsCartById(List<Long> ids) {
         return omsCartMapper.findOmsCartById(ids);
     }
 
@@ -58,14 +69,20 @@ public class OmsCartServiceImpl extends BaseService<OmsCart> implements OmsCartS
     }
 
     @Override
-    public int updateOmsCart(String quantity, String deleteStatus, Integer id, String updateTime) {
+    public int updateOmsCart(String quantity, String deleteStatus, List<Long> id, String updateTime) {
         return omsCartMapper.updateOmsCart(quantity,deleteStatus,id,updateTime);
     }
 
     @Override
-    public Map<String, Object> beforeSubmitOrder(List<Integer> ids, Integer memberId) {
-        findOmsCartById(ids);
-        return null;
+    public Map<String, Object> beforeSubmitOrder(List<Long> ids, Long memberId,Long productId) {
+        Map<String,Object> map=new TreeMap<>();
+        List<OmsCart> omsCarts=findOmsCartById(ids);
+        PmsShopDetails pmsShopDetails=pmsShopProductMapper.shopProductDetails(productId);//点击立即购买时需要的商品信息
+        List<OmsShipping> omsShippings=omsShippingMapper.selectByUserId(memberId);
+        map.put("omsCarts",omsCarts);
+        map.put("omsShippings",omsShippings);
+        map.put("pmsShopDetails",pmsShopDetails);
+        return map;
     }
 
     @Override

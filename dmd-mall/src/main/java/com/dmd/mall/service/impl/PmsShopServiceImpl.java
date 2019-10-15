@@ -1,10 +1,7 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.PmsShopProductMapper;
-import com.dmd.mall.model.domain.PmsComment;
-import com.dmd.mall.model.domain.PmsProduct;
-import com.dmd.mall.model.domain.PmsShopDetails;
-import com.dmd.mall.model.domain.SmsHomeAdvertise;
+import com.dmd.mall.model.domain.*;
 import com.dmd.mall.service.PmsShopService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -44,19 +41,21 @@ public class PmsShopServiceImpl implements PmsShopService {
     //获取商品详情和评论
     @Override
     public Map<String,Object> shopProductDetails(Map<String,Object> mapParam) {
-        int id=(int)mapParam.get("id");
+        Long id=(Long)mapParam.get("id");
         int page=(int)mapParam.get("page");
         int pageSize=(int)mapParam.get("pageSize");
         PmsShopDetails pmsShopDetails=psmShopProductMapper.shopProductDetails(id);
+        List<PmsProductAttribute> pmsProductAttributes=psmShopProductMapper.getPmsProductAttribute(pmsShopDetails.getProductAttributeCategoryId());
         Map<String,Object> map=new HashMap<>();
         PageInfo<PmsComment> pmsCommentPageInfo=shopProductComment(id,page,pageSize);
         map.put("pmsShopDetails",pmsShopDetails);
         map.put("pmsCommentPageInfo",pmsCommentPageInfo);
+        map.put("pmsProductAttributes",pmsProductAttributes);
         return map;
     }
     //获取商品评论
     @Override
-    public PageInfo<PmsComment> shopProductComment(int id,int page,int pageSize){
+    public PageInfo<PmsComment> shopProductComment(Long id,int page,int pageSize){
         PageHelper.startPage(page,pageSize);
         List<PmsComment> pmsComment=psmShopProductMapper.shopComment(id);
         PageInfo<PmsComment> pmsCommentPageInfo=new PageInfo<>(pmsComment);

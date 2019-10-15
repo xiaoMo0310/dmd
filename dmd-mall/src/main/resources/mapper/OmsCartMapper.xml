@@ -42,8 +42,9 @@
     </sql>
     <!--根据用户id查询购物车-->
     <select id="findOmsCart" resultType="com.dmd.mall.model.domain.OmsCart">
-        select <include refid="Base_Column_List"/>
-        from oms_cart where delete_status=0 and member_id=#{memberId}
+        select <include refid="Base_Column_List"/>,name
+        from oms_cart oc inner join ums_shop us on oc.shop_id=us.id
+        where delete_status=0 and member_id=#{memberId}
     </select>
     <!--根据id查询购物车-->
     <select id="findOmsCartById" resultType="com.dmd.mall.model.domain.OmsCart">
@@ -64,11 +65,14 @@
         <if test="quantity!=null">
             quantity=#{quantity},
         </if>
-        <if test="quantity!=null">
+        <if test="deleteStatus!=null">
             delete_status=#{deleteStatus},
         </if>
             update_time=#{updateTime}
-        where id=#{id}
+        where id in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </update>
 
     <select id="selectCartByUserIdAndCartId" resultType="com.dmd.mall.model.domain.OmsCart">

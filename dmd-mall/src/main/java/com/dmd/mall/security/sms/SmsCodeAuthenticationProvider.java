@@ -33,8 +33,11 @@ public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         SmsCodeAuthenticationToken smsToken=(SmsCodeAuthenticationToken)authentication;
         String type=smsToken.getType();
-        userDetailsService.setType("smsCode");
-        MemberDetails userDetails= (MemberDetails) userDetailsService.loadUserByUsername((String) smsToken.getPrincipal());
+        MemberDetails userDetails=null;
+        synchronized (MyUserDetailsService.class){
+            userDetailsService.setType("smsCode");
+            userDetails= (MemberDetails) userDetailsService.loadUserByUsername((String) smsToken.getPrincipal());
+        }
         SmsCodeAuthenticationToken smsCodeToken=new SmsCodeAuthenticationToken(userDetails,userDetails.getAuthorities());
         smsCodeToken.setDetails(smsToken.getDetails());
         return smsCodeToken;

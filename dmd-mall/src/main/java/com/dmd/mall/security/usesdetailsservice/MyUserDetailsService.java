@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MyUserDetailsService implements UserDetailsService, SocialUserDetailsService {
-    private String type;
+    private String type="";
 
     public String getType() {
         return type;
@@ -28,13 +28,18 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
     private UmsMemberService memberService;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UmsMember member = memberService.getByUsername(username);
-        if (member==null&&type.equals("smsCode")){
-            member=memberService.register(username);
-        }else if (member==null){
-            throw new InternalAuthenticationServiceException("无法获取用户信息");
+        try {
+            UmsMember member = memberService.getByUsername(username);
+            if (member==null&&type.equals("smsCode")){
+                member=memberService.register(username);
+            }else if (member==null){
+                throw new InternalAuthenticationServiceException("用户信息不存在，请先注册");
+            }
+            return new MemberDetails(member);
+        }finally {
+            type="";
         }
-        return new MemberDetails(member);
+
     }
 
     @Override
