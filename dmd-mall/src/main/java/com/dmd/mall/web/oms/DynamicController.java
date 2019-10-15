@@ -101,11 +101,11 @@ public class DynamicController {
 
 
     /**
-     * 点赞(喜欢)
+     * 动态点赞
      * @param 动态id
      * @return
      */
-    @ApiOperation("点赞数(喜欢)")
+    @ApiOperation("点赞动态")
     @RequestMapping(value = "/updateDynamicLikePraise",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult updateLikePraise(@RequestParam Long id){
@@ -117,11 +117,11 @@ public class DynamicController {
     }
 
     /**
-     * 点赞(不喜欢)
+     * 动态取消点赞
      * @param 动态id
      * @return
      */
-    @ApiOperation("点赞数(不喜欢)")
+    @ApiOperation("取消点赞动态")
     @RequestMapping(value = "/updateDynamicCancelPraise",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult updateCancelPraise(@RequestParam Long id){

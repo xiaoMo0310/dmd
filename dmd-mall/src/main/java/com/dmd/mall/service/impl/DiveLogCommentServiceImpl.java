@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.WordFilter;
 import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DiveLogCommentMapper;
 import com.dmd.mall.mapper.DiveLogMapper;
@@ -65,6 +66,7 @@ public class DiveLogCommentServiceImpl implements DiveLogCommentService{
         //获取ip地址是封装好的一个类
         String ip = IpaddressUtils.getIp(request);*/
         try {
+            //获取ip地址
             InetAddress ia = InetAddress.getLocalHost();
             String hostAddress = ia.getHostAddress();
             commentBean.setIpAddress(hostAddress);
@@ -76,6 +78,10 @@ public class DiveLogCommentServiceImpl implements DiveLogCommentService{
         commentBean.setStatus(0);
         //逻辑删除默认为否
         commentBean.setDelflag(0);
+        //敏感词过滤*****
+        String content = WordFilter.doFilter(commentBean.getContent());
+        System.out.println(content);
+        commentBean.setContent(content);
         //发布评论，日志评论数加1
         diveLogMapper.addrCommentNum(commentBean.getForDiveLogId());
         return diveLogCommentMapper.addComment(commentBean);
@@ -103,12 +109,16 @@ public class DiveLogCommentServiceImpl implements DiveLogCommentService{
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        //回复状态默认正常 状态（0=正常 1=待审核 2=禁止）
+        //回复状态默认正常 状态（0=正常  1=待审核 2=禁止）
         commentBean.setStatus(0);
         //逻辑删除默认为否
         commentBean.setDelflag(0);
-        //发布回复，动态评论数加1
-        //diveLogMapper.addrCommentNum(commentBean.getForDiveLogId());
+        //敏感词过滤*****
+        String content = WordFilter.doFilter(commentBean.getContent());
+        System.out.println(content);
+        commentBean.setContent(content);
+        //发布回复，日志评论数加1
+        diveLogMapper.addrCommentNum(commentBean.getForDiveLogId());
         return diveLogCommentMapper.addComment(commentBean);
     }
 
@@ -118,6 +128,5 @@ public class DiveLogCommentServiceImpl implements DiveLogCommentService{
         diveLogMapper.reduceCommentNum(forDiveLogId);
         return diveLogCommentMapper.updateCommentDelflag(commentId,userId);
     }
-
 
 }

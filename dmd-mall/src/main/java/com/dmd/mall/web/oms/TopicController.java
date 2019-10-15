@@ -49,7 +49,7 @@ public class TopicController {
     }
 
     /**
-     * 分页查询话题分类，热度排序
+     * 查询话题分类，热度排序
      * @param userId
      * @return
      */

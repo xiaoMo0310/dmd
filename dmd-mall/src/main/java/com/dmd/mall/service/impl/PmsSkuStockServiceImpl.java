@@ -1,10 +1,9 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.mall.model.domain.PmsSkuStock;
-import com.dmd.mall.mapper.PmsProductSkuMapper;
-import com.dmd.mall.service.PmsSkuStockService;
 import com.dmd.core.support.BaseService;
-
+import com.dmd.mall.mapper.PmsSkuStockMapper;
+import com.dmd.mall.model.domain.PmsSkuStock;
+import com.dmd.mall.service.PmsSkuStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,5 +21,5 @@ import org.springframework.transaction.annotation.Transactional;
 public class PmsSkuStockServiceImpl extends BaseService<PmsSkuStock> implements PmsSkuStockService {
 
     @Autowired
-    private PmsProductSkuMapper pmsProductSkuMapper;
+    private PmsSkuStockMapper pmsProductSkuMapper;
 }

@@ -59,6 +59,11 @@ public class PmsProductVo {
     private String description;
 
     /**
+     * 商品类型
+     */
+    private Integer productType;
+
+    /**
      * 商品sku信息
      */
     private List productSkuList = new ArrayList<>(0);

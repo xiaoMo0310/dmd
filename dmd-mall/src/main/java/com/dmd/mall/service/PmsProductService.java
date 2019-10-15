@@ -5,7 +5,6 @@ import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.PmsProduct;
 import com.dmd.mall.model.dto.SortDto;
-import com.dmd.mall.model.vo.PmsCourseProductVo;
 import com.dmd.mall.model.vo.PmsProductVo;
 import com.github.pagehelper.PageInfo;
 
@@ -29,10 +28,10 @@ public interface PmsProductService extends IService<PmsProduct> {
 
     /**
      * 根据商品的id查询商品的详细信息
-     * @param id
+     * @param productId
      * @return
      */
-    PmsProductVo findShipSleepsMessage(Long id);
+    PmsProductVo findShipSleepsMessage(Long productId);
 
     /**
      * 分页查询店铺商品的列表信息
@@ -50,11 +49,4 @@ public interface PmsProductService extends IService<PmsProduct> {
      */
     List<PageInfo> findCourseProduct(BaseQuery baseQuery, LoginAuthDto loginAuthDto);
 
-    /**
-     * 根据id查询详细的信息
-     * @param loginAuthDto
-     * @param id
-     * @return
-     */
-    PmsCourseProductVo findCourseProductById(LoginAuthDto loginAuthDto, Long id);
 }

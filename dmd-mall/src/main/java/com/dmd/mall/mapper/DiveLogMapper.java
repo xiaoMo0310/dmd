@@ -27,4 +27,14 @@ public interface DiveLogMapper {
     void addDiveLog(DiveLogBean diveLogBean);
 
     int addDiveLogAirbottle(@Param("diveLogAirbottleList")List<DiveLogAirbottleBean> diveLogAirbottleList);
+
+    int updateLikePraise(Long id);
+
+    int updateCancelPraise(Long id);
+
+    Integer queryPraise(Long id);
+
+    int updateDiveLogShare(Long id);
+
+    Integer queryShare(Long id);
 }

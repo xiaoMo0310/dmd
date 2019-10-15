@@ -13,15 +13,15 @@ import java.util.List;
  * </p>
  *
  * @author YangAnsheng
- * @since 2019-10-11
+ * @since 2019-10-14
  */
 @Mapper
 @Component
-public interface PmsProductSkuMapper extends MyMapper<PmsSkuStock> {
+public interface PmsSkuStockMapper extends MyMapper<PmsSkuStock> {
 
     /**
      * 根据商品id查询sku数据
-     * @param parentId
+     * @param productId
      * @return
      */
     List<PmsSkuStock> selectSkuMessageByProductId(Long productId);

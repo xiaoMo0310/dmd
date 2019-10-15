@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.WordFilter;
 import com.dmd.mall.mapper.DiveLogMapper;
 import com.dmd.mall.model.domain.DiveLogAirbottleBean;
 import com.dmd.mall.model.domain.DiveLogAndAirbottle;
@@ -48,19 +49,50 @@ public class DiveLogServiceImpl implements DiveLogService{
         diveLogBean.setPraiseNum(0);
         diveLogBean.setCommentNum(0);
         diveLogBean.setShareNum(0);
+        //敏感词过滤*****
+        String content = WordFilter.doFilter(diveLogBean.getDivingIdea());
+        System.out.println(content);
+        diveLogBean.setDivingIdea(content);
         diveLogMapper.addDiveLog(diveLogBean);
         //获取到新增完成之后的日志Id
-        Long id = diveLogBean.getId();
-        System.out.println(id);
+        Long diveLogId = diveLogBean.getId();
+        System.out.println(diveLogId);
         //潜水气瓶消耗实体
         List<DiveLogAirbottleBean> diveLogAirbottleList = diveLogAndAirbottle.getDiveLogAirbottleList();
         //循环赋值
         for (int i = 0; i < diveLogAirbottleList.size(); i++) {
-            diveLogAirbottleList.get(i).setDiveLogId(id);
+            diveLogAirbottleList.get(i).setDiveLogId(diveLogId);
             diveLogAirbottleList.get(i).setDelflag(0);
+            //剩余气瓶量
             diveLogAirbottleList.get(i).setResidue(diveLogAirbottleList.get(i).getStart() - diveLogAirbottleList.get(i).getEnd());
         }
         System.out.println(diveLogAirbottleList);
+        //新增气瓶消耗表
         return diveLogMapper.addDiveLogAirbottle(diveLogAirbottleList);
+    }
+
+    @Override
+    public int updateLikePraise(Long id) {
+        return diveLogMapper.updateLikePraise(id);
+    }
+
+    @Override
+    public int updateCancelPraise(Long id) {
+        return diveLogMapper.updateCancelPraise(id);
+    }
+
+    @Override
+    public Integer queryPraise(Long id) {
+        return diveLogMapper.queryPraise(id);
+    }
+
+    @Override
+    public int updateDiveLogShare(Long id) {
+        return diveLogMapper.updateDiveLogShare(id);
+    }
+
+    @Override
+    public Integer queryShare(Long id) {
+        return diveLogMapper.queryShare(id);
     }
 }

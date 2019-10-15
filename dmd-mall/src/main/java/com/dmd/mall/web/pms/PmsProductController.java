@@ -4,7 +4,6 @@ package com.dmd.mall.web.pms;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.dto.SortDto;
-import com.dmd.mall.model.vo.PmsCourseProductVo;
 import com.dmd.mall.model.vo.PmsProductVo;
 import com.dmd.mall.service.PmsProductService;
 import com.dmd.wrapper.WrapMapper;
@@ -44,11 +43,11 @@ public class PmsProductController extends BaseController {
         return WrapMapper.ok(list);
     }
 
-    @GetMapping("/shipSleepsProduct/findById/{id}")
+    @GetMapping("/shipSleepsProduct/findById/{productId}")
     @ApiOperation(httpMethod = "GET", value = "根据商品的id查询商品的详细信息")
-    @ApiImplicitParam(name ="id", value = "商品id", dataType = "Long", paramType = "path")
-    public Wrapper<PmsProductVo> findShipSleepsMessage(@PathVariable Long id) {
-        PmsProductVo pmsProductVo = pmsProductService.findShipSleepsMessage(id);
+    @ApiImplicitParam(name ="productId", value = "商品id", dataType = "Long", paramType = "path")
+    public Wrapper<PmsProductVo> findShipSleepsMessage(@PathVariable Long productId) {
+        PmsProductVo pmsProductVo = pmsProductService.findShipSleepsMessage(productId);
         return WrapMapper.ok(pmsProductVo);
     }
 
@@ -70,12 +69,5 @@ public class PmsProductController extends BaseController {
         return WrapMapper.ok(list);
     }
 
-    @GetMapping("/courseProduct/{id}")
-    @ApiOperation(httpMethod = "POST", value = "分页查询所有课程产品的列表信息")
-    @ApiImplicitParam(name ="id", value = "主键id", dataType = "long", paramType = "path")
-    public Wrapper findAttentionMessage(@RequestParam Long id) {
-        PmsCourseProductVo courseProductVo = pmsProductService.findCourseProductById(getLoginAuthDto(), id);
-        return WrapMapper.ok(courseProductVo);
-    }
 }
 

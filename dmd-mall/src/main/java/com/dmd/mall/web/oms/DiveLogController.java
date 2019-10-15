@@ -11,9 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * @author ChenYanbing
@@ -113,6 +112,80 @@ public class DiveLogController {
             return CommonResult.success(count,"日志发布成功");
         }
         return CommonResult.failed("日志发布失败");
+    }
+
+    /**
+     * 日志点赞
+     * @param id
+     * @return
+     */
+    @ApiOperation("点赞日志")
+    @RequestMapping(value = "/updateDiveLogLikePraise",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateLikePraise(@RequestParam Long id){
+        int count = diveLogService.updateLikePraise(id);
+        if (count > 0) {
+            return CommonResult.success(count,"点赞成功");
+        }
+        return CommonResult.failed("点赞失败");
+    }
+
+    /**
+     * 取消点赞
+     * @param id
+     * @return
+     */
+    @ApiOperation("取消点赞日志")
+    @RequestMapping(value = "/updateDiveLogCancelPraise",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateCancelPraise(@RequestParam Long id){
+        int count = diveLogService.updateCancelPraise(id);
+        if (count > 0) {
+            return CommonResult.success(count,"取消点赞成功");
+        }
+        return CommonResult.failed("取消点赞失败");
+    }
+
+    /**
+     * 查询日志点赞数
+     * @param id
+     * @return
+     */
+    @ApiOperation("查询日志点赞数")
+    @RequestMapping(value = "/selectDiveLogPraise",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<Integer> queryDiveLogPraise(@RequestParam Long id){
+        Integer praiseNum = diveLogService.queryPraise(id);
+        return CommonResult.success(praiseNum);
+    }
+
+    /**
+     * 日志分享
+     * @param id
+     * @return
+     */
+    @ApiOperation("分享数+1")
+    @RequestMapping(value = "/updateDiveLogShare",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateDiveLogShare(@RequestParam Long id){
+        int count = diveLogService.updateDiveLogShare(id);
+        if (count > 0) {
+            return CommonResult.success(count,"分享成功");
+        }
+        return CommonResult.failed("分享失败");
+    }
+
+    /**
+     * 查询日志分享数
+     * @param id
+     * @return
+     */
+    @ApiOperation("查询日志分享数")
+    @RequestMapping(value = "/selectDiveLogShare",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<Integer> queryDiveLogShare(@RequestParam Long id){
+        Integer praiseNum = diveLogService.queryShare(id);
+        return CommonResult.success(praiseNum);
     }
 
 }

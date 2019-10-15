@@ -79,7 +79,7 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
         // 1. 查找当前默认地址
         OmsShipping OmsShipping = omsShippingMapper.selectDefaultAddressByUserId(userId);
         if (PublicUtil.isEmpty(OmsShipping)) {
-            throw new OmsBizException(ErrorCodeEnum.OMC10031007);
+            throw new OmsBizException(ErrorCodeEnum.OMS10031007);
         }
         // 2. 判断默认地址和当前传入地址是否相同
         if (shippingId.equals(OmsShipping.getId())) {
@@ -101,7 +101,7 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
         updateNotDefault.setId(shippingId);
         result = omsShippingMapper.updateByPrimaryKeySelective(updateNotDefault);
         if (result < 1) {
-            throw new OmsBizException(ErrorCodeEnum.OMC10031008, shippingId);
+            throw new OmsBizException(ErrorCodeEnum.OMS10031008, shippingId);
         }
     }
 }

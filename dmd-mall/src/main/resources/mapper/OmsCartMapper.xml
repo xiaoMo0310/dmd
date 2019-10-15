@@ -70,4 +70,14 @@
             update_time=#{updateTime}
         where id=#{id}
     </update>
+
+    <select id="selectCartByUserIdAndCartId" resultType="com.dmd.mall.model.domain.OmsCart">
+        select
+        <include refid="Base_Column_List"/>
+        from oms_cart where delete_status=0 and member_id = #{userId} and id in
+        <foreach collection="cartIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

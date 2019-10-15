@@ -70,7 +70,7 @@
         where pp.delete_status = 0
         and pp.publish_status = 1
         and pp.verify_status = 1
-        and pp.product_category_id = #{categoryId}
+        and pp.productType = #{productType}
         and pp.shop_id = us.id
         <if test="sortDto.minPrice!= null">
             and price &gt;= #{sortDto.minPrice}

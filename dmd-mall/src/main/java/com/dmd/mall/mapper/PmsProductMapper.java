@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public interface PmsProductMapper extends MyMapper<PmsProduct> {
 
-    List<PmsProductListVo> selectShipSleepsProduct(@PathParam("sortDto") SortDto sortDto, @PathParam("categoryId") Long categoryId);
+    List<PmsProductListVo> selectShipSleepsProduct(@PathParam("sortDto") SortDto sortDto, @PathParam("productType") Integer productType);
 
     List<PmsProductListVo> selectProductByShopId(@PathParam("sortDto") SortDto sortDto, @PathParam("shopId") Long shopId);
 }
