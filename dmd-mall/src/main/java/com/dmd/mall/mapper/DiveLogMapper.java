@@ -14,9 +14,9 @@ import java.util.List;
  * @date 2019/10/1113:50
  */
 public interface DiveLogMapper {
-    void addrCommentNum(Long forDiveLogId);
+    int addrCommentNum(Long forDiveLogId);
 
-    void reduceCommentNum(Long forDiveLogId);
+    int reduceCommentNum(Long forDiveLogId);
 
     List<DiveLogBean> queryDiveLogAll(Long userId);
 

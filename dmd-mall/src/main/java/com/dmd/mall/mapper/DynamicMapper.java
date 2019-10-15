@@ -34,9 +34,9 @@ public interface DynamicMapper {
 
     int addDynamic(DynamicBean dynamicBean);
 
-    void addrCommentNum(Long forDynamicId);
+    int addrCommentNum(Long forDynamicId);
 
-    void reduceCommentNum(Long dynamicId);
+    int reduceCommentNum(Long dynamicId);
 
     List<DynamicBean> queryDynamicTime();
 
