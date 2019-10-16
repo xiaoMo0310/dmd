@@ -5,6 +5,7 @@ import com.dmd.mall.model.domain.UmsMember;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Set;
 
 /**
  * 会员管理Service
@@ -62,4 +63,6 @@ public interface UmsMemberService {
      * 修改个人资料
      * */
     CommonResult updatePersonalData(UmsMember umsMember);
+
+    Set<String> getPermission(String username);
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,11 +18,11 @@ import java.util.Set;
  * @author 王海成
  * @since
  */
-@Component
+
 public class AuthorizeConfigManagerImpl implements AuthorizeConfigManager{
 
     @Autowired
-    private Set<AuthorizeConfigProvider> authorizeConfigProviders;
+    private List<AuthorizeConfigProvider> authorizeConfigProviders;
 
     @Override
     public void config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config) {

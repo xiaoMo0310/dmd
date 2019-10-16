@@ -41,7 +41,7 @@ public class PmsShopServiceImpl implements PmsShopService {
     //获取商品详情和评论
     @Override
     public Map<String,Object> shopProductDetails(Map<String,Object> mapParam) {
-        Long id=(Long)mapParam.get("id");
+        Long id=Long.valueOf(mapParam.get("id").toString());
         int page=(int)mapParam.get("page");
         int pageSize=(int)mapParam.get("pageSize");
         PmsShopDetails pmsShopDetails=psmShopProductMapper.shopProductDetails(id);

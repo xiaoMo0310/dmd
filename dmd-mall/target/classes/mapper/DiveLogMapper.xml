@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.DiveLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="diveLogMap" type="com.dmd.mall.model.domain.DiveLogBean">
+        <result column="id" property="id" />
+        <result column="diving_number" property="divingNumber" />
+        <result column="maximum_depth" property="maximumDepth" />
+        <result column="average_depth" property="average_depth" />
+        <result column="depth_type" property="depthType" />
+        <result column="minimum_temperature" property="minimumTemperature" />
+        <result column="average_temperature" property="average_temperature" />
+        <result column="temperature_type" property="temperatureType" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="dive_sites" property="diveSites" />
+        <result column="diving_idea" property="divingIdea" />
+        <result column="diving_pictures" property="divingPictures" />
+        <result column="additional_weight" property="additionalWeight" />
+        <result column="water_way" property="waterWay" />
+        <result column="scenery" property="scenery" />
+        <result column="weather" property="weather" />
+        <result column="flow" property="flow" />
+        <result column="visibility" property="visibility" />
+        <result column="animal_photos" property="animalPhotos" />
+        <result column="clothing_brand" property="clothingBrand" />
+        <result column="airbottle_brand" property="airbottleBrand" />
+        <result column="mask_brand" property="maskBrand" />
+        <result column="watches_brand" property="watchesBrand" />
+        <result column="camera_brand" property="cameraBrand" />
+        <result column="fins_brand" property="finsBrand" />
+        <result column="createtime" property="createtime" />
+        <result column="edittime" property="edittime" />
+        <result column="delflag" property="delflag" />
+        <result column="author" property="author" />
+        <result column="user_head_portrait" property="userHeadPortrait" />
+        <result column="user_id" property="userId" />
+        <result column="praise_num" property="praiseNum" />
+        <result column="share_num" property="shareNum" />
+        <result column="comment_num" property="commentNum" />
+        <result column="dive_type" property="diveType" />
+
+    </resultMap>
+
+    <resultMap id="diveLogAirbottleMap" type="com.dmd.mall.model.domain.DiveLogAirbottleBean">
+        <result column="id" property="id" />
+        <result column="start" property="start" />
+        <result column="end" property="end" />
+        <result column="residue" property="residue" />
+        <result column="gas_type" property="gasType" />
+        <result column="mixture_type" property="mixtureType" />
+        <result column="airbottle_num" property="airbottleNum" />
+        <result column="user_id" property="userId" />
+        <result column="dive_log_id" property="diveLogId" />
+        <result column="delflag" property="delflag" />
+    </resultMap>
+
+    <update id="addrCommentNum" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET  comment_num = comment_num + 1 where id = #{value}
+    </update>
+
+    <update id="reduceCommentNum" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET  comment_num = comment_num - 1 where id = #{value} and comment_num > 0
+    </update>
+
+    <select id="queryDiveLogAll" resultMap="diveLogMap" parameterType="java.lang.Long">
+        SELECT
+        id,
+        diving_number,
+        maximum_depth,
+        average_depth,
+        depth_type,
+        minimum_temperature,
+        average_temperature,
+        temperature_type,
+        start_time,
+        end_time,
+        dive_sites,
+        diving_idea,
+        diving_pictures,
+        additional_weight,
+        water_way,
+        scenery,
+        weather,
+        flow,
+        visibility,
+        animal_photos,
+        clothing_brand,
+        airbottle_brand,
+        mask_brand,
+        watches_brand,
+        camera_brand,
+        fins_brand,
+        createtime,
+        edittime,
+        delflag,
+        author,
+        user_head_portrait,
+        user_id,
+        praise_num,
+        share_num,
+        comment_num,
+        dive_type
+        FROM
+        dmd_dive_log WHERE user_id = #{userId} AND delflag = 0
+    </select>
+
+    <select id="queryDiveLogById" resultMap="diveLogMap" parameterType="java.lang.Long">
+        SELECT
+        id,
+        diving_number,
+        maximum_depth,
+        average_depth,
+        depth_type,
+        minimum_temperature,
+        average_temperature,
+        temperature_type,
+        start_time,
+        end_time,
+        dive_sites,
+        diving_idea,
+        diving_pictures,
+        additional_weight,
+        water_way,
+        scenery,
+        weather,
+        flow,
+        visibility,
+        animal_photos,
+        clothing_brand,
+        airbottle_brand,
+        mask_brand,
+        watches_brand,
+        camera_brand,
+        fins_brand,
+        createtime,
+        edittime,
+        delflag,
+        author,
+        user_head_portrait,
+        user_id,
+        praise_num,
+        share_num,
+        comment_num,
+        dive_type
+        FROM
+        dmd_dive_log WHERE id = #{id} AND delflag = 0
+    </select>
+
+    <select id="queryDiveLogAirbottleByDiveLogId" resultMap="diveLogAirbottleMap" parameterType="java.lang.Long">
+        SELECT id,start,end,residue,gas_type,mixture_type,airbottle_num,user_id,dive_log_id,delflag
+        FROM dmd_dive_log_airbottle
+        WHERE dive_log_id = #{id} AND delflag = 0
+    </select>
+
+    <insert id="addDiveLog" parameterType="com.dmd.mall.model.domain.DiveLogBean" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO dmd_dive_log(
+        diving_number,
+        maximum_depth,
+        average_depth,
+        depth_type,
+        minimum_temperature,
+        average_temperature,
+        temperature_type,
+        start_time,
+        end_time,
+        dive_sites,
+        diving_idea,
+        diving_pictures,
+        additional_weight,
+        water_way,
+        scenery,
+        weather,
+        flow,
+        visibility,
+        animal_photos,
+        clothing_brand,
+        airbottle_brand,
+        mask_brand,
+        watches_brand,
+        camera_brand,
+        fins_brand,
+        createtime,
+        delflag,
+        author,
+        user_head_portrait,
+        user_id,
+        praise_num,
+        share_num,
+        comment_num,
+        dive_type
+        )
+        VALUES (
+        #{divingNumber,jdbcType=INTEGER},
+        #{maximumDepth,jdbcType=INTEGER},
+        #{average_depth,jdbcType=INTEGER},
+        #{depthType,jdbcType=INTEGER},
+        #{minimumTemperature,jdbcType=INTEGER},
+        #{average_temperature,jdbcType=INTEGER},
+        #{temperatureType,jdbcType=INTEGER},
+        #{startTime,jdbcType=TIMESTAMP},
+        #{endTime,jdbcType=TIMESTAMP},
+        #{diveSites,jdbcType=VARCHAR},
+        #{divingIdea,jdbcType=VARCHAR},
+        #{divingPictures,jdbcType=VARCHAR},
+        #{additionalWeight,jdbcType=INTEGER},
+        #{waterWay,jdbcType=VARCHAR},
+        #{scenery,jdbcType=VARCHAR},
+        #{weather,jdbcType=VARCHAR},
+        #{flow,jdbcType=VARCHAR},
+        #{visibility,jdbcType=INTEGER},
+        #{animalPhotos,jdbcType=VARCHAR},
+        #{clothingBrand,jdbcType=VARCHAR},
+        #{airbottleBrand,jdbcType=VARCHAR},
+        #{maskBrand,jdbcType=VARCHAR},
+        #{watchesBrand,jdbcType=VARCHAR},
+        #{cameraBrand,jdbcType=VARCHAR},
+        #{finsBrand,jdbcType=VARCHAR},
+        #{createtime,jdbcType=TIMESTAMP},
+        #{delflag,jdbcType=INTEGER},
+        #{author,jdbcType=VARCHAR},
+        #{userHeadPortrait,jdbcType=VARCHAR},
+        #{userId,jdbcType=BIGINT},
+        #{praiseNum,jdbcType=INTEGER},
+        #{shareNum,jdbcType=INTEGER},
+        #{commentNum,jdbcType=INTEGER},
+        #{diveType,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <insert id="addDiveLogAirbottle" parameterType="list">
+        INSERT INTO dmd_dive_log_airbottle(
+        start,
+        end,
+        residue,
+        gas_type,
+        mixture_type,
+        airbottle_num,
+        user_id,
+        dive_log_id,
+        delflag
+        ) VALUES
+        <foreach collection="diveLogAirbottleList" item="dept" index="index" separator=",">
+            (
+            #{dept.start,jdbcType=INTEGER},
+            #{dept.end,jdbcType=INTEGER},
+            #{dept.residue,jdbcType=INTEGER},
+            #{dept.gasType,jdbcType=INTEGER},
+            #{dept.mixtureType,jdbcType=INTEGER},
+            #{dept.airbottleNum,jdbcType=INTEGER},
+            #{dept.userId,jdbcType=BIGINT},
+            #{dept.diveLogId,jdbcType=BIGINT},
+            #{dept.delflag,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateLikePraise" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET  praise_num = praise_num + 1 where id = #{id}
+    </update>
+
+    <update id="updateCancelPraise" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET  praise_num = praise_num - 1 where id = #{id} and praise_num > 0
+    </update>
+
+    <select id="queryPraise" parameterType="java.lang.Long" resultType="int">
+        SELECT praise_num FROM dmd_dive_log WHERE id = #{id}
+    </select>
+
+    <update id="updateDiveLogShare" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET share_num = share_num + 1 WHERE id = #{id}
+    </update>
+
+    <select id="queryShare" parameterType="java.lang.Long" resultType="int">
+        SELECT share_num FROM dmd_dive_log WHERE id = #{id}
+    </select>
+
+    <update id="updateDiveLogDelflag" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log SET delflag = 1 WHERE id = #{id}
+    </update>
+
+    <update id="updateDiveLogAirbottleDelflag" parameterType="java.lang.Long">
+        UPDATE dmd_dive_log_airbottle SET delflag = 1 WHERE dive_log_id = #{id}
+    </update>
+</mapper>
