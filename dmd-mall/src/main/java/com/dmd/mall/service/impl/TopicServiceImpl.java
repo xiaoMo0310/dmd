@@ -38,4 +38,9 @@ public class TopicServiceImpl implements TopicService{
 
         return topicMapper.queryTopic();
     }
+
+    @Override
+    public List<TopicBean> queryTopicName(String topicName) {
+        return topicMapper.queryTopicName(topicName);
+    }
 }

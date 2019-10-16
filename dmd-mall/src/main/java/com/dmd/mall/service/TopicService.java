@@ -17,4 +17,6 @@ public interface TopicService {
     List<TopicBean> queryTopicById(Integer id);
 
     List<TopicBean> queryTopic();
+
+    List<TopicBean> queryTopicName(String topicName);
 }

@@ -28,6 +28,6 @@ public class AuthorizeConfigManagerImpl implements AuthorizeConfigManager{
         for (AuthorizeConfigProvider provider:authorizeConfigProviders) {
             provider.config(config);
         }
-        config.anyRequest().authenticated();
+        //config.anyRequest().authenticated();
     }
 }

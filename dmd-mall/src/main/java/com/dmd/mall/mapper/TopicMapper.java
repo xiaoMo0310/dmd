@@ -1,6 +1,7 @@
 package com.dmd.mall.mapper;
 
 import com.dmd.mall.model.domain.TopicBean;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,5 @@ public interface TopicMapper {
 
     void reduceTopicNum(Integer topicId);
 
+    List<TopicBean> queryTopicName(@Param("topicName") String topicName);
 }
