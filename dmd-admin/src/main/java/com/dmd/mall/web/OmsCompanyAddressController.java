@@ -1,7 +1,7 @@
 package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.OmsCompanyAddress;
+import com.dmd.mall.model.domain.OmsCompanyAddress;
 import com.dmd.mall.service.OmsCompanyAddressService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

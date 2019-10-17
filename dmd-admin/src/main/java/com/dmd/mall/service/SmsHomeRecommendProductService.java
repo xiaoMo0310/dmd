@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.SmsHomeRecommendProduct;
+import com.dmd.mall.model.domain.SmsHomeRecommendProduct;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

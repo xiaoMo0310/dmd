@@ -9,6 +9,7 @@ import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.mapper.*;
 import com.dmd.mall.model.domain.*;
 import com.dmd.mall.model.vo.OrderCreateVo;
+import com.dmd.mall.model.vo.OrderVo;
 import com.dmd.mall.service.OmsCartService;
 import com.dmd.mall.service.OmsOrderItemService;
 import com.dmd.mall.service.OmsOrderService;
@@ -59,7 +60,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createOrder(LoginAuthDto loginAuthDto, OrderCreateVo orderCreateVo) {
+    public OrderVo createOrder(LoginAuthDto loginAuthDto, OrderCreateVo orderCreateVo) {
         Long userId = loginAuthDto.getUserId();
         //查询用户的信息
         UmsMember umsMember = umsMemberMapper.selectByPrimaryKey(userId);
@@ -70,6 +71,10 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         }
         //总的购物车id
         List<OmsCart> carts = new ArrayList<>(0);
+        //总的价格
+        BigDecimal totalPayment = new BigDecimal("0.00");
+        //要支付订单
+        List<OmsOrder> orders = new ArrayList<>(0);
         for (OrderCreateVo.OrderGroupByShop orderGroupByShop : orderGroupByShopList) {
             List<OrderCreateVo.OrderDetailGroupByShop> orderDetailGroupByShop = orderGroupByShop.getOrderDetailGroupByShop();
             if (CollectionUtils.isEmpty(orderDetailGroupByShop)) {
@@ -122,7 +127,9 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
                 logger.error("生成订单失败, userId={}, shippingId={}, payment={}", userId, orderCreateVo.getShippingId(), payment);
                 throw new OmsBizException(ErrorCodeEnum.OMS10031002);
             }
-
+            //全部资金需要支付的价格
+            totalPayment = totalPayment.add(order.getPayAmount());
+            orders.add(order);
             //保存订单详情数据
             omsOrderItemService.batchInsertOrderDetail(orderItemList);
             //进行库存锁定
@@ -132,7 +139,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         //清空一下购物车
         this.cleanCart(carts, loginAuthDto);
         //返回给前端数据
-       // return assembleOrderVo(order, omcOrderDetailList);
+       return assembleOrderVo(totalPayment, orders);
     }
 
     /**
@@ -148,6 +155,18 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         return payment;
     }
 
+    /**
+     * 封装订单信息并保存
+     * @param umsMember
+     * @param shopId
+     * @param orderCreateVo
+     * @param payment
+     * @param postage
+     * @param integrationAmount
+     * @param loginAuthDto
+     * @param remark
+     * @return
+     */
     private OmsOrder assembleOrder(UmsMember umsMember, Long shopId, OrderCreateVo orderCreateVo, BigDecimal payment, BigDecimal postage, BigDecimal integrationAmount, LoginAuthDto loginAuthDto, String remark) {
         OmsOrder order = new OmsOrder();
 
@@ -260,4 +279,11 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         return integrationAmount;
     }
 
+    public OrderVo assembleOrderVo(BigDecimal totalPayemnt, List<OmsOrder> order){
+        OrderVo orderVo = new OrderVo();
+        List<String> orderSns = order.stream().map(OmsOrder::getOrderSn).collect(Collectors.toList());
+        orderVo.setTotalPayment(totalPayemnt);
+        orderVo.setOrderSns(orderSns);
+        return orderVo;
+    };
 }

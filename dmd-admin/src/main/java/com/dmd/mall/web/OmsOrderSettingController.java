@@ -1,7 +1,7 @@
 package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.OmsOrderSetting;
+import com.dmd.mall.model.domain.OmsOrderSetting;
 import com.dmd.mall.service.OmsOrderSettingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

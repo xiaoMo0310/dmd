@@ -1,8 +1,8 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.OmsCompanyAddressMapper;
-import com.dmd.mall.model.OmsCompanyAddress;
-import com.dmd.mall.model.OmsCompanyAddressExample;
+import com.dmd.mall.model.domain.OmsCompanyAddress;
+import com.dmd.mall.model.domain.OmsCompanyAddressExample;
 import com.dmd.mall.service.OmsCompanyAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

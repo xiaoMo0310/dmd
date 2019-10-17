@@ -1,8 +1,8 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.OmsOrderReturnReasonMapper;
-import com.dmd.mall.model.OmsOrderReturnReason;
-import com.dmd.mall.model.OmsOrderReturnReasonExample;
+import com.dmd.mall.model.domain.OmsOrderReturnReason;
+import com.dmd.mall.model.domain.OmsOrderReturnReasonExample;
 import com.dmd.mall.service.OmsOrderReturnReasonService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

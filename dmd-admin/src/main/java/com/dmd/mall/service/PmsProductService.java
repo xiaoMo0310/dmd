@@ -1,9 +1,9 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.PmsProductParam;
-import com.dmd.mall.dto.PmsProductQueryParam;
-import com.dmd.mall.dto.PmsProductResult;
-import com.dmd.mall.model.PmsProduct;
+import com.dmd.mall.model.dto.PmsProductParam;
+import com.dmd.mall.model.dto.PmsProductQueryParam;
+import com.dmd.mall.model.dto.PmsProductResult;
+import com.dmd.mall.model.domain.PmsProduct;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

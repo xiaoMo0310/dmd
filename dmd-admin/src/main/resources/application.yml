@@ -1,11 +1,18 @@
+server:
+  port: 8090
 spring:
+  application:
+    name: @pom.artifactId@
   profiles:
-    active: dev #默认为开发环境
-
+    active: @profileActive@
 mybatis:
+  type-aliases-package: com.dmd.mall.model.domain
   mapper-locations:
     - classpath:dao/*.xml
-    - classpath*:mapper/*.xml
+    - classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
 
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
@@ -29,6 +36,9 @@ aliyun:
 logging:
   level:
     root: info #日志配置DEBUG,INFO,WARN,ERROR
-    com.macro.mall: debug
+    com.dmd.mall: debug
 #  file: demo_log.log #配置日志生成路径
 #  path: /var/logs #配置日志文件名称
+
+dmd:
+  enableSqlLogInterceptor: true

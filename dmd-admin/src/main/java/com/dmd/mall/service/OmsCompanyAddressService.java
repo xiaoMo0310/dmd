@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.OmsCompanyAddress;
+import com.dmd.mall.model.domain.OmsCompanyAddress;
 
 import java.util.List;
 

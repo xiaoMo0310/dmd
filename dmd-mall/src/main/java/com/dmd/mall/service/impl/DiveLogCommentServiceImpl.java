@@ -1,7 +1,6 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.WordFilter;
-import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DiveLogCommentMapper;
 import com.dmd.mall.mapper.DiveLogMapper;
 import com.dmd.mall.model.domain.CommentBean;

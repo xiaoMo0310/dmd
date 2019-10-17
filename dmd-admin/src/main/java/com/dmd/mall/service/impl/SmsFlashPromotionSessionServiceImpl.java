@@ -1,9 +1,9 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.mall.dto.SmsFlashPromotionSessionDetail;
+import com.dmd.mall.model.dto.SmsFlashPromotionSessionDetail;
 import com.dmd.mall.mapper.SmsFlashPromotionSessionMapper;
-import com.dmd.mall.model.SmsFlashPromotionSession;
-import com.dmd.mall.model.SmsFlashPromotionSessionExample;
+import com.dmd.mall.model.domain.SmsFlashPromotionSession;
+import com.dmd.mall.model.domain.SmsFlashPromotionSessionExample;
 import com.dmd.mall.service.SmsFlashPromotionProductRelationService;
 import com.dmd.mall.service.SmsFlashPromotionSessionService;
 import org.springframework.beans.BeanUtils;

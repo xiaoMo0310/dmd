@@ -1,7 +1,7 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.SmsFlashPromotionSessionDetail;
-import com.dmd.mall.model.SmsFlashPromotionSession;
+import com.dmd.mall.model.dto.SmsFlashPromotionSessionDetail;
+import com.dmd.mall.model.domain.SmsFlashPromotionSession;
 
 import java.util.List;
 

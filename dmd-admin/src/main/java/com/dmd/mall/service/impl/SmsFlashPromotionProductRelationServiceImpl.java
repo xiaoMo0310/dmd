@@ -1,10 +1,10 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.mall.dto.SmsFlashPromotionProduct;
-import com.dmd.mall.mapper.SmsFlashPromotionProductRelationDao;
+import com.dmd.mall.model.dto.SmsFlashPromotionProduct;
+import com.dmd.mall.dao.SmsFlashPromotionProductRelationDao;
 import com.dmd.mall.mapper.SmsFlashPromotionProductRelationMapper;
-import com.dmd.mall.model.SmsFlashPromotionProductRelation;
-import com.dmd.mall.model.SmsFlashPromotionProductRelationExample;
+import com.dmd.mall.model.domain.SmsFlashPromotionProductRelation;
+import com.dmd.mall.model.domain.SmsFlashPromotionProductRelationExample;
 import com.dmd.mall.service.SmsFlashPromotionProductRelationService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

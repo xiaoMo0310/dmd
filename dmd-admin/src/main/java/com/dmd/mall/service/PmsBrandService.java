@@ -1,7 +1,7 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.PmsBrandParam;
-import com.dmd.mall.model.PmsBrand;
+import com.dmd.mall.model.dto.PmsBrandParam;
+import com.dmd.mall.model.domain.PmsBrand;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

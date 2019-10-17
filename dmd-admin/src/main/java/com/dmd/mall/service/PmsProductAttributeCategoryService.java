@@ -1,7 +1,7 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.PmsProductAttributeCategoryItem;
-import com.dmd.mall.model.PmsProductAttributeCategory;
+import com.dmd.mall.model.dto.PmsProductAttributeCategoryItem;
+import com.dmd.mall.model.domain.PmsProductAttributeCategory;
 
 import java.util.List;
 

@@ -1,8 +1,13 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.mall.dto.SmsCouponParam;
-import com.dmd.mall.mapper.*;
-import com.dmd.mall.model.*;
+import com.dmd.mall.dao.SmsCouponDao;
+import com.dmd.mall.dao.SmsCouponProductCategoryRelationDao;
+import com.dmd.mall.dao.SmsCouponProductRelationDao;
+import com.dmd.mall.mapper.SmsCouponMapper;
+import com.dmd.mall.mapper.SmsCouponProductCategoryRelationMapper;
+import com.dmd.mall.mapper.SmsCouponProductRelationMapper;
+import com.dmd.mall.model.domain.*;
+import com.dmd.mall.model.dto.SmsCouponParam;
 import com.dmd.mall.service.SmsCouponService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

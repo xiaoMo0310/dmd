@@ -2,8 +2,8 @@ package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.dto.*;
-import com.dmd.mall.model.OmsOrder;
+import com.dmd.mall.model.dto.*;
+import com.dmd.mall.model.domain.OmsOrder;
 import com.dmd.mall.service.OmsOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

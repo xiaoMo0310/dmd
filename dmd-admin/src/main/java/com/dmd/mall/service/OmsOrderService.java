@@ -1,7 +1,7 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.*;
-import com.dmd.mall.model.OmsOrder;
+import com.dmd.mall.model.dto.*;
+import com.dmd.mall.model.domain.OmsOrder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

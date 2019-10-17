@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.OmsOrderReturnReason;
+import com.dmd.mall.model.domain.OmsOrderReturnReason;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.OmsOrderReturnApplyResult;
-import com.dmd.mall.dto.OmsReturnApplyQueryParam;
-import com.dmd.mall.dto.OmsUpdateStatusParam;
-import com.dmd.mall.model.OmsOrderReturnApply;
+import com.dmd.mall.model.dto.OmsOrderReturnApplyResult;
+import com.dmd.mall.model.dto.OmsReturnApplyQueryParam;
+import com.dmd.mall.model.dto.OmsUpdateStatusParam;
+import com.dmd.mall.model.domain.OmsOrderReturnApply;
 
 import java.util.List;
 

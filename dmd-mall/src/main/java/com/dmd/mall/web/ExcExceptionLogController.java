@@ -24,6 +24,5 @@ public class ExcExceptionLogController {
     @Autowired
     private ExcExceptionLogService excExceptionLogService;
 
-
 }
 

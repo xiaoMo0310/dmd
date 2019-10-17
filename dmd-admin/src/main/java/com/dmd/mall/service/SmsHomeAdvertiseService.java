@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.SmsHomeAdvertise;
+import com.dmd.mall.model.domain.SmsHomeAdvertise;
 
 import java.util.List;
 

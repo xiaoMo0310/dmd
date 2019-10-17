@@ -2,8 +2,8 @@ package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.dto.PmsProductAttributeCategoryItem;
-import com.dmd.mall.model.PmsProductAttributeCategory;
+import com.dmd.mall.model.dto.PmsProductAttributeCategoryItem;
+import com.dmd.mall.model.domain.PmsProductAttributeCategory;
 import com.dmd.mall.service.PmsProductAttributeCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

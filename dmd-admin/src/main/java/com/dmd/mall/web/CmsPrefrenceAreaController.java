@@ -1,7 +1,7 @@
 package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.CmsPrefrenceArea;
+import com.dmd.mall.model.domain.CmsPrefrenceArea;
 import com.dmd.mall.service.CmsPrefrenceAreaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

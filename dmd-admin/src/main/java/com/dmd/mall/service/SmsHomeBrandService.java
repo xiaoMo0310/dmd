@@ -1,7 +1,7 @@
 package com.dmd.mall.service;
 
 
-import com.dmd.mall.model.SmsHomeBrand;
+import com.dmd.mall.model.domain.SmsHomeBrand;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

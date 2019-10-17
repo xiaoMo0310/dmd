@@ -1,8 +1,8 @@
 package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.dto.UmsPermissionNode;
-import com.dmd.mall.model.UmsPermission;
+import com.dmd.mall.model.dto.UmsPermissionNode;
+import com.dmd.mall.model.domain.UmsPermission;
 import com.dmd.mall.service.UmsPermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

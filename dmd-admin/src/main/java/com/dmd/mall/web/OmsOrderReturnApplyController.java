@@ -2,10 +2,10 @@ package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.dto.OmsOrderReturnApplyResult;
-import com.dmd.mall.dto.OmsReturnApplyQueryParam;
-import com.dmd.mall.dto.OmsUpdateStatusParam;
-import com.dmd.mall.model.OmsOrderReturnApply;
+import com.dmd.mall.model.dto.OmsOrderReturnApplyResult;
+import com.dmd.mall.model.dto.OmsReturnApplyQueryParam;
+import com.dmd.mall.model.dto.OmsUpdateStatusParam;
+import com.dmd.mall.model.domain.OmsOrderReturnApply;
 import com.dmd.mall.service.OmsOrderReturnApplyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

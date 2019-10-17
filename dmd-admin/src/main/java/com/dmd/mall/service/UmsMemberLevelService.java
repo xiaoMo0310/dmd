@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.UmsMemberLevel;
+import com.dmd.mall.model.domain.UmsMemberLevel;
 
 import java.util.List;
 

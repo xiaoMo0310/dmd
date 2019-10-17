@@ -2,9 +2,9 @@ package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.dto.PmsProductAttributeParam;
-import com.dmd.mall.dto.ProductAttrInfo;
-import com.dmd.mall.model.PmsProductAttribute;
+import com.dmd.mall.model.dto.PmsProductAttributeParam;
+import com.dmd.mall.model.dto.ProductAttrInfo;
+import com.dmd.mall.model.domain.PmsProductAttribute;
 import com.dmd.mall.service.PmsProductAttributeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

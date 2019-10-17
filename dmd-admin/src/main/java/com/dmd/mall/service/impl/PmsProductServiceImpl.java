@@ -1,10 +1,11 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.mall.dto.PmsProductParam;
-import com.dmd.mall.dto.PmsProductQueryParam;
-import com.dmd.mall.dto.PmsProductResult;
+import com.dmd.mall.dao.*;
 import com.dmd.mall.mapper.*;
-import com.dmd.mall.model.*;
+import com.dmd.mall.model.domain.*;
+import com.dmd.mall.model.dto.PmsProductParam;
+import com.dmd.mall.model.dto.PmsProductQueryParam;
+import com.dmd.mall.model.dto.PmsProductResult;
 import com.dmd.mall.service.PmsProductService;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;

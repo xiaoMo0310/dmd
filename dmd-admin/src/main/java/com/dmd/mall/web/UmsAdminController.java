@@ -2,11 +2,11 @@ package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.dto.UmsAdminLoginParam;
-import com.dmd.mall.dto.UmsAdminParam;
-import com.dmd.mall.model.UmsAdmin;
-import com.dmd.mall.model.UmsPermission;
-import com.dmd.mall.model.UmsRole;
+import com.dmd.mall.model.dto.UmsAdminLoginParam;
+import com.dmd.mall.model.dto.UmsAdminParam;
+import com.dmd.mall.model.domain.UmsAdmin;
+import com.dmd.mall.model.domain.UmsPermission;
+import com.dmd.mall.model.domain.UmsRole;
 import com.dmd.mall.service.UmsAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -4,6 +4,7 @@ import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.OmsOrder;
 import com.dmd.mall.model.vo.OrderCreateVo;
+import com.dmd.mall.model.vo.OrderVo;
 
 /**
  * <p>
@@ -20,5 +21,5 @@ public interface OmsOrderService extends IService<OmsOrder> {
      * @param loginAuthDto
      * @param orderCreateVo
      */
-    void createOrder(LoginAuthDto loginAuthDto, OrderCreateVo orderCreateVo);
+    OrderVo createOrder(LoginAuthDto loginAuthDto, OrderCreateVo orderCreateVo);
 }

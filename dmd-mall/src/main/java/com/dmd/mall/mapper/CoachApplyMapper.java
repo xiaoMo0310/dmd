@@ -1,9 +1,6 @@
 package com.dmd.mall.mapper;
 
 import com.dmd.mall.model.domain.CoachApplyBean;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
 
 /**
  * @author ChenYanbing

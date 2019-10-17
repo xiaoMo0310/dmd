@@ -1,9 +1,9 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.UmsAdminParam;
-import com.dmd.mall.model.UmsAdmin;
-import com.dmd.mall.model.UmsPermission;
-import com.dmd.mall.model.UmsRole;
+import com.dmd.mall.model.dto.UmsAdminParam;
+import com.dmd.mall.model.domain.UmsAdmin;
+import com.dmd.mall.model.domain.UmsPermission;
+import com.dmd.mall.model.domain.UmsRole;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

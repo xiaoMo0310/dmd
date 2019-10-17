@@ -91,7 +91,7 @@ public class OmsCartServiceImpl extends BaseService<OmsCart> implements OmsCartS
             }
             //校验库存
             //查询商品的库存
-            if (cartItem.getQuantity() > pmsSkuStock.getStock()) {
+            if (cartItem.getQuantity() > (pmsSkuStock.getStock() - pmsSkuStock.getLockStock())) {
                 logger.error("商品库存不足, productId={}", product.getId());
                 throw new OmsBizException(ErrorCodeEnum.PMS10021016, product.getId());
             }

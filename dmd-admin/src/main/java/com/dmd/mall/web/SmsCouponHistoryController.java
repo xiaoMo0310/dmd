@@ -2,7 +2,7 @@ package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.SmsCouponHistory;
+import com.dmd.mall.model.domain.SmsCouponHistory;
 import com.dmd.mall.service.SmsCouponHistoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

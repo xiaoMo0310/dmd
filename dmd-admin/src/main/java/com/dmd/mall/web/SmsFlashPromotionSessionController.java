@@ -1,8 +1,8 @@
 package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.dto.SmsFlashPromotionSessionDetail;
-import com.dmd.mall.model.SmsFlashPromotionSession;
+import com.dmd.mall.model.dto.SmsFlashPromotionSessionDetail;
+import com.dmd.mall.model.domain.SmsFlashPromotionSession;
 import com.dmd.mall.service.SmsFlashPromotionSessionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

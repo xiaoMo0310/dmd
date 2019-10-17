@@ -1,13 +1,13 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.mall.dto.*;
-import com.dmd.mall.mapper.OmsOrderDao;
+import com.dmd.mall.model.dto.*;
+import com.dmd.mall.dao.OmsOrderDao;
 import com.dmd.mall.mapper.OmsOrderMapper;
-import com.dmd.mall.mapper.OmsOrderOperateHistoryDao;
+import com.dmd.mall.dao.OmsOrderOperateHistoryDao;
 import com.dmd.mall.mapper.OmsOrderOperateHistoryMapper;
-import com.dmd.mall.model.OmsOrder;
-import com.dmd.mall.model.OmsOrderExample;
-import com.dmd.mall.model.OmsOrderOperateHistory;
+import com.dmd.mall.model.domain.OmsOrder;
+import com.dmd.mall.model.domain.OmsOrderExample;
+import com.dmd.mall.model.domain.OmsOrderOperateHistory;
 import com.dmd.mall.service.OmsOrderService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

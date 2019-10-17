@@ -1,12 +1,12 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.mall.dto.PmsBrandParam;
+import com.dmd.mall.model.dto.PmsBrandParam;
 import com.dmd.mall.mapper.PmsBrandMapper;
 import com.dmd.mall.mapper.PmsProductMapper;
-import com.dmd.mall.model.PmsBrand;
-import com.dmd.mall.model.PmsBrandExample;
-import com.dmd.mall.model.PmsProduct;
-import com.dmd.mall.model.PmsProductExample;
+import com.dmd.mall.model.domain.PmsBrand;
+import com.dmd.mall.model.domain.PmsBrandExample;
+import com.dmd.mall.model.domain.PmsProduct;
+import com.dmd.mall.model.domain.PmsProductExample;
 import com.dmd.mall.service.PmsBrandService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;

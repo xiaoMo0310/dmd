@@ -1,8 +1,8 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.CmsSubjectMapper;
-import com.dmd.mall.model.CmsSubject;
-import com.dmd.mall.model.CmsSubjectExample;
+import com.dmd.mall.model.domain.CmsSubject;
+import com.dmd.mall.model.domain.CmsSubjectExample;
 import com.dmd.mall.service.CmsSubjectService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

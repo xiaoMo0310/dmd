@@ -1,8 +1,8 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.SmsHomeRecommendSubjectMapper;
-import com.dmd.mall.model.SmsHomeRecommendSubject;
-import com.dmd.mall.model.SmsHomeRecommendSubjectExample;
+import com.dmd.mall.model.domain.SmsHomeRecommendSubject;
+import com.dmd.mall.model.domain.SmsHomeRecommendSubjectExample;
 import com.dmd.mall.service.SmsHomeRecommendSubjectService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

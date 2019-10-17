@@ -1,10 +1,10 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.mall.dto.PmsProductAttributeCategoryItem;
-import com.dmd.mall.mapper.PmsProductAttributeCategoryDao;
+import com.dmd.mall.model.dto.PmsProductAttributeCategoryItem;
+import com.dmd.mall.dao.PmsProductAttributeCategoryDao;
 import com.dmd.mall.mapper.PmsProductAttributeCategoryMapper;
-import com.dmd.mall.model.PmsProductAttributeCategory;
-import com.dmd.mall.model.PmsProductAttributeCategoryExample;
+import com.dmd.mall.model.domain.PmsProductAttributeCategory;
+import com.dmd.mall.model.domain.PmsProductAttributeCategoryExample;
 import com.dmd.mall.service.PmsProductAttributeCategoryService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

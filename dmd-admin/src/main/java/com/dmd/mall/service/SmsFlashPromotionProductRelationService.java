@@ -1,7 +1,7 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.SmsFlashPromotionProduct;
-import com.dmd.mall.model.SmsFlashPromotionProductRelation;
+import com.dmd.mall.model.dto.SmsFlashPromotionProduct;
+import com.dmd.mall.model.domain.SmsFlashPromotionProductRelation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

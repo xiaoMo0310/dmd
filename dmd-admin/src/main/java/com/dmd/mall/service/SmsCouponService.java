@@ -1,7 +1,7 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.SmsCouponParam;
-import com.dmd.mall.model.SmsCoupon;
+import com.dmd.mall.model.dto.SmsCouponParam;
+import com.dmd.mall.model.domain.SmsCoupon;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

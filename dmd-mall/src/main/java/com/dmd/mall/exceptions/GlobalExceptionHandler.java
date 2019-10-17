@@ -37,10 +37,8 @@ public class GlobalExceptionHandler {
     @Resource
     private ExcExceptionLogService exceptionLogService;
 
-
     /**
      * 参数非法异常.
-     *
      * @param e the e
      * @return the wrapper
      */

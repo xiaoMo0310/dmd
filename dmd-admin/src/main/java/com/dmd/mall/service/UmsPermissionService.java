@@ -1,7 +1,7 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.UmsPermissionNode;
-import com.dmd.mall.model.UmsPermission;
+import com.dmd.mall.model.dto.UmsPermissionNode;
+import com.dmd.mall.model.domain.UmsPermission;
 
 import java.util.List;
 

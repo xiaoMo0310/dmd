@@ -2,10 +2,10 @@ package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.dto.PmsProductParam;
-import com.dmd.mall.dto.PmsProductQueryParam;
-import com.dmd.mall.dto.PmsProductResult;
-import com.dmd.mall.model.PmsProduct;
+import com.dmd.mall.model.dto.PmsProductParam;
+import com.dmd.mall.model.dto.PmsProductQueryParam;
+import com.dmd.mall.model.dto.PmsProductResult;
+import com.dmd.mall.model.domain.PmsProduct;
 import com.dmd.mall.service.PmsProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

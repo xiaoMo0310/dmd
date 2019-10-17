@@ -1,8 +1,8 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.SmsFlashPromotionMapper;
-import com.dmd.mall.model.SmsFlashPromotion;
-import com.dmd.mall.model.SmsFlashPromotionExample;
+import com.dmd.mall.model.domain.SmsFlashPromotion;
+import com.dmd.mall.model.domain.SmsFlashPromotionExample;
 import com.dmd.mall.service.SmsFlashPromotionService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

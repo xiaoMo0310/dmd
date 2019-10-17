@@ -2,7 +2,6 @@ package com.dmd.mall;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * 应用启动入口
@@ -10,7 +9,6 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @date 2018/4/26
  */
 @SpringBootApplication
-@MapperScan("com.dmd.mall.mapper")
 public class MallAdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(MallAdminApplication.class, args);

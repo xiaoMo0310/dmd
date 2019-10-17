@@ -1,7 +1,7 @@
 package com.dmd.mall.bo;
 
-import com.dmd.mall.model.UmsAdmin;
-import com.dmd.mall.model.UmsPermission;
+import com.dmd.mall.model.domain.UmsAdmin;
+import com.dmd.mall.model.domain.UmsPermission;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

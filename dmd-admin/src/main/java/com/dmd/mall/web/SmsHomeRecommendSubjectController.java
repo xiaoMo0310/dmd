@@ -2,7 +2,7 @@ package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.SmsHomeRecommendSubject;
+import com.dmd.mall.model.domain.SmsHomeRecommendSubject;
 import com.dmd.mall.service.SmsHomeRecommendSubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

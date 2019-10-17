@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.CmsSubject;
+import com.dmd.mall.model.domain.CmsSubject;
 
 import java.util.List;
 

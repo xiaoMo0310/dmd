@@ -1,7 +1,7 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.OmsOrderSettingMapper;
-import com.dmd.mall.model.OmsOrderSetting;
+import com.dmd.mall.model.domain.OmsOrderSetting;
 import com.dmd.mall.service.OmsOrderSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

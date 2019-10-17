@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.SmsCouponHistory;
+import com.dmd.mall.model.domain.SmsCouponHistory;
 
 import java.util.List;
 

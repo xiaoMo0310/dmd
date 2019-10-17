@@ -1,7 +1,7 @@
 package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.PmsSkuStock;
+import com.dmd.mall.model.domain.PmsSkuStock;
 import com.dmd.mall.service.PmsSkuStockService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

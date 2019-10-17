@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.PmsSkuStock;
+import com.dmd.mall.model.domain.PmsSkuStock;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.SmsCouponHistoryMapper;
-import com.dmd.mall.model.SmsCouponHistory;
-import com.dmd.mall.model.SmsCouponHistoryExample;
+import com.dmd.mall.model.domain.SmsCouponHistory;
+import com.dmd.mall.model.domain.SmsCouponHistoryExample;
 import com.dmd.mall.service.SmsCouponHistoryService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

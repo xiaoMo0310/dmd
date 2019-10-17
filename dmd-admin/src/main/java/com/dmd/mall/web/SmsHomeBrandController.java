@@ -2,7 +2,7 @@ package com.dmd.mall.web;
 
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.SmsHomeBrand;
+import com.dmd.mall.model.domain.SmsHomeBrand;
 import com.dmd.mall.service.SmsHomeBrandService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

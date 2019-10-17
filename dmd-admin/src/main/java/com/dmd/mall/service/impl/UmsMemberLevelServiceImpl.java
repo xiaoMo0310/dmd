@@ -1,8 +1,8 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.UmsMemberLevelMapper;
-import com.dmd.mall.model.UmsMemberLevel;
-import com.dmd.mall.model.UmsMemberLevelExample;
+import com.dmd.mall.model.domain.UmsMemberLevel;
+import com.dmd.mall.model.domain.UmsMemberLevelExample;
 import com.dmd.mall.service.UmsMemberLevelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

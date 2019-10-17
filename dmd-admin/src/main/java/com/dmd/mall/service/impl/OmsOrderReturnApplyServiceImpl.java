@@ -1,12 +1,12 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.mall.dto.OmsOrderReturnApplyResult;
-import com.dmd.mall.dto.OmsReturnApplyQueryParam;
-import com.dmd.mall.dto.OmsUpdateStatusParam;
-import com.dmd.mall.mapper.OmsOrderReturnApplyDao;
+import com.dmd.mall.model.dto.OmsOrderReturnApplyResult;
+import com.dmd.mall.model.dto.OmsReturnApplyQueryParam;
+import com.dmd.mall.model.dto.OmsUpdateStatusParam;
+import com.dmd.mall.dao.OmsOrderReturnApplyDao;
 import com.dmd.mall.mapper.OmsOrderReturnApplyMapper;
-import com.dmd.mall.model.OmsOrderReturnApply;
-import com.dmd.mall.model.OmsOrderReturnApplyExample;
+import com.dmd.mall.model.domain.OmsOrderReturnApply;
+import com.dmd.mall.model.domain.OmsOrderReturnApplyExample;
 import com.dmd.mall.service.OmsOrderReturnApplyService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

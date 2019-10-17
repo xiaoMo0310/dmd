@@ -1,8 +1,8 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.PmsProductAttributeParam;
-import com.dmd.mall.dto.ProductAttrInfo;
-import com.dmd.mall.model.PmsProductAttribute;
+import com.dmd.mall.model.dto.PmsProductAttributeParam;
+import com.dmd.mall.model.dto.ProductAttrInfo;
+import com.dmd.mall.model.domain.PmsProductAttribute;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.SmsHomeBrandMapper;
-import com.dmd.mall.model.SmsHomeBrand;
-import com.dmd.mall.model.SmsHomeBrandExample;
+import com.dmd.mall.model.domain.SmsHomeBrand;
+import com.dmd.mall.model.domain.SmsHomeBrandExample;
 import com.dmd.mall.service.SmsHomeBrandService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,6 @@
 package com.dmd.mall.mapper;
 
 import com.dmd.mall.model.domain.IntegralGiftsBean;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

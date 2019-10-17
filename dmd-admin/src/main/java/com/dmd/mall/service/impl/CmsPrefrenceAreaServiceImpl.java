@@ -1,8 +1,8 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.CmsPrefrenceAreaMapper;
-import com.dmd.mall.model.CmsPrefrenceArea;
-import com.dmd.mall.model.CmsPrefrenceAreaExample;
+import com.dmd.mall.model.domain.CmsPrefrenceArea;
+import com.dmd.mall.model.domain.CmsPrefrenceAreaExample;
 import com.dmd.mall.service.CmsPrefrenceAreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

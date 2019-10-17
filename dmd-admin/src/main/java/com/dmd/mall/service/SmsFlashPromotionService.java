@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.SmsFlashPromotion;
+import com.dmd.mall.model.domain.SmsFlashPromotion;
 
 import java.util.List;
 

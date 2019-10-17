@@ -1,8 +1,8 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.PmsProductCategoryParam;
-import com.dmd.mall.dto.PmsProductCategoryWithChildrenItem;
-import com.dmd.mall.model.PmsProductCategory;
+import com.dmd.mall.model.dto.PmsProductCategoryParam;
+import com.dmd.mall.model.dto.PmsProductCategoryWithChildrenItem;
+import com.dmd.mall.model.domain.PmsProductCategory;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

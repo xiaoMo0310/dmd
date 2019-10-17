@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.CmsPrefrenceArea;
+import com.dmd.mall.model.domain.CmsPrefrenceArea;
 
 import java.util.List;
 

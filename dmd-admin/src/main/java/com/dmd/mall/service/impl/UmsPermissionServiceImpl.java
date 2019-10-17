@@ -1,9 +1,9 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.mall.dto.UmsPermissionNode;
+import com.dmd.mall.model.dto.UmsPermissionNode;
 import com.dmd.mall.mapper.UmsPermissionMapper;
-import com.dmd.mall.model.UmsPermission;
-import com.dmd.mall.model.UmsPermissionExample;
+import com.dmd.mall.model.domain.UmsPermission;
+import com.dmd.mall.model.domain.UmsPermissionExample;
 import com.dmd.mall.service.UmsPermissionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

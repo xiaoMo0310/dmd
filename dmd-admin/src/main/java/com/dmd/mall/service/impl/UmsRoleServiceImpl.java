@@ -1,9 +1,9 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.mall.dao.UmsRolePermissionRelationDao;
 import com.dmd.mall.mapper.UmsRoleMapper;
-import com.dmd.mall.mapper.UmsRolePermissionRelationDao;
 import com.dmd.mall.mapper.UmsRolePermissionRelationMapper;
-import com.dmd.mall.model.*;
+import com.dmd.mall.model.domain.*;
 import com.dmd.mall.service.UmsRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

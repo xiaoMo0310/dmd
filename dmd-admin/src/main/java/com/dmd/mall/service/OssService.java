@@ -1,7 +1,7 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.dto.OssCallbackResult;
-import com.dmd.mall.dto.OssPolicyResult;
+import com.dmd.mall.model.dto.OssCallbackResult;
+import com.dmd.mall.model.dto.OssPolicyResult;
 
 import javax.servlet.http.HttpServletRequest;
 

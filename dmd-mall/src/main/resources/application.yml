@@ -4,8 +4,6 @@ server:
     uri-encoding: UTF-8
     remote-ip-header: x-forwarded-for
   use-forward-headers: true
-  servlet:
-    context-path: /
 spring:
   mvc:
     date-format: yyyy-MM-dd HH:mm:ss

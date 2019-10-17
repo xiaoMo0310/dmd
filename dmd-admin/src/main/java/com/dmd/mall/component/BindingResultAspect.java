@@ -18,7 +18,7 @@ import org.springframework.validation.FieldError;
 @Component
 @Order(2)
 public class BindingResultAspect {
-    @Pointcut("execution(public * com.macro.mall.controller.*.*(..))")
+    @Pointcut("execution(public * com.dmd.mall.web.*.*(..))")
     public void BindingResult() {
     }
 

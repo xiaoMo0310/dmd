@@ -1,6 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.OmsOrderSetting;
+import com.dmd.mall.model.domain.OmsOrderSetting;
 
 /**
  * 订单设置Service
