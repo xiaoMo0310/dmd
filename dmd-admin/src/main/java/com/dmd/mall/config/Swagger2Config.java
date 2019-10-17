@@ -26,7 +26,7 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.macro.mall.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.dmd.mall.web"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(securitySchemes())
