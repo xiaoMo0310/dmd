@@ -42,4 +42,10 @@
         order_id, order_sn, product_id, product_pic, product_name, product_brand, product_sn, product_price, product_quantity, product_sku_id, product_sku_code, product_category_id, integration_amount, real_amount, product_attr, total_price totalPrice, product_type productType
     </sql>
 
+    <select id="getListByOrderNoUserId" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from oms_order_item
+        where order_sn = #{orderSn}
+    </select>
 </mapper>

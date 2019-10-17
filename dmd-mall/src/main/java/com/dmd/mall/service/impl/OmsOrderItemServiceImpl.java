@@ -6,6 +6,8 @@ import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.mapper.OmsOrderItemMapper;
 import com.dmd.mall.model.domain.OmsOrderItem;
 import com.dmd.mall.service.OmsOrderItemService;
+import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,5 +37,11 @@ public class OmsOrderItemServiceImpl extends BaseService<OmsOrderItem> implement
                 throw new OmsBizException(ErrorCodeEnum.OMS10031009);
             }
         });
+    }
+
+    @Override
+    public List<OmsOrderItem> getListByOrderNoUserId(String orderSn) {
+        Preconditions.checkArgument(StringUtils.isNotEmpty(orderSn), "订单号不能为空");
+        return omsOrderItemMapper.getListByOrderNoUserId(orderSn);
     }
 }

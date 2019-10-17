@@ -11,6 +11,7 @@
 
 package com.dmd.mall.model.vo;
 
+import com.dmd.mall.model.dto.OrderParamDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -29,7 +30,7 @@ import java.util.List;
 
 @Data
 @ApiModel
-public class OrderCreateVo implements Serializable {
+public class OrderCreateVo extends OrderParamDto implements Serializable {
 
     private static final long serialVersionUID = 592292780030349525L;
 
@@ -40,16 +41,6 @@ public class OrderCreateVo implements Serializable {
     private BigDecimal totalPostage;
     @ApiModelProperty("付款总金额")
     private BigDecimal totalPayment;
-    @ApiModelProperty("收货人信息ID")
-    private Long shippingId;
-    @ApiModelProperty("收货人发票信息ID")
-    private Long invoiceId;
-    @ApiModelProperty("是否使用积分")
-    private Boolean isUserIntegration = false;
-    @ApiModelProperty("下单使用的积分数")
-    private Integer useIntegration = 0;
-    @ApiModelProperty("是否开具发票")
-    private Boolean isInvoice = false;
     @ApiModelProperty("店铺订单集合")
     private List<OrderGroupByShop> orderGroupByShopList;
 
