@@ -1,9 +1,6 @@
 package com.dmd.mall.mapper;
 
-import com.dmd.mall.model.domain.PmsComment;
-import com.dmd.mall.model.domain.PmsProduct;
-import com.dmd.mall.model.domain.PmsShopDetails;
-import com.dmd.mall.model.domain.SmsHomeAdvertise;
+import com.dmd.mall.model.domain.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,6 +11,7 @@ import java.util.Map;
 public interface PmsShopProductMapper {
     public List<PmsProduct> getShopProduct(Map<String,Object> map);//获取商场首页的商品信息
     public List<SmsHomeAdvertise> getShopAdvertise(Map<String,Object> map);//获取轮播图
-    public PmsShopDetails shopProductDetails(@Param("id") Integer id);//商品详情
-    public List<PmsComment> shopComment(@Param("id") Integer id);//商品详情
+    public PmsShopDetails shopProductDetails(@Param("id") Long id);//商品详情
+    public List<PmsComment> shopComment(@Param("id") Long id);//商品详情
+    public List<PmsProductAttribute> getPmsProductAttribute(@Param("productAttributeCategoryId") Long productAttributeCategoryId);
 }

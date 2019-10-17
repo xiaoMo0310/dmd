@@ -6,6 +6,7 @@ import com.dmd.mall.model.domain.TopicBean;
 import com.dmd.mall.service.DynamicService;
 import com.dmd.mall.service.TopicService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,8 @@ public class TopicController {
 
     /**
      * 分页查询话题分类，热度排序
-     * @param userId
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     @ApiOperation("分页查询话题分类,按照热度(话题下动态数量)排序")
@@ -50,7 +52,6 @@ public class TopicController {
 
     /**
      * 查询话题分类，热度排序
-     * @param userId
      * @return
      */
     @ApiOperation("话题分类查询,按照热度(话题下动态数量)排序")
@@ -106,5 +107,17 @@ public class TopicController {
         return CommonResult.success(dynamicList);
     }
 
+    /**
+     * 根据话题名称模糊查询，新增动态时选择话题页面可查询并选择话题
+     * @param topicName
+     * @return
+     */
+    @ApiOperation("话题名称模糊查询")
+    @RequestMapping(value = "/selectTopicName",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<TopicBean>> queryTopicName(String topicName) {
+        List<TopicBean> topicList = topicService.queryTopicName(topicName);
+        return CommonResult.success(topicList);
+    }
 
 }

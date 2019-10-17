@@ -17,11 +17,11 @@ import java.util.Map;
  * @since 2019-10-12
  */
 public interface OmsCartService extends IService<OmsCart> {
-        public List<OmsCart> findOmsCart(Integer memberId);//查询购物车信息
-        public List<OmsCart> findOmsCartById(List<Integer> ids);//根据id查询购物车信息
+        public List<OmsCart> findOmsCart(Long memberId);//查询购物车信息
+        public List<OmsCart> findOmsCartById(List<Long> ids);//根据id查询购物车信息
         public int addOmsCart(OmsCart omsCart);//添加购物车信息
-        public int updateOmsCart(String quantity, String deleteStatus, Integer id, String updateTime);
-        public Map<String,Object> beforeSubmitOrder(List<Integer> ids,Integer memberId);
+        public int updateOmsCart(String quantity, String deleteStatus, List<Long> id, String updateTime);
+        public Map<String,Object> beforeSubmitOrder(List<Long> ids,Long memberId,Long productId);
 
         /**
          * 根据用户id和购物车id查询购物车的信息

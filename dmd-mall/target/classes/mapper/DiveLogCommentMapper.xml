@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.DiveLogCommentMapper">
+
+    <!--通用查询映射结果-->
+    <resultMap id="commentMap" type="com.dmd.mall.model.domain.CommentBean">
+        <result column="commentId" property="commentId" />
+        <result column="lw_name" property="commentName" />
+        <result column="lw_head_portrait" property="commentHeadPortrait" />
+        <result column="lw_date" property="createTime" />
+        <result column="lw_content" property="content" />
+        <result column="lw_comment_type" property="type" />
+        <result column="ip_address" property="ipAddress" />
+        <result column="status" property="status" />
+        <result column="delflag" property="delflag" />
+        <result column="lw_for_uid" property="forUid" />
+        <result column="lw_for_diveLog_id" property="forDiveLogId" />
+        <result column="lw_userid" property="userId" />
+        <result column="lw_for_pid" property="forPid" />
+    </resultMap>
+
+    <select id="findCommentListById" parameterType="map" resultMap="commentMap">
+        SELECT
+        commentId,
+        lw_name,
+        lw_head_portrait,
+        lw_date,lw_content,
+        lw_comment_type,
+        ip_address,status,
+        delflag,
+        lw_for_uid,
+        lw_for_diveLog_id,
+        lw_userid,
+        lw_for_pid
+        FROM dmd_dynamic_comment
+        WHERE lw_for_pid = #{forPid} AND delflag = 0 AND lw_for_diveLog_id = #{forDiveLogId}
+    </select>
+
+    <insert id="addComment" parameterType="com.dmd.mall.model.domain.CommentBean">
+        INSERT INTO dmd_dynamic_comment
+        (
+        lw_name,
+        lw_head_portrait,
+        lw_date,
+        lw_content,
+        lw_comment_type,
+        ip_address,
+        status,
+        delflag,
+        lw_for_uid,
+        lw_for_diveLog_id,
+        lw_userid,
+        lw_for_pid)
+        VALUES
+        (
+        #{commentName,jdbcType=VARCHAR},
+        #{commentHeadPortrait,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{content,jdbcType=VARCHAR},
+        #{type,jdbcType=INTEGER},
+        #{ipAddress,jdbcType=VARCHAR},
+        #{status,jdbcType=INTEGER},
+        #{delflag,jdbcType=INTEGER},
+        #{forUid,jdbcType=BIGINT},
+        #{forDiveLogId,jdbcType=BIGINT},
+        #{userId,jdbcType=BIGINT},
+        #{forPid,jdbcType=BIGINT})
+
+    </insert>
+
+    <update id="updateCommentDelflag" parameterType="map">
+        UPDATE dmd_dynamic_comment SET delflag = 1 WHERE commentId = #{commentId} AND lw_userid = #{userId}
+    </update>
+
+    <update id="updateDiveLogDelflag" parameterType="java.lang.Long">
+        UPDATE dmd_dynamic_comment SET delflag = 1 WHERE lw_for_diveLog_id = #{id}
+    </update>
+
+</mapper>

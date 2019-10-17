@@ -2,20 +2,21 @@ package com.dmd.mall.web.oms;
 
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.domain.OmsCart;
+import io.swagger.annotations.ApiParam;
+import org.springframework.web.bind.annotation.*;
 import com.dmd.mall.service.OmsCartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.dmd.core.support.BaseController;
+import org.springframework.beans.factory.annotation.Autowired;
+import tk.mybatis.mapper.common.IdsMapper;
 
+import java.sql.SQLException;
 import java.util.List;
-
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * <p>
@@ -33,19 +34,22 @@ public class OmsCartController extends BaseController {
     @Autowired
     private OmsCartService omsCartService;
 
-    @ApiOperation("根据用户id查找购物车")
+    @ApiOperation("根据用户id查找购物车，显示购物车时使用此接口")
     @RequestMapping(value = "/findOmsCart", method = RequestMethod.POST)
-    public CommonResult findOmsCart(Integer memberId){
+    @ResponseBody
+    public CommonResult findOmsCart(Long memberId){
         return CommonResult.success(omsCartService.findOmsCart(memberId));
     }
-    @ApiOperation("根据id查找购物车")
-    @RequestMapping(value = "/findOmsCartById", method = RequestMethod.POST)
-    public CommonResult findOmsCartById(@RequestBody List<Integer> ids){
-        return CommonResult.success(omsCartService.findOmsCartById(ids));
-    }
+//    @ApiOperation("根据id查找购物车")
+//    @RequestMapping(value = "/findOmsCartById", method = RequestMethod.POST)
+//    @ResponseBody
+//    public CommonResult findOmsCartById(@RequestBody List<Long> ids){
+//        return CommonResult.success(omsCartService.findOmsCartById(ids));
+//    }
 
     @ApiOperation("添加购物车")
     @RequestMapping(value = "/addOmsCart", method = RequestMethod.POST)
+    @ResponseBody
     public CommonResult addOmsCart(@RequestBody OmsCart omsCart){
         try {
             return CommonResult.success(omsCartService.addOmsCart(omsCart));
@@ -60,13 +64,17 @@ public class OmsCartController extends BaseController {
     }
     @ApiOperation("更新购物车（包括购物车商品数量和购物车是否删除）")
     @RequestMapping(value = "/updateOmsCart", method = RequestMethod.POST)
-    public CommonResult updateOmsCart(String quantity, String deleteStatus, Integer id, String updateTime){
-        return CommonResult.success(omsCartService.updateOmsCart(quantity,deleteStatus,id,updateTime));
+    @ResponseBody
+    public CommonResult updateOmsCart(@ApiParam(name="quantity",value = "购买数量，修改购物车购买数量时传入此参数，拼接在url里") String quantity, @ApiParam(name="deleteStatus",value = "删除状态（0：删除，1：删除），删除购物车时传入此参数，拼接在url里")String deleteStatus, @ApiParam(name="ids",value = "需要修改或者删除的购物id的集合，请求体里以json格式传入") List<Long> ids, String updateTime){
+        return CommonResult.success(omsCartService.updateOmsCart(quantity,deleteStatus,ids,updateTime));
     }
     @ApiOperation("提交订单前的页面")
-    @RequestMapping(value = "/beforeOrder", method = RequestMethod.POST)
-    public CommonResult beforeOrder(Integer shopId,Integer memberId){
-        return CommonResult.success("data");
+    @RequestMapping(value = "/beforeSubmitOrder", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult beforeSubmitOrder(@ApiParam(name="ids",value="购物车id的集合，这个参数需要在请求体里以json格式传入")@RequestBody List<Long> ids,@ApiParam(name="memberId",value="用户Id，这个参数需要拼接在url里") Long memberId,@ApiParam(name="productId",value="商品ID，在立即购买时需要传递此参数，这个参数需要拼接在url里") Long productId){
+        Map<String,Object> map=new TreeMap<>();
+        map=omsCartService.beforeSubmitOrder(ids,memberId,productId);
+        return CommonResult.success(map);
     }
 
 }

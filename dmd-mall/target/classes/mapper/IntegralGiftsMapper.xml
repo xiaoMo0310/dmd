@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.IntegralGiftsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="integralGiftsMap" type="com.dmd.mall.model.domain.IntegralGiftsBean">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="picture" property="picture" />
+        <result column="integral" property="integral" />
+        <result column="introduce" property="introduce" />
+        <result column="createtime" property="createTime" />
+        <result column="updatetime" property="updateTime" />
+    </resultMap>
+
+    <select id="queryIntegralGifts" resultMap="integralGiftsMap">
+        SELECT id,name,picture,integral,introduce,createtime,updatetime FROM dmd_integral_gift
+    </select>
+
+    <select id="queryIntegralGiftsById" parameterType="java.lang.Long" resultMap="integralGiftsMap">
+        SELECT id,name,picture,integral,introduce,createtime,updatetime FROM dmd_integral_gift WHERE id = #{value}
+    </select>
+
+    <insert id="addIntegralGifts" parameterType="com.dmd.mall.model.domain.IntegralGiftsBean">
+        INSERT INTO dmd_integral_gift
+        (
+          name,
+          picture,
+          integral,
+          introduce,
+          createtime,
+          updatetime
+        ) VALUES (
+          #{name,jdbcType=VARCHAR},
+          #{picture,jdbcType=VARCHAR},
+          #{integral,jdbcType=INTEGER},
+          #{introduce,jdbcType=VARCHAR},
+          #{createTime,jdbcType=TIMESTAMP},
+          #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <select id="findIntegralGiftsInfoById" parameterType="java.lang.Long" resultMap="integralGiftsMap">
+        SELECT id,name,picture,integral,introduce,createtime,updatetime FROM dmd_integral_gift WHERE id = #{value}
+    </select>
+
+    <update id="updateIntegralGiftsById" parameterType="com.dmd.mall.model.domain.IntegralGiftsBean">
+        UPDATE dmd_integral_gift SET
+        name = #{name},
+        picture = #{picture},
+        integral = #{integral},
+        introduce = #{introduce},
+        createtime = #{createTime},
+        updatetime = #{updateTime}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteIntegralGiftsById" parameterType="java.lang.Long">
+        DELETE FROM dmd_integral_gift WHERE id = #{id}
+    </delete>
+</mapper>

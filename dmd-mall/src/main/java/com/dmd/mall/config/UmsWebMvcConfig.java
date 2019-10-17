@@ -38,7 +38,7 @@ public class UmsWebMvcConfig extends WebMvcConfigurationSupport {
 		super.addInterceptors(registry);
 		registry.addInterceptor(vueViewInterceptor)
 				.addPathPatterns("/**")
-				.excludePathPatterns("/swagger-resources/**", "*.js", "/**/*.js", "*.css", "/**/*.css", "/*.html", "/**/*.html", "*.html", "/webjars/**");
+				.excludePathPatterns("/swagger-resources/**", "*.js", "/**/*.js", "*.css", "/**/*.css", "/*.html", "/**/*.html", "*.html", "/webjars/**","/sso/**");
 	}
 
 	@Override

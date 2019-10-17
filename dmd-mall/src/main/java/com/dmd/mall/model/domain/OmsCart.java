@@ -90,5 +90,6 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("商品销售属性:[{'key':'颜色','value':'颜色'},{'key':'容量','value':'4G'}]")
     private String productAttr;
 
+    private String name;//对应店铺的店铺名称（额外的属性）
 
 }

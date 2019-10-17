@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, // 允许对于网站静态资源的无授权访问
-                        "/",
+                        "/**/",
                         "/*.html",
                         "/favicon.ico",
                         "/**/*.html",

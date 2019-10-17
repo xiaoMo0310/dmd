@@ -33,4 +33,13 @@
     <update id="reduceTopicNum" parameterType="int">
         UPDATE dmd_dynamic_topic SET topicNum = topicNum -1 WHERE id = #{value} and topicNum > 0
     </update>
+
+    <select id="queryTopicName" resultMap="topicMap" parameterType="java.lang.String">
+        SELECT id,topicName FROM dmd_dynamic_topic
+        <where>
+            <if test="topicName != null and topicName != ''">
+                AND topicName LIKE CONCAT(CONCAT('%',#{topicName}),'%');
+            </if>
+        </where>
+    </select>
 </mapper>

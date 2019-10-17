@@ -1,0 +1,48 @@
+server:
+  port: 8000
+  tomcat:
+    uri-encoding: UTF-8
+    remote-ip-header: x-forwarded-for
+  use-forward-headers: true
+  servlet:
+    context-path: /
+spring:
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+    jackson:
+      joda-date-time-format: yyyy-MM-dd HH:mm:ss
+      date-format: yyyy-MM-dd HH:mm:ss
+  jackson:
+    default-property-inclusion: NON_NULL
+  application:
+    name: dmd-mall
+  profiles:
+    active: dev
+
+mybatis:
+  type-aliases-package: com.dmd.mall.model.domain
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+mapper:
+  mappers: com.dmd.core.mybatis.MyMapper
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+# 自定义redis key
+redis:
+  key:
+    prefix:
+      authCode: "portal:authCode:"
+      orderId: "portal:orderId:"
+    expire:
+      authCode: 90000 # 验证码超期时间
+
+dmd:
+  enableSqlLogInterceptor: false
+

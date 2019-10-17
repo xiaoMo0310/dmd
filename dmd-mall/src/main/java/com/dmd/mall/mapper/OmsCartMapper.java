@@ -22,11 +22,12 @@ public interface OmsCartMapper extends MyMapper<OmsCart> {
 
     List<OmsCart> selectCartByUserIdAndCartId(@Param("userId") Long userId, @Param("shopId") Long shopId, @Param("cartIds") List<Long> cartIds);
     public List<OmsCart> findOmsCart(@Param("memberId") Integer memberId);
-    public List<OmsCart> findOmsCartById(@Param("ids") List<Integer> ids);
+    public List<OmsCart> findOmsCart(@Param("memberId") Long memberId);
+    public List<OmsCart> findOmsCartById(@Param("ids") List<Long> ids);
     public int addOmsCart(OmsCart omsCart);
     public int updateOmsCart(
             @Param("quantity") String quantity,
             @Param("deleteStatus") String deleteStatus,
-            @Param("id") Integer id,
+            @Param("ids") List<Long> id,
             @Param("updateTime") String updateTime);
 }

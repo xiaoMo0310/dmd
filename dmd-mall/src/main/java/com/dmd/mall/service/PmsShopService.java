@@ -18,7 +18,7 @@ import java.util.Map;
 public interface PmsShopService {
     public Map<String,Object> getShopIndex(Map<String,Object> map);//获取首页内容
     public Map<String,Object> shopProductDetails(Map<String,Object> mapParam);//获取商品详情和评论
-    public PageInfo<PmsComment> shopProductComment(int id, int page, int pageSize);//获取评论内容
+    public PageInfo<PmsComment> shopProductComment(Long id, int page, int pageSize);//获取评论内容
     public List<SmsHomeAdvertise> getShopAdvertise(Map<String,Object> map);//获取轮播图
 
 }

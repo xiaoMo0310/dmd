@@ -40,7 +40,7 @@ public class PmsShopController {
     @RequestMapping(value = "/shopProductComment", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult<PageInfo<PmsComment>> shopProductComment(@RequestBody Map<String,Object> mapParam) {
-        int id=(int)mapParam.get("id");
+        Long id=(Long)mapParam.get("id");
         int page=(int)mapParam.get("page");
         int pageSize=(int)mapParam.get("pageSize");
         PageInfo<PmsComment> map = pmsShopService.shopProductComment(id,page,pageSize);

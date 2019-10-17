@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.CoachApplyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="coachApplyMap" type="com.dmd.mall.model.domain.CoachApplyBean">
+        <result column="id" property="id" />
+        <result column="coach_name" property="coachName" />
+        <result column="coach_phone" property="coachPhone" />
+        <result column="coach_identity_card_front" property="coachIdentityCardFront" />
+        <result column="coach_identity_card_reverse" property="coachIdentityCardReveres" />
+        <result column="coach_credentials" property="coachCredentials" />
+        <result column="createTime" property="createTime" />
+        <result column="apply_status" property="applyStatus" />
+        <result column="user_id" property="userId" />
+    </resultMap>
+
+    <insert id="addCoachApply" parameterType="com.dmd.mall.model.domain.CoachApplyBean" >
+        INSERT INTO dmd_coach_apply (coach_name,coach_phone,coach_identity_card_front,
+        coach_identity_card_reverse,coach_credentials,createTime,apply_status,user_id)
+        VALUES (#{coachName,jdbcType=VARCHAR} , #{coachPhone,jdbcType=VARCHAR},#{coachIdentityCardFront,jdbcType=VARCHAR},
+        #{coachIdentityCardReveres,jdbcType=VARCHAR},#{coachCredentials,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
+        #{applyStatus,jdbcType=INTEGER},#{userId,jdbcType=BIGINT})
+    </insert>
+</mapper>
