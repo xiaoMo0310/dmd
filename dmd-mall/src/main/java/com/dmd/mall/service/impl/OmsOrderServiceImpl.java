@@ -1,6 +1,7 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.BigDecimalUtil;
+import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
@@ -8,12 +9,17 @@ import com.dmd.mall.constant.OmsApiConstant;
 import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.mapper.*;
 import com.dmd.mall.model.domain.*;
-import com.dmd.mall.model.vo.OrderCreateVo;
-import com.dmd.mall.model.vo.OrderVo;
+import com.dmd.mall.model.dto.OrderPageQueryDto;
+import com.dmd.mall.model.dto.OrderParamDto;
+import com.dmd.mall.model.vo.*;
 import com.dmd.mall.service.OmsCartService;
 import com.dmd.mall.service.OmsOrderItemService;
 import com.dmd.mall.service.OmsOrderService;
+import com.dmd.mall.service.PmsProductService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -54,13 +60,17 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     @Autowired
     private UmsMemberMapper umsMemberMapper;
     @Autowired
+    private OmsShippingMapper omsShippingMapper;
+    @Autowired
+    private PmsProductService pmsProductService;
+    @Autowired
     private RedisTemplate redisTemplate;
     @Value("${redis.key.prefix.orderId}")
     private String REDIS_KEY_PREFIX_ORDER_ID;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public OrderVo createOrder(LoginAuthDto loginAuthDto, OrderCreateVo orderCreateVo) {
+    public OrderCreateResultVo createOrder(LoginAuthDto loginAuthDto, OrderCreateVo orderCreateVo) {
         Long userId = loginAuthDto.getUserId();
         //查询用户的信息
         UmsMember umsMember = umsMemberMapper.selectByPrimaryKey(userId);
@@ -136,10 +146,74 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             lockStock(orderItemList);
         };
 
-        //清空一下购物车
+        //清空购物车
         this.cleanCart(carts, loginAuthDto);
         //返回给前端数据
        return assembleOrderVo(totalPayment, orders);
+    }
+
+    @Override
+    public OrderCreateResultVo createCourseOrIntegralOrder(LoginAuthDto loginAuthDto, OrderParamDto orderParamDto) {
+        //查询用户的信息
+        UmsMember umsMember = umsMemberMapper.selectByPrimaryKey(loginAuthDto.getUserId());
+        //查询商品的信息
+        PmsProduct pmsProduct = pmsProductService.selectByKey(orderParamDto.getProductId());
+        //判断商品的信息
+        //商品类型(1:普通商品 2:船宿商品 3:课程商品 4:积分商品)
+        Integer productType = pmsProduct.getProductType();
+        if(productType == 3){
+
+        }
+        //计算商品的总价
+        OrderCreateVo orderCreateVo = new OrderCreateVo();
+        BeanUtils.copyProperties(orderParamDto, orderCreateVo);
+        //
+        return null;
+    }
+
+    @Override
+    public int cancelOrderDoc(LoginAuthDto loginAuthDto, String orderSn) {
+        Long userId = loginAuthDto.getUserId();
+        OmsOrder order = omsOrderMapper.selectByUserIdAndOrderNo(userId, orderSn);
+        if (order == null) {
+            logger.error("该用户此订单不存在, userId={}, orderNo={}", userId, orderSn);
+            throw new OmsBizException(ErrorCodeEnum.OMS10031003);
+        }
+        if (order.getStatus() != OmsApiConstant.OrderStatusEnum.NO_PAY.getCode()) {
+            throw new OmsBizException(ErrorCodeEnum.OMS10031004);
+        }
+        OmsOrder updateOrder = new OmsOrder();
+        updateOrder.setId(order.getId());
+        updateOrder.setStatus(OmsApiConstant.OrderStatusEnum.CANCELED.getCode());
+
+        return omsOrderMapper.updateByPrimaryKeySelective(updateOrder);
+    }
+
+    @Override
+    public OrderVo getOrderDetail(Long userId, String orderSn) {
+        logger.info("获取订单明细, userId={}, orderNo={}", userId, orderSn);
+        OmsOrder order = omsOrderMapper.selectByUserIdAndOrderNo(userId, orderSn);
+        if (null == order) {
+            throw new OmsBizException(ErrorCodeEnum.OMS10031005, orderSn);
+        }
+        List<OmsOrderItem> orderItemList = omsOrderItemService.getListByOrderNoUserId(orderSn);
+        //封装订单信息和订单的详细信息
+        return assembleOrderVo(order, orderItemList);
+    }
+
+    @Override
+    public PageInfo queryUserOrderListWithPage(Long userId, BaseQuery baseQuery) {
+        PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
+        List<OmsOrder> orderList = omsOrderMapper.selectByUserId(userId);
+        List<OrderVo> orderVoList = assembleOrderVoList(orderList);
+        return new PageInfo<>(orderVoList);
+    }
+
+    @Override
+    public PageInfo queryOrderListWithPage(final OrderPageQueryDto orderPageQuery) {
+        PageHelper.startPage(orderPageQuery.getPageNum(), orderPageQuery.getPageSize());
+        List<OrderDocVo> orderList = omsOrderMapper.queryOrderListWithPage(orderPageQuery);
+        return new PageInfo<>(orderList);
     }
 
     /**
@@ -148,7 +222,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
      * @return
      */
     private BigDecimal getOrderTotalPrice(List<OmsOrderItem> orderItemList) {
-        BigDecimal payment = new BigDecimal("0");
+        BigDecimal payment = new BigDecimal("0.00");
         for (OmsOrderItem orderItem : orderItemList) {
             payment = BigDecimalUtil.add(payment.doubleValue(), orderItem.getTotalPrice().doubleValue());
         }
@@ -157,15 +231,6 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
 
     /**
      * 封装订单信息并保存
-     * @param umsMember
-     * @param shopId
-     * @param orderCreateVo
-     * @param payment
-     * @param postage
-     * @param integrationAmount
-     * @param loginAuthDto
-     * @param remark
-     * @return
      */
     private OmsOrder assembleOrder(UmsMember umsMember, Long shopId, OrderCreateVo orderCreateVo, BigDecimal payment, BigDecimal postage, BigDecimal integrationAmount, LoginAuthDto loginAuthDto, String remark) {
         OmsOrder order = new OmsOrder();
@@ -204,7 +269,6 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
 
     /**
      * 清空购物车
-     * @param cartList
      */
     private void cleanCart(List<OmsCart> cartList, LoginAuthDto loginAuthDto) {
         cartList.forEach(cart -> {
@@ -238,11 +302,11 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
      * 锁定下单商品的所有库存
      */
     private synchronized void lockStock(List<OmsOrderItem> omcOrderDetailList) {
-        for (OmsOrderItem omsOrderItem : omcOrderDetailList) {
+        omcOrderDetailList.forEach(omsOrderItem -> {
             PmsSkuStock skuStock = skuStockMapper.selectByPrimaryKey(omsOrderItem.getProductSkuId());
             skuStock.setLockStock(skuStock.getLockStock() + omsOrderItem.getProductQuantity());
             skuStockMapper.updateByPrimaryKeySelective(skuStock);
-        }
+        });
     }
 
     /**
@@ -279,11 +343,56 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         return integrationAmount;
     }
 
-    public OrderVo assembleOrderVo(BigDecimal totalPayemnt, List<OmsOrder> order){
-        OrderVo orderVo = new OrderVo();
+    /**
+     * 创建订单成功后需要返回的数据
+     */
+    public OrderCreateResultVo assembleOrderVo(BigDecimal totalPayemnt, List<OmsOrder> order){
+        OrderCreateResultVo orderVo = new OrderCreateResultVo();
         List<String> orderSns = order.stream().map(OmsOrder::getOrderSn).collect(Collectors.toList());
         orderVo.setTotalPayment(totalPayemnt);
         orderVo.setOrderSns(orderSns);
         return orderVo;
     };
+
+    private OrderVo assembleOrderVo(OmsOrder order, List<OmsOrderItem> orderItemList) {
+        OrderVo orderVo = new OrderVo();
+        BeanUtils.copyProperties(order, orderVo);
+        orderVo.setStatusDesc(OmsApiConstant.OrderStatusEnum.codeOf(order.getStatus()).getValue());
+
+        OmsShipping shipping = omsShippingMapper.selectByPrimaryKey(order.getShippingId());
+        if (shipping != null) {
+            orderVo.setShippingVo(assembleShippingVo(shipping));
+        }
+        List<OrderItemVo> orderItemVoList = orderItemList.stream().map(orderItem -> assembleOrderItemVo(orderItem)).collect(Collectors.toList());
+        orderVo.setOrderItemVoList(orderItemVoList);
+        return orderVo;
+    }
+
+    /**
+     * 收货地址数据封装
+     */
+    private ShippingVo assembleShippingVo(OmsShipping shipping) {
+        ShippingVo shippingVo = new ShippingVo();
+        BeanUtils.copyProperties(shipping, shippingVo);
+        return shippingVo;
+    }
+
+    /**
+     * 订单详情信息的返回
+     * @param orderItem
+     * @return
+     */
+    private OrderItemVo assembleOrderItemVo(OmsOrderItem orderItem) {
+        logger.info("订单信息 orderItem={}", orderItem);
+        OrderItemVo orderItemVo = new OrderItemVo();
+        BeanUtils.copyProperties(orderItem, orderItemVo);
+        return orderItemVo;
+    }
+
+    private List<OrderVo> assembleOrderVoList(List<OmsOrder> orderList) {
+        return orderList.stream().map(order -> {
+             List<OmsOrderItem> orderItemList = omsOrderItemService.getListByOrderNoUserId(order.getOrderSn());
+             return assembleOrderVo(order, orderItemList);
+        }).collect(Collectors.toList());
+    }
 }

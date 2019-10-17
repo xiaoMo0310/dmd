@@ -15,5 +15,16 @@ import java.util.List;
  */
 public interface OmsOrderItemService extends IService<OmsOrderItem> {
 
+    /**
+     * 批量的插入订单详情数据
+     * @param omcOrderDetailList
+     */
     void batchInsertOrderDetail(List<OmsOrderItem> omcOrderDetailList);
+
+    /**
+     * 根据订单编号查询订单详情的信息
+     * @param orderSn
+     * @return
+     */
+    List<OmsOrderItem> getListByOrderNoUserId(String orderSn);
 }
