@@ -30,7 +30,7 @@
             <if test="topicDescribes !=null and topicDescribes != ''">
                 and topicDescribes like '%${topicDescribes}%'
             </if>
-            <!-- 话题描述模糊查询 -->
+            <!-- 日期区间查询 -->
             <if test="stratTime != null">
                 and createTime &gt;= #{stratTime}
             </if>
@@ -80,4 +80,9 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="queryTopic" resultMap="topicMap">
+        SELECT id,topicName FROM dmd_dynamic_topic
+        ORDER BY topicNum DESC
+    </select>
 </mapper>

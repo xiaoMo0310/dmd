@@ -21,4 +21,6 @@ public interface TopicAdminMapper {
     TopicBean findTopicInfoById(Long id);
 
     int deleteTopicById(String[] ids);
+
+    List<TopicBean> queryTopic();
 }
