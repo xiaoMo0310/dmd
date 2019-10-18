@@ -24,4 +24,6 @@ public interface TopicMapper {
     void reduceTopicNum(Integer topicId);
 
     List<TopicBean> queryTopicName(@Param("topicName") String topicName);
+
+    List<TopicBean> queryTopicByContent(@Param("content") String content);
 }

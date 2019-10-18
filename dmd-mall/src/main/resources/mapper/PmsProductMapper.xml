@@ -115,4 +115,24 @@
         </if>
 
     </select>
+
+    <select id="queryPmsProductByContent" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        pp.id,
+        pp.price,
+        pp.name,
+        pp.pic,
+        pp.ship_address,
+        us.id shop_id,
+        us.name shop_name,
+        us.logo
+        from pms_product pp, ums_shop us
+        where pp.delete_status = 0
+        and pp.publish_status = 1
+        and pp.verify_status = 1
+        and pp.shop_id = us.id
+        <if test="content!= null and content != ''">
+            and pp.name LIKE CONCAT(CONCAT('%',#{content}),'%')
+        </if>
+    </select>
 </mapper>

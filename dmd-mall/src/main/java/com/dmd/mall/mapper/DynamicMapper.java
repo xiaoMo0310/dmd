@@ -1,6 +1,7 @@
 package com.dmd.mall.mapper;
 
 import com.dmd.mall.model.domain.DynamicBean;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -41,4 +42,6 @@ public interface DynamicMapper {
     List<DynamicBean> queryDynamicTime();
 
     List<DynamicBean> queryDynamicHeat();
+
+    List<DynamicBean> queryDynamicByContent(@Param("content") String content);
 }

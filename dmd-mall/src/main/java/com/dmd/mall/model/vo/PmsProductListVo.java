@@ -21,7 +21,7 @@ public class PmsProductListVo implements Serializable {
     /**
      * 商品名称
      */
-    private String namne;
+    private String name;
 
     /**
      * 商品图片

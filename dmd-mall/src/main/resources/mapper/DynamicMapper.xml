@@ -120,4 +120,17 @@
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id WHERE delflag = 0 AND dy.r_picture is not null ORDER BY r_praise DESC , r_createtime DESC
     </select>
+
+    <select id="queryDynamicByContent" parameterType="java.lang.String" resultMap="dynamicMap">
+        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid = dt.id
+        <where>
+            <if test="content != null and content != ''">
+                AND dy.r_content LIKE CONCAT(CONCAT('%',#{content}),'%')
+            </if>
+                AND delflag = 0
+        </where>
+        ORDER BY r_createtime DESC
+    </select>
 </mapper>
