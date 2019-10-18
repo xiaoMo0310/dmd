@@ -1,16 +1,11 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.BigDecimalUtil;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
 import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.mapper.OmsCartMapper;
 import com.dmd.mall.mapper.OmsShippingMapper;
 import com.dmd.mall.mapper.PmsShopProductMapper;
-import com.dmd.mall.model.domain.OmsCart;
-import com.dmd.mall.mapper.OmsCartMapper;
-import com.dmd.mall.model.domain.OmsShipping;
-import com.dmd.mall.model.domain.PmsShopDetails;
 import com.dmd.mall.model.domain.*;
 import com.dmd.mall.model.vo.OrderCreateVo;
 import com.dmd.mall.service.OmsCartService;
@@ -23,9 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -93,42 +85,12 @@ public class OmsCartServiceImpl extends BaseService<OmsCart> implements OmsCartS
         }
         //校验购物车的数据,包括产品的状态和数量
         for (OmsCart cartItem : cartList) {
-            OmsOrderItem orderDetail = new OmsOrderItem();
-            //查询商品的信息
-            PmsProduct product = pmsProductService.selectByKey(cartItem.getProductId());
-            //查询商品sku的信息
-            PmsSkuStock pmsSkuStock = pmsSkuStockService.selectByKey(cartItem.getProductSkuId());
-            if (product.getVerifyStatus() == 0) {
-                logger.error("商品未通过审核不能销售, productId={}", product.getId());
-                throw new OmsBizException(ErrorCodeEnum.PMS10021015, product.getId());
-            }
-            if(product.getDeleteStatus() == 1 || product.getPublishStatus() == 0 || pmsSkuStock.getStatus() != 1){
-                logger.error("商品已下架或者删除, productId={}", product.getId());
-                throw new OmsBizException(ErrorCodeEnum.PMS10021017, product.getId());
-            }
-            //校验库存
-            //查询商品的库存
-            if (cartItem.getQuantity() > (pmsSkuStock.getStock() - pmsSkuStock.getLockStock())) {
-                logger.error("商品库存不足, productId={}", product.getId());
-                throw new OmsBizException(ErrorCodeEnum.PMS10021016, product.getId());
-            }
-            //封装商品的信息
-            orderDetail.setProductId(product.getId());
-            orderDetail.setProductPic(product.getPic());
-            orderDetail.setProductName(product.getName());
-            orderDetail.setProductBrand(product.getBrandName());
-            orderDetail.setProductQuantity(cartItem.getQuantity());
-            orderDetail.setProductCategoryId(product.getProductCategoryId());
-            orderDetail.setTotalPrice(BigDecimalUtil.mul(pmsSkuStock.getPrice().doubleValue(), cartItem.getQuantity()));
-            //封装商品sku数据
-            orderDetail.setProductSkuId(pmsSkuStock.getId());
-            orderDetail.setProductAttr(pmsSkuStock.getSpec());
-            orderDetail.setProductPrice(pmsSkuStock.getPrice());
-            orderDetail.setProductSkuCode(pmsSkuStock.getSkuCode());
-            orderItemList.add(orderDetail);
+            OmsOrderItem orderItem = pmsProductService.createOrderItem(cartItem.getProductId(), cartItem.getProductSkuId(), cartItem.getQuantity());
+            orderItemList.add(orderItem);
         }
         return orderItemList;
     }
+
 
     @Override
     public OrderCreateVo settlementById(Long[] cartIdArray) {

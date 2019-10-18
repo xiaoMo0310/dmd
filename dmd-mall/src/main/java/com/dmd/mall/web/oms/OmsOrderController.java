@@ -47,8 +47,8 @@ public class OmsOrderController extends BaseController {
     @ApiOperation(httpMethod = "POST", value = "创建课程或积分订单")
     @ApiImplicitParam(name ="orderParamDto", value = "创建订单需要的参数", dataType = "OrderParamDto")
     public Wrapper<OrderCreateResultVo> createCourseOrIntegralOrder(@RequestBody OrderParamDto orderParamDto) {
-        OrderCreateResultVo orderVo = omsOrderService.createCourseOrIntegralOrder(getLoginAuthDto(), orderParamDto);
-        return WrapMapper.ok(orderVo);
+        omsOrderService.createCourseOrIntegralOrder(getLoginAuthDto(), orderParamDto);
+        return WrapMapper.ok();
     }
 
     @GetMapping("cancelOrderDoc/{orderSn}")

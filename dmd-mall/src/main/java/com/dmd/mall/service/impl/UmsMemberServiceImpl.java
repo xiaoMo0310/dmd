@@ -2,6 +2,7 @@ package com.dmd.mall.service.impl;
 
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.base.result.CommonResult;
+import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.UmsMemberMapper;
 import com.dmd.mall.model.domain.MemberDetails;
 import com.dmd.mall.model.domain.UmsMember;
@@ -10,14 +11,14 @@ import com.dmd.mall.security.redis.ValidateCodeRepository;
 import com.dmd.mall.security.sms.ValidateCode;
 import com.dmd.mall.security.sms.ValidateCodeException;
 import com.dmd.mall.service.RedisService;
+import com.dmd.mall.service.UmsIntegrationChangeLogService;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.CodeValidateUtil;
-import com.dmd.mall.util.MD5Gen;
 import com.dmd.mall.util.MailUtil;
 import com.dmd.sms.SmsCode;
-import com.dmd.sms.SmsCodeResponse;
 import com.dmd.sms.SmsCodeUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -35,6 +37,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * 会员管理Service实现类
@@ -55,6 +61,8 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private UmsIntegrationChangeLogService integrationChangeLogService;
     @Value("${redis.key.prefix.authCode}")
     private String REDIS_KEY_PREFIX_AUTH_CODE;
     @Value("${redis.key.expire.authCode}")
@@ -185,11 +193,19 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
-    public void updateIntegration(Long id, Integer integration) {
-        UmsMember record = new UmsMember();
-        record.setId(id);
-        record.setIntegration(integration);
-        memberMapper.updateByPrimaryKeySelective(record);
+    @Transactional
+    public void updateIntegration(UmsMember umsMember, Integer integration, String operateNote) {
+        Preconditions.checkArgument(umsMember != null, "用户信息不能为空");
+        Preconditions.checkArgument(integration != 0, "要消费的积分不能为空");
+        //判断用户积分是否充足
+        if(umsMember.getIntegration() < integration){
+            throw new UmsBizException(ErrorCodeEnum.OMS10031015);
+        }
+        umsMember.setHistoryIntegration(umsMember.getIntegration());
+        umsMember.setIntegration(umsMember.getIntegration() - integration);
+        memberMapper.updateByPrimaryKeySelective(umsMember);
+        //记录日志
+        integrationChangeLogService.updateIntegrationAndAddLog(umsMember, integration, operateNote, 1);
     }
 
 

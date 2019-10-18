@@ -7,15 +7,13 @@ import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
 import com.dmd.mall.constant.OmsApiConstant;
 import com.dmd.mall.exceptions.OmsBizException;
+import com.dmd.mall.exceptions.PmsBizException;
 import com.dmd.mall.mapper.*;
 import com.dmd.mall.model.domain.*;
 import com.dmd.mall.model.dto.OrderPageQueryDto;
 import com.dmd.mall.model.dto.OrderParamDto;
 import com.dmd.mall.model.vo.*;
-import com.dmd.mall.service.OmsCartService;
-import com.dmd.mall.service.OmsOrderItemService;
-import com.dmd.mall.service.OmsOrderService;
-import com.dmd.mall.service.PmsProductService;
+import com.dmd.mall.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
@@ -58,7 +56,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     @Autowired
     private UmsIntegrationRuleSettingMapper integrationRuleSettingMapper;
     @Autowired
-    private UmsMemberMapper umsMemberMapper;
+    private UmsMemberService umsMemberService;
     @Autowired
     private OmsShippingMapper omsShippingMapper;
     @Autowired
@@ -73,7 +71,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     public OrderCreateResultVo createOrder(LoginAuthDto loginAuthDto, OrderCreateVo orderCreateVo) {
         Long userId = loginAuthDto.getUserId();
         //查询用户的信息
-        UmsMember umsMember = umsMemberMapper.selectByPrimaryKey(userId);
+        UmsMember umsMember = umsMemberService.getById(userId);
         //查询购物车的信息
         List<OrderCreateVo.OrderGroupByShop> orderGroupByShopList = orderCreateVo.getOrderGroupByShopList();
         if (CollectionUtils.isEmpty(orderGroupByShopList)) {
@@ -132,7 +130,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
                 }
             }
             //生成订单
-            OmsOrder order = this.assembleOrder(umsMember, orderGroupByShop.getShopId(), orderCreateVo, payment, postage, integrationAmount, loginAuthDto, orderGroupByShop.getRemark());
+            OmsOrder order = assembleOrder(umsMember, orderGroupByShop.getShopId(), orderCreateVo, payment, postage, integrationAmount, loginAuthDto, orderGroupByShop.getRemark(), false);
             if (order == null) {
                 logger.error("生成订单失败, userId={}, shippingId={}, payment={}", userId, orderCreateVo.getShippingId(), payment);
                 throw new OmsBizException(ErrorCodeEnum.OMS10031002);
@@ -153,22 +151,65 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     }
 
     @Override
-    public OrderCreateResultVo createCourseOrIntegralOrder(LoginAuthDto loginAuthDto, OrderParamDto orderParamDto) {
+    @Transactional(rollbackFor = Exception.class)
+    public void createCourseOrIntegralOrder(LoginAuthDto loginAuthDto, OrderParamDto orderParamDto) {
         //查询用户的信息
-        UmsMember umsMember = umsMemberMapper.selectByPrimaryKey(loginAuthDto.getUserId());
+        UmsMember umsMember = umsMemberService.getById(loginAuthDto.getUserId());
         //查询商品的信息
         PmsProduct pmsProduct = pmsProductService.selectByKey(orderParamDto.getProductId());
+        if(pmsProduct == null){
+            throw new PmsBizException(ErrorCodeEnum.PMS10021004);
+        }
         //判断商品的信息
         //商品类型(1:普通商品 2:船宿商品 3:课程商品 4:积分商品)
         Integer productType = pmsProduct.getProductType();
-        if(productType == 3){
-
+        //封装商品订单详情数据
+        OmsOrderItem orderItem = pmsProductService.createOrderItem(orderParamDto.getProductId(), orderParamDto.getProductSkuId(), orderParamDto.getQuantity());
+        //订单积分抵扣的钱数
+        BigDecimal integrationAmount = new BigDecimal("0.00");
+        //判断是否使用积分
+        if (!orderParamDto.getIsUserIntegration()) {
+            //不使用积分
+            orderItem.setIntegrationAmount(new BigDecimal(0));
+        } else {
+            //使用积分
+            integrationAmount = getUseIntegrationAmount(orderParamDto.getUseIntegration(), orderItem.getTotalPrice(), umsMember, false);
+            if (integrationAmount.compareTo(new BigDecimal(0)) == 0) {
+                throw new OmsBizException(ErrorCodeEnum.OMS10031015);
+            } else {
+                //分摊到可用商品中
+                BigDecimal perAmount = orderItem.getProductPrice().divide(orderItem.getTotalPrice() , 3, RoundingMode.HALF_EVEN).multiply(integrationAmount);
+                orderItem.setIntegrationAmount(perAmount);
+            }
         }
-        //计算商品的总价
+        //该订单需要支付的运费 todo 运费计算逻辑待开发
+        BigDecimal postage = new BigDecimal("0.00");
+        if(productType == 3){
+            postage = new BigDecimal("0.00");
+        }
         OrderCreateVo orderCreateVo = new OrderCreateVo();
         BeanUtils.copyProperties(orderParamDto, orderCreateVo);
-        //
-        return null;
+        //封装订单的信息
+        OmsOrder order;
+        if(productType == 4){
+            order = assembleOrder(umsMember, pmsProduct.getShopId(), orderCreateVo, orderItem.getTotalPrice(),
+                                            postage, integrationAmount, loginAuthDto, orderParamDto.getRemark(), true);
+        }else {
+            order = assembleOrder(umsMember, pmsProduct.getShopId(), orderCreateVo, orderItem.getTotalPrice(),
+                    postage, integrationAmount, loginAuthDto, orderParamDto.getRemark(), false);
+        }
+        if (order == null) {
+            logger.error("生成订单失败, userId={}, shippingId={}, payment={}", umsMember.getId(), orderCreateVo.getShippingId(),  orderItem.getTotalPrice());
+            throw new OmsBizException(ErrorCodeEnum.OMS10031002);
+        }
+        //保存订单详情数据
+        omsOrderItemService.save(orderItem);
+        //扣减积分
+        if(order.getPayType() == 4 && orderParamDto.getIsUserIntegration()){
+            umsMemberService.updateIntegration(umsMember, orderParamDto.getUseIntegration(), "购买商品扣减积分" );
+        }
+        //封装返回数据
+
     }
 
     @Override
@@ -232,7 +273,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     /**
      * 封装订单信息并保存
      */
-    private OmsOrder assembleOrder(UmsMember umsMember, Long shopId, OrderCreateVo orderCreateVo, BigDecimal payment, BigDecimal postage, BigDecimal integrationAmount, LoginAuthDto loginAuthDto, String remark) {
+    private OmsOrder assembleOrder(UmsMember umsMember, Long shopId, OrderCreateVo orderCreateVo, BigDecimal payment, BigDecimal postage, BigDecimal integrationAmount, LoginAuthDto loginAuthDto, String remark,Boolean isCourseProudct) {
         OmsOrder order = new OmsOrder();
 
         order.setStatus(OmsApiConstant.OrderStatusEnum.NO_PAY.getCode());
@@ -247,6 +288,10 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         //实际需要支付的金额
         order.setPayAmount(payment.add(postage).subtract(integrationAmount));
         order.setPayType(0);
+        if(isCourseProudct){
+            order.setPayType(4);
+            order.setPaymentTime(new Date());
+        }
         order.setSourceType(1);
         order.setMemberId(umsMember.getId());
         order.setShopId(shopId);

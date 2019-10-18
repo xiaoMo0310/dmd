@@ -50,9 +50,12 @@ public interface UmsMemberService {
     UmsMember getCurrentMember();
 
     /**
-     * 根据会员id修改会员积分
+     * 扣减用户积分
+     * @param umsMember
+     * @param integration
+     * @param operateNote
      */
-    void updateIntegration(Long id, Integer integration);
+    void updateIntegration(UmsMember umsMember, Integer integration, String operateNote);
     /**
      * 在手机号或邮箱登陆时，没有账号的话注册账号用的
      * */

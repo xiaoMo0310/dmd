@@ -3,6 +3,7 @@ package com.dmd.mall.service;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
+import com.dmd.mall.model.domain.OmsOrderItem;
 import com.dmd.mall.model.domain.PmsProduct;
 import com.dmd.mall.model.dto.SortDto;
 import com.dmd.mall.model.vo.PmsProductVo;
@@ -49,4 +50,12 @@ public interface PmsProductService extends IService<PmsProduct> {
      */
     List<PageInfo> findCourseProduct(BaseQuery baseQuery, LoginAuthDto loginAuthDto);
 
+    /**
+     * 根据用户分装用户订单详情数据并保存
+     * @param productId
+     * @param productSkuId
+     * @param quantity
+     * @return
+     */
+    OmsOrderItem createOrderItem(Long productId, Long productSkuId, Integer quantity);
 }

@@ -16,6 +16,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.dmd.mall</groupId>
             <artifactId>dmd-common-base</artifactId>
         </dependency>

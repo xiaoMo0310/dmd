@@ -34,7 +34,7 @@ public interface OmsOrderService extends IService<OmsOrder> {
      * @param orderParamDto
      * @return
      */
-    OrderCreateResultVo createCourseOrIntegralOrder(LoginAuthDto loginAuthDto, OrderParamDto orderParamDto);
+    void createCourseOrIntegralOrder(LoginAuthDto loginAuthDto, OrderParamDto orderParamDto);
     /**
      * 取消订单
      * @param loginAuthDto

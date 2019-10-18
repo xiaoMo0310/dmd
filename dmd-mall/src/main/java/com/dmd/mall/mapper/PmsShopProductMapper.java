@@ -3,10 +3,12 @@ package com.dmd.mall.mapper;
 import com.dmd.mall.model.domain.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
+@Component
 @Mapper
 public interface PmsShopProductMapper {
     public List<PmsProduct> getShopProduct(Map<String,Object> map);//获取商场首页的商品信息

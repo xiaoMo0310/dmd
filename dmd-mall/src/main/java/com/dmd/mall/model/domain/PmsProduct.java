@@ -43,7 +43,7 @@ private static final long serialVersionUID = 1L;
 
     @Column(name = "shop_id")
     @ApiModelProperty("店铺id")
-    private Integer shopId;
+    private Long shopId;
 
     @Column(name = "product_category_id")
     @ApiModelProperty("商品分类id")

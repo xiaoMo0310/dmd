@@ -17,11 +17,17 @@ public class OrderParamDto {
     @ApiModelProperty("商品id")
     private Long productId;
 
+    @ApiModelProperty("商品sku数据id")
+    private Long productSkuId;
+
     @ApiModelProperty("商品数量")
     private Integer quantity;
 
     @ApiModelProperty("收货人信息ID")
     private Long shippingId;
+
+    @ApiModelProperty("单个商家买家留言")
+    private String remark;
 
     @ApiModelProperty("收货人发票信息ID")
     private Long invoiceId;

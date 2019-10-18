@@ -1,14 +1,18 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.BigDecimalUtil;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
+import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.exceptions.PmsBizException;
 import com.dmd.mall.mapper.*;
 import com.dmd.mall.model.domain.*;
 import com.dmd.mall.model.dto.SortDto;
-import com.dmd.mall.model.vo.*;
+import com.dmd.mall.model.vo.PmsCourseListVo;
+import com.dmd.mall.model.vo.PmsProductListVo;
+import com.dmd.mall.model.vo.PmsProductVo;
 import com.dmd.mall.service.PmsProductService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -105,5 +109,48 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
             }).collect(Collectors.toList());
             return new PageInfo<>(courseProductVos);
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public OmsOrderItem createOrderItem(Long productId, Long productSkuId, Integer quantity) {
+        //查询商品的信息
+        PmsProduct product = pmsProductMapper.selectByPrimaryKey(productId);
+        if(product == null){
+            throw new PmsBizException(ErrorCodeEnum.PMS10021004, productId);
+        }
+        //查询商品sku的信息
+        PmsSkuStock pmsSkuStock = pmsProductSkuMapper.selectByPrimaryKey(productSkuId);
+        if(pmsSkuStock == null){
+            throw new PmsBizException(ErrorCodeEnum.PMS10021004, productSkuId);
+        }
+        if (product.getVerifyStatus() == 0) {
+            logger.error("商品未通过审核不能销售, productId={}", product.getId());
+            throw new OmsBizException(ErrorCodeEnum.PMS10021015, product.getId());
+        }
+        if(product.getDeleteStatus() == 1 || product.getPublishStatus() == 0 || pmsSkuStock.getStatus() != 1){
+            logger.error("商品已下架或者删除, productId={}", product.getId());
+            throw new OmsBizException(ErrorCodeEnum.PMS10021017, product.getId());
+        }
+        //校验库存
+        //查询商品的库存
+        if (quantity > (pmsSkuStock.getStock() - pmsSkuStock.getLockStock())) {
+            logger.error("商品库存不足, productId={}", product.getId());
+            throw new OmsBizException(ErrorCodeEnum.PMS10021016, product.getId());
+        }
+        OmsOrderItem orderDetail = new OmsOrderItem();
+        //封装商品的信息
+        orderDetail.setProductId(product.getId());
+        orderDetail.setProductPic(product.getPic());
+        orderDetail.setProductName(product.getName());
+        orderDetail.setProductBrand(product.getBrandName());
+        orderDetail.setProductQuantity(quantity);
+        orderDetail.setProductCategoryId(product.getProductCategoryId());
+        orderDetail.setTotalPrice(BigDecimalUtil.mul(pmsSkuStock.getPrice().doubleValue(), quantity));
+        //封装商品sku数据
+        orderDetail.setProductSkuId(pmsSkuStock.getId());
+        orderDetail.setProductAttr(pmsSkuStock.getSpec());
+        orderDetail.setProductPrice(pmsSkuStock.getPrice());
+        orderDetail.setProductSkuCode(pmsSkuStock.getSkuCode());
+        return orderDetail;
     }
 }
