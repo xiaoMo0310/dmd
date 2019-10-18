@@ -1,7 +1,6 @@
 package com.dmd.mall.security.server;
 
 import com.dmd.mall.component.*;
-import com.dmd.mall.security.authorize.AuthorizeConfigManager;
 import com.dmd.mall.security.redis.ValidateCodeRepository;
 import com.dmd.mall.security.sms.SmsCodeFilter;
 import com.dmd.mall.security.sms.SmsCodeSecurityConfig;
@@ -38,11 +37,11 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
         smsCodeFilter.setValidateCodeRepository(validateCodeRepository);
         http.addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
-                .loginProcessingUrl("/sso/login")
-                .successHandler(goAuthenticationSuccessHandler)
-                .failureHandler(new GoAuthenticationFailureHandler())
+                .loginProcessingUrl("/sso/login")//登陆的url
+                .successHandler(goAuthenticationSuccessHandler)//登陆成功处理器
+                .failureHandler(new GoAuthenticationFailureHandler())//登陆失败处理器
                 .and()
-                .exceptionHandling()
+                .exceptionHandling()//添加自定义未登录或未授权的返回结果
                 .accessDeniedHandler(new GoAccessDeniedHandler())
                 .authenticationEntryPoint(new GoAuthenticationEntryPoint())
                 .and()
@@ -54,14 +53,13 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
                         ,"/*.html"
                         ,"/**/*.html"
                         ,"/home/test"
-                        ,"/qqLogin/weixin",
-                        "/**"
-//                        "/home/**",//首页接口
-//                        "/login"
+                        ,"/qqLogin/weixin"
                 )
                 .permitAll()
-//                .antMatchers("/member/**","/returnApply/**")// 测试时开启
-//                .permitAll()
+                /*.antMatchers("/shop/getShop")
+                .hasAnyAuthority("coach","customer")//拥有教练或者客户任意一个角色可以访问
+                .antMatchers("/shop/shopProductDetails")//拥有教练角色能访问
+                .hasAuthority("coach")*/
                 .anyRequest()// 除上面外的所有请求全部需要鉴权认证
                 .authenticated()
                 .and()
@@ -73,8 +71,8 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable()
-                .apply(smsCodeSecurityConfig)
+                .apply(smsCodeSecurityConfig)//验证码登陆配置
                 .and()
-                .apply(springSocialConfigurer);//开启basic认证登录后可以调用需要认证的接口
+                .apply(springSocialConfigurer);//第三方登陆
     }
 }

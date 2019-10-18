@@ -1,4 +1,4 @@
-package com.dmd.mall.config;
+package com.dmd.mall.security.server;
 
 import com.dmd.mall.bo.AdminUserDetails;
 import com.dmd.mall.component.JwtAuthenticationTokenFilter;

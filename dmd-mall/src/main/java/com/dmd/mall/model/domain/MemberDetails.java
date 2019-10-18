@@ -1,6 +1,7 @@
 package com.dmd.mall.model.domain;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.social.security.SocialUserDetails;
@@ -22,7 +23,7 @@ public class MemberDetails implements UserDetails, SocialUserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //返回当前用户的权限
-        return Arrays.asList(new SimpleGrantedAuthority("TEST"));
+        return AuthorityUtils.commaSeparatedStringToAuthorityList(umsMember.getRole());
     }
 
     @Override

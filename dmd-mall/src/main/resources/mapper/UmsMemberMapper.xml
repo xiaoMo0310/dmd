@@ -21,6 +21,7 @@
     <result column="growth" jdbcType="INTEGER" property="growth" />
     <result column="luckey_count" jdbcType="INTEGER" property="luckeyCount" />
     <result column="history_integration" jdbcType="INTEGER" property="historyIntegration" />
+    <result column="role" jdbcType="VARCHAR" property="role"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -83,7 +84,7 @@
   <sql id="Base_Column_List">
     id, member_level_id, username, password, nick_name, phone, status, create_time, icon,
     gender, birthday, city, job, personalized_signature, source_type, integration, growth, 
-    luckey_count, history_integration
+    luckey_count, history_integration,role
   </sql>
   <select id="selectByExample" parameterType="com.dmd.mall.model.domain.UmsMemberExample" resultMap="BaseResultMap">
     select

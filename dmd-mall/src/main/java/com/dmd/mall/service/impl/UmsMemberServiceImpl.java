@@ -12,9 +12,12 @@ import com.dmd.mall.security.sms.ValidateCodeException;
 import com.dmd.mall.service.RedisService;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.CodeValidateUtil;
+import com.dmd.mall.util.MD5Gen;
 import com.dmd.mall.util.MailUtil;
 import com.dmd.sms.SmsCode;
+import com.dmd.sms.SmsCodeResponse;
 import com.dmd.sms.SmsCodeUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +28,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Timestamp;
+import java.io.IOException;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.*;
 
 /**
@@ -44,6 +43,8 @@ import java.util.*;
 @Service
 public class UmsMemberServiceImpl implements UmsMemberService {
     private Logger logger= LoggerFactory.getLogger(getClass());
+    @Autowired
+    private ObjectMapper objectMapper;
     @Autowired
     private UmsMemberMapper memberMapper;
     @Autowired
@@ -121,30 +122,32 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         }
         //验证码绑定设备id并存储到redis
         ValidateCode validateCode=new ValidateCode(sb.toString(),AUTH_CODE_EXPIRE_SECONDS);
-        validateCodeRepository.save(new ServletWebRequest(request),validateCode);
-        SmsCode smsCode=new SmsCode();
+        validateCodeRepository.save(new ServletWebRequest(request),validateCode);//保存验证码到redis
+//        SmsCode smsCode=new SmsCode();
+//        SmsCodeResponse result=null;
         if (telephone.contains("@")){
             try {
                 MailUtil.send_mail(telephone,sb.toString());
             } catch (MessagingException e) {
                 logger.info(e.getMessage()+"发送邮件失败");
+                validateCodeRepository.remove(new ServletWebRequest(request));
                 return CommonResult.failed( "验证码发送失败"+e);
             }
         }else {
-            long timestamp = Instant.now().getEpochSecond();
-            String password=smsCode.getPassword();
-            String pwdSlat=password;
-            String md5_1= DigestUtils.md5DigestAsHex(pwdSlat.getBytes());
-            String md5_2= DigestUtils.md5DigestAsHex((md5_1+timestamp).getBytes());
-            smsCode.setMobile(telephone);
-            smsCode.setContent(sb.toString());
-            smsCode.setTKey(Long.toString(timestamp));
-            smsCode.setPassword(md5_2);
-            //发送手机验证码的逻辑
-            //SmsCodeUtil.sendMsg(smsCode);
-            logger.info("这里写手机验证码发送的逻辑");
+//            long tKey = Instant.now().getEpochSecond();
+//            String password=smsCode.getPassword();
+//            String passwordMd5= MD5Gen.getMD5(MD5Gen.getMD5(password)+tKey);
+//            smsCode.setMobile(telephone);
+//            smsCode.setContent("【潜水伴侣】您正在登陆验证，验证码"+sb.toString()+",请在15分钟内按页面提示提交验证码，切勿将验证码泄露给他人");
+//            smsCode.setTKey(Long.toString(tKey));
+//            smsCode.setPassword(passwordMd5);
+//            try {
+//                result=SmsCodeUtil.sendMsg(smsCode);
+//            } catch (IOException e){
+//                return CommonResult.failed("链接关闭异常");
+//            }
         }
-        return CommonResult.success(sb.toString(), SmsCodeUtil.sendMsg(smsCode));//在真实环境下需要把验证码的数据改成null不该也行可以让app再证一次
+        return CommonResult.success(sb.toString(), "发送成功");//在真实环境下需要把验证码的数据改成null不该也行可以让app再证一次
     }
 
     @Override
@@ -188,6 +191,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         UmsMember umsMember = new UmsMember();
         umsMember.setUsername(username);
         umsMember.setPassword(passwordEncoder.encode("123456"));
+        umsMember.setRole("customer");
         umsMember.setCreateTime(new Date());
         umsMember.setStatus(1);
         /*//获取默认会员等级并设置
