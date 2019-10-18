@@ -53,4 +53,17 @@
         </where>
     </sql>
 
+    <select id="queryDynamicById" parameterType="String" resultType="String">
+        SELECT r_topicid FROM dmd_dynamic WHERE r_id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <update id="updateDynamicDelflag" parameterType="String">
+        UPDATE dmd_dynamic SET delflag = 1 WHERE r_id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

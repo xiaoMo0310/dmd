@@ -36,7 +36,7 @@ public class DynamicController {
      * @param dynamicBean
      * @return
      */
-    @ApiOperation("分页查询用户动态")
+    @ApiOperation("分页查询用户动态/条查")
     @RequestMapping(value = "/selectDynamicPage",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<DynamicBean>> queryDynamicPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize, DynamicBean dynamicBean) {
@@ -60,7 +60,7 @@ public class DynamicController {
      * 批量删除话题
      * @param ids
      * @return
-     *//*
+     */
     @ApiOperation("批量删除用户动态")
     @RequestMapping(value = "/updateDynamicDelflagById",method = RequestMethod.POST)
     @ResponseBody
@@ -70,5 +70,5 @@ public class DynamicController {
             return CommonResult.success(count,"删除成功");
         }
         return CommonResult.failed("删除失败");
-    }*/
+    }
 }

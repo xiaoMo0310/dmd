@@ -23,4 +23,6 @@ public interface TopicAdminMapper {
     int deleteTopicById(String[] ids);
 
     List<TopicBean> queryTopic();
+
+    void reduceTopicNum(String[] dynamicTopicId);
 }

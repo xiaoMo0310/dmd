@@ -17,4 +17,6 @@ public interface DynamicService {
     List<DynamicBean> queryDynamicPage(Integer pageNum, Integer pageSize, DynamicBean dynamicBean);
 
     List<TopicBean> queryTopic();
+
+    int updateDynamicDelflagById(String[] ids);
 }

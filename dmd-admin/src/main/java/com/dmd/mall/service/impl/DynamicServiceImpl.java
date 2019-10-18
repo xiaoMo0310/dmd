@@ -6,6 +6,7 @@ import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.TopicBean;
 import com.dmd.mall.service.DynamicService;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +37,17 @@ public class DynamicServiceImpl implements DynamicService{
     @Override
     public List<TopicBean> queryTopic() {
         return topicAdminMapper.queryTopic();
+    }
+
+    @Override
+    public int updateDynamicDelflagById(String[] ids) {
+        //动态删除时对应的动态下评论也全部删除
+        //commentMapper.updateComment(ids);
+        //动态删除时判断是否有话题id，如果有话题id则话题下动态数量减1。批量修改
+        String[] dynamicTopicId = dynamicAmdinMappper.queryDynamicById(ids);
+        if (dynamicTopicId != null){
+            topicAdminMapper.reduceTopicNum(dynamicTopicId);
+        }
+        return dynamicAmdinMappper.updateDynamicDelflag(ids);
     }
 }

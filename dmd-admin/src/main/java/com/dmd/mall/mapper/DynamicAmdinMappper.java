@@ -13,4 +13,10 @@ import java.util.List;
  */
 public interface DynamicAmdinMappper {
     List<DynamicBean> queryDynamicPage(DynamicBean dynamicBean);
+
+    String[] queryDynamicById(String[] ids);
+
+    int updateDynamicDelflag(String[] ids);
+
+    //List<DynamicBean> queryDynamicById(String[] ids);
 }
