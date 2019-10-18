@@ -56,4 +56,41 @@
         order_sn, member_id, shop_id, member_username, total_amount, pay_amount, freight_amount, promotion_amount, integration_amount, discount_amount, pay_type, source_type, status, order_type, delivery_company, delivery_sn, auto_confirm_day, integration, promotion_info, is_invoice, invoice_id, shipping_id, remark, confirm_status, delete_status, use_integration, payment_time, delivery_time, receive_time, end_time, close_time
     </sql>
 
+    <select id="selectByUserIdAndOrderNo" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="oder"/>
+        </include>
+        from oms_order oder
+        where oder.order_sn = #{orderSn}
+        and oder.member_id = #{userId}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="long">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="oder"/>
+        </include>
+        from pc_omc_order oder
+        where oder.member_id = #{userId}
+        order by update_time desc
+    </select>
+
+    <select id="queryOrderListWithPage" resultType="com.dmd.mall.model.vo.OrderDocVo">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="oder"/>
+        </include>
+        ,shipping.receiver_name
+        from pc_omc_order oder
+        LEFT JOIN oms_shipping shipping ON oder.shipping_id = shipping.id
+        where 1 = 1
+        <if test="status != null and status != ''">
+            and oder.status = #{status}
+        </if>
+        <if test="orderNo != null and orderNo != ''">
+            and oder.order_sn = #{orderSn}
+        </if>
+        ORDER BY update_time desc
+    </select>
 </mapper>

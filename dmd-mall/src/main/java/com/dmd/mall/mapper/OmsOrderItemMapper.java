@@ -5,6 +5,8 @@ import com.dmd.mall.model.domain.OmsOrderItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * <p>
  * 订单详情表 Mapper 接口
@@ -17,4 +19,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface OmsOrderItemMapper extends MyMapper<OmsOrderItem> {
 
+    List<OmsOrderItem> getListByOrderNoUserId(String orderSn);
 }

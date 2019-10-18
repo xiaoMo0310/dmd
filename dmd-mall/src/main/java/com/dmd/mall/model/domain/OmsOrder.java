@@ -73,7 +73,7 @@ private static final long serialVersionUID = 1L;
     private BigDecimal discountAmount;
 
     @Column(name = "pay_type")
-    @ApiModelProperty("支付方式：0->未支付；1->支付宝；2->微信")
+    @ApiModelProperty("支付方式: 1->在线支付；2->微信 3->微服通")
     private Integer payType;
 
     @Column(name = "source_type")

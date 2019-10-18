@@ -188,7 +188,10 @@ public class GlobalConstant {
 		/**
 		 * Online pay payment type enum.
 		 */
-		ONLINE_PAY(1, "在线支付");
+		ONLINE_PAY(1, "在线支付"),
+
+		WEIXIN_PAY(2, "微信支付"),
+		WFT_PAY(2, "微服通支付");
 
 		PaymentTypeEnum(int code, String value) {
 			this.code = code;

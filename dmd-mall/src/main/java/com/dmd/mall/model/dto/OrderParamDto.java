@@ -4,8 +4,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * @author YangAnsheng
  * @version 1.0
@@ -16,21 +14,25 @@ import java.util.List;
 @ApiModel
 public class OrderParamDto {
 
-    @ApiModelProperty("收货地址id")
+    @ApiModelProperty("商品id")
+    private Long productId;
+
+    @ApiModelProperty("商品数量")
+    private Integer quantity;
+
+    @ApiModelProperty("收货人信息ID")
     private Long shippingId;
 
+    @ApiModelProperty("收货人发票信息ID")
+    private Long invoiceId;
+
     @ApiModelProperty("是否使用积分")
-    private Boolean isUserIntegration;
-
-    @ApiModelProperty("是否开具发票")
-    private Boolean isInvoice;
-
-    @ApiModelProperty("订单备注")
-    private String remark;
+    private Boolean isUserIntegration = false;
 
     @ApiModelProperty("下单使用的积分数")
-    private Integer useIntegration;
+    private Integer useIntegration = 0;
 
-    @ApiModelProperty("购物车ids")
-    private List<Long> cartIds;
+    @ApiModelProperty("是否开具发票")
+    private Boolean isInvoice = false;
+
 }

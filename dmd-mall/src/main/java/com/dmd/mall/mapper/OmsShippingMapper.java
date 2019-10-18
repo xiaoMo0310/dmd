@@ -16,6 +16,7 @@ import java.util.List;
  * @author YangAnsheng123
  * @since 2019-09-20
  */
+@Component
 @Mapper
 public interface OmsShippingMapper extends MyMapper<OmsShipping> {
 
