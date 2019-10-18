@@ -22,6 +22,7 @@
     <result column="luckey_count" jdbcType="INTEGER" property="luckeyCount" />
     <result column="history_integration" jdbcType="INTEGER" property="historyIntegration" />
     <result column="role" jdbcType="VARCHAR" property="role"/>
+    <result column="invitation_code" jdbcType="VARCHAR" property="invitationCode"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -84,17 +85,17 @@
   <sql id="Base_Column_List">
     id, member_level_id, username, password, nick_name, phone, status, create_time, icon,
     gender, birthday, city, job, personalized_signature, source_type, integration, growth, 
-    luckey_count, history_integration,role
+    luckey_count, history_integration,role,invitation_code
   </sql>
   <select id="selectByExample" parameterType="com.dmd.mall.model.domain.UmsMemberExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from ums_member
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
@@ -447,5 +448,9 @@
     inner join ums_role_permission_relation urpr on ur.id=urpr.role_id
     inner join ums_permission up on urpr.permission_id=up.id
     where um.username=#{username}
+  </select>
+
+  <select id="getCoachUser" resultType="string">
+        select username from ums_member where invitation_code=#{invitationCode}
   </select>
 </mapper>

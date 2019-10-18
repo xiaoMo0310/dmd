@@ -54,6 +54,11 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
                         ,"/**/*.html"
                         ,"/home/test"
                         ,"/qqLogin/weixin"
+                        ,"/swagger-resources/**"
+                        ,"/v2/api-docs/**"
+                        ,"/favicon.ico"
+                        ,"/**/*.css"
+                        ,"/**/*.js"
                 )
                 .permitAll()
                 /*.antMatchers("/shop/getShop")

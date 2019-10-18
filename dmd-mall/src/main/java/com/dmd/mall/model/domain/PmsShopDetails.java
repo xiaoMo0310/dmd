@@ -28,4 +28,5 @@ public class PmsShopDetails implements Serializable {
     private List<PmsProductAttribute> productAttributes;//商品规格内容
     private String name;//商品名称
     private Long productAttributeCategoryId;//属性分类对应的id
+    private String telephone;//商铺电话
 }

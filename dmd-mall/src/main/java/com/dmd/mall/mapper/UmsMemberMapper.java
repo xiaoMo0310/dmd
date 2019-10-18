@@ -35,4 +35,6 @@ public interface UmsMemberMapper {
     int updateByPrimaryKey(UmsMember record);
 
     Set<String> getPermission(@Param("username")String username);
+
+    String getCoachUser(@Param("invitationCode") String invitationCode);
 }

@@ -78,7 +78,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
-    public CommonResult register(String username, String password, String telephone, String authCode, HttpServletRequest request) {
+    public CommonResult register(String username, String password, String invitationCode, String authCode, HttpServletRequest request) {
         //验证验证码
         ValidateCode validateCode=validateCodeRepository.get(new ServletWebRequest(request));
         try {
@@ -89,7 +89,6 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         //查询是否已有该用户
         UmsMemberExample example = new UmsMemberExample();
         example.createCriteria().andUsernameEqualTo(username);
-        example.or(example.createCriteria().andPhoneEqualTo(telephone));
         List<UmsMember> umsMembers = memberMapper.selectByExample(example);
         if (!CollectionUtils.isEmpty(umsMembers)) {
             return CommonResult.failed("该用户已经存在");
@@ -97,7 +96,9 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         //没有该用户进行添加操作
         UmsMember umsMember = new UmsMember();
         umsMember.setUsername(username);
-        umsMember.setPhone(telephone);
+        if (!username.contains("@")){
+            umsMember.setPhone(username);
+        }
         umsMember.setPassword(passwordEncoder.encode(password));
         umsMember.setCreateTime(new Date());
         umsMember.setStatus(1);
@@ -109,6 +110,14 @@ public class UmsMemberServiceImpl implements UmsMemberService {
             umsMember.setMemberLevelId(memberLevelList.get(0).getId());
         }*/
         memberMapper.insert(umsMember);
+        if (invitationCode!=null){
+            //在邀请码不等于null的时候自动加入邀请码对应的教练的群
+            String coachUserName=memberMapper.getCoachUser(invitationCode);
+            //调用腾讯接口查询教练群组并加入
+
+        }
+        //调用腾讯接口将账号和腾讯IM建立关联
+
         umsMember.setPassword(null);
         return CommonResult.success(null, "注册成功");
     }

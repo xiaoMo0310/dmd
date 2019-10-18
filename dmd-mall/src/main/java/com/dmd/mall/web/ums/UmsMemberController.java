@@ -27,12 +27,12 @@ public class UmsMemberController {
     @ApiOperation("注册")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult register(@RequestParam String username,
-                                 @RequestParam String password,
-                                 @RequestParam String telephone,
-                                 @RequestParam String authCode,
+    public CommonResult register(@RequestParam(required = true) String username,
+                                 @RequestParam(required = true) String password,
+                                 @RequestParam(required = true) String authCode,
+                                 @RequestParam(required = false) String invitationCode,
                                  HttpServletRequest request) {
-        return memberService.register(username, password, telephone, authCode,request);
+        return memberService.register(username, password, invitationCode, authCode,request);
     }
 
     @ApiOperation("获取验证码")

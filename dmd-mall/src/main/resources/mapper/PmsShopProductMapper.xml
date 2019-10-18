@@ -29,7 +29,7 @@
     </select>
     <!--查询商品详情内容-->
     <select id="shopProductDetails" resultMap="pmsShopDetails">
-        select (select count(1) from pms_comment pc where product_id=pp.id) comment_count,pp.id,pss.sale pss_sale,pp.price,shop_id,detail,description,album_pics,pss.spec,pss.price pss_price,pss.id pss_id,pss.pic pss_pic,pss.stock pss_stock,us.name,pp.product_attribute_category_id
+        select (select count(1) from pms_comment pc where product_id=pp.id) comment_count,pp.id,pss.sale pss_sale,pp.price,shop_id,detail,description,album_pics,pss.spec,pss.price pss_price,pss.id pss_id,pss.pic pss_pic,pss.stock pss_stock,us.name,pp.product_attribute_category_id,us.telephone
         from pms_product pp
         inner join pms_sku_stock pss on pp.id=pss.product_id
         inner join ums_shop us on pp.shop_id=us.id

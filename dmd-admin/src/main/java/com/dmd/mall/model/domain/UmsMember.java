@@ -74,6 +74,9 @@ public class UmsMember implements Serializable {
     @ApiModelProperty(value = "角色")
     private String role;
 
+    @ApiModelProperty(value = "邀请码")
+    private String invitationCode;
+
     private static final long serialVersionUID = 1L;
     @Override
     public String toString() {
@@ -104,6 +107,7 @@ public class UmsMember implements Serializable {
         sb.append(", stature=").append(stature);
         sb.append(", weight=").append(weight);
         sb.append(", role=").append(role);
+        sb.append(", invitationCode=").append(invitationCode);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
