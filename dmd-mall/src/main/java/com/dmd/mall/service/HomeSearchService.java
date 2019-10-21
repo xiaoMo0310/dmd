@@ -22,4 +22,6 @@ public interface HomeSearchService {
     List<TopicBean> queryTopic(Long userId, String content, Integer searchType);
 
     List<HomeSearchRecordBean> queryHistory(Long userId);
+
+    int deleteHistoryByUserid(Long userid);
 }

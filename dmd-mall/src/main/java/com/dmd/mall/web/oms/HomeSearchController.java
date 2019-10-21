@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,25 +45,47 @@ public class HomeSearchController {
         List list = new ArrayList<>();
         if(searchType == 1){
             List<DynamicBean> dynamicList = homeSearchService.queryDynamic(userId,content,searchType);
-            list.add(dynamicList);
+            list=dynamicList;
         }
         if(searchType == 2){
             List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType);
-            list.add(pmsProductList);
+            list=pmsProductList;
         }
         if(searchType == 3){
             List<TopicBean> TopicList = homeSearchService.queryTopic(userId,content,searchType);
-            list.add(TopicList);
+            list=TopicList;
         }
         return CommonResult.success(list);
     }
 
 
+    /**
+     * 查询历史记录
+     * @param userId
+     * @return
+     */
     @ApiOperation("查询历史搜索")
     @RequestMapping(value = "/queryHistory",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<HomeSearchRecordBean>> queryHistory(@RequestParam Long userId) {
         List<HomeSearchRecordBean> historyList = homeSearchService.queryHistory(userId);
         return CommonResult.success(historyList);
+    }
+
+
+    /**
+     * 删除历史记录
+     * @param userid
+     * @return
+     */
+    @ApiOperation("删除历史记录")
+    @RequestMapping(value = "/deleteHistoryByUserid",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult deleteHistoryByUserid(@RequestParam Long userid){
+        int count = homeSearchService.deleteHistoryByUserid(userid);
+        if (count > 0) {
+            return CommonResult.success(count,"清除历史记录成功");
+        }
+        return CommonResult.failed("清除历史记录失败");
     }
 }

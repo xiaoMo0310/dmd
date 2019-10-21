@@ -58,4 +58,11 @@ public class HomeSearchServiceImpl implements HomeSearchService{
     public List<HomeSearchRecordBean> queryHistory(Long userId) {
         return homeSearchMapper.queryHistory(userId);
     }
+
+    @Override
+    public int deleteHistoryByUserid(Long userid) {
+        return homeSearchMapper.deleteHistoryByUserid(userid);
+    }
+
+
 }

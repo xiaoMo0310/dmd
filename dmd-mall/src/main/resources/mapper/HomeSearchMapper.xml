@@ -33,4 +33,8 @@
         GROUP BY name
         ORDER BY createTime DESC LIMIT 5
     </select>
+
+    <delete id="deleteHistoryByUserid" parameterType="java.lang.Long">
+        DELETE FROM dmd_search_home_history WHERE userid = #{userid}
+    </delete>
 </mapper>
