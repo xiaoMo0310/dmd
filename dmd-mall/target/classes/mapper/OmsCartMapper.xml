@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.OmsCartMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.OmsCart">
+    <result column="id" property="id" />
+    <result column="creator" property="creator" />
+    <result column="creator_id" property="creatorId" />
+    <result column="created_time" property="createdTime" />
+    <result column="last_operator" property="lastOperator" />
+    <result column="last_operator_id" property="lastOperatorId" />
+    <result column="update_time" property="updateTime" />
+        <result column="product_id" property="productId" />
+        <result column="product_sku_id" property="productSkuId" />
+        <result column="member_id" property="memberId" />
+        <result column="shop_id" property="shopId" />
+        <result column="quantity" property="quantity" />
+        <result column="price" property="price" />
+        <result column="product_pic" property="productPic" />
+        <result column="product_name" property="productName" />
+        <result column="product_sub_title" property="productSubTitle" />
+        <result column="product_sku_code" property="productSkuCode" />
+        <result column="member_nickname" property="memberNickname" />
+        <result column="delete_status" property="deleteStatus" />
+        <result column="product_category_id" property="productCategoryId" />
+        <result column="product_brand" property="productBrand" />
+        <result column="product_sn" property="productSn" />
+        <result column="product_attr" property="productAttr" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        creator,
+        creator_id,
+        created_time,
+        last_operator,
+        last_operator_id,
+        update_time,
+        product_id, product_sku_id, member_id, shop_id, quantity, price, product_pic, product_name, product_sub_title, product_sku_code, member_nickname, delete_status, product_category_id, product_brand, product_sn, product_attr
+    </sql>
+    <!--根据用户id查询购物车-->
+    <select id="findOmsCart" resultType="com.dmd.mall.model.domain.OmsCart">
+        select <include refid="Base_Column_List"/>,name
+        from oms_cart oc inner join ums_shop us on oc.shop_id=us.id
+        where delete_status=0 and member_id=#{memberId}
+    </select>
+    <!--根据id查询购物车-->
+    <select id="findOmsCartById" resultType="com.dmd.mall.model.domain.OmsCart">
+        select <include refid="Base_Column_List"/>
+        from oms_cart where delete_status=0 and id in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+        </foreach>
+    </select>
+    <!--生成购物车-->
+    <insert id="addOmsCart">
+        insert into oms_cart(product_id,product_sku_id,member_id,shop_id,quantity,price,product_pic,product_name,product_sub_title,product_sku_code,delete_status,product_category_id,product_brand,product_sn,product_attr,created_time,update_time) values (#{productId},#{productSkuId},#{memberId},#{shopId},#{quantity},#{price},#{productPic},#{productName},#{productSubTitle},#{productSkuCode},0,#{productCategoryId},#{productBrand},#{productSn},#{productAttr},#{createdTime},#{updateTime})
+    </insert>
+    <!--修改购物车商品的数量和购物是否被删除-->
+    <update id="updateOmsCart">
+        update oms_cart
+        set
+        <if test="quantity!=null">
+            quantity=#{quantity},
+        </if>
+        <if test="deleteStatus!=null">
+            delete_status=#{deleteStatus},
+        </if>
+            update_time=#{updateTime}
+        where id in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="selectCartByUserIdAndCartId" resultType="com.dmd.mall.model.domain.OmsCart">
+        select
+        <include refid="Base_Column_List"/>
+        from oms_cart where delete_status=0 and member_id = #{userId} and shop_id = #{shopId} and id in
+        <foreach collection="cartIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.PmsProductMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.PmsProduct">
+    <result column="id" property="id" />
+    <result column="creator" property="creator" />
+    <result column="creator_id" property="creatorId" />
+    <result column="created_time" property="createdTime" />
+    <result column="last_operator" property="lastOperator" />
+    <result column="last_operator_id" property="lastOperatorId" />
+    <result column="update_time" property="updateTime" />
+        <result column="product_sn" property="productSn" />
+        <result column="brand_id" property="brandId" />
+        <result column="brand_name" property="brandName" />
+        <result column="shop_id" property="shopId" />
+        <result column="product_category_id" property="productCategoryId" />
+        <result column="product_attribute_category_id" property="productAttributeCategoryId" />
+        <result column="product_category_name" property="productCategoryName" />
+        <result column="name" property="name" />
+        <result column="pic" property="pic" />
+        <result column="delete_status" property="deleteStatus" />
+        <result column="publish_status" property="publishStatus" />
+        <result column="new_status" property="newStatus" />
+        <result column="recommand_status" property="recommandStatus" />
+        <result column="verify_status" property="verifyStatus" />
+        <result column="sort" property="sort" />
+        <result column="sale" property="sale" />
+        <result column="price" property="price" />
+        <result column="gift_growth" property="giftGrowth" />
+        <result column="gift_point" property="giftPoint" />
+        <result column="use_point_limit" property="usePointLimit" />
+        <result column="title" property="title" />
+        <result column="description" property="description" />
+        <result column="content" property="content" />
+        <result column="detail" property="detail" />
+        <result column="stock" property="stock" />
+        <result column="low_stock" property="lowStock" />
+        <result column="unit" property="unit" />
+        <result column="weight" property="weight" />
+        <result column="service_ids" property="serviceIds" />
+        <result column="ship_address" property="shipAddress" />
+        <result column="album_pics" property="albumPics" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        creator,
+        creator_id,
+        created_time,
+        last_operator,
+        last_operator_id,
+        update_time,
+        product_sn, brand_id, brand_name, shop_id, product_category_id, product_attribute_category_id, product_category_name, name, pic, delete_status, publish_status, new_status, recommand_status, verify_status, sort, sale, price, gift_growth, gift_point, use_point_limit, title, description, content, detail, stock, low_stock, unit, weight, service_ids, ship_address, album_pics
+    </sql>
+
+    <select id="selectShipSleepsProduct" resultType="com.dmd.mall.model.vo.PmsProductListVo">
+        select
+        pp.id,
+        pp.price,
+        pp.name,
+        pp.pic,
+        pp.ship_address,
+        us.id shop_id,
+        us.name shop_name,
+        us.logo
+        from pms_product pp, ums_shop us
+        where pp.delete_status = 0
+        and pp.publish_status = 1
+        and pp.verify_status = 1
+        and pp.productType = #{productType}
+        and pp.shop_id = us.id
+        <if test="sortDto.minPrice!= null">
+            and price &gt;= #{sortDto.minPrice}
+        </if>
+        <if test="sortDto.maxPrice!= null">
+            and price &lt;= #{sortDto.maxPrice}
+        </if>
+        <if test="sortDto.address!=null">
+            and ship_address = #{sortDto.address}
+        </if>
+        <if test="sortDto.orderBy != null">
+            order by #{sortDto.orderBy}
+        </if>
+    </select>
+    <select id="selectProductByShopId" resultType="com.dmd.mall.model.vo.PmsProductListVo">
+        select
+        pp.id,
+        pp.price,
+        pp.name,
+        pp.pic,
+        pp.ship_address,
+        us.id shop_id,
+        us.name shop_name,
+        us.logo
+        from pms_product pp, ums_shop us
+        where pp.delete_status = 0
+        and pp.publish_status = 1
+        and pp.verify_status = 1
+        and us.id = #{shopId}
+        and pp.shop_id = us.id
+        <if test="sortDto.minPrice!= null">
+            and price &gt;= #{sortDto.minPrice}
+        </if>
+        <if test="sortDto.maxPrice!= null">
+            and price &lt;= #{sortDto.maxPrice}
+        </if>
+        <if test="sortDto.address!=null">
+            and ship_address = #{sortDto.address}
+        </if>
+        <if test="sortDto.orderBy != null">
+            order by #{sortDto.orderBy}
+        </if>
+
+    </select>
+
+    <select id="queryPmsProductByContent" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        pp.id,
+        pp.price,
+        pp.name,
+        pp.pic,
+        pp.ship_address,
+        us.id shop_id,
+        us.name shop_name,
+        us.logo
+        from pms_product pp, ums_shop us
+        where pp.delete_status = 0
+        and pp.publish_status = 1
+        and pp.verify_status = 1
+        and pp.shop_id = us.id
+        <if test="content!= null and content != ''">
+            and pp.name LIKE CONCAT(CONCAT('%',#{content}),'%')
+        </if>
+    </select>
+</mapper>

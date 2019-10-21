@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.UmsFavoritesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.UmsFavorites">
+    <result column="id" property="id" />
+    <result column="status" property="status" />
+    <result column="creator" property="creator" />
+    <result column="creator_id" property="creatorId" />
+    <result column="created_time" property="createdTime" />
+    <result column="last_operator" property="lastOperator" />
+    <result column="last_operator_id" property="lastOperatorId" />
+    <result column="update_time" property="updateTime" />
+        <result column="user_id" property="userId" />
+        <result column="favorite_type" property="favoriteType" />
+        <result column="target_id" property="targetId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        version,
+        creator,
+        creator_id,
+        created_time,
+        last_operator,
+        last_operator_id,
+        update_time,
+        user_id, favorite_type, target_id,status
+    </sql>
+
+</mapper>

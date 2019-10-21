@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.PmsShopProductMapper">
+    <select id="getShopProduct" resultType="com.dmd.mall.model.domain.PmsProduct">
+        select id,sale,price,name,pic
+        from pms_product
+        where delete_status=0 and publish_status=1
+        <if test="minPrice!=null">
+            and price &gt;= #{minPrice}
+        </if>
+        <if test="maxPrice!=null">
+            and price &lt;= #{maxPrice}
+        </if>
+        <if test="type!=null">
+            and product_category_id=#{type}
+        </if>
+        <if test="shipAddress!=null">
+            and ship_address=#{shipAddress}
+        </if>
+        <if test="sortType!=null">
+            order by #{sortType}
+        </if>
+    </select>
+
+    <select id="getShopAdvertise" resultType="com.dmd.mall.model.domain.SmsHomeAdvertise">
+        select id,pic,url
+        from sms_home_advertise
+        where start_time&gt;=#{startTime} and end_time&lt;=#{endTime} and type=#{type}
+    </select>
+    <!--查询商品详情内容-->
+    <select id="shopProductDetails" resultMap="pmsShopDetails">
+        select (select count(1) from pms_comment pc where product_id=pp.id) comment_count,pp.id,pss.sale pss_sale,pp.price,shop_id,detail,description,album_pics,pss.spec,pss.price pss_price,pss.id pss_id,pss.pic pss_pic,pss.stock pss_stock,us.name,pp.product_attribute_category_id,us.telephone
+        from pms_product pp
+        inner join pms_sku_stock pss on pp.id=pss.product_id
+        inner join ums_shop us on pp.shop_id=us.id
+        where delete_status=0 and publish_status=1 and pp.id=#{id}
+    </select>
+    <resultMap id="pmsShopDetails" type="com.dmd.mall.model.domain.PmsShopDetails">
+        <id column="id" property="id"/>
+        <collection property="productAttributes" javaType="java.util.ArrayList" ofType="com.dmd.mall.model.domain.PmsSkuStock" >
+            <id column="pss_id" property="id"/>
+            <result column="pss_price" property="price"/>
+            <result column="spec" property="spec"/>
+            <result column="pss_pic" property="pic"/>
+            <result column="pss_stock" property="stock"/>
+            <result column="pss_sale" property="sale"/>
+        </collection>
+    </resultMap>
+    <!--获取商品属性-->
+    <select id="getPmsProductAttribute" resultType="com.dmd.mall.model.domain.PmsProductAttribute">
+        select name,input_list from pms_product_attribute where product_attribute_category_id=#{productAttributeCategoryId}
+    </select>
+    <!--获取评论信息-->
+    <select id="shopComment" resultType="com.dmd.mall.model.domain.PmsComment">
+        select member_ip,product_attribute,member_icon,pics,content,read_count,id
+        from pms_comment where product_id=#{id}
+    </select>
+</mapper>

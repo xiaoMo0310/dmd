@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.TopicMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="topicMap" type="com.dmd.mall.model.domain.TopicBean">
+        <result column="id" property="id" />
+        <result column="topicName" property="topicName" />
+        <result column="topicNum" property="topicNum" />
+        <result column="topicDescribes" property="topicDescribes" />
+        <result column="createTime" property="createTime" />
+        <result column="topicPicture" property="topicPicture" />
+    </resultMap>
+
+    <select id="queryTopicPage" resultMap="topicMap">
+        SELECT id,topicName,topicPicture FROM dmd_dynamic_topic ORDER BY topicNum DESC
+    </select>
+
+
+    <select id="queryTopicById" resultMap="topicMap" parameterType="int">
+        SELECT id,topicName,topicNum,topicDescribes,createTime,topicPicture FROM dmd_dynamic_topic WHERE id = #{value}
+    </select>
+
+
+    <select id="queryTopic" resultMap="topicMap">
+        SELECT id,topicName,topicPicture,topicNum FROM dmd_dynamic_topic ORDER BY topicNum DESC
+    </select>
+
+    <update id="addTopicNum" parameterType="int">
+        UPDATE dmd_dynamic_topic SET topicNum = topicNum +1 WHERE id = #{value}
+    </update>
+
+    <update id="reduceTopicNum" parameterType="int">
+        UPDATE dmd_dynamic_topic SET topicNum = topicNum -1 WHERE id = #{value} and topicNum > 0
+    </update>
+
+    <select id="queryTopicName" resultMap="topicMap" parameterType="java.lang.String">
+        SELECT id,topicName FROM dmd_dynamic_topic
+        <where>
+            <if test="topicName != null and topicName != ''">
+                AND topicName LIKE CONCAT(CONCAT('%',#{topicName}),'%');
+            </if>
+        </where>
+    </select>
+
+    <select id="queryTopicByContent" resultMap="topicMap" parameterType="java.lang.String">
+        SELECT id,topicName,topicPicture,topicNum FROM dmd_dynamic_topic
+        <where>
+          <if test="content != null and content != ''">
+              AND topicName LIKE CONCAT(CONCAT('%',#{content}),'%')
+          </if>
+        </where>
+        ORDER BY topicNum DESC
+    </select>
+</mapper>

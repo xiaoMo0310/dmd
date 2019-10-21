@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.admin.mapper.TopicAdminMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="topicMap" type="com.dmd.admin.model.domain.TopicBean">
+        <result column="id" property="id" />
+        <result column="topicName" property="topicName" />
+        <result column="topicNum" property="topicNum" />
+        <result column="topicDescribes" property="topicDescribes" />
+        <result column="createTime" property="createTime" />
+        <result column="topicPicture" property="topicPicture" />
+    </resultMap>
+
+
+    <select id="queryTopicPage" parameterType="com.dmd.admin.model.domain.TopicBean" resultMap="topicMap">
+        SELECT id,topicName,topicNum,topicPicture,createTime,topicPicture FROM dmd_dynamic_topic
+        <include refid="topicWhere"></include>
+        ORDER BY topicNum DESC
+    </select>
+
+    <!-- 公用标签 -->
+    <sql id="topicWhere">
+        <where>
+            <!-- 话题名称模糊查询 -->
+            <if test="topicName !=null and topicName != ''">
+                and topicName like '%${topicName}%'
+            </if>
+            <!-- 话题描述模糊查询 -->
+            <if test="topicDescribes !=null and topicDescribes != ''">
+                and topicDescribes like '%${topicDescribes}%'
+            </if>
+            <!-- 日期区间查询 -->
+            <if test="stratTime != null">
+                and createTime &gt;= #{stratTime}
+            </if>
+            <if test="endTime != null">
+                and createTime &lt;= #{endTime}
+            </if>
+        </where>
+    </sql>
+
+    <insert id="addTopic" parameterType="com.dmd.admin.model.domain.TopicBean">
+        INSERT INTO dmd_dynamic_topic
+        (
+        topicName,
+        topicNum,
+        topicDescribes,
+        createTime,
+        topicPicture
+        ) VALUES
+        (
+        #{topicName,jdbcType=VARCHAR},
+        #{topicNum,jdbcType=INTEGER},
+        #{topicDescribes,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{topicPicture,jdbcType=VARCHAR}
+        )
+
+    </insert>
+
+    <update id="updateTopicById" parameterType="com.dmd.admin.model.domain.TopicBean">
+        UPDATE dmd_dynamic_topic SET
+        topicName = #{topicName},
+        topicNum = #{topicNum},
+        topicDescribes = #{topicDescribes},
+        createTime = #{createTime},
+        topicPicture = #{topicPicture}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findTopicInfoById" parameterType="java.lang.Long" resultMap="topicMap">
+        SELECT id,topicName,topicNum,topicPicture,createTime,topicPicture FROM dmd_dynamic_topic
+        WHERE id = #{id}
+    </select>
+
+    <delete id="deleteTopicById" parameterType="String">
+        DELETE FROM  dmd_dynamic_topic  WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="queryTopic" resultMap="topicMap">
+        SELECT id,topicName FROM dmd_dynamic_topic
+        ORDER BY topicNum DESC
+    </select>
+
+    <update id="reduceTopicNum" parameterType="String">
+        UPDATE dmd_dynamic_topic SET topicNum = topicNum -1 WHERE topicNum > 0 AND id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
