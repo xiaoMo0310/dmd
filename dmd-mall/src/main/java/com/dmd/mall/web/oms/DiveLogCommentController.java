@@ -80,7 +80,7 @@ public class DiveLogCommentController {
      * 我只能删我的回复和评论无法删除别人的回复
      */
     @ApiOperation("逻辑删除日志评论与回复")
-    @RequestMapping(value = "/updateDiveLogCommentDelflag",method = RequestMethod.GET)
+    @RequestMapping(value = "/updateDiveLogCommentDelflag",method = RequestMethod.POST)
     @ResponseBody                            //评论id
     public CommonResult updateDiveLogCommentDelflag(@RequestParam Long commentId,
                                                     //登录人id,判断此发布回复和评论的用户是否为是我,发布回复和评论的用户id是否是我的用户id

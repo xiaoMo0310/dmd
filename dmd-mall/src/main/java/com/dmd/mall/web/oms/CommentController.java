@@ -75,7 +75,7 @@ public class CommentController {
      * 我只能删我的回复和评论无法删除别人的回复
      */
     @ApiOperation("逻辑删除动态评论与回复")
-    @RequestMapping(value = "/updateCommentDelflag",method = RequestMethod.GET)
+    @RequestMapping(value = "/updateCommentDelflag",method = RequestMethod.POST)
     @ResponseBody                            //评论id
     public CommonResult updateCommentDelflag(@RequestParam Long commentId,
                                              //登录人id,判断此发布回复和评论的用户是否为是我,发布回复和评论的用户id是否是我的用户id

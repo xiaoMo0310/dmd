@@ -1,7 +1,9 @@
 package com.dmd.admin.service.impl;
 
+import com.dmd.admin.mapper.CommentMapper;
 import com.dmd.admin.mapper.DynamicAmdinMappper;
 import com.dmd.admin.mapper.TopicAdminMapper;
+import com.dmd.admin.model.domain.CommentBean;
 import com.dmd.admin.model.domain.DynamicBean;
 import com.dmd.admin.model.domain.TopicBean;
 import com.dmd.admin.service.DynamicService;
@@ -27,6 +29,8 @@ public class DynamicServiceImpl implements DynamicService {
     @Autowired
     private TopicAdminMapper topicAdminMapper;
 
+    @Autowired
+    private CommentMapper commentMapper;
     @Override
     public List<DynamicBean> queryDynamicPage(Integer pageNum, Integer pageSize, DynamicBean dynamicBean) {
         PageHelper.startPage(pageNum, pageSize);
@@ -41,7 +45,7 @@ public class DynamicServiceImpl implements DynamicService {
     @Override
     public int updateDynamicDelflagById(String[] ids) {
         //动态删除时对应的动态下评论也全部删除
-        //commentMapper.updateComment(ids);
+        commentMapper.updateComment(ids);
         //动态删除时判断是否有话题id，如果有话题id则话题下动态数量减1。批量修改
         String[] dynamicTopicId = dynamicAmdinMappper.queryDynamicById(ids);
         if (dynamicTopicId != null){

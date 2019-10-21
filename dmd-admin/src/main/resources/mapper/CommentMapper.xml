@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.admin.mapper.CommentMapper">
+
+   <!--通用查询映射结果-->
+    <resultMap id="commentMap" type="com.dmd.admin.model.domain.CommentBean">
+        <result column="commentId" property="commentId" />
+        <result column="lw_name" property="commentName" />
+        <result column="lw_head_portrait" property="commentHeadPortrait" />
+        <result column="lw_date" property="createTime" />
+        <result column="lw_content" property="content" />
+        <result column="lw_comment_type" property="type" />
+        <result column="ip_address" property="ipAddress" />
+        <result column="status" property="status" />
+        <result column="delflag" property="delflag" />
+        <result column="lw_for_uid" property="forUid" />
+        <result column="lw_for_dynamic_id" property="forDynamicId" />
+        <result column="lw_for_diveLog_id" property="forDiveLogId" />
+        <result column="lw_userid" property="userId" />
+        <result column="lw_for_pid" property="forPid" />
+    </resultMap>
+
+    <select id="queryCommentAll" parameterType="com.dmd.admin.model.domain.CommentBean" resultMap="commentMap">
+        SELECT
+        commentId,
+        lw_name,
+        lw_head_portrait,
+        lw_date,lw_content,
+        lw_comment_type,
+        ip_address,status
+        ,delflag,
+        lw_for_uid,
+        lw_for_dynamic_id,
+        lw_for_diveLog_id,
+        lw_userid,
+        lw_for_pid
+        FROM dmd_dynamic_comment
+        <include refid="commentWhere"></include>
+    </select>
+
+    <!-- 公用标签 -->
+    <sql id="commentWhere">
+        <where>
+            <!-- 文章内容模糊查询 -->
+            <if test="content !=null and content != ''">
+                and lw_content like '%${content}%'
+            </if>
+            <!-- 日期区间查询 -->
+            <if test="stratTime != null">
+                and lw_date &gt;= #{stratTime}
+            </if>
+            <if test="endTime != null">
+                and lw_date &lt;= #{endTime}
+            </if>
+            <!-- 某个动态下的所有评论与回复 -->
+            <if test="forDynamicId !=null">
+                and lw_for_dynamic_id = #{forDynamicId}
+            </if>
+            <!-- 某个日志下的所有评论与回复 -->
+            <if test="forDiveLogId !=null">
+                and lw_for_diveLog_id = #{forDiveLogId}
+            </if>
+                and delflag = 0
+        </where>
+    </sql>
+
+    <update id="updateCommentDelflag" parameterType="String" >
+        UPDATE dmd_dynamic_comment SET delflag = 1 WHERE commentId IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateComment" parameterType="String">
+        UPDATE dmd_dynamic_comment SET delflag = 1 WHERE lw_for_dynamic_id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
