@@ -10,11 +10,12 @@
         <result column="topicDescribes" property="topicDescribes" />
         <result column="createTime" property="createTime" />
         <result column="topicPicture" property="topicPicture" />
+        <result column="updateTime" property="updateTime" />
+        <result column="operationName" property="operationName" />
     </resultMap>
 
-
     <select id="queryTopicPage" parameterType="com.dmd.admin.model.domain.TopicBean" resultMap="topicMap">
-        SELECT id,topicName,topicNum,topicPicture,createTime,topicPicture FROM dmd_dynamic_topic
+        SELECT id,topicName,topicNum,topicDescribes,createTime,topicPicture FROM dmd_dynamic_topic
         <include refid="topicWhere"></include>
         ORDER BY topicNum DESC
     </select>
@@ -47,14 +48,16 @@
         topicNum,
         topicDescribes,
         createTime,
-        topicPicture
+        topicPicture,
+        operationName
         ) VALUES
         (
         #{topicName,jdbcType=VARCHAR},
         #{topicNum,jdbcType=INTEGER},
         #{topicDescribes,jdbcType=VARCHAR},
         #{createTime,jdbcType=TIMESTAMP},
-        #{topicPicture,jdbcType=VARCHAR}
+        #{topicPicture,jdbcType=VARCHAR},
+        #{operationName,jdbcType=VARCHAR}
         )
 
     </insert>
@@ -65,12 +68,14 @@
         topicNum = #{topicNum},
         topicDescribes = #{topicDescribes},
         createTime = #{createTime},
-        topicPicture = #{topicPicture}
+        topicPicture = #{topicPicture},
+        updateTime = #{updateTime},
+        operationName = #{operationName}
         WHERE id = #{id}
     </update>
 
     <select id="findTopicInfoById" parameterType="java.lang.Long" resultMap="topicMap">
-        SELECT id,topicName,topicNum,topicPicture,createTime,topicPicture FROM dmd_dynamic_topic
+        SELECT id,topicName,topicNum,topicDescribes,createTime,topicPicture,operationName,updateTime FROM dmd_dynamic_topic
         WHERE id = #{id}
     </select>
 

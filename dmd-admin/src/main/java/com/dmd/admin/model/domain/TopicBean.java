@@ -31,6 +31,12 @@ public class TopicBean {
     @ApiModelProperty(value = "发布时间")
     private Date createTime;
 
+    @ApiModelProperty(value = "修改时间")
+    private Date updateTime;
+
+    @ApiModelProperty(value = "操作人")
+    private String operationName;
+
     @ApiModelProperty(value = "话题展示图片")
     private String topicPicture;
 
@@ -41,6 +47,23 @@ public class TopicBean {
     @ApiModelProperty(value = "结束时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
+
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getOperationName() {
+        return operationName;
+    }
+
+    public void setOperationName(String operationName) {
+        this.operationName = operationName;
+    }
 
     public Date getStratTime() {
         return stratTime;
@@ -114,6 +137,8 @@ public class TopicBean {
                 ", topicDescribes='" + topicDescribes + '\'' +
                 ", topicNum=" + topicNum +
                 ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", operationName='" + operationName + '\'' +
                 ", topicPicture='" + topicPicture + '\'' +
                 ", stratTime=" + stratTime +
                 ", endTime=" + endTime +

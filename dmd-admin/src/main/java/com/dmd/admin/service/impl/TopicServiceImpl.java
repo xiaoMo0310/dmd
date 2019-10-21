@@ -40,6 +40,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public int updateTopicById(TopicBean topicBean) {
+        topicBean.setUpdateTime(new Date());
         return topicMapper.updateTopicById(topicBean);
     }
 
