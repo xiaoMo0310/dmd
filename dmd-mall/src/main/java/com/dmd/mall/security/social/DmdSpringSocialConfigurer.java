@@ -1,6 +1,5 @@
 package com.dmd.mall.security.social;
 
-import org.springframework.social.UserIdSource;
 import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
 /**

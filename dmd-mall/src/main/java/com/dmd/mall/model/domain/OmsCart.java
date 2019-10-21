@@ -1,14 +1,15 @@
 package com.dmd.mall.model.domain;
 
-import java.math.BigDecimal;
 import com.dmd.core.mybatis.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.ibatis.type.Alias;
+
 import javax.persistence.Column;
 import javax.persistence.Table;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import java.math.BigDecimal;
 
 /**
  * <p>

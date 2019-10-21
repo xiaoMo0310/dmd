@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dmd.mall.mapper.SmsCouponHistoryMapper">
-  <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.SmsCouponHistory">
+<mapper namespace="com.dmd.admin.mapper.SmsCouponHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.dmd.admin.model.domain.SmsCouponHistory">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="coupon_id" jdbcType="BIGINT" property="couponId" />
     <result column="member_id" jdbcType="BIGINT" property="memberId" />
@@ -76,7 +76,7 @@
     id, coupon_id, member_id, coupon_code, member_nickname, get_type, create_time, use_status, 
     use_time, order_id, order_sn
   </sql>
-  <select id="selectByExample" parameterType="com.dmd.mall.model.domain.SmsCouponHistoryExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.dmd.admin.model.domain.SmsCouponHistoryExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -100,13 +100,13 @@
     delete from sms_coupon_history
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dmd.mall.model.domain.SmsCouponHistoryExample">
+  <delete id="deleteByExample" parameterType="com.dmd.admin.model.domain.SmsCouponHistoryExample">
     delete from sms_coupon_history
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dmd.mall.model.domain.SmsCouponHistory">
+  <insert id="insert" parameterType="com.dmd.admin.model.domain.SmsCouponHistory">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -119,7 +119,7 @@
       #{useStatus,jdbcType=INTEGER}, #{useTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=BIGINT}, 
       #{orderSn,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.dmd.mall.model.domain.SmsCouponHistory">
+  <insert id="insertSelective" parameterType="com.dmd.admin.model.domain.SmsCouponHistory">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -189,7 +189,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dmd.mall.model.domain.SmsCouponHistoryExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.dmd.admin.model.domain.SmsCouponHistoryExample" resultType="java.lang.Long">
     select count(*) from sms_coupon_history
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -253,7 +253,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dmd.mall.model.domain.SmsCouponHistory">
+  <update id="updateByPrimaryKeySelective" parameterType="com.dmd.admin.model.domain.SmsCouponHistory">
     update sms_coupon_history
     <set>
       <if test="couponId != null">
@@ -289,7 +289,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dmd.mall.model.domain.SmsCouponHistory">
+  <update id="updateByPrimaryKey" parameterType="com.dmd.admin.model.domain.SmsCouponHistory">
     update sms_coupon_history
     set coupon_id = #{couponId,jdbcType=BIGINT},
       member_id = #{memberId,jdbcType=BIGINT},

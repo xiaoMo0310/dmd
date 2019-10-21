@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+/**
+ * @author YangAnsheng
+ */
 @Data
 public class UmsMember implements Serializable {
     private Long id;

@@ -6,7 +6,7 @@
         <artifactId>dmd-master</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.dmd.mall</groupId>
+    <groupId>com.dmd.admin</groupId>
     <artifactId>dmd-admin</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>

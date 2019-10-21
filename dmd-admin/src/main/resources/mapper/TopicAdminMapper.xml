@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dmd.mall.mapper.TopicAdminMapper">
+<mapper namespace="com.dmd.admin.mapper.TopicAdminMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="topicMap" type="com.dmd.mall.model.domain.TopicBean">
+    <resultMap id="topicMap" type="com.dmd.admin.model.domain.TopicBean">
         <result column="id" property="id" />
         <result column="topicName" property="topicName" />
         <result column="topicNum" property="topicNum" />
@@ -13,7 +13,7 @@
     </resultMap>
 
 
-    <select id="queryTopicPage" parameterType="com.dmd.mall.model.domain.TopicBean" resultMap="topicMap">
+    <select id="queryTopicPage" parameterType="com.dmd.admin.model.domain.TopicBean" resultMap="topicMap">
         SELECT id,topicName,topicNum,topicPicture,createTime,topicPicture FROM dmd_dynamic_topic
         <include refid="topicWhere"></include>
         ORDER BY topicNum DESC
@@ -40,7 +40,7 @@
         </where>
     </sql>
 
-    <insert id="addTopic" parameterType="com.dmd.mall.model.domain.TopicBean">
+    <insert id="addTopic" parameterType="com.dmd.admin.model.domain.TopicBean">
         INSERT INTO dmd_dynamic_topic
         (
         topicName,
@@ -59,7 +59,7 @@
 
     </insert>
 
-    <update id="updateTopicById" parameterType="com.dmd.mall.model.domain.TopicBean">
+    <update id="updateTopicById" parameterType="com.dmd.admin.model.domain.TopicBean">
         UPDATE dmd_dynamic_topic SET
         topicName = #{topicName},
         topicNum = #{topicNum},

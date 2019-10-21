@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dmd.mall.mapper.CmsPrefrenceAreaProductRelationMapper">
-  <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.CmsPrefrenceAreaProductRelation">
+<mapper namespace="com.dmd.admin.mapper.CmsPrefrenceAreaProductRelationMapper">
+  <resultMap id="BaseResultMap" type="com.dmd.admin.model.domain.CmsPrefrenceAreaProductRelation">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="prefrence_area_id" jdbcType="BIGINT" property="prefrenceAreaId" />
     <result column="product_id" jdbcType="BIGINT" property="productId" />
@@ -67,7 +67,7 @@
   <sql id="Base_Column_List">
     id, prefrence_area_id, product_id
   </sql>
-  <select id="selectByExample" parameterType="com.dmd.mall.model.domain.CmsPrefrenceAreaProductRelationExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.dmd.admin.model.domain.CmsPrefrenceAreaProductRelationExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -91,20 +91,20 @@
     delete from cms_prefrence_area_product_relation
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dmd.mall.model.domain.CmsPrefrenceAreaProductRelationExample">
+  <delete id="deleteByExample" parameterType="com.dmd.admin.model.domain.CmsPrefrenceAreaProductRelationExample">
     delete from cms_prefrence_area_product_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dmd.mall.model.domain.CmsPrefrenceAreaProductRelation">
+  <insert id="insert" parameterType="com.dmd.admin.model.domain.CmsPrefrenceAreaProductRelation">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into cms_prefrence_area_product_relation (prefrence_area_id, product_id)
     values (#{prefrenceAreaId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.dmd.mall.model.domain.CmsPrefrenceAreaProductRelation">
+  <insert id="insertSelective" parameterType="com.dmd.admin.model.domain.CmsPrefrenceAreaProductRelation">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -126,7 +126,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dmd.mall.model.domain.CmsPrefrenceAreaProductRelationExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.dmd.admin.model.domain.CmsPrefrenceAreaProductRelationExample" resultType="java.lang.Long">
     select count(*) from cms_prefrence_area_product_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -158,7 +158,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dmd.mall.model.domain.CmsPrefrenceAreaProductRelation">
+  <update id="updateByPrimaryKeySelective" parameterType="com.dmd.admin.model.domain.CmsPrefrenceAreaProductRelation">
     update cms_prefrence_area_product_relation
     <set>
       <if test="prefrenceAreaId != null">
@@ -170,7 +170,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dmd.mall.model.domain.CmsPrefrenceAreaProductRelation">
+  <update id="updateByPrimaryKey" parameterType="com.dmd.admin.model.domain.CmsPrefrenceAreaProductRelation">
     update cms_prefrence_area_product_relation
     set prefrence_area_id = #{prefrenceAreaId,jdbcType=BIGINT},
       product_id = #{productId,jdbcType=BIGINT}

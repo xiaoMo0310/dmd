@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dmd.mall.dao.SmsFlashPromotionProductRelationDao">
-    <resultMap id="flashProductMap" type="com.dmd.mall.model.dto.SmsFlashPromotionProduct" extends="com.dmd.mall.mapper.SmsFlashPromotionProductRelationMapper.BaseResultMap">
-        <association property="product" resultMap="com.dmd.mall.mapper.PmsProductMapper.BaseResultMap" columnPrefix="p_"/>
+<mapper namespace="com.dmd.admin.dao.SmsFlashPromotionProductRelationDao">
+    <resultMap id="flashProductMap" type="com.dmd.admin.model.dto.SmsFlashPromotionProduct" extends="com.dmd.admin.mapper.SmsFlashPromotionProductRelationMapper.BaseResultMap">
+        <association property="product" resultMap="com.dmd.admin.mapper.PmsProductMapper.BaseResultMap" columnPrefix="p_"/>
     </resultMap>
     <select id="getList" resultMap="flashProductMap">
         SELECT

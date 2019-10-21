@@ -1,7 +1,5 @@
 package com.dmd.mall.model.domain;
 
-import io.swagger.models.auth.In;
-
 import java.util.Date;
 
 /**

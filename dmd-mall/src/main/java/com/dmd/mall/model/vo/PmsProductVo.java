@@ -73,5 +73,6 @@ public class PmsProductVo implements Serializable {
     /**
      * 商品评论的信息
      */
+
     private List<PmsComment> comments = new ArrayList<>(0);
 }

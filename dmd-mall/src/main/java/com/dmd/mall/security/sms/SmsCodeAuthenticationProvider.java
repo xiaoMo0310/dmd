@@ -4,10 +4,8 @@ import com.dmd.mall.model.domain.MemberDetails;
 import com.dmd.mall.security.usesdetailsservice.MyUserDetailsService;
 import com.dmd.mall.service.UmsMemberService;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
     private MyUserDetailsService userDetailsService;

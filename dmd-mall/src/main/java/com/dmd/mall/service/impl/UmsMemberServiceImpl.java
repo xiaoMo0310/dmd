@@ -15,8 +15,6 @@ import com.dmd.mall.service.UmsIntegrationChangeLogService;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.CodeValidateUtil;
 import com.dmd.mall.util.MailUtil;
-import com.dmd.sms.SmsCode;
-import com.dmd.sms.SmsCodeUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
@@ -34,9 +32,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.time.Instant;
-import java.util.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;

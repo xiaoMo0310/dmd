@@ -23,7 +23,7 @@ import java.util.Map;
 public class CodeGeneration {
 
     public static void main(String[] args) {
-        mybatisPlusCodeGeneratro(new String[]{"ums_integration_change_log"});
+        mybatisPlusCodeGeneratro(new String[]{"ums_member"}, "dmd-admin");
     }
 
     /**
@@ -31,12 +31,12 @@ public class CodeGeneration {
      * @Description: 生成
      * @param tables
      */
-    public static void mybatisPlusCodeGeneratro(String[] tables) {
+    public static void mybatisPlusCodeGeneratro(String[] tables, String file) {
         //用来获取mybatis-plus.properties文件的配置信息
         AutoGenerator mpg = new AutoGenerator();
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("dmd-mall\\src\\main\\java");//输出文件路径
+        gc.setOutputDir(file + "\\src\\main\\java");//输出文件路径
         gc.setFileOverride(false);
         gc.setActiveRecord(false);// 不需要ActiveRecord特性的请改为false
         gc.setEnableCache(false);// XML 二级缓存s
@@ -58,7 +58,7 @@ public class CodeGeneration {
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("123456");
-        dsc.setUrl("jdbc:mysql://192.168.0.248:3306/mall");
+        dsc.setUrl("jdbc:mysql://192.168.0.114:3306/mall");
 
         //文件类型的转换
         /*dsc .setTypeConvert(new MySqlTypeConvert() {
