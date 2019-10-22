@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.IntegralRuleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="integralGiftsMap" type="com.dmd.mall.model.domain.IntegralRuleBean">
+        <result column="id" property="id" />
+        <result column="ruledescription" property="ruledescription" />
+        <result column="picturesample" property="picturesample" />
+        <result column="createTime" property="createTime" />
+        <result column="operationName" property="operationName" />
+    </resultMap>
+
+
+    <select id="queryIntegralRule" resultMap="integralGiftsMap">
+        SELECT id,ruledescription,picturesample,createTime,operationName FROM dmd_ntegral_rule_specification
+    </select>
+
+</mapper>
