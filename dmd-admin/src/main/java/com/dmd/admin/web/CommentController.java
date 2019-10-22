@@ -42,9 +42,10 @@ public class CommentController {
     }
 
 
-
-    /*
-     * 我只能删我的回复和评论无法删除别人的回复
+    /**
+     * 批量删除动态或者日志评论
+     * @param ids
+     * @return
      */
     @ApiOperation("批量删除动态或者日志评论")
     @RequestMapping(value = "/updateCommentDelflag",method = RequestMethod.POST)

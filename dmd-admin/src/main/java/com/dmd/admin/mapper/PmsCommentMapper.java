@@ -34,4 +34,8 @@ public interface PmsCommentMapper {
     int updateByPrimaryKeyWithBLOBs(PmsComment record);
 
     int updateByPrimaryKey(PmsComment record);
+
+    List<PmsComment> queryCommentAll(PmsComment pmsComment);
+
+    int deleteComment(String[] ids);
 }

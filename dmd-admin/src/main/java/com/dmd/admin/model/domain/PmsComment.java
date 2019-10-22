@@ -1,6 +1,7 @@
 package com.dmd.admin.model.domain;
 
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,10 +9,12 @@ import java.util.Date;
 public class PmsComment implements Serializable {
     private Long id;
 
+    @ApiModelProperty(value = "商品id")
     private Long productId;
 
     private String memberNickName;
 
+    @ApiModelProperty(value = "商品名称")
     private String productName;
 
     @ApiModelProperty(value = "评价星数：0->5")
@@ -39,9 +42,45 @@ public class PmsComment implements Serializable {
 
     private Integer replayCount;
 
+    @ApiModelProperty(value = "评论内容")
     private String content;
 
+    @ApiModelProperty(value = "用户id")
+    private String userId;
+
+    @ApiModelProperty(value = "开始时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date stratTime;
+
+    @ApiModelProperty(value = "结束时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
     private static final long serialVersionUID = 1L;
+
+    public Date getStratTime() {
+        return stratTime;
+    }
+
+    public void setStratTime(Date stratTime) {
+        this.stratTime = stratTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
 
     public Long getId() {
         return id;
@@ -184,6 +223,9 @@ public class PmsComment implements Serializable {
         sb.append(", memberIcon=").append(memberIcon);
         sb.append(", replayCount=").append(replayCount);
         sb.append(", content=").append(content);
+        sb.append(", userId=").append(userId);
+        sb.append(", endTime=").append(endTime);
+        sb.append(", stratTime=").append(userId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

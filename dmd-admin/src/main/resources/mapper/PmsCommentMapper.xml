@@ -8,7 +8,7 @@
     <result column="product_name" jdbcType="VARCHAR" property="productName" />
     <result column="star" jdbcType="INTEGER" property="star" />
     <result column="member_ip" jdbcType="VARCHAR" property="memberIp" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="show_status" jdbcType="INTEGER" property="showStatus" />
     <result column="product_attribute" jdbcType="VARCHAR" property="productAttribute" />
     <result column="collect_couont" jdbcType="INTEGER" property="collectCouont" />
@@ -16,6 +16,8 @@
     <result column="pics" jdbcType="VARCHAR" property="pics" />
     <result column="member_icon" jdbcType="VARCHAR" property="memberIcon" />
     <result column="replay_count" jdbcType="INTEGER" property="replayCount" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dmd.admin.model.domain.PmsComment">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -425,4 +427,41 @@
       replay_count = #{replayCount,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="queryCommentAll" parameterType="com.dmd.admin.model.domain.PmsComment" resultMap="BaseResultMap">
+    SELECT id, product_id, member_nick_name, product_name, star, member_ip, created_time,show_status,
+    product_attribute,  read_count, pics, member_icon, user_id,content  FROM pms_comment
+    <include refid="pmsComentWhere"></include>
+  </select>
+
+  <sql id="pmsComentWhere">
+    <where>
+      <!-- 商品名称模糊查询 -->
+      <if test="productName !=null and productName != ''">
+        and product_name like '%${productName}%'
+      </if>
+      <!-- 商品ID查询 -->
+      <if test="productId !=null">
+        and product_id = #{productId}
+      </if>
+      <!-- 评论内容模糊查询 -->
+      <if test="content !=null and content != ''">
+        and content like '%${content}%'
+      </if>
+      <!-- 日期区间查询 -->
+      <if test="stratTime != null">
+        and created_time &gt;= #{stratTime}
+      </if>
+      <if test="endTime != null">
+        and created_time &lt;= #{endTime}
+      </if>
+    </where>
+  </sql>
+
+  <delete id="deleteComment" parameterType="String">
+    DELETE FROM pms_comment WHERE id IN
+    <foreach collection="array" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 </mapper>
