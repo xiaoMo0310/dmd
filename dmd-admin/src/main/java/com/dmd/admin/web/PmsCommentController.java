@@ -47,7 +47,7 @@ public class PmsCommentController {
      * @param ids
      * @return
      */
-    @ApiOperation("批量买家评论")
+    @ApiOperation("批量删除买家评论")
     @RequestMapping(value = "/deleteComment",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult deleteComment(@RequestBody String... ids){
