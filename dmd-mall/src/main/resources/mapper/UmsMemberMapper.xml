@@ -453,4 +453,9 @@
   <select id="getCoachUser" resultType="string">
         select username from ums_member where invitation_code=#{invitationCode}
   </select>
+
+  <select id="queryMyIntegral" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    SELECT integration FROM  ums_member WHERE id = #{userId}
+  </select>
+
 </mapper>

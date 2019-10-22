@@ -17,6 +17,9 @@
         <result column="operate_man" property="operateMan" />
         <result column="operate_note" property="operateNote" />
         <result column="source_type" property="sourceType" />
+        <result column="integral_trend" property="integralTrend" />
+        <result column="startTime" property="startTime" />
+        <result column="endTime" property="endTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -31,4 +34,40 @@
         member_id, change_type, change_count, operate_man, operate_note, source_type
     </sql>
 
+    <select id="selectIntegralIncome" parameterType="map" resultMap="BaseResultMap">
+        SELECT id,member_id,integral_trend,created_time,change_count,change_type FROM  ums_integration_change_log
+        <where>
+            <!-- 日期区间查询 -->
+            <if test="startTime != null">
+                and created_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and created_time &lt;= #{endTime}
+            </if>
+                and change_type = 0 AND member_id = #{userId}
+        </where>
+
+    </select>
+
+    <select id="selectIntegralExpend" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT id,member_id,integral_trend,created_time,change_count,change_type FROM  ums_integration_change_log
+        <where>
+            <!-- 日期区间查询 -->
+            <if test="startTime != null">
+                and created_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and created_time &lt;= #{endTime}
+            </if>
+            and change_type = 1 AND member_id = #{userId}
+        </where>
+    </select>
+
+    <select id="selectIntegralIncomeSum" parameterType="java.lang.Long" resultType="java.lang.Integer" >
+        SELECT sum(change_count) FROM ums_integration_change_log WHERE change_type = 0 AND member_id = #{userId}
+    </select>
+
+    <select id="selectIntegralExpendSum" parameterType="java.lang.Long" resultType="java.lang.Integer" >
+        SELECT sum(change_count) FROM ums_integration_change_log WHERE change_type = 1 AND member_id = #{userId}
+    </select>
 </mapper>
