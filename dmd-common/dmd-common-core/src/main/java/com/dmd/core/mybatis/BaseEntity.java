@@ -11,9 +11,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * The class Base entity.
- *
- * @author paascloud.net@gmail.com
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/10/23 9:07
+ * @Description 基础实体类
  */
 @Data
 public class BaseEntity implements Serializable {
@@ -39,8 +40,6 @@ public class BaseEntity implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date createdTime;
-
-
 
 	/**
 	 * 最近操作人

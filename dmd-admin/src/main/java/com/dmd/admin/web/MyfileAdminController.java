@@ -116,8 +116,9 @@ public class MyfileAdminController {
 
                 list.add(filePath);
                 File saveDir = new File(filePath);
-                if (!saveDir.getParentFile().exists())
+                if (!saveDir.getParentFile().exists()) {
                     saveDir.getParentFile().mkdirs();
+                }
 
                 // 转存文件
                 file.transferTo(saveDir);

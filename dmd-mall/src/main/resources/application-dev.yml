@@ -39,4 +39,10 @@ logging:
   level:
     org.springframework.data.mongodb.core: debug
     com.dmd.mall.mapper: debug
+dmd:
+  uploadfile:
+    extension: txt,gif,jpg,png,zip,rar,jpeg #使用逗号隔开的字符串，精确匹配例如：txt,jpg,png,zip
+    prefix: http://192.168.12.141
+    attachmentPath: /home/glyw/files/ #要保存文件的父路径 D:\
+
 

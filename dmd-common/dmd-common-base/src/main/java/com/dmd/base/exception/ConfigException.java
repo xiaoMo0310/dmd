@@ -1,9 +1,10 @@
 package com.dmd.base.exception;
 
 /**
- * The class Config exception.
- *
- * @author paascloud.net@gmail.com
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/10/23 16:37
+ * @Description 配置异常
  */
 public class ConfigException extends RuntimeException {
 

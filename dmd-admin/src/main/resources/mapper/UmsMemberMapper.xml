@@ -271,7 +271,20 @@
   <select id="countTotalUser" resultType="java.lang.Long">
     select count(1) from ums_member
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+    <select id="selectUserList" resultType="com.dmd.admin.model.domain.UmsMember">
+      select * from ums_member where 1 = 1
+      <if test="username != null">
+        and username like '%${username}%'
+      </if>
+      <if test="nickName != null">
+        and nick_name like '%${nickName}%'
+      </if>
+      <if test="createTime != null">
+        and to_days(create_time) = to_days(#{createTime})
+      </if>
+      order by create_time desc
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
     update ums_member
     <set>
       <if test="record.id != null">

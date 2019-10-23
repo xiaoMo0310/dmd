@@ -7,11 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 通用接口
- *
- * @param <T> the type parameter @author paascloud.net@gmail.com
- *
- * @author paascloud.net@gmail.com
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/10/23 9:08
+ * @Description 通用接口
  */
 public interface IService<T> {
 	/**

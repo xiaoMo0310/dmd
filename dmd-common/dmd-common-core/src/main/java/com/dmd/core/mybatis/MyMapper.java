@@ -5,9 +5,10 @@ import tk.mybatis.mapper.common.MySqlMapper;
 
 
 /**
- * The interface My mapper.
- *
- * @param <T> the type parameter @author paascloud.net@gmail.com
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/10/23 11:32
+ * @Description 
  */
 public interface MyMapper<T> extends Mapper<T>, MySqlMapper<T> {
 }

@@ -5,7 +5,10 @@ import com.dmd.DateUtil;
 import com.dmd.admin.mapper.UmsMemberLoginLogMapper;
 import com.dmd.admin.mapper.UmsMemberMapper;
 import com.dmd.admin.model.domain.UmsMember;
+import com.dmd.admin.model.dto.UmsUserQueryParam;
 import com.dmd.admin.service.UmsMemberService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,6 +87,21 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         object.put("seven", seven);
         object.put("thirty", thirty);
         return object;
+    }
+
+    @Override
+    public PageInfo selectUserList(UmsUserQueryParam userQueryParam) {
+        PageHelper.startPage(userQueryParam.getPageNum(), userQueryParam.getPageSize());
+        List<UmsMember> userList = umsMemberMapper.selectUserList(userQueryParam);
+        return new PageInfo(userList);
+    }
+
+    @Override
+    public int updateUserStatus(Long id, Integer status) {
+        UmsMember umsMember = new UmsMember();
+        umsMember.setId(id);
+        umsMember.setStatus(status);
+        return umsMemberMapper.updateByPrimaryKeySelective(umsMember);
     }
 
 }

@@ -3,6 +3,7 @@ package com.dmd.admin.mapper;
 
 import com.dmd.admin.model.domain.UmsMember;
 import com.dmd.admin.model.domain.UmsMemberExample;
+import com.dmd.admin.model.dto.UmsUserQueryParam;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -52,4 +53,6 @@ public interface UmsMemberMapper {
      * @return
      */
     Long countTotalUser();
+
+    List<UmsMember> selectUserList(UmsUserQueryParam userQueryParam);
 }

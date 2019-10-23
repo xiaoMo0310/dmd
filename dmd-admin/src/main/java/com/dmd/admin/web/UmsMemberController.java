@@ -2,20 +2,19 @@ package com.dmd.admin.web;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.dmd.admin.model.dto.UmsUserQueryParam;
 import com.dmd.admin.service.UmsMemberService;
 import com.dmd.core.support.BaseController;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.text.ParseException;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -42,7 +41,7 @@ public class UmsMemberController extends BaseController {
 
     @GetMapping("visitUser/countYesterday")
     @ApiOperation(httpMethod = "GET", value = "统计昨日访问用户的数量")
-    public Wrapper countYesterdayVisitUser() throws ParseException {
+    public Wrapper countYesterdayVisitUser(){
         Long visitUser = umsMemberService.countYesterdayVisitUser();
         System.out.println(visitUser);
         return WrapMapper.ok(visitUser);
@@ -57,9 +56,26 @@ public class UmsMemberController extends BaseController {
 
     @GetMapping("retentionRate/count/{day}")
     @ApiOperation(httpMethod = "GET", value = "统计七日留存率")
-    public Wrapper countSevenDayRetentionRate(@PathVariable Integer day) throws ParseException {
+    public Wrapper countSevenDayRetentionRate(@PathVariable Integer day){
         JSONObject object = umsMemberService.countRetentionRate(day);
         return WrapMapper.ok(object);
+    }
+
+    @PostMapping("userList/findPage")
+    @ApiOperation(httpMethod = "POST", value = "查询用户列表信息")
+    @ApiImplicitParam(name ="userQueryParam", value = "查询需要的数据", dataType = "UmsUserQueryParam")
+    public Wrapper<PageInfo> selectUserList(@RequestBody UmsUserQueryParam userQueryParam) {
+        PageInfo pageInfo = umsMemberService.selectUserList(userQueryParam);
+        return WrapMapper.ok(pageInfo);
+    }
+
+    @GetMapping("user/editStatus")
+    @ApiOperation(httpMethod = "GET", value = "修改用户的状态信息")
+    @ApiImplicitParams({@ApiImplicitParam(name ="id", value = "用户id", paramType = "query", dataType = "Long"),
+                        @ApiImplicitParam(name ="status", value = "用户状态(0:禁用 1:启用)", paramType = "query", dataType = "Integer")})
+    public Wrapper selectUserList(@RequestParam("id") Long id, @RequestParam("status") Integer status) {
+        int result = umsMemberService.updateUserStatus(id, status);
+        return handleResult(result);
     }
 
 }

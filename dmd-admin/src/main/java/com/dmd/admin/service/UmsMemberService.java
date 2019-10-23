@@ -1,6 +1,8 @@
 package com.dmd.admin.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dmd.admin.model.dto.UmsUserQueryParam;
+import com.github.pagehelper.PageInfo;
 
 import java.text.ParseException;
 
@@ -25,7 +27,7 @@ public interface UmsMemberService{
      * @return
      * @throws ParseException
      */
-    Long countYesterdayVisitUser() throws ParseException;
+    Long countYesterdayVisitUser();
 
     /**
      * 总的注册人数
@@ -38,6 +40,14 @@ public interface UmsMemberService{
      * @return
      * @throws ParseException
      */
-    JSONObject countRetentionRate(Integer day) throws ParseException;
+    JSONObject countRetentionRate(Integer day) ;
 
+    /**
+     * 分页查询用户信息
+     * @param userQueryParam
+     * @return
+     */
+    PageInfo selectUserList(UmsUserQueryParam userQueryParam);
+
+    int updateUserStatus(Long id, Integer status);
 }

@@ -5,9 +5,10 @@ import com.dmd.base.enums.ErrorCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 业务异常.
- *
- * @author paascloud.net @gmail.com
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/10/23 16:37
+ * @Description 业务异常
  */
 @Slf4j
 public class BusinessException extends RuntimeException {
