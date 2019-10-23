@@ -6,6 +6,7 @@ import com.dmd.admin.model.domain.UmsMemberExample;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -35,8 +36,20 @@ public interface UmsMemberMapper {
     String getCoachUser(@Param("invitationCode") String invitationCode);
 
     /**
-     * 统计当日用户的注册数
+     * 查询当日用户的注册数
      * @return
      */
-    Long countDayRegisterUser();
+    List<UmsMember> selectRegisterUser(Date date);
+
+    /**
+     * 统计昨日用户访问数量
+     * @return
+     */
+    Long countYesterdayVisitUser();
+
+    /**
+     *查询总的人数
+     * @return
+     */
+    Long countTotalUser();
 }

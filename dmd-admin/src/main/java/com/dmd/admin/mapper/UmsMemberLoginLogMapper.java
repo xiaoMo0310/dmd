@@ -4,9 +4,13 @@ package com.dmd.admin.mapper;
 import com.dmd.admin.model.domain.UmsMemberLoginLog;
 import com.dmd.admin.model.domain.UmsMemberLoginLogExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+@Component
 public interface UmsMemberLoginLogMapper {
     long countByExample(UmsMemberLoginLogExample example);
 
@@ -29,4 +33,18 @@ public interface UmsMemberLoginLogMapper {
     int updateByPrimaryKeySelective(UmsMemberLoginLog record);
 
     int updateByPrimaryKey(UmsMemberLoginLog record);
+
+    /**
+     * 查询用户留存数
+     * @param firstDate
+     * @param userIds
+     * @return
+     */
+    Map selectRetentionNumber(@Param("firstDate") Date firstDate, @Param("userIds") List<Long> userIds);
+
+    /**
+     * 查询用户昨日访问量
+     * @return
+     */
+    Long countYesterdayVisitUser(Date date);
 }

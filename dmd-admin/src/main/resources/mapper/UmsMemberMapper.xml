@@ -258,8 +258,18 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <select id="countDayRegisterUser" resultType="long">
-        select count(1) from ums_member where to_days(create_time) = to_days(now())
+
+  <select id="countYesterdayVisitUser" resultType="java.lang.Long">
+    select count(1) from ums_member WHERE TO_DAYS(NOW( )) - TO_DAYS(create_time) = 1
+  </select>
+  <select id="selectRegisterUser" resultType="com.dmd.admin.model.domain.UmsMember">
+    select
+    <include refid="Base_Column_List"/>
+    from ums_member
+    where to_days(create_time) = to_days(#{date})
+  </select>
+  <select id="countTotalUser" resultType="java.lang.Long">
+    select count(1) from ums_member
   </select>
   <update id="updateByExampleSelective" parameterType="map">
     update ums_member

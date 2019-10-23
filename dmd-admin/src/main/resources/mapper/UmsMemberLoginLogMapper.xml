@@ -164,6 +164,41 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <select id="selectRetentionNumber" resultType="java.util.Map">
+    select
+    day7, day30
+    from (
+      SELECT
+      first_day,
+      sum(case when by_day >= 30 then 1 else 0 end) day30,
+      sum(case when by_day = 7 then 1 else 0 end) day7
+      FROM
+      (SELECT
+      member_id,
+      #{firstDate} first_day,
+      login_time,
+      DATEDIFF(login_time,#{firstDate}) as by_day
+      FROM
+      (select
+      member_id,
+      DATE_FORMAT(create_time,'%Y/%m/%d') login_time
+      from ums_member_login_log
+      where member_id in
+      <foreach close=")" collection="userIds" item="userId" open="(" separator=",">
+        #{userId}
+      </foreach>
+      group by 1,2
+      ) a order by 1,2) f
+      group by 1
+      order by 1) g
+	where first_day = #{firstDate}
+  </select>
+  <select id="countYesterdayVisitUser" resultType="java.lang.Long">
+    select count(1) from
+        (select DISTINCT member_id
+        from ums_member_login_log a
+        where to_days(create_time) = to_days("2019/10/21")) a
+  </select>
   <update id="updateByExampleSelective" parameterType="map">
     update ums_member_login_log
     <set>
