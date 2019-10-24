@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * </p>
  *
  * @author YangAnsheng
- * @since 2019-09-26
+ * @since 2019-10-24
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -55,10 +55,10 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     public List<PageInfo> findcourseProduct(BaseQuery baseQuery, LoginAuthDto loginAuthDto) {
         List<PmsDictVo> courseTypes = pmsDictService.findAllProcessingType("course_type");
         return courseTypes.stream().map(courseType -> {
-                    //根据类型id查询过商品的信息
-                    PageInfo<PmsCourseListVo> courseProductByType = findCourseProductByType(baseQuery.getPageNum(), baseQuery.getPageSize(), courseType.getDictKey());
-                    return courseProductByType;
-                }).collect(Collectors.toList());
+            //根据类型id查询过商品的信息
+            PageInfo<PmsCourseListVo> courseProductByType = findCourseProductByType(baseQuery.getPageNum(), baseQuery.getPageSize(), courseType.getDictKey());
+            return courseProductByType;
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -83,4 +83,5 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         }).collect(Collectors.toList());
         return new PageInfo<>(courseProductVos);
     }
+
 }

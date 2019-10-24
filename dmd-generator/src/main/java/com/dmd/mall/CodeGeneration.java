@@ -23,7 +23,7 @@ import java.util.Map;
 public class CodeGeneration {
 
     public static void main(String[] args) {
-        mybatisPlusCodeGeneratro(new String[]{"ums_member_login_log"}, "dmd-admin");
+        mybatisPlusCodeGeneratro(new String[]{"oms_shipping"}, "dmd-admin", "admin");
     }
 
     /**
@@ -31,7 +31,7 @@ public class CodeGeneration {
      * @Description: 生成
      * @param tables
      */
-    public static void mybatisPlusCodeGeneratro(String[] tables, String file) {
+    public static void mybatisPlusCodeGeneratro(String[] tables, String file, String backage) {
         //用来获取mybatis-plus.properties文件的配置信息
         AutoGenerator mpg = new AutoGenerator();
         // 全局配置
@@ -103,7 +103,7 @@ public class CodeGeneration {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.dmd.mall");
+        pc.setParent("com.dmd."+ backage);
         pc.setController("web");
         pc.setService("service");
         pc.setServiceImpl("service.impl");
@@ -128,7 +128,7 @@ public class CodeGeneration {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 System.out.println(tableInfo);
-                return "dmd-mall\\src\\main\\resources\\mapper\\" + tableInfo.getEntityName() + "Mapper.xml";
+                return file + "\\src\\main\\resources\\mapper\\" + tableInfo.getEntityName() + "Mapper.xml";
             }
         });
         cfg.setFileOutConfigList(focList);

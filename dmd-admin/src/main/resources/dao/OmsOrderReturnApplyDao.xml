@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dmd.admin.dao.OmsOrderReturnApplyDao">
     <resultMap id="returnApplyDetailResultMap" type="com.dmd.admin.model.dto.OmsOrderReturnApplyResult" extends="com.dmd.admin.mapper.OmsOrderReturnApplyMapper.BaseResultMap">
-        <association property="companyAddress" resultMap="com.dmd.admin.mapper.OmsCompanyAddressMapper.BaseResultMap" columnPrefix="ca_"/>
+        <association property="companyAddress" resultMap="com.dmd.admin.mapper.OmsShippingMapper.BaseResultMap" columnPrefix="ca_"/>
     </resultMap>
     <select id="getList" resultMap="com.dmd.admin.mapper.OmsOrderReturnApplyMapper.BaseResultMap">
         SELECT
@@ -53,7 +53,7 @@
                   ca.detail_address ca_detail_address
         FROM
             oms_order_return_apply ra
-            LEFT JOIN oms_company_address ca ON ra.company_address_id = ca.id
+            LEFT JOIN oms_shipping ca ON ra.company_address_id = ca.id
         WHERE ra.id=#{id};
     </select>
 </mapper>

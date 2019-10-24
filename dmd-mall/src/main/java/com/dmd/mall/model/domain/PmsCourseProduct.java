@@ -17,7 +17,7 @@ import java.math.BigDecimal;
  * </p>
  *
  * @author YangAnsheng
- * @since 2019-09-27
+ * @since 2019-10-24
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 public class PmsCourseProduct extends BaseEntity {
 
 private static final long serialVersionUID = 1L;
+
 
     @Column(name = "shop_id")
     @ApiModelProperty("店铺id")

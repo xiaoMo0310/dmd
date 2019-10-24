@@ -1,7 +1,7 @@
 package com.dmd.admin.model.dto;
 
-import com.dmd.admin.model.domain.OmsCompanyAddress;
 import com.dmd.admin.model.domain.OmsOrderReturnApply;
+import com.dmd.admin.model.domain.OmsShipping;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,5 +12,5 @@ import lombok.Setter;
 public class OmsOrderReturnApplyResult extends OmsOrderReturnApply {
     @Getter
     @Setter
-    private OmsCompanyAddress companyAddress;
+    private OmsShipping omsShipping;
 }

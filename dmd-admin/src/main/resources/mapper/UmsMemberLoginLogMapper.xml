@@ -197,7 +197,7 @@
     select count(1) from
         (select DISTINCT member_id
         from ums_member_login_log a
-        where to_days(create_time) = to_days("2019/10/21")) a
+        where to_days(create_time) = to_days(#{date})) a
   </select>
   <update id="updateByExampleSelective" parameterType="map">
     update ums_member_login_log

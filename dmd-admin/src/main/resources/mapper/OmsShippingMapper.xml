@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.admin.mapper.OmsShippingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.admin.model.domain.OmsShipping">
+    <result column="id" property="id" />
+    <result column="version" property="version" />
+    <result column="creator" property="creator" />
+    <result column="creator_id" property="creatorId" />
+    <result column="created_time" property="createdTime" />
+    <result column="last_operator" property="lastOperator" />
+    <result column="last_operator_id" property="lastOperatorId" />
+    <result column="update_time" property="updateTime" />
+        <result column="user_id" property="userId" />
+        <result column="receiver_name" property="receiverName" />
+        <result column="receiver_phone_no" property="receiverPhoneNo" />
+        <result column="receiver_mobile_no" property="receiverMobileNo" />
+        <result column="province_id" property="provinceId" />
+        <result column="province_name" property="provinceName" />
+        <result column="city_id" property="cityId" />
+        <result column="city_name" property="cityName" />
+        <result column="district_id" property="districtId" />
+        <result column="district_name" property="districtName" />
+        <result column="detail_address" property="detailAddress" />
+        <result column="receiver_zip_code" property="receiverZipCode" />
+        <result column="default_address" property="defaultAddress" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        version,
+        creator,
+        creator_id,
+        created_time,
+        last_operator,
+        last_operator_id,
+        update_time,
+        user_id, receiver_name, receiver_phone_no, receiver_mobile_no, province_id, province_name, city_id, city_name, district_id, district_name, detail_address, receiver_zip_code, default_address
+    </sql>
+
+</mapper>

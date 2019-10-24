@@ -1,13 +1,13 @@
-package com.dmd.mall.mapper;
+package com.dmd.admin.mapper;
 
-import com.dmd.mall.model.domain.PmsCourseProduct;
+import com.dmd.admin.model.domain.OmsShipping;
 import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 /**
  * <p>
- * 课程商品表 Mapper 接口
+ * 收货人信息表 Mapper 接口
  * </p>
  *
  * @author YangAnsheng
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Component;
  */
 @Mapper
 @Component
-public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
+public interface OmsShippingMapper extends MyMapper<OmsShipping> {
 
 }

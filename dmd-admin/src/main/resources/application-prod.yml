@@ -16,3 +16,10 @@ spring:
 
 logging:
   path: /var/logs #配置日志生成路径
+
+dmd:
+  #文件上传相关
+  uploadfile:
+    extension: txt,gif,jpg,png,zip,rar,jpeg #使用逗号隔开的字符串，精确匹配例如：txt,jpg,png,zip
+    prefix: http://39.105.166.51
+    attachmentPath: /home/dmd/files/ #要保存文件的父路径
