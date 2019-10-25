@@ -2,6 +2,7 @@ package com.dmd.admin.web;
 
 import com.dmd.admin.model.domain.TopicBean;
 import com.dmd.admin.service.TopicService;
+import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,34 +37,35 @@ public class TopicController {
     @ApiOperation("分页查询话题分类,按照热度(话题下动态数量)排序/条查")
     @RequestMapping(value = "/selectTopicPage",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<TopicBean>> queryTopicPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize, TopicBean topicBean) {
+    public CommonResult<CommonPage<TopicBean>> queryTopicPage(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                              @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                              TopicBean topicBean) {
         List<TopicBean> topicList = topicService.queryTopicPage(pageNum,pageSize,topicBean);
-        return CommonResult.success(topicList);
+        return CommonResult.success(CommonPage.restPage(topicList));
     }
 
     /**
      * 添加/修改 话题
-     * @param TopicBean
+     * @param topicBean
      * @return
      */
     @ApiOperation("添加/修改 话题")
     @RequestMapping(value = "/addOrUpdateTopic",method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult addOrUpdateTopic(@RequestBody TopicBean TopicBean) {
+    public CommonResult addOrUpdateTopic(@RequestParam Integer id,@RequestBody TopicBean topicBean) {
 
         try {
             //有id修改,无id新增
-            if(TopicBean.getId()==null) {
-
-                int count = topicService.addTopic(TopicBean);
+            if(id==null) {
+                int count = topicService.addTopic(topicBean);
                 if (count > 0) {
                     return CommonResult.success(count,"添加成功");
                 }
                 return CommonResult.failed("添加失败");
             }
             else{
-
-                int count = topicService.updateTopicById(TopicBean);
+                topicBean.setId(id);
+                int count = topicService.updateTopicById(topicBean);
                 if (count > 0) {
                     return CommonResult.success(count,"修改成功");
                 }
@@ -74,6 +76,23 @@ public class TopicController {
             e.printStackTrace();
             return CommonResult.failed();
         }
+    }
+
+    /**
+     * 添加/修改 话题
+     * @param topicBean
+     * @return
+     */
+    @ApiOperation("添加话题")
+    @RequestMapping(value = "/addTopic",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult addTopic(@RequestBody TopicBean topicBean) {
+
+        int count = topicService.addTopic(topicBean);
+        if (count > 0) {
+            return CommonResult.success(count,"添加成功");
+        }
+        return CommonResult.failed("添加失败");
     }
 
 
@@ -98,7 +117,7 @@ public class TopicController {
     @ApiOperation("批量删除话题")
     @RequestMapping(value = "/deleteTopicById",method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult deleteTopicById(@RequestBody String... ids){
+    public CommonResult deleteTopicById(@RequestParam("ids") List<Long> ids){
         int count = topicService.deleteTopicById(ids);
         if (count > 0) {
             return CommonResult.success(count,"删除成功");

@@ -20,5 +20,5 @@ public interface TopicService {
 
     TopicBean findTopicInfoById(Long id);
 
-    int deleteTopicById(String[] ids);
+    int deleteTopicById(List<Long> ids);
 }

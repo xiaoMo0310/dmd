@@ -1,12 +1,16 @@
 package com.dmd.admin.service.impl;
 
 import com.dmd.admin.mapper.TopicAdminMapper;
+import com.dmd.admin.model.domain.SmsHomeAdvertiseExample;
 import com.dmd.admin.model.domain.TopicBean;
 import com.dmd.admin.service.TopicService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +29,24 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public List<TopicBean> queryTopicPage(Integer pageNum, Integer pageSize, TopicBean topicBean) {
+
         PageHelper.startPage(pageNum, pageSize);
+        /*SmsHomeAdvertiseExample example = new SmsHomeAdvertiseExample();
+        SmsHomeAdvertiseExample.Criteria criteria = example.createCriteria();
+        if (!StringUtils.isEmpty(topicBean.getStratTime())) {
+            String startStr = topicBean.getStratTime() + " 00:00:00";
+            String endStr = topicBean.getStratTime() + " 23:59:59";
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date start = null;
+            try {
+                start = sdf.parse(startStr);
+                topicBean.setStratTime(start);
+                System.out.println(start);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }*/
+
         return topicMapper.queryTopicPage(topicBean);
     }
 
@@ -50,7 +71,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public int deleteTopicById(String[] ids) {
+    public int deleteTopicById(List<Long> ids) {
         return topicMapper.deleteTopicById(ids);
     }
 
