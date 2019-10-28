@@ -37,5 +37,5 @@ public interface PmsCommentMapper {
 
     List<PmsComment> queryCommentAll(PmsComment pmsComment);
 
-    int deleteComment(String[] ids);
+    int deleteComment(List<Long> ids);
 }

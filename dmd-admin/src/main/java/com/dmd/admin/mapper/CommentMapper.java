@@ -14,7 +14,7 @@ import java.util.List;
 public interface CommentMapper {
     List<CommentBean> queryCommentAll(CommentBean commentBean);
 
-    int updateCommentDelflag(String[] ids);
+    int updateCommentDelflag(List<Long> ids);
 
     void updateComment(String[] ids);
 }

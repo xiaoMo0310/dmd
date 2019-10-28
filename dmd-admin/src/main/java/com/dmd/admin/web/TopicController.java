@@ -6,10 +6,14 @@ import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +44,41 @@ public class TopicController {
     public CommonResult<CommonPage<TopicBean>> queryTopicPage(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                               @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                               TopicBean topicBean) {
+        if(topicBean.getStratTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(topicBean.getStratTime());
+            if(StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                topicBean.setStratTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(topicBean.getEndTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(topicBean.getEndTime());
+            if(StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                topicBean.setEndTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         List<TopicBean> topicList = topicService.queryTopicPage(pageNum,pageSize,topicBean);
         return CommonResult.success(CommonPage.restPage(topicList));
     }

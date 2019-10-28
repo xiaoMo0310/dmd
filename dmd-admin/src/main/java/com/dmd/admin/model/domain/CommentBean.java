@@ -1,6 +1,7 @@
 package com.dmd.admin.model.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,6 +32,8 @@ public class CommentBean {
     /**
      * 评论时间为当前时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
     /**
      * 评论内容
@@ -80,6 +83,7 @@ public class CommentBean {
      */
     @ApiModelProperty(value = "开始时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date stratTime;
 
     /**
@@ -87,6 +91,7 @@ public class CommentBean {
      */
     @ApiModelProperty(value = "结束时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endTime;
 
     public Date getStratTime() {

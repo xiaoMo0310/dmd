@@ -1,5 +1,6 @@
 package com.dmd.admin.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,6 +24,8 @@ public class PmsComment implements Serializable {
     @ApiModelProperty(value = "评价的ip")
     private String memberIp;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
     private Integer showStatus;
@@ -50,12 +53,15 @@ public class PmsComment implements Serializable {
 
     @ApiModelProperty(value = "开始时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date stratTime;
 
     @ApiModelProperty(value = "结束时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endTime;
     private static final long serialVersionUID = 1L;
+
 
     public Date getStratTime() {
         return stratTime;
@@ -225,7 +231,7 @@ public class PmsComment implements Serializable {
         sb.append(", content=").append(content);
         sb.append(", userId=").append(userId);
         sb.append(", endTime=").append(endTime);
-        sb.append(", stratTime=").append(userId);
+        sb.append(", stratTime=").append(stratTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

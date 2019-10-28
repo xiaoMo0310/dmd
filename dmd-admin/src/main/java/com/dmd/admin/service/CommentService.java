@@ -14,5 +14,5 @@ import java.util.List;
 public interface CommentService {
     List<CommentBean> queryCommentAll(Integer pageNum, Integer pageSize, CommentBean commentBean);
 
-    int updateCommentDelflag(String[] ids);
+    int updateCommentDelflag(List<Long> ids);
 }

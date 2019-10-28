@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public int updateCommentDelflag(String[] ids) {
+    public int updateCommentDelflag(List<Long> ids) {
         return commentMapper.updateCommentDelflag(ids);
     }
 }

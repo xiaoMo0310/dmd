@@ -14,5 +14,5 @@ import java.util.List;
 public interface PmsCommentService {
     List<PmsComment> queryCommentAll(Integer pageNum, Integer pageSize, PmsComment pmsComment);
 
-    int deleteComment(String[] ids);
+    int deleteComment(List<Long> ids);
 }

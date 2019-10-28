@@ -29,7 +29,7 @@ public class PmsCommentServiceImpl implements PmsCommentService{
     }
 
     @Override
-    public int deleteComment(String[] ids) {
+    public int deleteComment(List<Long> ids) {
         return pmsCommentMapper.deleteComment(ids);
     }
 }
