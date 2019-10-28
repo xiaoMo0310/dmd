@@ -15,4 +15,6 @@ public interface IntegralAdminService {
     List<IntegralRuleBean> queryIntegralRule();
 
     int updateIntegralRule(IntegralRuleBean integralRuleBean);
+
+    IntegralRuleBean findIntegralInfoById(Long id);
 }

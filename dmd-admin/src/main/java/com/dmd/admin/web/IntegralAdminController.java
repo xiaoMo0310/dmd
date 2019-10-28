@@ -1,16 +1,15 @@
 package com.dmd.admin.web;
 
 import com.dmd.admin.model.domain.IntegralRuleBean;
+import com.dmd.admin.model.domain.TopicBean;
 import com.dmd.admin.service.IntegralAdminService;
+import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,9 +35,10 @@ public class IntegralAdminController {
     @ApiOperation("查询积分规则说明")
     @RequestMapping(value = "/selectIntegralRule",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<IntegralRuleBean>> queryIntegralRule() {
+    public CommonResult<CommonPage<IntegralRuleBean>> queryIntegralRule(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                                        @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
         List<IntegralRuleBean> List = integralAdminService.queryIntegralRule();
-        return CommonResult.success(List);
+        return CommonResult.success(CommonPage.restPage(List));
     }
 
     /**
@@ -56,5 +56,18 @@ public class IntegralAdminController {
         }
         return CommonResult.failed("修改失败");
 
+    }
+
+    /**
+     * 回显积分规则
+     * @param id
+     * @return
+     */
+    @ApiOperation("回显积分规则")
+    @RequestMapping(value = "/findIntegralInfoById",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<IntegralRuleBean> findIntegralInfoById(@RequestParam Long id){
+        IntegralRuleBean integralRuleBean = integralAdminService.findIntegralInfoById(id);
+        return CommonResult.success(integralRuleBean);
     }
 }

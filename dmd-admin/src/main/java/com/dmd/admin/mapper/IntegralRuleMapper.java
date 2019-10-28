@@ -15,4 +15,6 @@ public interface IntegralRuleMapper {
     List<IntegralRuleBean> queryIntegralRule();
 
     int updateIntegralRule(IntegralRuleBean integralRuleBean);
+
+    IntegralRuleBean findIntegralInfoById(Long id);
 }

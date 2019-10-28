@@ -24,4 +24,8 @@
         operationName = #{operationName}
         WHERE id = #{id}
     </update>
+
+    <select id="findIntegralInfoById" parameterType="java.lang.Long" resultMap="integralGiftsMap">
+        SELECT id,ruledescription,picturesample,createTime,operationName FROM dmd_ntegral_rule_specification WHERE id = #{id}
+    </select>
 </mapper>

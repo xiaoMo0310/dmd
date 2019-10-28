@@ -32,4 +32,9 @@ public class IntegralAdminServiceImpl implements IntegralAdminService{
         integralRuleBean.setCreateTime(new Date());
         return integralRuleMapper.updateIntegralRule(integralRuleBean);
     }
+
+    @Override
+    public IntegralRuleBean findIntegralInfoById(Long id) {
+        return integralRuleMapper.findIntegralInfoById(id);
+    }
 }
