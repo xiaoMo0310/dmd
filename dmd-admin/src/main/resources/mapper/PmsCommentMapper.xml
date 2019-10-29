@@ -432,6 +432,7 @@
     SELECT id, product_id, member_nick_name, product_name, star, member_ip, created_time,show_status,
     product_attribute,  read_count, pics, member_icon, user_id,content  FROM pms_comment
     <include refid="pmsComentWhere"></include>
+    ORDER BY created_time DESC
   </select>
 
   <sql id="pmsComentWhere">

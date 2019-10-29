@@ -267,6 +267,7 @@
     FROM ums_integration_change_log uc LEFT JOIN  ums_member um
     ON uc.member_id = um.id
     <include refid="integralChangeWhere"></include>
+    ORDER BY uc.created_time DESC
   </select>
 
   <!-- 公用标签 -->

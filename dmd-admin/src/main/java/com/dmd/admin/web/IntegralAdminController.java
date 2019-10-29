@@ -8,6 +8,7 @@ import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -135,14 +136,29 @@ public class IntegralAdminController {
     /**
      * 增加用户积分操作
      * @param id
-     * @param umsIntegrationChangeHistory
+     * @param changeCount
+     * @param operateMan
+     * @param operateNote
+     * @param integralTrend
+     * @param memberId
      * @return
      */
     @ApiOperation("增加用户积分操作")
     @RequestMapping(value = "/addIntegration",method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updateIntegration(@RequestParam Long id,@RequestBody UmsIntegrationChangeHistory umsIntegrationChangeHistory) {
+    public CommonResult updateIntegration(@RequestParam Long id,
+                                          @RequestParam Integer changeCount,
+                                          @RequestParam String operateMan,
+                                          @RequestParam String operateNote,
+                                          @RequestParam String integralTrend,
+                                          @RequestParam Long memberId) {
+        UmsIntegrationChangeHistory umsIntegrationChangeHistory = new UmsIntegrationChangeHistory();
         umsIntegrationChangeHistory.setId(id);
+        umsIntegrationChangeHistory.setChangeCount(changeCount);
+        umsIntegrationChangeHistory.setOperateNote(operateNote);
+        umsIntegrationChangeHistory.setIntegralTrend(integralTrend);
+        umsIntegrationChangeHistory.setMemberId(memberId);
+        umsIntegrationChangeHistory.setOperateMan(operateMan);
         int count = integralAdminService.updateIntegration(umsIntegrationChangeHistory);
         if (count > 0) {
             return CommonResult.success(count,"增加成功");
@@ -153,19 +169,34 @@ public class IntegralAdminController {
     /**
      * 减少用户积分操作
      * @param id
-     * @param umsIntegrationChangeHistory
+     * @param changeCount
+     * @param operateMan
+     * @param operateNote
+     * @param integralTrend
+     * @param memberId
      * @return
      */
     @ApiOperation("减少用户积分操作")
     @RequestMapping(value = "/reduceIntegration",method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updateIntegrationReduce(@RequestParam Long id,@RequestBody UmsIntegrationChangeHistory umsIntegrationChangeHistory) {
+    public CommonResult updateIntegrationReduce(@RequestParam Long id,
+                                                @RequestParam Integer changeCount,
+                                                @RequestParam String operateMan,
+                                                @RequestParam String operateNote,
+                                                @RequestParam String integralTrend,
+                                                @RequestParam Long memberId) {
+        UmsIntegrationChangeHistory umsIntegrationChangeHistory = new UmsIntegrationChangeHistory();
         umsIntegrationChangeHistory.setId(id);
+        umsIntegrationChangeHistory.setChangeCount(changeCount);
+        umsIntegrationChangeHistory.setOperateNote(operateNote);
+        umsIntegrationChangeHistory.setIntegralTrend(integralTrend);
+        umsIntegrationChangeHistory.setMemberId(memberId);
+        umsIntegrationChangeHistory.setOperateMan(operateMan);
         int count = integralAdminService.updateIntegrationReduce(umsIntegrationChangeHistory);
         if (count > 0) {
             return CommonResult.success(count,"减少成功");
         }
-        return CommonResult.failed("减少失败");
+        return CommonResult.failed("减少失败,减少的数额超过用户总积分！");
     }
 
 }

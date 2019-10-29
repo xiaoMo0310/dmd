@@ -36,6 +36,7 @@
         lw_for_pid
         FROM dmd_dynamic_comment
         <include refid="commentWhere"></include>
+        ORDER BY lw_date DESC
     </select>
 
     <!-- 公用标签 -->
