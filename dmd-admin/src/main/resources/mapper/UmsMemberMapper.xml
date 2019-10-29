@@ -473,4 +473,8 @@
   <update id="updateIntegrationForUserReduce" parameterType="map">
     UPDATE ums_member SET integration = integration - #{changeCount} WHERE id = #{memberId} AND integration >= #{changeCount}
   </update>
+
+  <select id="queryMemberNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    SELECT integration FROM ums_member WHERE id = #{memberId}
+  </select>
 </mapper>

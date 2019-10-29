@@ -33,7 +33,7 @@
         lw_userid,
         lw_for_pid
         FROM dmd_dynamic_comment
-        WHERE lw_for_pid = #{forPid} AND delflag = 0 AND lw_for_diveLog_id = #{forDiveLogId}
+        WHERE lw_for_pid = #{forPid} AND delflag = 0 AND lw_for_diveLog_id = #{forDiveLogId} ORDER BY lw_date DESC
     </select>
 
     <insert id="addComment" parameterType="com.dmd.mall.model.domain.CommentBean">

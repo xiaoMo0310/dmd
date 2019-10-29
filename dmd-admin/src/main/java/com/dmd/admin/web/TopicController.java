@@ -84,11 +84,11 @@ public class TopicController {
     }
 
     /**
-     * 添加/修改 话题
+     * 修改 话题
      * @param topicBean
      * @return
      */
-    @ApiOperation("添加/修改 话题")
+    @ApiOperation("修改话题")
     @RequestMapping(value = "/addOrUpdateTopic",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult addOrUpdateTopic(@RequestParam Integer id,@RequestBody TopicBean topicBean) {

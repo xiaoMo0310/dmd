@@ -59,4 +59,6 @@ public interface UmsMemberMapper {
     void updateIntegrationForUser(@Param("changeCount")Integer changeCount,@Param("memberId") Long memberId);
 
     int updateIntegrationForUserReduce(@Param("changeCount")Integer changeCount,@Param("memberId") Long memberId);
+
+    Integer queryMemberNum(Long memberId);
 }

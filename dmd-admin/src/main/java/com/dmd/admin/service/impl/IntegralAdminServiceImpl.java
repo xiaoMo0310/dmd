@@ -1,8 +1,10 @@
 package com.dmd.admin.service.impl;
 
+import com.dmd.admin.mapper.IntegralGiftsMapper;
 import com.dmd.admin.mapper.IntegralRuleMapper;
 import com.dmd.admin.mapper.UmsIntegrationChangeHistoryMapper;
 import com.dmd.admin.mapper.UmsMemberMapper;
+import com.dmd.admin.model.domain.IntegralGiftsBean;
 import com.dmd.admin.model.domain.IntegralRuleBean;
 import com.dmd.admin.model.domain.UmsIntegrationChangeHistory;
 import com.dmd.admin.model.domain.UmsMember;
@@ -33,6 +35,10 @@ public class IntegralAdminServiceImpl implements IntegralAdminService{
 
     @Autowired
     private UmsMemberMapper umsMemberMapper;
+
+    @Autowired
+    private IntegralGiftsMapper integralGiftsMapper;
+
     @Override
     public List<IntegralRuleBean> queryIntegralRule() {
         return integralRuleMapper.queryIntegralRule();
@@ -90,5 +96,40 @@ public class IntegralAdminServiceImpl implements IntegralAdminService{
             umsIntegrationChangeHistoryMapper.updateIntegration(umsIntegrationChangeHistory);
         }
         return count;
+    }
+
+    @Override
+    public Integer queryMemberNum(Long memberId) {
+        return umsMemberMapper.queryMemberNum(memberId);
+    }
+
+    @Override
+    public List<IntegralGiftsBean> queryIntegralGifts(Integer pageNum, Integer pageSize, IntegralGiftsBean integralGiftsBean) {
+        PageHelper.startPage(pageNum, pageSize);
+        return integralGiftsMapper.queryIntegralGifts(integralGiftsBean);
+    }
+
+    @Override
+    public int updateIntegralGiftsById(IntegralGiftsBean integralGiftsBean) {
+        integralGiftsBean.setUpdateTime(new Date());
+        return integralGiftsMapper.updateIntegralGiftsById(integralGiftsBean);
+    }
+
+    @Override
+    public IntegralGiftsBean findIntegralGiftsInfoById(Long id) {
+        return integralGiftsMapper.findIntegralGiftsInfoById(id);
+    }
+
+    @Override
+    public int addIntegralGifts(IntegralGiftsBean integralGiftsBean) {
+        //添加时间为当前时间
+        integralGiftsBean.setCreateTime(new Date());
+        integralGiftsBean.setUpdateTime(null);
+        return integralGiftsMapper.addIntegralGifts(integralGiftsBean);
+    }
+
+    @Override
+    public int deleteIntegralGiftsById(List<Long> ids) {
+        return integralGiftsMapper.deleteIntegralGiftsById(ids);
     }
 }

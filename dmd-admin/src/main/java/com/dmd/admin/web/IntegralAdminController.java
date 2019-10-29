@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.admin.model.domain.IntegralGiftsBean;
 import com.dmd.admin.model.domain.IntegralRuleBean;
 import com.dmd.admin.model.domain.TopicBean;
 import com.dmd.admin.model.domain.UmsIntegrationChangeHistory;
@@ -196,7 +197,125 @@ public class IntegralAdminController {
         if (count > 0) {
             return CommonResult.success(count,"减少成功");
         }
-        return CommonResult.failed("减少失败,减少的数额超过用户总积分！");
+        //查询用户总积分
+        Integer num = integralAdminService.queryMemberNum(memberId);
+        return CommonResult.failed("减少失败,减少的数额超过用户总积分！用户总积分为"+num+"请核实后在操作！");
+    }
+
+    /**
+     * 查询全部积分好礼
+     * @param pageNum
+     * @param pageSize
+     * @param integralGiftsBean
+     * @return
+     */
+    @ApiOperation("查询全部积分好礼")
+    @RequestMapping(value = "/selectIntegralGifts",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<CommonPage<IntegralGiftsBean>> queryIntegralGifts(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                                          @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                                          IntegralGiftsBean integralGiftsBean) {
+        if(integralGiftsBean.getStratTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(integralGiftsBean.getStratTime());
+            if(StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                integralGiftsBean.setStratTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(integralGiftsBean.getEndTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(integralGiftsBean.getEndTime());
+            if(StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                integralGiftsBean.setEndTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        List<IntegralGiftsBean> integralGiftsList = integralAdminService.queryIntegralGifts(pageNum,pageSize,integralGiftsBean);
+        return CommonResult.success(CommonPage.restPage(integralGiftsList));
+    }
+
+
+    /**
+     * 修改积分好礼
+     * @param id
+     * @param integralGiftsBean
+     * @return
+     */
+    @ApiOperation("修改积分好礼")
+    @RequestMapping(value = "/updateIntegralGifts",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateIntegralGifts(@RequestParam Long id,@RequestBody IntegralGiftsBean integralGiftsBean) {
+        integralGiftsBean.setId(id);
+        int count = integralAdminService.updateIntegralGiftsById(integralGiftsBean);
+        if (count > 0) {
+            return CommonResult.success(count,"修改成功");
+        }
+        return CommonResult.failed("修改失败");
+    }
+
+    /**
+     * 回显积分好礼
+     * @param id
+     * @return
+     */
+    @ApiOperation("回显积分好礼")
+    @RequestMapping(value = "/findIntegralGiftsInfoById",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<IntegralGiftsBean> findIntegralGiftsInfoById(@RequestParam Long id){
+        IntegralGiftsBean integralGiftsBean = integralAdminService.findIntegralGiftsInfoById(id);
+        return CommonResult.success(integralGiftsBean);
+    }
+
+    /**
+     * 添加积分好礼
+     * @param integralGiftsBean
+     * @return
+     */
+    @ApiOperation("添加积分好礼")
+    @RequestMapping(value = "/addIntegralGifts",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult addTopic(@RequestBody IntegralGiftsBean integralGiftsBean) {
+        int count = integralAdminService.addIntegralGifts(integralGiftsBean);
+        if (count > 0) {
+            return CommonResult.success(count,"添加成功");
+        }
+        return CommonResult.failed("添加失败");
+    }
+
+    /**
+     * 批量删除积分好礼
+     * @param ids
+     * @return
+     */
+    @ApiOperation("批量删除积分好礼")
+    @RequestMapping(value = "/deleteIntegralGiftsById",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult deleteIntegralGiftsById(@RequestParam("ids") List<Long> ids){
+        int count = integralAdminService.deleteIntegralGiftsById(ids);
+        if (count > 0) {
+            return CommonResult.success(count,"删除成功");
+        }
+        return CommonResult.failed("删除失败");
     }
 
 }
