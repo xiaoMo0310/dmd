@@ -1,6 +1,8 @@
 package com.dmd.admin.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,6 +12,8 @@ public class UmsIntegrationChangeHistory implements Serializable {
 
     private Long memberId;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     @ApiModelProperty(value = "改变类型：0->增加；1->减少")
@@ -24,10 +28,67 @@ public class UmsIntegrationChangeHistory implements Serializable {
     @ApiModelProperty(value = "操作备注")
     private String operateNote;
 
-    @ApiModelProperty(value = "积分来源：0->购物；1->管理员修改")
+    @ApiModelProperty(value = "积分来源：0->购物；1->动态或评论 2->管理员修改")
     private Integer sourceType;
 
+    @ApiModelProperty("积分动向说明")
+    private String integralTrend;
+
+
+    /**
+     * 开始时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date startTime;
+
+    /**
+     * 结束时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date endTime;
+
+    /**
+     * 用户总积分
+     */
+    @ApiModelProperty("用户总积分")
+    private Integer integration;
+
     private static final long serialVersionUID = 1L;
+
+    public Integer getIntegration() {
+        return integration;
+    }
+
+    public void setIntegration(Integer integration) {
+        this.integration = integration;
+    }
+
+    public String getIntegralTrend() {
+        return integralTrend;
+    }
+
+    public void setIntegralTrend(String integralTrend) {
+        this.integralTrend = integralTrend;
+    }
+
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 
     public Long getId() {
         return id;
@@ -107,6 +168,10 @@ public class UmsIntegrationChangeHistory implements Serializable {
         sb.append(", operateMan=").append(operateMan);
         sb.append(", operateNote=").append(operateNote);
         sb.append(", sourceType=").append(sourceType);
+        sb.append(", integralTrend=").append(integralTrend);
+        sb.append(", startTime=").append(startTime);
+        sb.append(", endTime=").append(endTime);
+        sb.append(", integration=").append(integration);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

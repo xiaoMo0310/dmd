@@ -1,6 +1,7 @@
 package com.dmd.admin.service;
 
 import com.dmd.admin.model.domain.IntegralRuleBean;
+import com.dmd.admin.model.domain.UmsIntegrationChangeHistory;
 
 import java.util.List;
 
@@ -17,4 +18,10 @@ public interface IntegralAdminService {
     int updateIntegralRule(IntegralRuleBean integralRuleBean);
 
     IntegralRuleBean findIntegralInfoById(Long id);
+
+    List<UmsIntegrationChangeHistory> queryIntegralChangePage(Integer pageNum, Integer pageSize, UmsIntegrationChangeHistory umsIntegrationChangeHistory);
+
+    int updateIntegration(UmsIntegrationChangeHistory umsIntegrationChangeHistory);
+
+    int updateIntegrationReduce(UmsIntegrationChangeHistory umsIntegrationChangeHistory);
 }

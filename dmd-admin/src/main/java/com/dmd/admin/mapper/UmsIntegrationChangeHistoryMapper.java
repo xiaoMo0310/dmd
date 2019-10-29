@@ -28,4 +28,8 @@ public interface UmsIntegrationChangeHistoryMapper {
     int updateByPrimaryKeySelective(UmsIntegrationChangeHistory record);
 
     int updateByPrimaryKey(UmsIntegrationChangeHistory record);
+
+    List<UmsIntegrationChangeHistory> queryIntegralChangePage(UmsIntegrationChangeHistory umsIntegrationChangeHistory);
+
+    int updateIntegration(UmsIntegrationChangeHistory umsIntegrationChangeHistory);
 }

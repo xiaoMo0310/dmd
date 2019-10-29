@@ -4,12 +4,15 @@
   <resultMap id="BaseResultMap" type="com.dmd.admin.model.domain.UmsIntegrationChangeHistory">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="member_id" jdbcType="BIGINT" property="memberId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="change_type" jdbcType="INTEGER" property="changeType" />
     <result column="change_count" jdbcType="INTEGER" property="changeCount" />
     <result column="operate_man" jdbcType="VARCHAR" property="operateMan" />
     <result column="operate_note" jdbcType="VARCHAR" property="operateNote" />
     <result column="source_type" jdbcType="INTEGER" property="sourceType" />
+    <result column="integral_trend" jdbcType="VARCHAR" property="integralTrend" />
+    <result column="integration" jdbcType="INTEGER" property="integration" />
+
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -256,4 +259,44 @@
       source_type = #{sourceType,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+
+  <select id="queryIntegralChangePage" parameterType="com.dmd.admin.model.domain.UmsIntegrationChangeHistory" resultMap="BaseResultMap">
+    SELECT uc.id, uc.member_id, uc.created_time, uc.change_type, uc.change_count, uc.operate_man, uc.operate_note,
+    uc.source_type ,uc.integral_trend , um.integration as integration
+    FROM ums_integration_change_log uc LEFT JOIN  ums_member um
+    ON uc.member_id = um.id
+    <include refid="integralChangeWhere"></include>
+  </select>
+
+  <!-- 公用标签 -->
+  <sql id="integralChangeWhere">
+    <where>
+      <!-- 按照会员id查询会员所有记录 -->
+      <if test="memberId !=null ">
+        and uc.member_id = #{memberId}
+      </if>
+      <!-- 查找增加或减少的记录 -->
+      <if test="changeType !=null ">
+        and uc.change_type = #{changeType}
+      </if>
+      <!-- 日期区间查询 -->
+      <if test="startTime != null">
+        and uc.created_time &gt;= #{startTime}
+      </if>
+      <if test="endTime != null">
+        and uc.created_time &lt;= #{endTime}
+      </if>
+    </where>
+  </sql>
+
+  <insert id="updateIntegration" parameterType="com.dmd.admin.model.domain.UmsIntegrationChangeHistory">
+    INSERT INTO ums_integration_change_log
+    (member_id , created_time, change_type,
+      change_count, operate_man, operate_note,
+      source_type,integral_trend)
+    values (#{memberId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{changeType,jdbcType=INTEGER},
+      #{changeCount,jdbcType=INTEGER}, #{operateMan,jdbcType=VARCHAR}, #{operateNote,jdbcType=VARCHAR},
+      #{sourceType,jdbcType=INTEGER},#{integralTrend,jdbcType=VARCHAR})
+  </insert>
 </mapper>

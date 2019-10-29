@@ -465,4 +465,12 @@
       history_integration = #{historyIntegration,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <update id="updateIntegrationForUser" parameterType="map">
+    UPDATE ums_member SET integration = integration + #{changeCount} WHERE id = #{memberId}
+  </update>
+
+  <update id="updateIntegrationForUserReduce" parameterType="map">
+    UPDATE ums_member SET integration = integration - #{changeCount} WHERE id = #{memberId} AND integration >= #{changeCount}
+  </update>
 </mapper>

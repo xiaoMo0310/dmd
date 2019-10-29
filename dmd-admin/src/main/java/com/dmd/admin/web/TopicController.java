@@ -118,7 +118,7 @@ public class TopicController {
     }
 
     /**
-     * 添加/修改 话题
+     * 添加 话题
      * @param topicBean
      * @return
      */
