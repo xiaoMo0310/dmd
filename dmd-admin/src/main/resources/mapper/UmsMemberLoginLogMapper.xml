@@ -170,8 +170,8 @@
     from (
       SELECT
       first_day,
-      sum(case when by_day >= 30 then 1 else 0 end) day30,
-      sum(case when by_day = 7 then 1 else 0 end) day7
+      COALESCE(sum(case when by_day >= 30 then 1 else 0 end), 0) day30,
+      COALESCE(sum(case when by_day = 7 then 1 else 0 end), 0) day7
       FROM
       (SELECT
       member_id,

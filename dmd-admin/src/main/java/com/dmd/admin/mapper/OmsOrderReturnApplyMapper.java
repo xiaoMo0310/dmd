@@ -2,6 +2,8 @@ package com.dmd.admin.mapper;
 
 import com.dmd.admin.model.domain.OmsOrderReturnApply;
 import com.dmd.admin.model.domain.OmsOrderReturnApplyExample;
+import com.dmd.admin.model.dto.OmsOrderReturnApplyResult;
+import com.dmd.admin.model.dto.OmsReturnApplyQueryParam;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +30,14 @@ public interface OmsOrderReturnApplyMapper {
     int updateByPrimaryKeySelective(OmsOrderReturnApply record);
 
     int updateByPrimaryKey(OmsOrderReturnApply record);
+
+    /**
+     * 查询申请列表
+     */
+    List<OmsOrderReturnApply> getList(@Param("queryParam") OmsReturnApplyQueryParam queryParam);
+
+    /**
+     * 获取申请详情
+     */
+    OmsOrderReturnApplyResult getDetail(@Param("id")Long id);
 }

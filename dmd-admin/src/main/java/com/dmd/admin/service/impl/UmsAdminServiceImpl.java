@@ -1,5 +1,6 @@
 package com.dmd.admin.service.impl;
 
+import com.dmd.admin.bo.AdminUserDetails;
 import com.dmd.admin.dao.UmsAdminPermissionRelationDao;
 import com.dmd.admin.dao.UmsAdminRoleRelationDao;
 import com.dmd.admin.mapper.UmsAdminLoginLogMapper;
@@ -21,7 +22,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -102,7 +102,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         String token = null;
         //密码需要客户端加密后传递
         try {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            AdminUserDetails userDetails = (AdminUserDetails) userDetailsService.loadUserByUsername(username);
             if(!passwordEncoder.matches(password,userDetails.getPassword())){
                 throw new BadCredentialsException("密码不正确");
             }

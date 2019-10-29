@@ -5,6 +5,7 @@ import com.dmd.DateUtil;
 import com.dmd.admin.mapper.UmsMemberLoginLogMapper;
 import com.dmd.admin.mapper.UmsMemberMapper;
 import com.dmd.admin.model.domain.UmsMember;
+import com.dmd.admin.model.domain.UmsMemberExample;
 import com.dmd.admin.model.dto.UmsUserQueryParam;
 import com.dmd.admin.service.UmsMemberService;
 import com.github.pagehelper.PageHelper;
@@ -67,26 +68,50 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         Date firstDate = DateUtil.dateshit("yyyy-MM-dd", new Date(), -day);
         //查询注册的人
         List<UmsMember> members = umsMemberMapper.selectRegisterUser(firstDate);
+        JSONObject jsonObject = new JSONObject();
         if(CollectionUtils.isEmpty(members)){
-            JSONObject jsonObject = new JSONObject();
             jsonObject.put("seven", 0);
-            jsonObject.put("thirty", 0);
             return jsonObject;
         }
         List<Long> userIds = members.stream().map(UmsMember::getId).collect(Collectors.toList());
         //查询7天的留存数
         Map map = umsMemberLoginLogMapper.selectRetentionNumber(firstDate, userIds);
+        if(map ==null){
+            jsonObject.put("seven", 0);
+            return jsonObject;
+        }
         long sevenDayLogin = Long.parseLong(String.valueOf(map.get("day7")));
         long thirtyDayLogin = Long.parseLong(String.valueOf(map.get("day30")));
         //查询当天新增的用户数
         double seven = sevenDayLogin / (double) members.size();
         seven = Double.valueOf(new BigDecimal(seven).setScale(2, RoundingMode.DOWN).multiply(new BigDecimal("100")).toString());
+        jsonObject.put("seven", seven);
+        return jsonObject;
+    }
+
+    @Override
+    public JSONObject countThirtyDayRetentionRate(Integer day) {
+        //第7日留存率：（当天新增的用户中，新增日之后的第7天还登录的用户数）/第一天新增总用户数
+        //计算起始的时间
+        Date firstDate = DateUtil.dateshit("yyyy-MM-dd", new Date(), -day);
+        //查询注册的人
+        List<UmsMember> members = umsMemberMapper.selectRegisterUser(firstDate);
+        JSONObject jsonObject = new JSONObject();
+        if(CollectionUtils.isEmpty(members)){
+            jsonObject.put("thirty", 0);
+            return jsonObject;
+        }
+        List<Long> userIds = members.stream().map(UmsMember::getId).collect(Collectors.toList());
+        Map map = umsMemberLoginLogMapper.selectRetentionNumber(firstDate, userIds);
+        if(map ==null){
+            jsonObject.put("thirty", 0);
+            return jsonObject;
+        }
+        long thirtyDayLogin = Long.parseLong(String.valueOf(map.get("day30")));
         double thirty = thirtyDayLogin / (double) members.size();
         thirty = Double.valueOf(new BigDecimal(thirty).setScale(2, RoundingMode.DOWN).multiply(new BigDecimal("100")).toString());
-        JSONObject object = new JSONObject();
-        object.put("seven", seven);
-        object.put("thirty", thirty);
-        return object;
+        jsonObject.put("thirty", thirty);
+        return jsonObject;
     }
 
     @Override
@@ -103,5 +128,15 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         umsMember.setStatus(status);
         return umsMemberMapper.updateByPrimaryKeySelective(umsMember);
     }
+
+    @Override
+    public int batchUpdateUserStatus(List<Long> ids, Integer status) {
+        UmsMember record = new UmsMember();
+        record.setStatus(status);
+        UmsMemberExample example = new UmsMemberExample();
+        example.createCriteria().andIdIn(ids);
+        return umsMemberMapper.updateByExampleSelective(record, example);
+    }
+
 
 }

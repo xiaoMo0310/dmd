@@ -5,6 +5,7 @@ import com.dmd.admin.model.dto.UmsUserQueryParam;
 import com.github.pagehelper.PageInfo;
 
 import java.text.ParseException;
+import java.util.List;
 
 /**
  * <p>
@@ -49,5 +50,26 @@ public interface UmsMemberService{
      */
     PageInfo selectUserList(UmsUserQueryParam userQueryParam);
 
+    /**
+     * 修改用户状态
+     * @param id
+     * @param status
+     * @return
+     */
     int updateUserStatus(Long id, Integer status);
+
+    /**
+     * 批量修改用户状态
+     * @param ids
+     * @param status
+     * @return
+     */
+    int batchUpdateUserStatus(List<Long> ids, Integer status);
+
+    /**
+     * 统计三十日留存lv
+     * @param day
+     * @return
+     */
+    JSONObject countThirtyDayRetentionRate(Integer day);
 }

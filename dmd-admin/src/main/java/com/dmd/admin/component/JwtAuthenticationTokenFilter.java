@@ -1,10 +1,14 @@
 package com.dmd.admin.component;
 
+import com.dmd.ThreadLocalMap;
 import com.dmd.admin.utils.JwtTokenUtil;
+import com.dmd.base.constant.GlobalConstant;
+import com.dmd.base.dto.LoginAuthDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,10 +32,16 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private RedisTemplate redisTemplate;
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
     @Value("${jwt.tokenHead}")
     private String tokenHead;
+    @Value("${jwt.expiration}")
+    private Long expiration;
+
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -42,6 +52,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             // The part after "Bearer "
             String authToken = authHeader.substring(this.tokenHead.length());
             String username = jwtTokenUtil.getUserNameFromToken(authToken);
+            Long id = jwtTokenUtil.getIdFromToken(authToken);
+            //保存用户信息
+            LoginAuthDto loginAuthDto = new LoginAuthDto(id, username);
+            ThreadLocalMap.put(GlobalConstant.Sys.TOKEN_AUTH_DTO, loginAuthDto);
             LOGGER.info("checking username:{}", username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);

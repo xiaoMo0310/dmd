@@ -60,4 +60,8 @@ public class AdminUserDetails implements UserDetails {
     public boolean isEnabled() {
         return umsAdmin.getStatus().equals(1);
     }
+
+    public UmsAdmin getUmsAdmin() {
+        return umsAdmin;
+    }
 }

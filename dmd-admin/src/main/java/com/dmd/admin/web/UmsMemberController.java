@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 会员表 前端控制器
@@ -60,6 +62,12 @@ public class UmsMemberController extends BaseController {
         JSONObject object = umsMemberService.countRetentionRate(day);
         return WrapMapper.ok(object);
     }
+    @GetMapping("retentionRate/countThirty/{day}")
+    @ApiOperation(httpMethod = "GET", value = "统计三十日留存率")
+    public Wrapper countThirtyDayRetentionRate(@PathVariable Integer day){
+        JSONObject object = umsMemberService.countThirtyDayRetentionRate(day);
+        return WrapMapper.ok(object);
+    }
 
     @PostMapping("userList/findPage")
     @ApiOperation(httpMethod = "POST", value = "查询用户列表信息")
@@ -76,6 +84,16 @@ public class UmsMemberController extends BaseController {
     public Wrapper selectUserList(@RequestParam("id") Long id, @RequestParam("status") Integer status) {
         int result = umsMemberService.updateUserStatus(id, status);
         return handleResult(result);
+    }
+
+    @ApiOperation("批量修改用户的状态")
+    @PostMapping(value = "/status/batchUpdate")
+    @ApiImplicitParams({@ApiImplicitParam(name ="ids", value = "用户id集合", paramType = "query", dataType = "List"),
+            @ApiImplicitParam(name ="status", value = "用户状态(0:禁用 1:启用)", paramType = "query", dataType = "Integer")})
+    public Wrapper updatePublishStatus(@RequestParam("ids") List<Long> ids,
+                                       @RequestParam("status") Integer status) {
+        int count = umsMemberService.batchUpdateUserStatus(ids, status);
+        return handleResult(count);
     }
 
 }

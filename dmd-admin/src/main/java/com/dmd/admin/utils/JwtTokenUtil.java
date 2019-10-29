@@ -1,5 +1,7 @@
 package com.dmd.admin.utils;
 
+import com.dmd.admin.bo.AdminUserDetails;
+import com.dmd.admin.model.domain.UmsAdmin;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -27,6 +29,7 @@ import java.util.Map;
 @Component
 public class JwtTokenUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
+    private static final String CLAIM_KEY_ID = "jti";
     private static final String CLAIM_KEY_USERNAME = "sub";
     private static final String CLAIM_KEY_CREATED = "created";
     @Value("${jwt.secret}")
@@ -83,6 +86,20 @@ public class JwtTokenUtil {
     }
 
     /**
+     * 从token中获取登录用户id
+     */
+    public Long getIdFromToken(String token) {
+        Long id;
+        try {
+            Claims claims = getClaimsFromToken(token);
+            id = Long.parseLong(claims.getId());
+        } catch (Exception e) {
+            id = null;
+        }
+        return id;
+    }
+
+    /**
      * 验证token是否还有效
      *
      * @param token       客户端传入的token
@@ -112,9 +129,11 @@ public class JwtTokenUtil {
     /**
      * 根据用户信息生成token
      */
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(AdminUserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
+        UmsAdmin umsAdmin = userDetails.getUmsAdmin();
+        claims.put(CLAIM_KEY_ID, umsAdmin.getId().toString());
+        claims.put(CLAIM_KEY_USERNAME, umsAdmin.getUsername());
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
     }

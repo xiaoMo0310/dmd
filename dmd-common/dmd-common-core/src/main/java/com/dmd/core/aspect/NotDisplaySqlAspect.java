@@ -20,7 +20,7 @@ public class NotDisplaySqlAspect {
 	 */
 	public static final String DISPLAY_SQL = "DISPLAY_SQL";
 
-	@Pointcut("@annotation(com.paascloud.core.annotation.NotDisplaySql)")
+	@Pointcut("@annotation(com.dmd.core.annotation.NotDisplaySql)")
 	private void myPointCut() {
 	}
 

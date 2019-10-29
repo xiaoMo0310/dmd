@@ -1,6 +1,5 @@
 package com.dmd.admin.service.impl;
 
-import com.dmd.admin.dao.OmsOrderReturnApplyDao;
 import com.dmd.admin.mapper.OmsOrderReturnApplyMapper;
 import com.dmd.admin.model.domain.OmsOrderReturnApply;
 import com.dmd.admin.model.domain.OmsOrderReturnApplyExample;
@@ -22,13 +21,11 @@ import java.util.List;
 @Service
 public class OmsOrderReturnApplyServiceImpl implements OmsOrderReturnApplyService {
     @Autowired
-    private OmsOrderReturnApplyDao returnApplyDao;
-    @Autowired
     private OmsOrderReturnApplyMapper returnApplyMapper;
     @Override
     public List<OmsOrderReturnApply> list(OmsReturnApplyQueryParam queryParam, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum,pageSize);
-        return returnApplyDao.getList(queryParam);
+        return returnApplyMapper.getList(queryParam);
     }
 
     @Override
@@ -73,6 +70,6 @@ public class OmsOrderReturnApplyServiceImpl implements OmsOrderReturnApplyServic
 
     @Override
     public OmsOrderReturnApplyResult getItem(Long id) {
-        return returnApplyDao.getDetail(id);
+        return returnApplyMapper.getDetail(id);
     }
 }

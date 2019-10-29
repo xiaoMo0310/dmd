@@ -31,4 +31,8 @@ public class LoginAuthDto implements Serializable {
 		this.userName = userName;
 	}
 
+	public LoginAuthDto(Long userId, String userName) {
+		this.userId = userId;
+		this.userName = userName;
+	}
 }
