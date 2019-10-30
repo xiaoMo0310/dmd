@@ -18,5 +18,5 @@ public interface DynamicService {
 
     List<TopicBean> queryTopic();
 
-    int updateDynamicDelflagById(String[] ids);
+    int updateDynamicDelflagById(List<Long> ids);
 }
