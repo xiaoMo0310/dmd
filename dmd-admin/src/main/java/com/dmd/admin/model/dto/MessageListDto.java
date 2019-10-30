@@ -1,7 +1,10 @@
 package com.dmd.admin.model.dto;
 
 import com.dmd.base.dto.BaseQuery;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @author YangAnsheng
@@ -11,4 +14,19 @@ import lombok.Data;
  */
 @Data
 public class MessageListDto extends BaseQuery {
+
+    @ApiModelProperty("用户类型")
+    private Integer userType;
+
+    @ApiModelProperty("发送时间")
+    private Date sendTime;
+
+    @ApiModelProperty("标题")
+    private String title;
+
+    @ApiModelProperty("是否删除")
+    private Integer isDelete;
+
+    @ApiModelProperty("消息类型")
+    private Integer messageType;
 }

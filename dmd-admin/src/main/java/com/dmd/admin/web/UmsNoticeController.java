@@ -1,14 +1,13 @@
 package com.dmd.admin.web;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.dmd.admin.model.dto.MessageDto;
 import com.dmd.admin.model.dto.MessageListDto;
-import com.dmd.admin.model.vo.NoticeListVo;
 import com.dmd.admin.service.UmsNoticeService;
 import com.dmd.core.support.BaseController;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -68,11 +67,25 @@ public class UmsNoticeController extends BaseController {
     @ApiOperation(httpMethod = "POST", value = "分页查询通知消息")
     @ApiImplicitParams({@ApiImplicitParam(name ="messageListDto", value = "查询需要的信息", paramType = "body", dataType = "MessageListDto")})
     public Wrapper batchSaveMessage(@RequestBody MessageListDto messageListDto) {
-        PageInfo<NoticeListVo> pageInfo = umsNoticeService.findNoticeMessageByPage(messageListDto);
-        return WrapMapper.ok(pageInfo);
+        JSONObject object = umsNoticeService.findNoticeMessageByPage(messageListDto);
+        return WrapMapper.ok(object);
     }
 
+    @PostMapping("/message/delete")
+    @ApiOperation(httpMethod = "POST", value = "删除通知消息")
+    @ApiImplicitParams({@ApiImplicitParam(name ="ids", value = "id", paramType = "query", dataType = "List")})
+    public Wrapper delete(@RequestParam("ids") List<Long> ids) {
+        int count = umsNoticeService.deleteNotice(ids);
+        return handleResult(count);
+    }
 
-
+    @PostMapping("/message/update/isCancel/{id}")
+    @ApiOperation(httpMethod = "POST", value = "修改通知撤销的状态")
+    @ApiImplicitParams({@ApiImplicitParam(name ="id", value = "通知id", paramType = "path", dataType = "Long"),
+                        @ApiImplicitParam(name ="status", value = "撤销编号", paramType = "query", dataType = "int")})
+    public Wrapper updateIsCancel(@PathVariable Long id, @RequestParam Integer status) {
+        int count = umsNoticeService.updateIsCancel(getLoginAuthDto(),id, status);
+        return handleResult(count);
+    }
 }
 

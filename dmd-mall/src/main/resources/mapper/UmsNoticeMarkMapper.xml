@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dmd.admin.mapper.UmsNoticeMarkMapper">
+<mapper namespace="com.dmd.mall.mapper.UmsNoticeMarkMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dmd.admin.model.domain.UmsNoticeMark">
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.UmsNoticeMark">
     <result column="id" property="id" />
     <result column="creator" property="creator" />
     <result column="creator_id" property="creatorId" />
@@ -29,14 +29,10 @@
         update_time,
         notice_id, user_id, user_type, is_read, read_time
     </sql>
-    <select id="selectByNoticeId" resultType="com.dmd.admin.model.vo.NoticeMarkVo">
-        select
-        um.id userId,
-        um.username,
-        unm.is_read,
-        unm.read_time
-        from ums_notice_mark unm, ums_member um
-        where unm.user_id = um.id and unm.notice_id = #{noticeId} and unm.user_type = #{userType}
+    <select id="selectByUserId" resultType="com.dmd.mall.model.domain.UmsNoticeMark">
+        select <include refid="Base_Column_List"/>
+        from ums_notice_mark
+        where user_id = #{userId} and user_type = #{userType}
     </select>
 
 </mapper>

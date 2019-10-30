@@ -22,4 +22,6 @@ import java.util.List;
 public interface UmsNoticeMapper extends MyMapper<UmsNotice> {
 
     List<NoticeListVo> findNoticeMessage(MessageListDto messageListDto);
+
+    List<UmsNotice> selectByMessage(MessageListDto messageListDto);
 }

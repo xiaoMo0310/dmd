@@ -1,7 +1,6 @@
-package com.dmd.admin.mapper;
+package com.dmd.mall.mapper;
 
-import com.dmd.admin.model.domain.UmsNoticeMark;
-import com.dmd.admin.model.vo.NoticeMarkVo;
+import com.dmd.mall.model.domain.UmsNoticeMark;
 import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,11 +14,11 @@ import java.util.List;
  * </p>
  *
  * @author YangAnsheng
- * @since 2019-10-29
+ * @since 2019-10-30
  */
 @Mapper
 @Component
 public interface UmsNoticeMarkMapper extends MyMapper<UmsNoticeMark> {
 
-    List<NoticeMarkVo> selectByNoticeId(@Param("noticeId") Long noticeId, @Param("userType") Integer userType);
+    List<UmsNoticeMark> selectByUserId(@Param("userId") Long userId, @Param("userType") Integer userType);
 }

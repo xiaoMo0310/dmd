@@ -1,8 +1,11 @@
 package com.dmd.admin.service;
 
 import com.dmd.admin.model.domain.UmsNoticeMark;
+import com.dmd.admin.model.vo.NoticeMarkVo;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,4 +25,12 @@ public interface UmsNoticeMarkService extends IService<UmsNoticeMark> {
      * @param loginAuthDto
      */
     void insertNoticeMarkMessage(Long noticeId, Long id, Integer userType, LoginAuthDto loginAuthDto);
+
+    /**
+     * 根据通知id查询所有的通知标记信息
+     * @param noticeId
+     * @param userType
+     * @return
+     */
+    List<NoticeMarkVo> selectByNoticeId(Long noticeId, Integer userType);
 }

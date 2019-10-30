@@ -1,12 +1,11 @@
 package com.dmd.admin.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dmd.admin.model.domain.UmsNotice;
 import com.dmd.admin.model.dto.MessageDto;
 import com.dmd.admin.model.dto.MessageListDto;
-import com.dmd.admin.model.vo.NoticeListVo;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
-import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -50,5 +49,20 @@ public interface UmsNoticeService extends IService<UmsNotice> {
      * @param messageListDto
      * @return
      */
-    PageInfo<NoticeListVo> findNoticeMessageByPage(MessageListDto messageListDto);
+    JSONObject findNoticeMessageByPage(MessageListDto messageListDto);
+
+    /**
+     * 删除通知消息
+     * @param ids
+     * @return
+     */
+    int deleteNotice(List<Long> ids);
+
+    /**
+     * 修改通知撤销的状态
+     * @param id
+     * @param status
+     * @return
+     */
+    int updateIsCancel(LoginAuthDto loginAuthDto, Long id, Integer status);
 }

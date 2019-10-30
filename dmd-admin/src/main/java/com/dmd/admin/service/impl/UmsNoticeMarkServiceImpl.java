@@ -1,14 +1,16 @@
 package com.dmd.admin.service.impl;
 
-import com.dmd.admin.model.domain.UmsNoticeMark;
 import com.dmd.admin.mapper.UmsNoticeMarkMapper;
+import com.dmd.admin.model.domain.UmsNoticeMark;
+import com.dmd.admin.model.vo.NoticeMarkVo;
 import com.dmd.admin.service.UmsNoticeMarkService;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * <p>
@@ -32,7 +34,13 @@ public class UmsNoticeMarkServiceImpl extends BaseService<UmsNoticeMark> impleme
         umsNoticeMark.setNoticeId(noticeId);
         umsNoticeMark.setUserId(id);
         umsNoticeMark.setUserType(userType);
+        umsNoticeMark.setReadTime("0");
         umsNoticeMark.setUpdateInfo(loginAuthDto);
         umsNoticeMarkMapper.insertSelective(umsNoticeMark);
+    }
+
+    @Override
+    public List<NoticeMarkVo> selectByNoticeId(Long noticeId, Integer userType) {
+        return umsNoticeMarkMapper.selectByNoticeId(noticeId, userType);
     }
 }
