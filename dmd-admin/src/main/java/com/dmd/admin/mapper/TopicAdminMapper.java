@@ -2,6 +2,8 @@ package com.dmd.admin.mapper;
 
 
 import com.dmd.admin.model.domain.TopicBean;
+import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,5 +27,5 @@ public interface TopicAdminMapper {
 
     List<TopicBean> queryTopic();
 
-    void reduceTopicNum(String[] dynamicTopicId);
+    void reduceTopicNum(@Param("list")List<Long> dynamicTopicId,@Param("size") Integer size);
 }

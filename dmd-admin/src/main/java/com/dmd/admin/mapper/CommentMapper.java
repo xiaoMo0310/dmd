@@ -16,5 +16,5 @@ public interface CommentMapper {
 
     int updateCommentDelflag(List<Long> ids);
 
-    void updateComment(String[] ids);
+    void updateComment(List<Long> ids);
 }

@@ -3,13 +3,18 @@ package com.dmd.admin.web;
 import com.dmd.admin.model.domain.DynamicBean;
 import com.dmd.admin.model.domain.TopicBean;
 import com.dmd.admin.service.DynamicService;
+import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -39,9 +44,46 @@ public class DynamicController {
     @ApiOperation("分页查询用户动态/条查")
     @RequestMapping(value = "/selectDynamicPage",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DynamicBean>> queryDynamicPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize, DynamicBean dynamicBean) {
+    public CommonResult<CommonPage<DynamicBean>> queryDynamicPage(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                                  @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                                  DynamicBean dynamicBean) {
+        if(dynamicBean.getStratTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(dynamicBean.getStratTime());
+            if(StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                dynamicBean.setStratTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(dynamicBean.getEndTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(dynamicBean.getEndTime());
+            if(StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                dynamicBean.setEndTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         List<DynamicBean> dynamicList = dynamicService.queryDynamicPage(pageNum,pageSize,dynamicBean);
-        return CommonResult.success(dynamicList);
+        return  CommonResult.success(CommonPage.restPage(dynamicList));
     }
 
     /**
@@ -64,7 +106,7 @@ public class DynamicController {
     @ApiOperation("批量删除用户动态")
     @RequestMapping(value = "/updateDynamicDelflagById",method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updateDynamicDelflagById(@RequestBody String... ids){
+    public CommonResult updateDynamicDelflagById(@RequestParam("ids") List<Long> ids){
         int count = dynamicService.updateDynamicDelflagById(ids);
         if (count > 0) {
             return CommonResult.success(count,"删除成功");

@@ -43,13 +43,14 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    public int updateDynamicDelflagById(String[] ids) {
+    public int updateDynamicDelflagById(List<Long> ids) {
         //动态删除时对应的动态下评论也全部删除
         commentMapper.updateComment(ids);
         //动态删除时判断是否有话题id，如果有话题id则话题下动态数量减1。批量修改
-        String[] dynamicTopicId = dynamicAmdinMappper.queryDynamicById(ids);
+        List<Long> dynamicTopicId = dynamicAmdinMappper.queryDynamicById(ids);
+        Integer size = dynamicTopicId.size();
         if (dynamicTopicId != null){
-            topicAdminMapper.reduceTopicNum(dynamicTopicId);
+            topicAdminMapper.reduceTopicNum(dynamicTopicId,size);
         }
         return dynamicAmdinMappper.updateDynamicDelflag(ids);
     }
