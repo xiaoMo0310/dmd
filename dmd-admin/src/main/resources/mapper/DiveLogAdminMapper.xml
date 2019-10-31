@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.admin.mapper.DiveLogAdminMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="diveLogMap" type="com.dmd.admin.model.domain.DiveLogBean">
+        <result column="id" property="id" />
+        <result column="diving_number" property="divingNumber" />
+        <result column="maximum_depth" property="maximumDepth" />
+        <result column="average_depth" property="average_depth" />
+        <result column="depth_type" property="depthType" />
+        <result column="minimum_temperature" property="minimumTemperature" />
+        <result column="average_temperature" property="average_temperature" />
+        <result column="temperature_type" property="temperatureType" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="dive_sites" property="diveSites" />
+        <result column="diving_idea" property="divingIdea" />
+        <result column="diving_pictures" property="divingPictures" />
+        <result column="additional_weight" property="additionalWeight" />
+        <result column="water_way" property="waterWay" />
+        <result column="scenery" property="scenery" />
+        <result column="weather" property="weather" />
+        <result column="flow" property="flow" />
+        <result column="visibility" property="visibility" />
+        <result column="animal_photos" property="animalPhotos" />
+        <result column="clothing_brand" property="clothingBrand" />
+        <result column="airbottle_brand" property="airbottleBrand" />
+        <result column="mask_brand" property="maskBrand" />
+        <result column="watches_brand" property="watchesBrand" />
+        <result column="camera_brand" property="cameraBrand" />
+        <result column="fins_brand" property="finsBrand" />
+        <result column="createtime" property="createtime" />
+        <result column="edittime" property="edittime" />
+        <result column="delflag" property="delflag" />
+        <result column="author" property="author" />
+        <result column="user_head_portrait" property="userHeadPortrait" />
+        <result column="user_id" property="userId" />
+        <result column="praise_num" property="praiseNum" />
+        <result column="share_num" property="shareNum" />
+        <result column="comment_num" property="commentNum" />
+        <result column="dive_type" property="diveType" />
+
+    </resultMap>
+
+    <resultMap id="diveLogAirbottleMap" type="com.dmd.admin.model.domain.DiveLogAirbottleBean">
+        <result column="id" property="id" />
+        <result column="start" property="start" />
+        <result column="end" property="end" />
+        <result column="residue" property="residue" />
+        <result column="gas_type" property="gasType" />
+        <result column="mixture_type" property="mixtureType" />
+        <result column="airbottle_num" property="airbottleNum" />
+        <result column="user_id" property="userId" />
+        <result column="dive_log_id" property="diveLogId" />
+        <result column="delflag" property="delflag" />
+    </resultMap>
+
+
+    <select id="queryDiveLogPage" resultMap="diveLogMap" parameterType="com.dmd.admin.model.domain.DiveLogBean">
+        SELECT
+        id,
+        diving_number,
+        maximum_depth,
+        average_depth,
+        depth_type,
+        minimum_temperature,
+        average_temperature,
+        temperature_type,
+        start_time,
+        end_time,
+        dive_sites,
+        diving_idea,
+        diving_pictures,
+        additional_weight,
+        water_way,
+        scenery,
+        weather,
+        flow,
+        visibility,
+        animal_photos,
+        clothing_brand,
+        airbottle_brand,
+        mask_brand,
+        watches_brand,
+        camera_brand,
+        fins_brand,
+        createtime,
+        edittime,
+        delflag,
+        author,
+        user_head_portrait,
+        user_id,
+        praise_num,
+        share_num,
+        comment_num,
+        dive_type
+        FROM
+        dmd_dive_log
+        <include refid="diveLogWhere"></include>
+    </select>
+
+    <!-- 公用标签 -->
+    <sql id="diveLogWhere">
+        <where>
+            <!-- 日期区间查询 -->
+            <if test="startDate != null">
+                and createtime &gt;= #{startDate}
+            </if>
+            <if test="endDate != null">
+                and createtime &lt;= #{endDate}
+            </if>
+            <!-- 潜水类型查询 -->
+            <if test="diveType !=null">
+                and dive_type = #{diveType}
+            </if>
+                and delflag = 0
+        </where>
+    </sql>
+    <select id="queryDiveLogAirbottleByDiveLogId" resultMap="diveLogAirbottleMap" parameterType="java.lang.Long">
+        SELECT id,start,end,residue,gas_type,mixture_type,airbottle_num,user_id,dive_log_id,delflag
+        FROM dmd_dive_log_airbottle
+        WHERE dive_log_id = #{id} AND delflag = 0
+    </select>
+
+    <update id="updateDiveLogDelflag" parameterType="java.lang.Long" >
+        UPDATE dmd_dive_log SET delflag = 1 WHERE id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateDiveLogAirbottleDelflag" parameterType="java.lang.Long" >
+        UPDATE dmd_dive_log_airbottle SET delflag = 1 WHERE dive_log_id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

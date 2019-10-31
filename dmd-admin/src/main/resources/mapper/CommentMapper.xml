@@ -78,4 +78,13 @@
             #{id}
         </foreach>
     </update>
+
+    <update id="updateDiveLogDelflag" parameterType="java.lang.Long">
+        UPDATE dmd_dynamic_comment SET delflag = 1 WHERE lw_for_diveLog_id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+
 </mapper>

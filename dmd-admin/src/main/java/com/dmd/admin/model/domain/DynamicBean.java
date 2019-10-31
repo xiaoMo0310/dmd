@@ -1,5 +1,6 @@
 package com.dmd.admin.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,6 +24,8 @@ public class DynamicBean {
     @ApiModelProperty(value = "文章内容")
     private String dynamicContent;
     @ApiModelProperty(value = "发布时间为当前时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
     @ApiModelProperty(value = "发布地址")
     private String dynamicAddress;
@@ -45,10 +48,12 @@ public class DynamicBean {
 
     @ApiModelProperty(value = "开始时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date stratTime;
 
     @ApiModelProperty(value = "结束时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endTime;
 
     public Date getStratTime() {

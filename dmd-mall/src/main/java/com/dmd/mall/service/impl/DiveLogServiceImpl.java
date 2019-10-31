@@ -1,6 +1,7 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.WordFilter;
+import com.dmd.base.result.CommonResult;
 import com.dmd.mall.mapper.DiveLogCommentMapper;
 import com.dmd.mall.mapper.DiveLogMapper;
 import com.dmd.mall.model.domain.DiveLogAirbottleBean;
@@ -59,22 +60,28 @@ public class DiveLogServiceImpl implements DiveLogService{
         String content = WordFilter.doFilter(diveLogBean.getDivingIdea());
         System.out.println(content);
         diveLogBean.setDivingIdea(content);
-        diveLogMapper.addDiveLog(diveLogBean);
+        int count = diveLogMapper.addDiveLog(diveLogBean);
         //获取到新增完成之后的日志Id
         Long diveLogId = diveLogBean.getId();
         System.out.println(diveLogId);
         //潜水气瓶消耗实体
         List<DiveLogAirbottleBean> diveLogAirbottleList = diveLogAndAirbottle.getDiveLogAirbottleList();
-        //循环赋值
-        for (int i = 0; i < diveLogAirbottleList.size(); i++) {
-            diveLogAirbottleList.get(i).setDiveLogId(diveLogId);
-            diveLogAirbottleList.get(i).setDelflag(0);
-            //剩余气瓶量
-            diveLogAirbottleList.get(i).setResidue(diveLogAirbottleList.get(i).getStart() - diveLogAirbottleList.get(i).getEnd());
+        if (diveLogAirbottleList!=null){
+            //循环赋值
+            for (int i = 0; i < diveLogAirbottleList.size(); i++) {
+                diveLogAirbottleList.get(i).setDiveLogId(diveLogId);
+                diveLogAirbottleList.get(i).setDelflag(0);
+                //剩余气瓶量
+                diveLogAirbottleList.get(i).setResidue(diveLogAirbottleList.get(i).getStart() - diveLogAirbottleList.get(i).getEnd());
+            }
+
+            System.out.println(diveLogAirbottleList);
+            //新增气瓶消耗表
+            diveLogMapper.addDiveLogAirbottle(diveLogAirbottleList);
         }
-        System.out.println(diveLogAirbottleList);
-        //新增气瓶消耗表
-        return diveLogMapper.addDiveLogAirbottle(diveLogAirbottleList);
+
+
+        return count;
     }
 
     @Override

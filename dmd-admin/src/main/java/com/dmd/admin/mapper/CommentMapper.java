@@ -17,4 +17,6 @@ public interface CommentMapper {
     int updateCommentDelflag(List<Long> ids);
 
     void updateComment(List<Long> ids);
+
+    int updateDiveLogDelflag(List<Long> ids);
 }

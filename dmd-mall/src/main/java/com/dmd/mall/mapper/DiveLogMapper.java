@@ -24,7 +24,7 @@ public interface DiveLogMapper {
 
     List<DiveLogAirbottleBean> queryDiveLogAirbottleByDiveLogId(Long id);
 
-    void addDiveLog(DiveLogBean diveLogBean);
+    int addDiveLog(DiveLogBean diveLogBean);
 
     int addDiveLogAirbottle(@Param("diveLogAirbottleList")List<DiveLogAirbottleBean> diveLogAirbottleList);
 
