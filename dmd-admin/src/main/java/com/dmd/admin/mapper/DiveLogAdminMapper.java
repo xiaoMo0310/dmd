@@ -17,7 +17,7 @@ public interface DiveLogAdminMapper {
 
     List<DiveLogAirbottleBean> queryDiveLogAirbottleByDiveLogId(Long id);
 
-    void updateDiveLogDelflag(List<Long> ids);
+    int updateDiveLogDelflag(List<Long> ids);
 
     void updateDiveLogAirbottleDelflag(List<Long> ids);
 }

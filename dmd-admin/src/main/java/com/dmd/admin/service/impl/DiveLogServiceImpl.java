@@ -40,10 +40,11 @@ public class DiveLogServiceImpl implements DiveLogService{
     @Override
     public int updateDiveLogDelflag(List<Long> ids) {
         //删除潜水日志
-        diveLogAdminMapper.updateDiveLogDelflag(ids);
+        int count = diveLogAdminMapper.updateDiveLogDelflag(ids);
         //删除潜水日志对应的气瓶消耗删除
         diveLogAdminMapper.updateDiveLogAirbottleDelflag(ids);
         //删除潜水日志对应日志下评论删除
-        return commentMapper.updateDiveLogDelflag(ids);
+        commentMapper.updateDiveLogDelflag(ids);
+        return count;
     }
 }

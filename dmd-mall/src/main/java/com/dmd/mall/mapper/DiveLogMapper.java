@@ -38,7 +38,7 @@ public interface DiveLogMapper {
 
     Integer queryShare(Long id);
 
-    void updateDiveLogDelflag(Long id);
+    int updateDiveLogDelflag(Long id);
 
     void updateDiveLogAirbottleDelflag(Long id);
 }

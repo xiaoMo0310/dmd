@@ -113,10 +113,11 @@ public class DiveLogServiceImpl implements DiveLogService{
     public int updateDiveLogDelflag(Long id) {
 
         //删除潜水日志
-        diveLogMapper.updateDiveLogDelflag(id);
+        int count = diveLogMapper.updateDiveLogDelflag(id);
         //删除潜水日志对应的气瓶消耗删除
         diveLogMapper.updateDiveLogAirbottleDelflag(id);
         //删除潜水日志对应日志下评论删除
-        return diveLogCommentMapper.updateDiveLogDelflag(id);
+        diveLogCommentMapper.updateDiveLogDelflag(id);
+        return count;
     }
 }

@@ -114,6 +114,10 @@
             <if test="diveType !=null">
                 and dive_type = #{diveType}
             </if>
+            <!-- 按照用户ID查询 -->
+            <if test="userId !=null">
+                and user_id = #{userId}
+            </if>
                 and delflag = 0
         </where>
     </sql>
