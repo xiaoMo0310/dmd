@@ -3,9 +3,11 @@ package com.dmd.admin.mapper;
 import com.dmd.admin.model.domain.OmsOrderOperateHistory;
 import com.dmd.admin.model.domain.OmsOrderOperateHistoryExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public interface OmsOrderOperateHistoryMapper {
     long countByExample(OmsOrderOperateHistoryExample example);
 
@@ -28,4 +30,6 @@ public interface OmsOrderOperateHistoryMapper {
     int updateByPrimaryKeySelective(OmsOrderOperateHistory record);
 
     int updateByPrimaryKey(OmsOrderOperateHistory record);
+
+    int insertList(@Param("list") List<OmsOrderOperateHistory> orderOperateHistoryList);
 }

@@ -1,10 +1,12 @@
 package com.dmd.mall.service;
 
 import com.dmd.base.dto.LoginAuthDto;
-import com.dmd.mall.model.domain.UmsNotice;
 import com.dmd.core.support.IService;
+import com.dmd.mall.model.domain.UmsNotice;
+import com.dmd.mall.model.vo.UmsNoticeVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -21,5 +23,5 @@ public interface UmsNoticeService extends IService<UmsNotice> {
      * @param loginAuthDto
      * @return
      */
-    List<UmsNotice> findLoginUserMessage(LoginAuthDto loginAuthDto, Integer userType);
+    Map<Integer, List<UmsNoticeVo>> findLoginUserMessage(LoginAuthDto loginAuthDto, Integer userType);
 }

@@ -33,12 +33,12 @@
     </sql>
     <select id="selectById" resultType="com.dmd.mall.model.domain.UmsNotice">
         select <include refid="Base_Column_List"/>
-        form ums_notice
+        from ums_notice
         where id = #{noticeId} and is_delete = 1 and is_cancel = 1
     </select>
     <select id="selectByType" resultType="com.dmd.mall.model.domain.UmsNotice">
         select <include refid="Base_Column_List"/>
-        form ums_notice
+        from ums_notice
         where type = #{type} and is_delete = 1 and is_cancel = 1
     </select>
 

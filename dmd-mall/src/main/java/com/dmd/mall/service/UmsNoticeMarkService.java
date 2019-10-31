@@ -1,5 +1,6 @@
 package com.dmd.mall.service;
 
+import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.mall.model.domain.UmsNoticeMark;
 import com.dmd.core.support.IService;
 
@@ -21,4 +22,12 @@ public interface UmsNoticeMarkService extends IService<UmsNoticeMark> {
      * @return
      */
     List<UmsNoticeMark> selectByUserId(Long userId, Integer userType);
+
+    /**
+     * 修改当前登录人的通知标记未已读
+     * @param loginAuthDto
+     * @param noticeIds
+     * @return
+     */
+    int updateIsRead(LoginAuthDto loginAuthDto, List<Long> noticeIds, Integer userType);
 }

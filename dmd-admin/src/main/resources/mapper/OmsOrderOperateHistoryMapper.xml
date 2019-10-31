@@ -223,4 +223,15 @@
       note = #{note,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <insert id="insertList">
+    INSERT INTO oms_order_operate_history (order_id, operate_man, create_time, order_status, note) VALUES
+    <foreach collection="list" separator="," item="item" index="index">
+      (#{item.orderId},
+      #{item.operateMan},
+      #{item.createTime,jdbcType=TIMESTAMP},
+      #{item.orderStatus},
+      #{item.note})
+    </foreach>
+  </insert>
 </mapper>

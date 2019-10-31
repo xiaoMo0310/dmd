@@ -15,9 +15,6 @@
     <result column="product_sku_id" jdbcType="BIGINT" property="productSkuId" />
     <result column="product_sku_code" jdbcType="VARCHAR" property="productSkuCode" />
     <result column="product_category_id" jdbcType="BIGINT" property="productCategoryId" />
-    <result column="sp1" jdbcType="VARCHAR" property="sp1" />
-    <result column="sp2" jdbcType="VARCHAR" property="sp2" />
-    <result column="sp3" jdbcType="VARCHAR" property="sp3" />
     <result column="promotion_name" jdbcType="VARCHAR" property="promotionName" />
     <result column="promotion_amount" jdbcType="DECIMAL" property="promotionAmount" />
     <result column="coupon_amount" jdbcType="DECIMAL" property="couponAmount" />

@@ -23,7 +23,7 @@ import java.util.Map;
 public class CodeGeneration {
 
     public static void main(String[] args) {
-        mybatisPlusCodeGeneratro(new String[]{"oms_shipping"}, "dmd-admin", "admin");
+        mybatisPlusCodeGeneratro(new String[]{"ums_notice_mark"}, "dmd-mall", "mall");
     }
 
     /**
@@ -58,7 +58,7 @@ public class CodeGeneration {
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("123456");
-        dsc.setUrl("jdbc:mysql://192.168.0.114:3306/mall");
+        dsc.setUrl("jdbc:mysql://192.168.0.217:3306/mall");
 
         //文件类型的转换
         /*dsc .setTypeConvert(new MySqlTypeConvert() {

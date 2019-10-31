@@ -1,7 +1,5 @@
 package com.dmd.admin.service.impl;
 
-import com.dmd.admin.dao.OmsOrderDao;
-import com.dmd.admin.dao.OmsOrderOperateHistoryDao;
 import com.dmd.admin.mapper.OmsOrderMapper;
 import com.dmd.admin.mapper.OmsOrderOperateHistoryMapper;
 import com.dmd.admin.model.domain.OmsOrder;
@@ -26,22 +24,18 @@ public class OmsOrderServiceImpl implements OmsOrderService {
     @Autowired
     private OmsOrderMapper orderMapper;
     @Autowired
-    private OmsOrderDao orderDao;
-    @Autowired
-    private OmsOrderOperateHistoryDao orderOperateHistoryDao;
-    @Autowired
     private OmsOrderOperateHistoryMapper orderOperateHistoryMapper;
 
     @Override
     public List<OmsOrder> list(OmsOrderQueryParam queryParam, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum, pageSize);
-        return orderDao.getList(queryParam);
+        return orderMapper.getList(queryParam);
     }
 
     @Override
     public int delivery(List<OmsOrderDeliveryParam> deliveryParamList) {
         //批量发货
-        int count = orderDao.delivery(deliveryParamList);
+        int count = orderMapper.delivery(deliveryParamList);
         //添加操作记录
         List<OmsOrderOperateHistory> operateHistoryList = deliveryParamList.stream()
                 .map(omsOrderDeliveryParam -> {
@@ -53,7 +47,7 @@ public class OmsOrderServiceImpl implements OmsOrderService {
                     history.setNote("完成发货");
                     return history;
                 }).collect(Collectors.toList());
-        orderOperateHistoryDao.insertList(operateHistoryList);
+        orderOperateHistoryMapper.insertList(operateHistoryList);
         return count;
     }
 
@@ -73,7 +67,7 @@ public class OmsOrderServiceImpl implements OmsOrderService {
             history.setNote("订单关闭:"+note);
             return history;
         }).collect(Collectors.toList());
-        orderOperateHistoryDao.insertList(historyList);
+        orderOperateHistoryMapper.insertList(historyList);
         return count;
     }
 
@@ -88,7 +82,7 @@ public class OmsOrderServiceImpl implements OmsOrderService {
 
     @Override
     public OmsOrderDetail detail(Long id) {
-        return orderDao.getDetail(id);
+        return orderMapper.getDetail(id);
     }
 
     @Override

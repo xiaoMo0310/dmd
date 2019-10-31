@@ -2,7 +2,7 @@ package com.dmd.mall.web.ums;
 
 
 import com.dmd.core.support.BaseController;
-import com.dmd.mall.model.domain.UmsNotice;
+import com.dmd.mall.model.vo.UmsNoticeVo;
 import com.dmd.mall.service.UmsNoticeService;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -38,8 +39,8 @@ public class UmsNoticeController extends BaseController {
     @ApiOperation(httpMethod = "GET", value = "查询当前登录人的通知信息")
     @ApiImplicitParam(name ="userType", value = "用户类型(1:普通用户 2:教练)", paramType = "path", dataType = "int")
     public Wrapper findLoginUserMessage(@PathVariable Integer userType) {
-        List<UmsNotice> list = umsNoticeService.findLoginUserMessage(getLoginAuthDto(), userType);
-        return WrapMapper.ok(list);
+        Map<Integer, List<UmsNoticeVo>> map = umsNoticeService.findLoginUserMessage(getLoginAuthDto(), userType);
+        return WrapMapper.ok(map);
     }
 
 }
