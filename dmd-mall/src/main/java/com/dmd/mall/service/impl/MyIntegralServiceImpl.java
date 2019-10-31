@@ -4,6 +4,7 @@ import com.dmd.mall.mapper.UmsIntegrationChangeLogMapper;
 import com.dmd.mall.mapper.UmsMemberMapper;
 import com.dmd.mall.model.domain.UmsIntegrationChangeLog;
 import com.dmd.mall.service.MyIntegralService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,14 +33,16 @@ public class MyIntegralServiceImpl implements MyIntegralService{
     }
 
     @Override
-    public List<UmsIntegrationChangeLog> selectIntegralIncome(Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog) {
+    public List<UmsIntegrationChangeLog> selectIntegralIncome(Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog,Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         Date startTime = umsIntegrationChangeLog.getStartTime();
         Date endTime = umsIntegrationChangeLog.getEndTime();
         return umsIntegrationChangeLogMapper.selectIntegralIncome(userId,startTime,endTime);
     }
 
     @Override
-    public List<UmsIntegrationChangeLog> selectIntegralExpend(Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog) {
+    public List<UmsIntegrationChangeLog> selectIntegralExpend(Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog,Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         Date startTime = umsIntegrationChangeLog.getStartTime();
         Date endTime = umsIntegrationChangeLog.getEndTime();
         return umsIntegrationChangeLogMapper.selectIntegralExpend(userId,startTime,endTime);

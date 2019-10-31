@@ -81,13 +81,15 @@ public class TopicController {
      * @param 话题id
      * @return
      */
-    @ApiOperation("话题下最新动态查询")
+    @ApiOperation("话题下最新动态分页查询")
     @RequestMapping(value = "/selectTopicByDynamicTime",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DynamicBean>> queryTopicByDynamicTime( //话题ID
+    public CommonResult<List<DynamicBean>> queryTopicByDynamicTime( @RequestParam Integer pageNum,
+                                                                    @RequestParam Integer pageSize,
+                                                                    //话题ID
                                                                     @RequestParam Integer id
     ){
-        List<DynamicBean> dynamicList = dynamicService.queryTopicByDynamicTime(id);
+        List<DynamicBean> dynamicList = dynamicService.queryTopicByDynamicTime(id,pageNum,pageSize);
         return CommonResult.success(dynamicList);
     }
 
@@ -96,13 +98,15 @@ public class TopicController {
      * @param 话题id
      * @return
      */
-    @ApiOperation("话题下最热动态查询")
+    @ApiOperation("话题下最热动态分页查询")
     @RequestMapping(value = "/selectTopicByDynamicHeat",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DynamicBean>> selectTopicByDynamicHeat( //话题ID
+    public CommonResult<List<DynamicBean>> selectTopicByDynamicHeat(@RequestParam Integer pageNum,
+                                                                    @RequestParam Integer pageSize,
+                                                                    //话题ID
                                                                     @RequestParam Integer id
     ){
-        List<DynamicBean> dynamicList = dynamicService.selectTopicByDynamicHeat(id);
+        List<DynamicBean> dynamicList = dynamicService.selectTopicByDynamicHeat(id,pageNum,pageSize);
         return CommonResult.success(dynamicList);
     }
 

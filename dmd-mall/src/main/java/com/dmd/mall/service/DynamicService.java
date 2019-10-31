@@ -30,9 +30,9 @@ public interface DynamicService {
 
     int updateDynamicDelflag(Long id);
 
-    List<DynamicBean> queryTopicByDynamicTime(Integer id);
+    List<DynamicBean> queryTopicByDynamicTime(Integer id,Integer pageNum,Integer pageSize);
 
-    List<DynamicBean> selectTopicByDynamicHeat(Integer id);
+    List<DynamicBean> selectTopicByDynamicHeat(Integer id,Integer pageNum,Integer pageSize);
 
     List<DynamicBean> queryDynamicById(Long id);
 

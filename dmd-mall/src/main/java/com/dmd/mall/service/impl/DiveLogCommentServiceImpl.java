@@ -5,6 +5,7 @@ import com.dmd.mall.mapper.DiveLogCommentMapper;
 import com.dmd.mall.mapper.DiveLogMapper;
 import com.dmd.mall.model.domain.CommentBean;
 import com.dmd.mall.service.DiveLogCommentService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,8 @@ public class DiveLogCommentServiceImpl implements DiveLogCommentService{
     private DiveLogMapper diveLogMapper;
 
     @Override
-    public List<CommentBean> queryCommentAll(Long forDiveLogId) {
+    public List<CommentBean> queryCommentAll(Long forDiveLogId,Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         Integer id = 0;
         List<CommentBean> node = getNode(Long.valueOf(id),forDiveLogId);
         return node;

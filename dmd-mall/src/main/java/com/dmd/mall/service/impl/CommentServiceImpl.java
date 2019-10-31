@@ -5,6 +5,7 @@ import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DynamicMapper;
 import com.dmd.mall.model.domain.CommentBean;
 import com.dmd.mall.service.CommentService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,8 @@ public class CommentServiceImpl implements CommentService{
     private DynamicMapper dynamicMapper;
 
     @Override
-    public List<CommentBean> queryCommentAll(Long forDynamicId) {
+    public List<CommentBean> queryCommentAll(Long forDynamicId,Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         /*ArrayList list = new ArrayList();
         //根节点id为评论id,根据文章id查询评论id
         List<Long> idList = commentMapper.queryCommentById(forDynamicId);

@@ -34,10 +34,12 @@ public class DiveLogController {
      * @param userId
      * @return
      */
-    @ApiOperation("查询我的日志")
+    @ApiOperation("分页查询我的日志")
     @RequestMapping(value = "/selectDiveLogAll",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DiveLogBean>> queryDiveLogAll(@RequestParam Long userId
+    public CommonResult<List<DiveLogBean>> queryDiveLogAll(@RequestParam Integer pageNum,
+                                                           @RequestParam Integer pageSize,
+                                                           @RequestParam Long userId
                                                            //token获取
                                                            //HttpServletRequest request
        //获取用户id
@@ -48,7 +50,7 @@ public class DiveLogController {
        //Long userId = result.getUserId();
 
     ) {
-        List<DiveLogBean> diveLogAllList = diveLogService.queryDiveLogAll(userId);
+        List<DiveLogBean> diveLogAllList = diveLogService.queryDiveLogAll(userId,pageNum,pageSize);
         return CommonResult.success(diveLogAllList);
     }
 

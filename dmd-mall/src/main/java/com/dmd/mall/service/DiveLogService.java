@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2019/10/1113:49
  */
 public interface DiveLogService {
-    List<DiveLogBean> queryDiveLogAll(Long userId);
+    List<DiveLogBean> queryDiveLogAll(Long userId,Integer pageNum,Integer pageSize);
 
     List<DiveLogBean> queryDiveLogById(Long id);
 

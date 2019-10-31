@@ -31,14 +31,16 @@ public class DiveLogCommentController {
      * @param forDiveLogId
      * @return
      */
-    @ApiOperation("查询全部我的日志下评论")
+    @ApiOperation("分页查询全部我的日志下评论")
     @RequestMapping(value = "/selectDiveLogCommentAll",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<CommentBean>> queryDiveLogCommentAll(
+            @RequestParam Integer pageNum,
+            @RequestParam Integer pageSize,
             //日志ID
             @RequestParam Long forDiveLogId
     ) {
-        List<CommentBean> CommentList = diveLogCommentService.queryCommentAll(forDiveLogId);
+        List<CommentBean> CommentList = diveLogCommentService.queryCommentAll(forDiveLogId,pageNum,pageSize);
         return CommonResult.success(CommentList);
     }
 

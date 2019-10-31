@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface DiveLogCommentService {
 
-    List<CommentBean> queryCommentAll(Long forDiveLogId);
+    List<CommentBean> queryCommentAll(Long forDiveLogId,Integer pageNum,Integer pageSize);
 
     int addComment(CommentBean commentBean);
 

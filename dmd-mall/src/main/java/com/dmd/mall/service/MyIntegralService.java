@@ -14,9 +14,9 @@ import java.util.List;
 public interface MyIntegralService {
     Integer queryMyIntegral(Long userId);
 
-    List<UmsIntegrationChangeLog> selectIntegralIncome(Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog);
+    List<UmsIntegrationChangeLog> selectIntegralIncome(Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog,Integer pageNum,Integer pageSize);
 
-    List<UmsIntegrationChangeLog> selectIntegralExpend(Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog);
+    List<UmsIntegrationChangeLog> selectIntegralExpend(Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog,Integer pageNum,Integer pageSize);
 
     Integer selectIntegralIncomeSum(Long userId);
 

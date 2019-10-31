@@ -46,15 +46,17 @@ public class MyIntegralController {
     }
 
     /**
-     * 我的积分收入查询
+     * 我的积分收入分页查询
      * @param userId
      * @return
      */
-    @ApiOperation("我的积分收入查询")
+    @ApiOperation("我的积分收入分页查询")
     @RequestMapping(value = "/selectIntegralIncome",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<UmsIntegrationChangeLog>> selectIntegralIncome(@RequestParam Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog ) {
-        List<UmsIntegrationChangeLog> integration = myIntegralService.selectIntegralIncome(userId,umsIntegrationChangeLog);
+    public CommonResult<List<UmsIntegrationChangeLog>> selectIntegralIncome(@RequestParam Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog,
+                                                                            @RequestParam Integer pageNum,
+                                                                            @RequestParam Integer pageSize) {
+        List<UmsIntegrationChangeLog> integration = myIntegralService.selectIntegralIncome(userId,umsIntegrationChangeLog,pageNum,pageSize);
         return CommonResult.success(integration);
     }
 
@@ -63,11 +65,13 @@ public class MyIntegralController {
      * @param userId
      * @return
      */
-    @ApiOperation("我的积分支出查询")
+    @ApiOperation("我的积分支出分页查询")
     @RequestMapping(value = "/selectIntegralExpend",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<UmsIntegrationChangeLog>> selectIntegralExpend(@RequestParam Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog ) {
-        List<UmsIntegrationChangeLog> integration = myIntegralService.selectIntegralExpend(userId,umsIntegrationChangeLog);
+    public CommonResult<List<UmsIntegrationChangeLog>> selectIntegralExpend(@RequestParam Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog,
+                                                                            @RequestParam Integer pageNum,
+                                                                            @RequestParam Integer pageSize) {
+        List<UmsIntegrationChangeLog> integration = myIntegralService.selectIntegralExpend(userId,umsIntegrationChangeLog,pageNum,pageSize);
         return CommonResult.success(integration);
     }
 

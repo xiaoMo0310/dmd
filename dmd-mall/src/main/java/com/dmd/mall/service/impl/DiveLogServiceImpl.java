@@ -7,6 +7,7 @@ import com.dmd.mall.model.domain.DiveLogAirbottleBean;
 import com.dmd.mall.model.domain.DiveLogAndAirbottle;
 import com.dmd.mall.model.domain.DiveLogBean;
 import com.dmd.mall.service.DiveLogService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,8 @@ public class DiveLogServiceImpl implements DiveLogService{
     private DiveLogCommentMapper diveLogCommentMapper;
 
     @Override
-    public List<DiveLogBean> queryDiveLogAll(Long userId) {
+    public List<DiveLogBean> queryDiveLogAll(Long userId,Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         return diveLogMapper.queryDiveLogAll(userId);
     }
 
