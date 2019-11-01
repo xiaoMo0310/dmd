@@ -34,9 +34,8 @@ public class PmsCourseProductController extends BaseController {
     @Autowired
     private PmsCourseProductService pmsCourseProductService;
 
-
     @PostMapping("/courseProduct/save")
-    @ApiOperation(httpMethod = "POST", value = "编辑课程产品的信息")
+    @ApiOperation(httpMethod = "POST", value = "编辑课程产品和潜水产品的信息")
     @ApiImplicitParam(name ="courseProduct", value = "课程产品的信息,修改需要提供id", dataType = "PmsCourseProduct")
     public Wrapper saveAttentionMessage(@RequestBody PmsCourseProduct courseProduct) {
         logger.info("saveAttentionMessage - 编辑课程产品的信息. courseProduct={}", courseProduct);
@@ -44,18 +43,16 @@ public class PmsCourseProductController extends BaseController {
         return handleResult(result);
     }
 
-
     @PostMapping("/courseProduct/findPage")
     @ApiOperation(httpMethod = "POST", value = "分页查询所有课程产品的列表信息")
     @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery")
     public Wrapper findAttentionMessage(@RequestBody BaseQuery baseQuery) {
-        List<PageInfo> list = pmsCourseProductService.findcourseProduct(baseQuery, getLoginAuthDto());
+        List<PageInfo> list = pmsCourseProductService.findCourseProduct(baseQuery, getLoginAuthDto());
         return WrapMapper.ok(list);
     }
 
-
     @GetMapping("/courseProduct/{id}")
-    @ApiOperation(httpMethod = "GET", value = "分页查询所有课程产品的列表信息")
+    @ApiOperation(httpMethod = "GET", value = "查看商品的详细信息")
     @ApiImplicitParam(name ="id", value = "主键id", dataType = "long")
     public Wrapper findAttentionMessage(@PathVariable Long id) {
         PmsCourseProductVo courseProductVo = pmsCourseProductService.findcourseProductById(getLoginAuthDto(), id);

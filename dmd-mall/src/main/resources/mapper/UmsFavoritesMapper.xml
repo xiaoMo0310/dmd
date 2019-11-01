@@ -13,6 +13,7 @@
     <result column="last_operator_id" property="lastOperatorId" />
     <result column="update_time" property="updateTime" />
         <result column="user_id" property="userId" />
+        <result column="user_type" property="userType" />
         <result column="favorite_type" property="favoriteType" />
         <result column="target_id" property="targetId" />
     </resultMap>
@@ -27,7 +28,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        user_id, favorite_type, target_id,status
+        user_id, favorite_type, target_id,status, user_type
     </sql>
 
 </mapper>

@@ -44,9 +44,6 @@
         <if test="userType != null">
             and user_type = #{userType}
         </if>
-        <if test="userType != null">
-            and user_type = #{userType}
-        </if>
         <if test="title != null">
             and title like '%${title}%'
         </if>

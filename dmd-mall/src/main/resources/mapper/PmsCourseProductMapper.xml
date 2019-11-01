@@ -5,24 +5,32 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.PmsCourseProduct">
     <result column="id" property="id" />
-    <result column="version" property="version" />
     <result column="creator" property="creator" />
     <result column="creator_id" property="creatorId" />
     <result column="created_time" property="createdTime" />
     <result column="last_operator" property="lastOperator" />
     <result column="last_operator_id" property="lastOperatorId" />
     <result column="update_time" property="updateTime" />
+        <result column="product_name" property="productName" />
+        <result column="user_id" property="userId" />
         <result column="shop_id" property="shopId" />
         <result column="shop_name" property="shopName" />
-        <result column="mobile" property="mobile" />
-        <result column="name" property="name" />
-        <result column="image" property="image" />
+        <result column="title" property="title" />
         <result column="price" property="price" />
         <result column="product_type" property="productType" />
-        <result column="product_type_name" property="productTypeName" />
-        <result column="product_description" property="productDescription" />
-        <result column="content_arrangement" property="contentArrangement" />
+        <result column="location" property="location" />
+        <result column="length_play" property="lengthPlay" />
+        <result column="is_time_limit" property="isTimeLimit" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="number_is_limit" property="numberIsLimit" />
+        <result column="number_limit" property="numberLimit" />
+        <result column="cost_includes" property="costIncludes" />
+        <result column="cost_not_includes" property="costNotIncludes" />
         <result column="purchase_notes" property="purchaseNotes" />
+        <result column="product_description" property="productDescription" />
+        <result column="image" property="image" />
+        <result column="content_arrangement" property="contentArrangement" />
         <result column="status" property="status" />
         <result column="approval_status" property="approvalStatus" />
         <result column="sales" property="sales" />
@@ -32,14 +40,13 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,
-        version,
         creator,
         creator_id,
         created_time,
         last_operator,
         last_operator_id,
         update_time,
-        shop_id, shop_name, mobile, name, image, price, product_type, product_type_name, product_description, content_arrangement, purchase_notes, status, approval_status, sales, sort
+        product_name, user_id, shop_id, shop_name, title, price, product_type, location, length_play, is_time_limit, start_time, end_time, number_is_limit, number_limit, cost_includes, cost_not_includes, purchase_notes, product_description, image, content_arrangement, status, approval_status, sales, sort
     </sql>
 
 </mapper>

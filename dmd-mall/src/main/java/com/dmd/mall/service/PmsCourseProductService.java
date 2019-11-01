@@ -32,7 +32,7 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
      * @param loginAuthDto
      * @return
      */
-    List<PageInfo> findcourseProduct(BaseQuery baseQuery, LoginAuthDto loginAuthDto);
+    List<PageInfo> findCourseProduct(BaseQuery baseQuery, LoginAuthDto loginAuthDto);
 
     /**
      *根据id查询详细的信息

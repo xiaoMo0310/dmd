@@ -49,7 +49,7 @@ public class UmsFavoritesController extends BaseController {
     @PostMapping("/attention/check/{targetId}/{favoriteType}")
     @ApiOperation(httpMethod = "POST", value = "判断用户时候关注用户 商品 商铺")
     @ApiImplicitParams({@ApiImplicitParam(name ="targetId", value = "目标对象id", dataType = "Long", paramType = "path"),
-                        @ApiImplicitParam(name ="favoriteType", value = "关注类型(0:用户 1:商品 2:店铺)", dataType = "int", paramType = "path")})
+                        @ApiImplicitParam(name ="favoriteType", value = "关注类型(1:普通用户 2:教练用户 3:普通商品 4:课程或潜水商品 5:商铺)", dataType = "int", paramType = "path")})
     public Wrapper<Boolean> checkAttention(@PathVariable Long targetId, @PathVariable Integer favoriteType) {
         Long userId = getLoginAuthDto().getUserId();
         logger.info("checkAttention - 判断用户时候关注用户 商品 商铺. userId={}, targetId={}", userId, targetId);

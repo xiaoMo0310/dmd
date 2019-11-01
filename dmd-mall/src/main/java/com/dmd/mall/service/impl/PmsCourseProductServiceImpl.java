@@ -52,11 +52,12 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     }
 
     @Override
-    public List<PageInfo> findcourseProduct(BaseQuery baseQuery, LoginAuthDto loginAuthDto) {
+    public List<PageInfo> findCourseProduct(BaseQuery baseQuery, LoginAuthDto loginAuthDto) {
+        //todo 教练表没有待做
         List<PmsDictVo> courseTypes = pmsDictService.findAllProcessingType("course_type");
         return courseTypes.stream().map(courseType -> {
             //根据类型id查询过商品的信息
-            PageInfo<PmsCourseListVo> courseProductByType = findCourseProductByType(baseQuery.getPageNum(), baseQuery.getPageSize(), courseType.getDictKey());
+            PageInfo<PmsCourseListVo> courseProductByType = findCourseProductByType(baseQuery.getPageNum(), baseQuery.getPageSize(), 1);
             return courseProductByType;
         }).collect(Collectors.toList());
     }
@@ -69,7 +70,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         return courseProductVo;
     }
 
-    public PageInfo<PmsCourseListVo> findCourseProductByType(Integer pageNum, Integer pageSize, String type){
+    public PageInfo<PmsCourseListVo> findCourseProductByType(Integer pageNum, Integer pageSize, Integer type){
         PmsCourseProduct pmsCourseProduct = new PmsCourseProduct();
         pmsCourseProduct.setProductType(type);
         pmsCourseProduct.setStatus(1);

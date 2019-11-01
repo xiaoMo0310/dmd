@@ -16,14 +16,19 @@ public class PmsCourseListVo implements Serializable {
 
     private static final long serialVersionUID = 2831200859177969124L;
     /**
-     * 课程产品id
+     * 产品id
      */
     private Long id;
 
     /**
      * 产品名称
      */
-    private String name;
+    private String productName;
+
+    /**
+     * 标题
+     */
+    private String title;
 
     /**
      * 产品图片(多个使用 , 隔开)
@@ -36,13 +41,17 @@ public class PmsCourseListVo implements Serializable {
     private BigDecimal price;
 
     /**
-     * 分类id
+     * 教练名称
      */
-    private Long productCategoryId;
+    private String CoachName;
 
     /**
-     * 产品类型名称
+     * 教练id
      */
-    private String productCategoryName;
+    private Long CoachId;
 
+    /**
+     * 教练等级
+     */
+    private String CoachGrade;
 }
