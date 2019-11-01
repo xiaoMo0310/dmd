@@ -22,7 +22,7 @@ public class UmsAdminParam {
     @ApiModelProperty(value = "用户头像")
     private String icon;
     @ApiModelProperty(value = "邮箱")
-    @Email(message = "邮箱格式不合法")
+//    @Email(message = "邮箱格式不合法")
     private String email;
     @ApiModelProperty(value = "用户昵称")
     private String nickName;

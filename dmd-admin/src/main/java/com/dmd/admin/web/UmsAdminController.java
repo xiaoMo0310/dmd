@@ -104,6 +104,11 @@ public class UmsAdminController {
                                                    @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                    @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<UmsAdmin> adminList = adminService.list(name, pageSize, pageNum);
+        for (int i=0;i<adminList.size();i++) {
+            if (adminList.get(i).getUsername().equals("admin")){
+                adminList.remove(i);
+            }
+        }
         return CommonResult.success(CommonPage.restPage(adminList));
     }
 

@@ -6,7 +6,7 @@
     <groupId>com.dmd.mall</groupId>
     <artifactId>dmd-mall</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>dmd-mall</name>
     <description>Demo project for Spring Boot</description>
@@ -97,42 +97,82 @@
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <!-- war包部署移除嵌入式tomcat插件 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- war包部署添加servlet依赖 -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>7.0.37</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-websocket</artifactId>
+            <version>9.0.19</version>
+        </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <warName>DmdMall</warName>
+                </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>com.spotify</groupId>-->
-                <!--<artifactId>docker-maven-plugin</artifactId>-->
-                <!--<version>1.1.0</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>build-image</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>build</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<imageName>mall/${project.artifactId}:${project.version}</imageName>-->
-                    <!--<dockerHost>http://192.168.3.101:2375</dockerHost>-->
-                    <!--<baseImage>java:8</baseImage>-->
-                    <!--<entryPoint>["java", "-jar","-Dspring.profiles.active=prod","/${project.build.finalName}.jar"]</entryPoint>-->
-                    <!--<resources>-->
-                        <!--<resource>-->
-                            <!--<targetPath>/</targetPath>-->
-                            <!--<directory>${project.build.directory}</directory>-->
-                            <!--<include>${project.build.finalName}.jar</include>-->
-                        <!--</resource>-->
-                    <!--</resources>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash;<plugin>&ndash;&gt;-->
+<!--                &lt;!&ndash;<groupId>com.spotify</groupId>&ndash;&gt;-->
+<!--                &lt;!&ndash;<artifactId>docker-maven-plugin</artifactId>&ndash;&gt;-->
+<!--                &lt;!&ndash;<version>1.1.0</version>&ndash;&gt;-->
+<!--                &lt;!&ndash;<executions>&ndash;&gt;-->
+<!--                    &lt;!&ndash;<execution>&ndash;&gt;-->
+<!--                        &lt;!&ndash;<id>build-image</id>&ndash;&gt;-->
+<!--                        &lt;!&ndash;<phase>package</phase>&ndash;&gt;-->
+<!--                        &lt;!&ndash;<goals>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<goal>build</goal>&ndash;&gt;-->
+<!--                        &lt;!&ndash;</goals>&ndash;&gt;-->
+<!--                    &lt;!&ndash;</execution>&ndash;&gt;-->
+<!--                &lt;!&ndash;</executions>&ndash;&gt;-->
+<!--                &lt;!&ndash;<configuration>&ndash;&gt;-->
+<!--                    &lt;!&ndash;<imageName>mall/${project.artifactId}:${project.version}</imageName>&ndash;&gt;-->
+<!--                    &lt;!&ndash;<dockerHost>http://192.168.3.101:2375</dockerHost>&ndash;&gt;-->
+<!--                    &lt;!&ndash;<baseImage>java:8</baseImage>&ndash;&gt;-->
+<!--                    &lt;!&ndash;<entryPoint>["java", "-jar","-Dspring.profiles.active=prod","/${project.build.finalName}.jar"]</entryPoint>&ndash;&gt;-->
+<!--                    &lt;!&ndash;<resources>&ndash;&gt;-->
+<!--                        &lt;!&ndash;<resource>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<targetPath>/</targetPath>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<directory>${project.build.directory}</directory>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<include>${project.build.finalName}.jar</include>&ndash;&gt;-->
+<!--                        &lt;!&ndash;</resource>&ndash;&gt;-->
+<!--                    &lt;!&ndash;</resources>&ndash;&gt;-->
+<!--                &lt;!&ndash;</configuration>&ndash;&gt;-->
+<!--            &lt;!&ndash;</plugin>&ndash;&gt;-->
+<!--        </plugins>-->
 
     </build>
 

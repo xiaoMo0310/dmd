@@ -49,6 +49,7 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
                 .permitAll()
                 .antMatchers(
+                        "/**",
                         "/sso/*"//登录注册
                         ,"/*.html"
                         ,"/**/*.html"
