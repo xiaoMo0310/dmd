@@ -5,6 +5,7 @@ import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.UmsIntegrationChangeLog;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.service.MyIntegralService;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,11 +54,11 @@ public class MyIntegralController {
     @ApiOperation("我的积分收入分页查询")
     @RequestMapping(value = "/selectIntegralIncome",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<UmsIntegrationChangeLog>> selectIntegralIncome(@RequestParam Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog,
+    public CommonResult<PageInfo<UmsIntegrationChangeLog>> selectIntegralIncome(@RequestParam Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog,
                                                                             @RequestParam Integer pageNum,
                                                                             @RequestParam Integer pageSize) {
         List<UmsIntegrationChangeLog> integration = myIntegralService.selectIntegralIncome(userId,umsIntegrationChangeLog,pageNum,pageSize);
-        return CommonResult.success(integration);
+        return CommonResult.success(new PageInfo<>(integration));
     }
 
     /**
@@ -68,11 +69,11 @@ public class MyIntegralController {
     @ApiOperation("我的积分支出分页查询")
     @RequestMapping(value = "/selectIntegralExpend",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<UmsIntegrationChangeLog>> selectIntegralExpend(@RequestParam Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog,
+    public CommonResult<PageInfo<UmsIntegrationChangeLog>> selectIntegralExpend(@RequestParam Long userId,UmsIntegrationChangeLog umsIntegrationChangeLog,
                                                                             @RequestParam Integer pageNum,
                                                                             @RequestParam Integer pageSize) {
         List<UmsIntegrationChangeLog> integration = myIntegralService.selectIntegralExpend(userId,umsIntegrationChangeLog,pageNum,pageSize);
-        return CommonResult.success(integration);
+        return CommonResult.success(new PageInfo<>(integration));
     }
 
     /**

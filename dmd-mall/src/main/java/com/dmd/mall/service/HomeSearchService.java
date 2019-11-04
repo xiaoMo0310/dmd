@@ -15,11 +15,11 @@ import java.util.List;
  * @date 2019/10/1818:17
  */
 public interface HomeSearchService {
-    List<DynamicBean> queryDynamic(Long userId, String content, Integer searchType);
+    List<DynamicBean> queryDynamic(Long userId, String content, Integer searchType,Integer pageNum,Integer pageSize);
 
-    List<PmsProduct> queryPmsProduct(Long userId, String content, Integer searchType);
+    List<PmsProduct> queryPmsProduct(Long userId, String content, Integer searchType,Integer pageNum,Integer pageSize);
 
-    List<TopicBean> queryTopic(Long userId, String content, Integer searchType);
+    List<TopicBean> queryTopic(Long userId, String content, Integer searchType,Integer pageNum,Integer pageSize);
 
     List<HomeSearchRecordBean> queryHistory(Long userId);
 

@@ -4,6 +4,7 @@ import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.CommentBean;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.service.CommentService;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +36,13 @@ public class CommentController {
     @ApiOperation("分页查询全部我的动态下评论")
     @RequestMapping(value = "/selectCommentAll",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<CommentBean>> queryCommentAll( @RequestParam Integer pageNum,
-                                                            @RequestParam Integer pageSize,
-                                                            //动态ID
-                                                            @RequestParam Long forDynamicId
+    public CommonResult<PageInfo<CommentBean>> queryCommentAll(@RequestParam Integer pageNum,
+                                                               @RequestParam Integer pageSize,
+                                                               //动态ID
+                                                               @RequestParam Long forDynamicId
     ) {
         List<CommentBean> CommentList = commentService.queryCommentAll(forDynamicId,pageNum,pageSize);
-        return CommonResult.success(CommentList);
+        return CommonResult.success(new PageInfo<>(CommentList));
     }
 
     @ApiOperation("新增我的动态评论/留言")

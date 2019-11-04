@@ -5,6 +5,7 @@ import com.dmd.mall.model.domain.DiveLogAirbottleBean;
 import com.dmd.mall.model.domain.DiveLogAndAirbottle;
 import com.dmd.mall.model.domain.DiveLogBean;
 import com.dmd.mall.service.DiveLogService;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class DiveLogController {
     @ApiOperation("分页查询我的日志")
     @RequestMapping(value = "/selectDiveLogAll",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DiveLogBean>> queryDiveLogAll(@RequestParam Integer pageNum,
+    public CommonResult<PageInfo<DiveLogBean>> queryDiveLogAll(@RequestParam Integer pageNum,
                                                            @RequestParam Integer pageSize,
                                                            @RequestParam Long userId
                                                            //token获取
@@ -51,7 +52,7 @@ public class DiveLogController {
 
     ) {
         List<DiveLogBean> diveLogAllList = diveLogService.queryDiveLogAll(userId,pageNum,pageSize);
-        return CommonResult.success(diveLogAllList);
+        return CommonResult.success(new PageInfo<>(diveLogAllList));
     }
 
 

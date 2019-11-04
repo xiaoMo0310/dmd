@@ -9,6 +9,7 @@ import com.dmd.mall.model.domain.HomeSearchRecordBean;
 import com.dmd.mall.model.domain.PmsProduct;
 import com.dmd.mall.model.domain.TopicBean;
 import com.dmd.mall.service.HomeSearchService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,19 +38,22 @@ public class HomeSearchServiceImpl implements HomeSearchService{
     private TopicMapper topicMapper;
 
     @Override
-    public List<DynamicBean> queryDynamic(Long userId, String content, Integer searchType) {
+    public List<DynamicBean> queryDynamic(Long userId, String content, Integer searchType,Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         homeSearchMapper.addHomeSearchRecord(userId,content,searchType);
         return dynamicMapper.queryDynamicByContent(content);
     }
 
     @Override
-    public List<PmsProduct> queryPmsProduct(Long userId, String content, Integer searchType) {
+    public List<PmsProduct> queryPmsProduct(Long userId, String content, Integer searchType,Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         homeSearchMapper.addHomeSearchRecord(userId,content,searchType);
         return pmsProductMapper.queryPmsProductByContent(content);
     }
 
     @Override
-    public List<TopicBean> queryTopic(Long userId, String content, Integer searchType) {
+    public List<TopicBean> queryTopic(Long userId, String content, Integer searchType,Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         homeSearchMapper.addHomeSearchRecord(userId,content,searchType);
         return topicMapper.queryTopicByContent(content);
     }

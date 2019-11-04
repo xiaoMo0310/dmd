@@ -3,6 +3,7 @@ package com.dmd.mall.web.oms;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.CommentBean;
 import com.dmd.mall.service.DiveLogCommentService;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +35,14 @@ public class DiveLogCommentController {
     @ApiOperation("分页查询全部我的日志下评论")
     @RequestMapping(value = "/selectDiveLogCommentAll",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<CommentBean>> queryDiveLogCommentAll(
+    public CommonResult<PageInfo<CommentBean>> queryDiveLogCommentAll(
             @RequestParam Integer pageNum,
             @RequestParam Integer pageSize,
             //日志ID
             @RequestParam Long forDiveLogId
     ) {
         List<CommentBean> CommentList = diveLogCommentService.queryCommentAll(forDiveLogId,pageNum,pageSize);
-        return CommonResult.success(CommentList);
+        return CommonResult.success(new PageInfo<>(CommentList));
     }
 
 

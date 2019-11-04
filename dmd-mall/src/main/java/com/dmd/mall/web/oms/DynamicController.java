@@ -4,6 +4,7 @@ import com.dmd.annotation.NoNeedAccessAuthentication;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.service.DynamicService;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +50,11 @@ public class DynamicController {
     @ApiOperation("分页查询我的动态")
     @RequestMapping(value = "/selectDynamicPage",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DynamicBean>> queryDynamicPage(@RequestParam Long userId,
-                                                            @RequestParam Integer pageNum,
-                                                            @RequestParam Integer pageSize) {
+    public CommonResult<PageInfo<DynamicBean>> queryDynamicPage(@RequestParam Long userId,
+                                                                @RequestParam Integer pageNum,
+                                                                @RequestParam Integer pageSize) {
         List<DynamicBean> dynamicList = dynamicService.queryDynamicPage(userId,pageNum,pageSize);
-        return CommonResult.success(dynamicList);
+        return CommonResult.success(new PageInfo<>(dynamicList));
     }
 
     /**
@@ -211,21 +212,26 @@ public class DynamicController {
      * 首页--最新动态
      * @return
      */
-    @ApiOperation("首页--最新动态查询")
+    @ApiOperation("首页--最新动态分页查询")
     @RequestMapping(value = "/selectDynamicTime",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DynamicBean>> queryDynamicTime() {
-        List<DynamicBean> dynamicList = dynamicService.queryDynamicTime();
-        return CommonResult.success(dynamicList);
+    public CommonResult<PageInfo<DynamicBean>> queryDynamicTime(@RequestParam Integer pageNum,
+                                                            @RequestParam Integer pageSize) {
+        List<DynamicBean> dynamicList = dynamicService.queryDynamicTime(pageNum,pageSize);
+        return CommonResult.success(new PageInfo<>(dynamicList));
     }
 
     /**
      * 首页--最热动态
      * @return
      */
-    @ApiOperation("首页--最热动态查询")
+    @ApiOperation("首页--最热动态分页查询")
     @RequestMapping(value = "/selectDynamicHeat",method = RequestMethod.GET)
     @ResponseBody
+    public CommonResult<PageInfo<DynamicBean>> queryDynamicHeat(@RequestParam Integer pageNum,
+                                                            @RequestParam Integer pageSize) {
+        List<DynamicBean> dynamicList = dynamicService.queryDynamicHeat(pageNum,pageSize);
+        return CommonResult.success(new PageInfo<>(dynamicList));
     @NoNeedAccessAuthentication
     public CommonResult<List<DynamicBean>> queryDynamicHeat() {
         List<DynamicBean> dynamicList = dynamicService.queryDynamicHeat();
