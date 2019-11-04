@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.DiveCertificateMapper">
+
+    <!--通用查询映射结果-->
+    <resultMap id="diveCertificateMap" type="com.dmd.mall.model.domain.DiveCertificateBean">
+        <result column="id" property="id" />
+        <result column="userid" property="userId" />
+        <result column="owd" property="owd" />
+        <result column="aowd" property="aowd" />
+        <result column="efa" property="efa" />
+        <result column="rd" property="rd" />
+        <result column="sc" property="sc" />
+        <result column="msd" property="msd" />
+        <result column="dm" property="dm" />
+        <result column="owsi" property="owsi" />
+        <result column="msdt" property="msdt" />
+        <result column="idcsi" property="idcsi" />
+        <result column="mi" property="mi" />
+        <result column="cd" property="cd" />
+        <result column="createTime" property="createTime" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <select id="queryDiveCertificate" resultMap="diveCertificateMap" parameterType="java.lang.Long">
+        SELECT id,userid,owd,aowd,efa,rd,sc,msd,dm,owsi,msdt,idcsi,mi,cd,createTime,status FROM dmd_dive_certificate WHERE userid = #{userId} AND status = 1
+    </select>
+
+    <select id="queryUserId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+        select count(*) from dmd_dive_certificate where userid = #{userId} ;
+    </select>
+
+    <insert id="addDiveCertificate" parameterType="com.dmd.mall.model.domain.DiveCertificateBean">
+        INSERT INTO dmd_dive_certificate
+        (
+        userid,
+        owd,
+        aowd,
+        efa,
+        rd,
+        sc,
+        msd,
+        dm,
+        owsi,
+        msdt,
+        idcsi,
+        mi,
+        cd,
+        createTime,
+        status
+        )
+        VALUES (
+        #{userId,jdbcType=BIGINT},
+        #{owd,jdbcType=VARCHAR},
+        #{aowd,jdbcType=VARCHAR},
+        #{efa,jdbcType=VARCHAR},
+        #{rd,jdbcType=VARCHAR},
+        #{sc,jdbcType=VARCHAR},
+        #{msd,jdbcType=VARCHAR},
+        #{dm,jdbcType=VARCHAR},
+        #{owsi,jdbcType=VARCHAR},
+        #{msdt,jdbcType=VARCHAR},
+        #{idcsi,jdbcType=VARCHAR},
+        #{mi,jdbcType=VARCHAR},
+        #{cd,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{status,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <update id="updateDiveCertificate" parameterType="com.dmd.mall.model.domain.DiveCertificateBean">
+        UPDATE dmd_dive_certificate SET
+        owd = #{owd},
+        aowd = #{aowd},
+        efa = #{efa},
+        rd = #{rd},
+        sc = #{sc},
+        msd = #{msd},
+        dm = #{dm},
+        owsi = #{owsi},
+        msdt = #{msdt},
+        idcsi = #{idcsi},
+        mi = #{mi},
+        cd = #{cd},
+        createTime = #{createTime},
+        status = #{status}
+        WHERE userid = #{userId}
+    </update>
+</mapper>

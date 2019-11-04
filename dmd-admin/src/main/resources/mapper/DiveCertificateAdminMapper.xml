@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.admin.mapper.DiveCertificateAdminMapper">
+
+    <!--通用查询映射结果-->
+    <resultMap id="diveCertificateMap" type="com.dmd.admin.model.domain.DiveCertificateBean">
+        <result column="id" property="id" />
+        <result column="userid" property="userId" />
+        <result column="owd" property="owd" />
+        <result column="aowd" property="aowd" />
+        <result column="efa" property="efa" />
+        <result column="rd" property="rd" />
+        <result column="sc" property="sc" />
+        <result column="msd" property="msd" />
+        <result column="dm" property="dm" />
+        <result column="owsi" property="owsi" />
+        <result column="msdt" property="msdt" />
+        <result column="idcsi" property="idcsi" />
+        <result column="mi" property="mi" />
+        <result column="cd" property="cd" />
+        <result column="createTime" property="createTime" />
+        <result column="operator" property="operator" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <select id="queryDiveCertificate" resultMap="diveCertificateMap" parameterType="java.lang.Long">
+        SELECT id,userid,owd,aowd,efa,rd,sc,msd,dm,owsi,msdt,idcsi,mi,cd,createTime,status,operator
+        FROM dmd_dive_certificate
+        <include refid="diveCertificateWhere"></include>
+    </select>
+    <!-- 公用标签 -->
+    <sql id="diveCertificateWhere">
+        <where>
+            <!-- 日期区间查询 -->
+            <if test="stratTime != null">
+                and createTime &gt;= #{stratTime}
+            </if>
+            <if test="endTime != null">
+                and createTime &lt;= #{endTime}
+            </if>
+            <!-- 按照用户id查找 -->
+            <if test="userId !=null">
+                and userid = #{userId}
+            </if>
+            <!-- 按照状态查找 -->
+            <if test="status !=null">
+                and status = #{status}
+            </if>
+        </where>
+    </sql>
+
+    <update id="updateDiveCertificateStatus" parameterType="java.lang.Long" >
+        UPDATE dmd_dive_certificate SET status = 1 WHERE id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateDiveCertificateStatusNoPass" parameterType="java.lang.Long" >
+        UPDATE dmd_dive_certificate SET status = 2 WHERE id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
