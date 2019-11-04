@@ -5,6 +5,7 @@ import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.TopicBean;
 import com.dmd.mall.service.DynamicService;
 import com.dmd.mall.service.TopicService;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,9 @@ public class TopicController {
     @ApiOperation("分页查询话题分类,按照热度(话题下动态数量)排序")
     @RequestMapping(value = "/selectTopicPage",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<TopicBean>> queryTopicPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+    public CommonResult<PageInfo<TopicBean>> queryTopicPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
         List<TopicBean> topicList = topicService.queryTopicPage(pageNum,pageSize);
-        return CommonResult.success(topicList);
+        return CommonResult.success(new PageInfo<>(topicList));
     }
 
     /**
@@ -84,13 +85,13 @@ public class TopicController {
     @ApiOperation("话题下最新动态分页查询")
     @RequestMapping(value = "/selectTopicByDynamicTime",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DynamicBean>> queryTopicByDynamicTime( @RequestParam Integer pageNum,
+    public CommonResult<PageInfo<DynamicBean>> queryTopicByDynamicTime( @RequestParam Integer pageNum,
                                                                     @RequestParam Integer pageSize,
                                                                     //话题ID
                                                                     @RequestParam Integer id
     ){
         List<DynamicBean> dynamicList = dynamicService.queryTopicByDynamicTime(id,pageNum,pageSize);
-        return CommonResult.success(dynamicList);
+        return CommonResult.success(new PageInfo<>(dynamicList));
     }
 
     /**
@@ -101,13 +102,13 @@ public class TopicController {
     @ApiOperation("话题下最热动态分页查询")
     @RequestMapping(value = "/selectTopicByDynamicHeat",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DynamicBean>> selectTopicByDynamicHeat(@RequestParam Integer pageNum,
+    public CommonResult<PageInfo<DynamicBean>> selectTopicByDynamicHeat(@RequestParam Integer pageNum,
                                                                     @RequestParam Integer pageSize,
                                                                     //话题ID
                                                                     @RequestParam Integer id
     ){
         List<DynamicBean> dynamicList = dynamicService.selectTopicByDynamicHeat(id,pageNum,pageSize);
-        return CommonResult.success(dynamicList);
+        return CommonResult.success(new PageInfo<>(dynamicList));
     }
 
     /**

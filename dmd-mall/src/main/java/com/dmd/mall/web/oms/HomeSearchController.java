@@ -6,6 +6,7 @@ import com.dmd.mall.model.domain.HomeSearchRecordBean;
 import com.dmd.mall.model.domain.PmsProduct;
 import com.dmd.mall.model.domain.TopicBean;
 import com.dmd.mall.service.HomeSearchService;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,21 +41,22 @@ public class HomeSearchController {
     @ApiOperation("首页--搜索动态/商品/话题")
     @RequestMapping(value = "/searchCount",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List> querycontent(@RequestParam String content ,@RequestParam Long userId,@RequestParam Integer searchType) {
+    public CommonResult<PageInfo> querycontent(@RequestParam String content ,@RequestParam Long userId,@RequestParam Integer searchType,@RequestParam Integer pageNum,
+                                           @RequestParam Integer pageSize) {
         List list = new ArrayList<>();
         if(searchType == 1){
-            List<DynamicBean> dynamicList = homeSearchService.queryDynamic(userId,content,searchType);
+            List<DynamicBean> dynamicList = homeSearchService.queryDynamic(userId,content,searchType,pageNum,pageSize);
             list=dynamicList;
         }
         if(searchType == 2){
-            List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType);
+            List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType,pageNum,pageSize);
             list=pmsProductList;
         }
         if(searchType == 3){
-            List<TopicBean> TopicList = homeSearchService.queryTopic(userId,content,searchType);
+            List<TopicBean> TopicList = homeSearchService.queryTopic(userId,content,searchType,pageNum,pageSize);
             list=TopicList;
         }
-        return CommonResult.success(list);
+        return CommonResult.success(new PageInfo<>(list));
     }
 
 
