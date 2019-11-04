@@ -5,6 +5,7 @@ import com.dmd.mall.model.domain.CommentBean;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.IntegralGiftsBean;
 import com.dmd.mall.service.IntegralGiftsService;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +50,10 @@ public class IntegralGiftsController {
     @ApiOperation("分页查询全部积分好礼")
     @RequestMapping(value = "/selectIntegralGiftsPage",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<IntegralGiftsBean>> queryIntegralGiftsPage(@RequestParam Integer pageNum,
-                                                                        @RequestParam Integer pageSize) {
+    public CommonResult<PageInfo<IntegralGiftsBean>> queryIntegralGiftsPage(@RequestParam Integer pageNum,
+                                                                            @RequestParam Integer pageSize) {
         List<IntegralGiftsBean> integralGiftsList = integralGiftsService.queryIntegralGiftsPage(pageNum,pageSize);
-        return CommonResult.success(integralGiftsList);
+        return CommonResult.success(new PageInfo<>(integralGiftsList));
     }
 
     /**
