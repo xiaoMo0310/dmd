@@ -1,11 +1,13 @@
 package com.dmd.admin.model.domain;
 
+import com.dmd.base.dto.BaseQuery;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-public class UmsPermission implements Serializable {
+public class UmsPermission extends BaseQuery implements Serializable{
     private Long id;
 
     @ApiModelProperty(value = "父级权限id")
@@ -34,6 +36,16 @@ public class UmsPermission implements Serializable {
 
     @ApiModelProperty(value = "排序")
     private Integer sort;
+
+    private List<UmsPermission> umsPermissions;
+
+    public List<UmsPermission> getUmsPermissions() {
+        return umsPermissions;
+    }
+
+    public void setUmsPermissions(List<UmsPermission> umsPermissions) {
+        this.umsPermissions = umsPermissions;
+    }
 
     private static final long serialVersionUID = 1L;
 

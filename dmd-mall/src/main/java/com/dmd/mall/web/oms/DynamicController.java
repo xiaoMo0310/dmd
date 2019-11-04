@@ -1,5 +1,6 @@
 package com.dmd.mall.web.oms;
 
+import com.dmd.annotation.NoNeedAccessAuthentication;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.service.DynamicService;
@@ -225,6 +226,7 @@ public class DynamicController {
     @ApiOperation("首页--最热动态查询")
     @RequestMapping(value = "/selectDynamicHeat",method = RequestMethod.GET)
     @ResponseBody
+    @NoNeedAccessAuthentication
     public CommonResult<List<DynamicBean>> queryDynamicHeat() {
         List<DynamicBean> dynamicList = dynamicService.queryDynamicHeat();
         return CommonResult.success(dynamicList);

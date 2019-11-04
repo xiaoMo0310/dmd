@@ -31,6 +31,7 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    //http://192.168.0.217:8000/topic/selectTopic
     @Override
     public void configure(HttpSecurity http) throws Exception {
         SmsCodeFilter smsCodeFilter=new SmsCodeFilter();

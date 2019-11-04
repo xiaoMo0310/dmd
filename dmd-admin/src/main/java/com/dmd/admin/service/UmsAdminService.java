@@ -4,6 +4,8 @@ import com.dmd.admin.model.domain.UmsAdmin;
 import com.dmd.admin.model.domain.UmsPermission;
 import com.dmd.admin.model.domain.UmsRole;
 import com.dmd.admin.model.dto.UmsAdminParam;
+import com.dmd.base.dto.BaseQuery;
+import com.github.pagehelper.PageInfo;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -78,4 +80,14 @@ public interface UmsAdminService {
      * 获取用户所有权限（包括角色权限和+-权限）
      */
     List<UmsPermission> getPermissionList(Long adminId);
+
+    /**
+     * 所有权限列表
+    */
+    PageInfo getAllPermission(BaseQuery baseQuery);
+
+    /**
+     * 所有权限列表
+     */
+    int isForbiddenPermission(Long id,int status);
 }

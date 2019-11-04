@@ -3,6 +3,7 @@ package com.dmd.admin.web;
 import com.dmd.admin.model.domain.DynamicBean;
 import com.dmd.admin.model.domain.TopicBean;
 import com.dmd.admin.service.DynamicService;
+import com.dmd.annotation.NoNeedAccessAuthentication;
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
@@ -93,6 +94,7 @@ public class DynamicController {
     @ApiOperation("话题类别查询")
     @RequestMapping(value = "/selectTopic",method = RequestMethod.GET)
     @ResponseBody
+    @NoNeedAccessAuthentication
     public CommonResult<List<TopicBean>> queryTopicPage() {
         List<TopicBean> topicList = dynamicService.queryTopic();
         return CommonResult.success(topicList);

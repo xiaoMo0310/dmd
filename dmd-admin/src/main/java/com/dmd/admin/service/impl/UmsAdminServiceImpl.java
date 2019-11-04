@@ -11,7 +11,9 @@ import com.dmd.admin.model.domain.*;
 import com.dmd.admin.model.dto.UmsAdminParam;
 import com.dmd.admin.service.UmsAdminService;
 import com.dmd.admin.utils.JwtTokenUtil;
+import com.dmd.base.dto.BaseQuery;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -249,4 +251,28 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     public List<UmsPermission> getPermissionList(Long adminId) {
         return adminRoleRelationDao.getPermissionList(adminId);
     }
+
+    @Override
+    public PageInfo getAllPermission(BaseQuery baseQuery) {
+        PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
+        List<UmsPermission> umsPermissions=adminRoleRelationDao.getAllPermission();
+        return new PageInfo<>(umsPermissions);
+    }
+
+    @Override
+    public int isForbiddenPermission(Long id, int status) {
+        return adminRoleRelationDao.isForbiddenPermission(id,status);
+    }
+
+//    public List<UmsPermission> getNode(Long pid){
+//        List<UmsPermission> umsPermissions=adminRoleRelationDao.getAllPermission(pid);
+//        for (UmsPermission umsPermission: umsPermissions) {
+//            Long pid1=umsPermission.getId();
+//            List<UmsPermission> umsPermissions1=getNode(pid1);
+//            umsPermission.setUmsPermissions(umsPermissions1);
+//        }
+//        return umsPermissions;
+//    }
+
+
 }

@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class UmsRole implements Serializable {
     private Long id;
@@ -24,6 +25,8 @@ public class UmsRole implements Serializable {
     private Integer status;
 
     private Integer sort;
+
+    private List<UmsPermission> permissions;
 
     private static final long serialVersionUID = 1L;
 
