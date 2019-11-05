@@ -1,5 +1,6 @@
 package com.dmd.mall.web.oms;
 
+import com.dmd.annotation.NoNeedAccessAuthentication;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.service.DynamicService;
@@ -231,5 +232,9 @@ public class DynamicController {
                                                             @RequestParam Integer pageSize) {
         List<DynamicBean> dynamicList = dynamicService.queryDynamicHeat(pageNum,pageSize);
         return CommonResult.success(new PageInfo<>(dynamicList));
+    @NoNeedAccessAuthentication
+    public CommonResult<List<DynamicBean>> queryDynamicHeat() {
+        List<DynamicBean> dynamicList = dynamicService.queryDynamicHeat();
+        return CommonResult.success(dynamicList);
     }
 }

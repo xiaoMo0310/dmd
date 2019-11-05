@@ -6,8 +6,12 @@ import com.dmd.admin.model.domain.UmsRole;
 import com.dmd.admin.model.dto.UmsAdminLoginParam;
 import com.dmd.admin.model.dto.UmsAdminParam;
 import com.dmd.admin.service.UmsAdminService;
+import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
+import com.dmd.wrapper.WrapMapper;
+import com.dmd.wrapper.Wrapper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,4 +185,19 @@ public class UmsAdminController {
         List<UmsPermission> permissionList = adminService.getPermissionList(adminId);
         return CommonResult.success(permissionList);
     }
+
+    @ApiOperation("获取所有权限")
+    @RequestMapping(value = "/allPermission", method = RequestMethod.POST)
+    @ResponseBody
+    public Wrapper<PageInfo> getAllPermission(@RequestBody BaseQuery baseQuery) {
+        PageInfo pageInfo = adminService.getAllPermission(baseQuery);
+        return WrapMapper.ok(pageInfo);
+    }
+    @ApiOperation("禁用和启用权限")
+    @RequestMapping(value = "/isForbiddenPermission", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<Integer> isForbiddenPermission(@RequestParam("id") Long id,@RequestParam("status") int status) {
+        return CommonResult.success(adminService.isForbiddenPermission(id,status));
+    }
+
 }

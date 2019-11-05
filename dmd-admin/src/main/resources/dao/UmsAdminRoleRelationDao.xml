@@ -52,4 +52,56 @@
             pr.type = 1
             AND pr.admin_id = #{adminId}
     </select>
+
+    <select id="getRoles" resultType="com.dmd.admin.model.domain.UmsRole">
+        select * from ums_role ur inner join ums_role_permission_relation urpr on
+            ur.id=urpr.role_id
+    </select>
+
+
+    <insert id="addRoles">
+        insert into ums_role(name,description,admin_count,create_time,status)
+        values(#{name},#{description},0,now(),1)
+    </insert>
+    <insert id="addRolesForAdmin">
+        insert into ums_admin_role_relation(admin_id, role_id)
+        values
+        <foreach collection="adminRoleRelation" item="role" index="index" separator=",">
+            (
+            #{role.role_id,jdbcType=INTEGER},
+            #{role.permission_id,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteRolesForAdmin">
+        delete from ums_admin_role_relation
+        where admin_id=#{adminId}
+    </delete>
+
+    <insert id="addPermissions">
+        insert into ums_permission(pid,name,value,icon,uri,status,create_time)
+        values(#{pid},#{name},#{value},#{icon},#{uri},1,now())
+    </insert>
+
+    <insert id="addPermissionForRole">
+        insert into ums_role_permission_relation(role_id,permission_id)
+        values
+        <foreach collection="permissionRelations" item="permission" index="index" separator=",">
+            (
+            #{permission.role_id,jdbcType=INTEGER},
+            #{permission.permission_id,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+    <delete id="deletePermissionForRole">
+       delete from ums_role_permission_relation
+       where role_id=#{roleId}
+    </delete>
+
+    <select id="getAllPermission" resultType="com.dmd.admin.model.domain.UmsPermission">
+        select * from ums_permission ORDER BY pid
+    </select>
+    <update id="isForbiddenPermission">
+        update ums_permission set status=#{status} where id=#{id}
+    </update>
 </mapper>

@@ -1,5 +1,6 @@
 package com.dmd.mall.web.pms;
 
+import com.dmd.annotation.NoNeedAccessAuthentication;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.PmsComment;
 import com.dmd.mall.model.domain.SmsHomeAdvertise;
@@ -49,6 +50,7 @@ public class PmsShopController {
     @ApiOperation("轮播图")
     @RequestMapping(value = "/shopAdvertise", method = RequestMethod.POST)
     @ResponseBody
+    @NoNeedAccessAuthentication
     public CommonResult<List<SmsHomeAdvertise>> shopAdvertise(@RequestBody Map<String,Object> mapParam) {
         List<SmsHomeAdvertise> map =pmsShopService.getShopAdvertise(mapParam);
         return CommonResult.success(map);
