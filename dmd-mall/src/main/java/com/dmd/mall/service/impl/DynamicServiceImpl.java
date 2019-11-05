@@ -126,14 +126,12 @@ public class DynamicServiceImpl implements DynamicService{
     }
 
     @Override
-    public List<DynamicBean> queryDynamicTime(Integer pageNum,Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+    public List<DynamicBean> queryDynamicTime() {
         return dynamicMapper.queryDynamicTime();
     }
 
     @Override
-    public List<DynamicBean> queryDynamicHeat(Integer pageNum,Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+    public List<DynamicBean> queryDynamicHeat() {
         return dynamicMapper.queryDynamicHeat();
     }
 }

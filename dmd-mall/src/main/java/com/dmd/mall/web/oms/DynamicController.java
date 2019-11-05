@@ -215,10 +215,9 @@ public class DynamicController {
     @ApiOperation("首页--最新动态分页查询")
     @RequestMapping(value = "/selectDynamicTime",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<PageInfo<DynamicBean>> queryDynamicTime(@RequestParam Integer pageNum,
-                                                            @RequestParam Integer pageSize) {
-        List<DynamicBean> dynamicList = dynamicService.queryDynamicTime(pageNum,pageSize);
-        return CommonResult.success(new PageInfo<>(dynamicList));
+    public CommonResult<List<DynamicBean>> queryDynamicTime() {
+        List<DynamicBean> dynamicList = dynamicService.queryDynamicTime();
+        return CommonResult.success(dynamicList);
     }
 
     /**
@@ -228,13 +227,8 @@ public class DynamicController {
     @ApiOperation("首页--最热动态分页查询")
     @RequestMapping(value = "/selectDynamicHeat",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<PageInfo<DynamicBean>> queryDynamicHeat(@RequestParam Integer pageNum,
-                                                            @RequestParam Integer pageSize) {
-        List<DynamicBean> dynamicList = dynamicService.queryDynamicHeat(pageNum,pageSize);
-        return CommonResult.success(new PageInfo<>(dynamicList));
-    @NoNeedAccessAuthentication
     public CommonResult<List<DynamicBean>> queryDynamicHeat() {
         List<DynamicBean> dynamicList = dynamicService.queryDynamicHeat();
-        return CommonResult.success(dynamicList);
+        return  CommonResult.success(dynamicList);
     }
 }

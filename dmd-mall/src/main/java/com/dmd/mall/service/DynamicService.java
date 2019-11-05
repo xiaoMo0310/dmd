@@ -38,7 +38,7 @@ public interface DynamicService {
 
     int addDynamic(DynamicBean dynamicBean);
 
-    List<DynamicBean> queryDynamicTime(Integer pageNum,Integer pageSize);
+    List<DynamicBean> queryDynamicTime();
 
-    List<DynamicBean> queryDynamicHeat(Integer pageNum,Integer pageSize);
+    List<DynamicBean> queryDynamicHeat();
 }
