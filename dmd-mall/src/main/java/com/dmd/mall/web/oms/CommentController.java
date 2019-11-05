@@ -41,8 +41,8 @@ public class CommentController {
                                                                //动态ID
                                                                @RequestParam Long forDynamicId
     ) {
-        List<CommentBean> CommentList = commentService.queryCommentAll(forDynamicId,pageNum,pageSize);
-        return CommonResult.success(new PageInfo<>(CommentList));
+        List<CommentBean> commentList = commentService.queryCommentAll(forDynamicId,pageNum,pageSize);
+        return CommonResult.success(new PageInfo<>(commentList));
     }
 
     @ApiOperation("新增我的动态评论/留言")
