@@ -14,5 +14,5 @@ import java.util.List;
 public interface DiveCertificateServuce {
     List<DiveCertificateBean> queryDiveCertificate(Long userId);
 
-    int addDiveCertificate(Long userId, DiveCertificateBean diveCertificateBean);
+    int addDiveCertificate(Long userId, DiveCertificateBean diveCertificateBean,Integer identifier);
 }

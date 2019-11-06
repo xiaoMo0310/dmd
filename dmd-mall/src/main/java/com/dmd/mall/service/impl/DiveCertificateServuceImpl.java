@@ -28,18 +28,23 @@ public class DiveCertificateServuceImpl implements DiveCertificateServuce{
     }
 
     @Override
-    public int addDiveCertificate(Long userId, DiveCertificateBean diveCertificateBean) {
+    public int addDiveCertificate(Long userId, DiveCertificateBean diveCertificateBean,Integer identifier) {
         //判断userid在表中字段是否存在,不存在则第一次上传进行新增,存在则进行修改操作
         //查询的结果=0 就不存在 >0 就存在
         Integer bool = diveCertificateMapper.queryUserId(userId);
         int count1 = 0;
-        if (bool == 0){
+        //第一次上传
+        if (bool == 0 && identifier == 1){
             diveCertificateBean.setUserId(userId);
             diveCertificateBean.setCreateTime(new Date());
             diveCertificateBean.setStatus(0);
+            diveCertificateBean.setIdentifier(1);
             int count = diveCertificateMapper.addDiveCertificate(diveCertificateBean);
             count1 = count;
-        }if (bool > 0){
+        }
+        Integer identifierNum = diveCertificateMapper.selectIdentifier(userId);
+        System.out.println(identifierNum);
+        if (bool > 0 && (identifier - identifierNum) == 1){
             diveCertificateBean.setUserId(userId);
             diveCertificateBean.setCreateTime(new Date());
             diveCertificateBean.setStatus(0);

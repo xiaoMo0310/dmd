@@ -1,5 +1,7 @@
 package com.dmd.mall.model.domain;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 /**
@@ -74,6 +76,20 @@ public class DiveCertificateBean {
      * 审核中=0；审核通过=1；审核未通过=2
      */
     private Integer status;
+
+    /**
+     * 等级标识符
+     */
+    @ApiModelProperty("等级标识符")
+    private Integer identifier;
+
+    public Integer getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(Integer identifier) {
+        this.identifier = identifier;
+    }
 
     public Long getId() {
         return id;
@@ -204,7 +220,7 @@ public class DiveCertificateBean {
     }
 
     @Override
-    public String   toString() {
+    public String toString() {
         return "DiveCertificateBean{" +
                 "id=" + id +
                 ", userId=" + userId +
@@ -222,6 +238,7 @@ public class DiveCertificateBean {
                 ", cd='" + cd + '\'' +
                 ", createTime=" + createTime +
                 ", status=" + status +
+                ", identifier=" + identifier +
                 '}';
     }
 }

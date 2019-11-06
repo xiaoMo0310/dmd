@@ -45,11 +45,13 @@ public class DiveCertificateController {
     @ApiOperation("上传我的证书")
     @RequestMapping(value = "/addDiveCertificate",method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult addDiveCertificate(@RequestParam Long userId,@RequestBody DiveCertificateBean diveCertificateBean) {
-        int count = diveCertificateServuce.addDiveCertificate(userId,diveCertificateBean);
+    public CommonResult addDiveCertificate(@RequestParam Long userId,
+                                           @RequestBody DiveCertificateBean diveCertificateBean,
+                                           @RequestParam Integer identifier) {
+        int count = diveCertificateServuce.addDiveCertificate(userId,diveCertificateBean,identifier);
         if (count > 0) {
-            return CommonResult.success(count,"长传成功,请等待审核！");
+            return CommonResult.success(count,"上传成功,请等待审核!");
         }
-        return CommonResult.failed("上传失败");
+        return CommonResult.failed("上传失败,请先上传上一等级证书!");
     }
 }

@@ -20,6 +20,7 @@
         <result column="cd" property="cd" />
         <result column="createTime" property="createTime" />
         <result column="status" property="status" />
+        <result column="identifier" property="identifier" />
     </resultMap>
 
     <select id="queryDiveCertificate" resultMap="diveCertificateMap" parameterType="java.lang.Long">
@@ -30,7 +31,7 @@
         select count(*) from dmd_dive_certificate where userid = #{userId} ;
     </select>
 
-    <insert id="addDiveCertificate" parameterType="com.dmd.mall.model.domain.DiveCertificateBean">
+    <insert id="addDiveCertificate" parameterType="com.dmd.mall.model.domain.DiveCertificateBean" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO dmd_dive_certificate
         (
         userid,
@@ -47,7 +48,8 @@
         mi,
         cd,
         createTime,
-        status
+        status,
+        identifier
         )
         VALUES (
         #{userId,jdbcType=BIGINT},
@@ -64,7 +66,8 @@
         #{mi,jdbcType=VARCHAR},
         #{cd,jdbcType=VARCHAR},
         #{createTime,jdbcType=TIMESTAMP},
-        #{status,jdbcType=INTEGER}
+        #{status,jdbcType=INTEGER},
+        #{identifier,jdbcType=INTEGER}
         )
     </insert>
 
@@ -83,7 +86,12 @@
         mi = #{mi},
         cd = #{cd},
         createTime = #{createTime},
-        status = #{status}
+        status = #{status},
+        identifier = identifier + 1
         WHERE userid = #{userId}
     </update>
+
+    <select id="selectIdentifier" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT identifier FROM dmd_dive_certificate WHERE userid = #{userId}
+    </select>
 </mapper>

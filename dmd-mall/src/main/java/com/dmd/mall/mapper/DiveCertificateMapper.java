@@ -19,4 +19,6 @@ public interface DiveCertificateMapper {
     int addDiveCertificate(DiveCertificateBean diveCertificateBean);
 
     int updateDiveCertificate(DiveCertificateBean diveCertificateBean);
+
+    Integer selectIdentifier(Long userId);
 }
