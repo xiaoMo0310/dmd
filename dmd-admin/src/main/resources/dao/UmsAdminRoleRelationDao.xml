@@ -79,8 +79,8 @@
     </delete>
 
     <insert id="addPermissions">
-        insert into ums_permission(pid,name,value,icon,uri,status,create_time)
-        values(#{pid},#{name},#{value},#{icon},#{uri},1,now())
+        insert into ums_permission(pid,name,value,icon,type,uri,status,create_time,sort)
+        values(#{pid},#{name},#{value},#{icon},#{type},#{uri},1,now(),#{sort})
     </insert>
 
     <insert id="addPermissionForRole">
@@ -104,4 +104,18 @@
     <update id="isForbiddenPermission">
         update ums_permission set status=#{status} where id=#{id}
     </update>
+
+    <select id="roleForPermission" resultType="com.dmd.admin.model.domain.UmsPermission">
+        select up.*
+        from ums_permission up
+        inner join ums_role_permission_relation urpr on up.id=urpr.permission_id
+        inner join ums_role ur on urpr.role_id=ur.id
+        where ur.id=#{roleId}
+    </select>
+
+    <select id="roleList" resultType="com.dmd.admin.model.domain.UmsRole">
+        select * from ums_role
+    </select>
+
+
 </mapper>

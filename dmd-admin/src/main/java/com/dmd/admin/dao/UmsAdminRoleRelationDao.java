@@ -64,5 +64,9 @@ public interface UmsAdminRoleRelationDao {
 
     int isForbiddenPermission(@Param("id") Long id,@Param("status") int status);
 
+    List<UmsPermission> roleForPermission(@Param("roleId") Long roleId);
+
+    List<UmsRole> roleList();
+
 
 }

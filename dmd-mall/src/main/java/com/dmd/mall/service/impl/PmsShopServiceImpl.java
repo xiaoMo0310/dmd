@@ -27,7 +27,7 @@ public class PmsShopServiceImpl implements PmsShopService {
     @Override
     public Map<String,Object> getShopIndex(Map<String,Object> map){
         PageHelper.startPage((int)(map.get("page")), (int)(map.get("pageSize")));
-        List<SmsHomeAdvertise> advertises=psmShopProductMapper.getShopAdvertise(map);
+        List<SmsHomeAdvertise> advertises=psmShopProductMapper.getShopAdvertise((String) map.get("type"));
         PageInfo<SmsHomeAdvertise> advertisesPageInfo=new PageInfo<>(advertises);
 
         PageHelper.startPage((int)(map.get("page")), (int)(map.get("pageSize")));
@@ -63,7 +63,7 @@ public class PmsShopServiceImpl implements PmsShopService {
     }
 
     @Override
-    public List<SmsHomeAdvertise> getShopAdvertise(Map<String, Object> map) {
-        return psmShopProductMapper.getShopAdvertise(map);
+    public List<SmsHomeAdvertise> getShopAdvertise(String type) {
+        return psmShopProductMapper.getShopAdvertise(type);
     }
 }

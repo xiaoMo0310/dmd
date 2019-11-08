@@ -3,6 +3,7 @@ package com.dmd.admin.web;
 import com.dmd.admin.model.domain.UmsAdmin;
 import com.dmd.admin.model.domain.UmsPermission;
 import com.dmd.admin.model.domain.UmsRole;
+import com.dmd.admin.model.domain.UmsRolePermissionRelation;
 import com.dmd.admin.model.dto.UmsAdminLoginParam;
 import com.dmd.admin.model.dto.UmsAdminParam;
 import com.dmd.admin.service.UmsAdminService;
@@ -198,6 +199,33 @@ public class UmsAdminController {
     @ResponseBody
     public CommonResult<Integer> isForbiddenPermission(@RequestParam("id") Long id,@RequestParam("status") int status) {
         return CommonResult.success(adminService.isForbiddenPermission(id,status));
+    }
+
+    @ApiOperation("添加权限内容")
+    @RequestMapping(value = "/addPermission", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<Integer> addPermission(@RequestBody UmsPermission umsPermission) {
+        return CommonResult.success(adminService.addPermission(umsPermission));
+    }
+
+//    @ApiOperation("获取指定角色的权限")
+//    @RequestMapping(value = "/roleForPermission", method = RequestMethod.GET)
+//    @ResponseBody
+//    public CommonResult<List<UmsPermission>> roleForPermission(@RequestParam("roleId") Long roleId) {
+//        return CommonResult.success(adminService.roleForPermission(roleId));
+//    }
+    @ApiOperation("获取所有角色")
+    @RequestMapping(value = "/roleList", method = RequestMethod.POST)
+    @ResponseBody
+    public Wrapper<PageInfo> roleList(@RequestBody BaseQuery baseQuery) {
+        PageInfo pageInfo = adminService.getRoleList(baseQuery);
+        return  WrapMapper.ok(pageInfo);
+    }
+    @ApiOperation("建立权限和角色的关系")
+    @RequestMapping(value = "/addPermissionForRole", method = RequestMethod.POST)
+    @ResponseBody
+    public Wrapper<Integer> addPermissionForRole(@RequestBody List<UmsRolePermissionRelation> permissionRelations) {
+        return  WrapMapper.ok(adminService.addPermissionForRole(permissionRelations));
     }
 
 }

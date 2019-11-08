@@ -256,12 +256,42 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     public PageInfo getAllPermission(BaseQuery baseQuery) {
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
         List<UmsPermission> umsPermissions=adminRoleRelationDao.getAllPermission();
+        List<UmsPermission> rolePermission=adminRoleRelationDao.roleForPermission(baseQuery.getRoleId());
+        for (UmsPermission umsPermission:umsPermissions){
+            for (UmsPermission umsPermission1: rolePermission){
+                if (umsPermission.getName().equals(umsPermission1.getName())){
+                    umsPermission.setCheck(true);
+                }
+            }
+        }
         return new PageInfo<>(umsPermissions);
     }
 
     @Override
     public int isForbiddenPermission(Long id, int status) {
         return adminRoleRelationDao.isForbiddenPermission(id,status);
+    }
+
+    @Override
+    public int addPermission(UmsPermission umsPermission) {
+        return adminRoleRelationDao.addPermissions(umsPermission);
+    }
+
+    @Override
+    public List<UmsPermission> roleForPermission(Long roleId) {
+        return adminRoleRelationDao.roleForPermission(roleId);
+    }
+
+    @Override
+    public PageInfo getRoleList(BaseQuery baseQuery) {
+        PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
+        List<UmsRole> umsRoles =adminRoleRelationDao.roleList();
+        return new PageInfo<>(umsRoles);
+    }
+
+    @Override
+    public int addPermissionForRole(List<UmsRolePermissionRelation> permissionRelations) {
+        return adminRoleRelationDao.addPermissionForRole(permissionRelations);
     }
 
 //    public List<UmsPermission> getNode(Long pid){

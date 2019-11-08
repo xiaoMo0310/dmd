@@ -1,12 +1,13 @@
 package com.dmd.admin.model.domain;
 
+import com.dmd.base.dto.BaseQuery;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class UmsRole implements Serializable {
+public class UmsRole extends BaseQuery implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "名称")

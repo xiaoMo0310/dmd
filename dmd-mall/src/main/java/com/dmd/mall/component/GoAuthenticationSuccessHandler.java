@@ -73,7 +73,6 @@ public class GoAuthenticationSuccessHandler implements AuthenticationSuccessHand
     }
     private String[] extractAndDecodeHeader(String header, HttpServletRequest request) throws IOException {
         byte[] base64Token = header.substring(6).getBytes("UTF-8");
-
         byte[] decoded;
         try {
             decoded = Base64.getDecoder().decode(base64Token);

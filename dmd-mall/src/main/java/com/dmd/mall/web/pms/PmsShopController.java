@@ -4,6 +4,7 @@ import com.dmd.annotation.NoNeedAccessAuthentication;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.PmsComment;
 import com.dmd.mall.model.domain.SmsHomeAdvertise;
+import com.dmd.mall.model.domain.UmsShop;
 import com.dmd.mall.service.PmsShopService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -51,8 +52,8 @@ public class PmsShopController {
     @RequestMapping(value = "/shopAdvertise", method = RequestMethod.POST)
     @ResponseBody
     @NoNeedAccessAuthentication
-    public CommonResult<List<SmsHomeAdvertise>> shopAdvertise(@RequestBody Map<String,Object> mapParam) {
-        List<SmsHomeAdvertise> map =pmsShopService.getShopAdvertise(mapParam);
+    public CommonResult<List<SmsHomeAdvertise>> shopAdvertise(@RequestBody UmsShop umsShop) {
+        List<SmsHomeAdvertise> map =pmsShopService.getShopAdvertise(umsShop.getType());
         return CommonResult.success(map);
     }
 

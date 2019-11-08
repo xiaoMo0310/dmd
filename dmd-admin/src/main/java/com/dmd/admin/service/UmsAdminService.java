@@ -3,6 +3,7 @@ package com.dmd.admin.service;
 import com.dmd.admin.model.domain.UmsAdmin;
 import com.dmd.admin.model.domain.UmsPermission;
 import com.dmd.admin.model.domain.UmsRole;
+import com.dmd.admin.model.domain.UmsRolePermissionRelation;
 import com.dmd.admin.model.dto.UmsAdminParam;
 import com.dmd.base.dto.BaseQuery;
 import com.github.pagehelper.PageInfo;
@@ -90,4 +91,21 @@ public interface UmsAdminService {
      * 所有权限列表
      */
     int isForbiddenPermission(Long id,int status);
+
+    /**
+     * 添加权限
+     */
+    int addPermission(UmsPermission umsPermission);
+    /**
+     * 查询角色拥有的权限
+     */
+    List<UmsPermission> roleForPermission(Long roleId);
+    /**
+     * 查询所有角色
+     */
+    PageInfo getRoleList(BaseQuery baseQuery);
+    /**
+     * 建立角色和权限的关系
+     */
+    int addPermissionForRole(List<UmsRolePermissionRelation> permissionRelations);
 }
