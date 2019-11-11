@@ -28,6 +28,8 @@ public class TokenJwtEnhancer implements TokenEnhancer {
 		MemberDetails m=(MemberDetails)authentication.getPrincipal();
 		Map<String, Object> info = new HashMap<>();
 		info.put("id", m.getUmsMember().getId());
+		info.put("nickName", m.getUmsMember().getNickname());
+		info.put("icon", m.getUmsMember().getIcon());
 		((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation(info);
 		return accessToken;
 	}

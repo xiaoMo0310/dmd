@@ -34,7 +34,6 @@ public class MyfileController {
     @ResponseBody
     public CommonResult uploadFile(@RequestParam("fileName") MultipartFile file) {
         Map<String,Object> map=new HashMap<>();
-        System.out.println("假的-----------------------------------");
         System.out.print("上传文件==="+"\n");
         //判断文件是否为空
         if (file.isEmpty()) {
