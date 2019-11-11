@@ -1,7 +1,5 @@
 package com.dmd.admin.web;
 
-import com.dmd.admin.model.domain.SmsHomeAdvertise;
-import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
@@ -15,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author ChenYanbing
@@ -34,11 +34,13 @@ public class MyfileAdminController {
     @RequestMapping(value="/uploadFile",produces="application/json;charset=UTF-8")
     @ResponseBody
     public String uploadFile(@RequestParam("fileName") MultipartFile file) {
+
         System.out.print("上传文件==="+"\n");
         //判断文件是否为空
         if (file.isEmpty()) {
-            return "文件已经存在";
+            return "上传文件不可为空";
         }
+
 
         // 获取文件名
         String fileName = file.getOriginalFilename();
@@ -49,7 +51,7 @@ public class MyfileAdminController {
 
 
         //加个时间戳，尽量避免文件名称重复
-        String path = "/usr/local/tomcat/apache-tomcat-8.0.53/webapps/fileUploadAdmin/video" +fileName;
+        String path = "/project/tomcat/webapps/fileUploadAdmin/video" +fileName;
         //String path = "C:/fileUpload/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
         //文件绝对路径
         System.out.print("保存文件绝对路径"+path+"\n");
@@ -60,7 +62,6 @@ public class MyfileAdminController {
         //判断文件是否已经存在
         if (dest.exists()) {
             return "文件已经存在";
-
         }
 
         //判断文件父目录是否存在
@@ -75,6 +76,7 @@ public class MyfileAdminController {
         } catch (IOException e) {
             return "上传失败";
         }
+
         return path;
     }
 
@@ -110,7 +112,7 @@ public class MyfileAdminController {
             try {
                 // 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中
                 // )
-                String filePath = "C:/fileUploadAdmin/picture" + (new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + file.getOriginalFilename());
+                String filePath = "/project/tomcat/fileUploadAdmin/picture" + (new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + file.getOriginalFilename());
 
                 list.add(filePath);
                 File saveDir = new File(filePath);
