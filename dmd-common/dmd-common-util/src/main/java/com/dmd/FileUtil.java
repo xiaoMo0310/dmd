@@ -1,18 +1,16 @@
 package com.dmd;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 public class FileUtil {
 	
@@ -30,7 +28,7 @@ public class FileUtil {
 		//String savePath = request.getRealPath("/");
 		//String savePath = request.getSession().getServletContext().getRealPath("/")+url;
 		//本地
-		String savePath = "c:/upload";
+		String savePath = "/project/tomcat/webapps/upload";
 		//获取源文件后缀名称
 		//12345.jpg
 		int suffixIndex = file.getOriginalFilename().lastIndexOf(".");
