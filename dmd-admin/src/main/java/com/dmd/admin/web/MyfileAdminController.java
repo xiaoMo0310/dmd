@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
@@ -33,12 +34,12 @@ public class MyfileAdminController {
     @ApiOperation("视频上传")
     @RequestMapping(value="/uploadFile",produces="application/json;charset=UTF-8")
     @ResponseBody
-    public String uploadFile(@RequestParam("fileName") MultipartFile file) {
+    public CommonResult<String> uploadFile(@RequestParam("fileName") MultipartFile file) {
 
         System.out.print("上传文件==="+"\n");
         //判断文件是否为空
         if (file.isEmpty()) {
-            return "上传文件不可为空";
+            return CommonResult.failed("上传文件不可为空");
         }
 
 
@@ -61,7 +62,7 @@ public class MyfileAdminController {
 
         //判断文件是否已经存在
         if (dest.exists()) {
-            return "文件已经存在";
+            return CommonResult.failed("文件已存在");
         }
 
         //判断文件父目录是否存在
@@ -74,10 +75,10 @@ public class MyfileAdminController {
             file.transferTo(dest); //保存文件
 
         } catch (IOException e) {
-            return "上传失败";
+            return  CommonResult.failed("上传失败");
         }
 
-        return path;
+        return CommonResult.success(path,"添加成功");
     }
 
 
@@ -85,7 +86,7 @@ public class MyfileAdminController {
     @ApiOperation("图片上传")
     @RequestMapping(value="/saveFile",produces="application/json;charset=UTF-8")
     @ResponseBody
-    public String filesUpload(@RequestParam(value = "myfiles" ) MultipartFile[] files,
+    public CommonResult<String>  filesUpload(@RequestParam(value = "myfiles" ) MultipartFile[] files,
                               HttpServletRequest request) {
         List<String> list = new ArrayList<>();
         if (files != null && files.length > 0) {
@@ -102,7 +103,7 @@ public class MyfileAdminController {
         // 数组转String字符串
         String newStr = StringUtils.join(list, ",");
         System.out.println(newStr);
-        return newStr;
+        return CommonResult.success(newStr,"上传成功");
     }
 
     private List<String> saveFile(HttpServletRequest request,
