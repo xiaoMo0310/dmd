@@ -1,35 +1,27 @@
 package com.dmd.mall.model.vo;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
 public class PmsCourseProductVo {
-    /**
-     * 店铺id
-     */
-    private Long shopId;
 
     /**
-     * 店铺名称
+     * 卖家id
      */
-    private String shopName;
+    private Long userId;
 
     /**
-     * 店铺电话
+     * 地址id
      */
-    private String mobile;
+    private Long addressId;
 
     /**
-     * 产品名称
+     * 标题
      */
-    private String name;
-
-    /**
-     * 产品图片(多个使用 , 隔开)
-     */
-    private String image;
+    private String title;
 
     /**
      * 产品的价格
@@ -37,24 +29,29 @@ public class PmsCourseProductVo {
     private BigDecimal price;
 
     /**
-     * 产品类型(1:入门 2:进阶 3:专业)
+     * 产品类型(1:学证 2:潜水)
      */
-    private String productType;
+    private Integer productType;
 
     /**
-     * 产品类型名称
+     * 地点
      */
-    private String productTypeName;
+    private String location;
 
     /**
-     * 产品介绍
+     * 游玩时长
      */
-    private String productDescription;
+    private String lengthPlay;
 
     /**
-     * 课程内容安排
+     * 费用包含
      */
-    private String contentArrangement;
+    private String costIncludes;
+
+    /**
+     * 费用不含
+     */
+    private String costNotIncludes;
 
     /**
      * 购买须知
@@ -62,7 +59,26 @@ public class PmsCourseProductVo {
     private String purchaseNotes;
 
     /**
-     * 销量
+     * 产品介绍
      */
-    private String sales;
+    private String productDescription;
+
+    /**
+     * 产品图片(多个使用 , 隔开)
+     */
+    private String image;
+
+    /**
+     * 内容安排(数据格式 [{"day01":"内容"}, {"day02":"内容"}])
+     */
+    private String contentArrangement;
+
+    @ApiModelProperty("销量")
+    private Integer sales;
+
+    /**
+     * 证书id
+     */
+    private Long certificateId;
+
 }

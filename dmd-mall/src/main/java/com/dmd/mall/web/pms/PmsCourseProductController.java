@@ -4,7 +4,10 @@ package com.dmd.mall.web.pms;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.domain.PmsCourseProduct;
-import com.dmd.mall.model.vo.PmsCourseProductVo;
+import com.dmd.mall.model.dto.CertificateProductDto;
+import com.dmd.mall.model.vo.CertificateProductVo;
+import com.dmd.mall.model.vo.DivingProductVo;
+import com.dmd.mall.model.vo.PmsCourseListVo;
 import com.dmd.mall.service.PmsCourseProductService;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
@@ -15,8 +18,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * <p>
@@ -35,28 +36,44 @@ public class PmsCourseProductController extends BaseController {
     private PmsCourseProductService pmsCourseProductService;
 
     @PostMapping("/courseProduct/save")
-    @ApiOperation(httpMethod = "POST", value = "编辑课程产品和潜水产品的信息")
+    @ApiOperation(httpMethod = "POST", value = "添加或编辑潜水及学习产品的信息")
     @ApiImplicitParam(name ="courseProduct", value = "课程产品的信息,修改需要提供id", dataType = "PmsCourseProduct")
-    public Wrapper saveAttentionMessage(@RequestBody PmsCourseProduct courseProduct) {
+    public Wrapper saveCourseProductMessage(@RequestBody PmsCourseProduct courseProduct) {
         logger.info("saveAttentionMessage - 编辑课程产品的信息. courseProduct={}", courseProduct);
         int result = pmsCourseProductService.saveCourseProductMessage(getLoginAuthDto(), courseProduct);
         return handleResult(result);
     }
 
-    @PostMapping("/courseProduct/findPage")
-    @ApiOperation(httpMethod = "POST", value = "分页查询所有课程产品的列表信息")
-    @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery")
-    public Wrapper findAttentionMessage(@RequestBody BaseQuery baseQuery) {
-        List<PageInfo> list = pmsCourseProductService.findCourseProduct(baseQuery, getLoginAuthDto());
-        return WrapMapper.ok(list);
-    }
-
     @GetMapping("/courseProduct/{id}")
     @ApiOperation(httpMethod = "GET", value = "查看商品的详细信息")
-    @ApiImplicitParam(name ="id", value = "主键id", dataType = "long")
-    public Wrapper findAttentionMessage(@PathVariable Long id) {
-        PmsCourseProductVo courseProductVo = pmsCourseProductService.findcourseProductById(getLoginAuthDto(), id);
-        return WrapMapper.ok(courseProductVo);
+    @ApiImplicitParam(name ="id", value = "主键id", dataType = "long", paramType = "path")
+    public Wrapper findCourseProductById(@PathVariable Long id) {
+        DivingProductVo divingProductVo = pmsCourseProductService.findCourseProductById(id);
+        return WrapMapper.ok(divingProductVo);
+    }
+
+    @PostMapping("/divingProductList/find")
+    @ApiOperation(httpMethod = "POST", value = "查询潜水商品的列表信息")
+    @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery", paramType = "body")
+    public Wrapper findDivingProductMessage(@RequestBody BaseQuery baseQuery) {
+        PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findCourseProductListByType(baseQuery, 2);
+        return WrapMapper.ok(productList);
+    }
+
+    @PostMapping("/certificateProduct/find/{certificateId}")
+    @ApiOperation(httpMethod = "POST", value = "查询学证产品的详细信息")
+    @ApiImplicitParam(name ="certificateId", value = "证书id", dataType = "Long", paramType = "path")
+    public Wrapper findCertificateProduct(@PathVariable Long certificateId) {
+        CertificateProductVo certificateProductVo = pmsCourseProductService.findCertificateProduct(getLoginAuthDto(), certificateId);
+        return WrapMapper.ok(certificateProductVo);
+    }
+
+    @PostMapping("/certificateProduct/find")
+    @ApiOperation(httpMethod = "POST", value = "查询学证产品的详细信息")
+    @ApiImplicitParam(name ="certificateProductDto", value = "查询学证产品需要的参数", dataType = "CertificateProductDto", paramType = "body")
+    public Wrapper findCourseProductByIds(@RequestBody CertificateProductDto certificateProductDto) {
+        PmsCourseProduct pmsCourseProduct = pmsCourseProductService.findCourseProductByIds(certificateProductDto);
+        return WrapMapper.ok(pmsCourseProduct);
     }
 }
 

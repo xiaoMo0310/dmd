@@ -5,6 +5,8 @@ import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * <p>
  * 首页轮播广告表 Mapper 接口
@@ -17,4 +19,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface SmsHomeAdvertiseMapper extends MyMapper<SmsHomeAdvertise> {
 
+    List<SmsHomeAdvertise> selectAdvertisePicList(Integer type);
 }

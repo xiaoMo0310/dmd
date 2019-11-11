@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * <p>
  * 首页轮播广告表 服务实现类
@@ -23,4 +25,9 @@ public class SmsHomeAdvertiseServiceImpl extends BaseService<SmsHomeAdvertise> i
 
     @Autowired
     private SmsHomeAdvertiseMapper smsHomeAdvertiseMapper;
+
+    @Override
+    public List<SmsHomeAdvertise> selectAdvertisePicList(Integer type) {
+        return smsHomeAdvertiseMapper.selectAdvertisePicList(type);
+    }
 }

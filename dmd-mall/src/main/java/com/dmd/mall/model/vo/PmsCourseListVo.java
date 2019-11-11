@@ -26,6 +26,11 @@ public class PmsCourseListVo implements Serializable {
     private String productName;
 
     /**
+     * 位置
+     */
+    private String location;
+
+    /**
      * 标题
      */
     private String title;
@@ -33,7 +38,7 @@ public class PmsCourseListVo implements Serializable {
     /**
      * 产品图片(多个使用 , 隔开)
      */
-    private String pic;
+    private String image;
 
     /**
      * 产品的价格
@@ -43,15 +48,20 @@ public class PmsCourseListVo implements Serializable {
     /**
      * 教练名称
      */
-    private String CoachName;
+    private String coachName;
+
+    /**
+     * 教练头像
+     */
+    private String coachIcon;
 
     /**
      * 教练id
      */
-    private Long CoachId;
+    private Long coachId;
 
     /**
      * 教练等级
      */
-    private String CoachGrade;
+    private String coachGrade;
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.OmsTransactionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.OmsTransaction">
+    <result column="id" property="id" />
+    <result column="creator" property="creator" />
+    <result column="creator_id" property="creatorId" />
+    <result column="created_time" property="createdTime" />
+    <result column="last_operator" property="lastOperator" />
+    <result column="last_operator_id" property="lastOperatorId" />
+    <result column="update_time" property="updateTime" />
+        <result column="order_sn" property="orderSn" />
+        <result column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="phone" property="phone" />
+        <result column="pay_amount" property="payAmount" />
+        <result column="income_type" property="incomeType" />
+        <result column="oid_paybill" property="oidPaybill" />
+        <result column="payment_type" property="paymentType" />
+        <result column="source" property="source" />
+        <result column="status" property="status" />
+        <result column="order_type" property="orderType" />
+        <result column="type" property="type" />
+        <result column="completion_time" property="completionTime" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        creator,
+        creator_id,
+        created_time,
+        last_operator,
+        last_operator_id,
+        update_time,
+        order_sn, user_id, user_name, pay_amount, oid_paybill, payment_type, source, status, order_type, type, completion_time, remark, phone, incomeType
+    </sql>
+
+</mapper>
