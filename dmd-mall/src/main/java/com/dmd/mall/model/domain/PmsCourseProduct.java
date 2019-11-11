@@ -125,5 +125,13 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("排序")
     private Integer sort;
 
+    @Column(name = "certificate_id")
+    @ApiModelProperty("证书id")
+    private Long certificateId;
+
+    @Column(name = "address_id")
+    @ApiModelProperty("地址id")
+    private Long addressId;
+
 
 }

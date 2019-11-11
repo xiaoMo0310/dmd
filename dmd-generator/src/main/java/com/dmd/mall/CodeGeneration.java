@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
  * mybatisPlus代码生成器
  * @Author: YangAnsheng
  * @Date: 2019/9/22 12:29
@@ -23,7 +22,7 @@ import java.util.Map;
 public class CodeGeneration {
 
     public static void main(String[] args) {
-        mybatisPlusCodeGeneratro(new String[]{"pms_course_product"}, "dmd-mall", "mall");
+        mybatisPlusCodeGeneratro(new String[]{"pms_play_address"}, "dmd-mall", "mall");
     }
 
     /**

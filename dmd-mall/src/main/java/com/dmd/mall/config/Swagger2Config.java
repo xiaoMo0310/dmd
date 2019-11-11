@@ -47,7 +47,7 @@ public class Swagger2Config {
                 .groupName("商城API")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.dmd.mall.web.oms"))
+                .apis(RequestHandlerSelectors.basePackage("com.dmd.mall.web.pms"))
                 .paths(PathSelectors.any())
                 .build()
                 //配置鉴权信息

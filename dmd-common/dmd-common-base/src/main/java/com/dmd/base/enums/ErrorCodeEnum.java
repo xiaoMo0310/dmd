@@ -402,6 +402,10 @@ public enum ErrorCodeEnum {
 	 */
 	PMS10021023(10021023, "删除商品信息失败, productId=%s"),
 	/**
+	 * PMS 10021025 error code enum.
+	 */
+	PMS10021025(10021025, "找不到指定的证书信息, certificateId=%s"),
+	/**
 	 * OMS 10031001 error code enum.
 	 */
 // 1003 订单中心

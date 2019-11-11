@@ -2,39 +2,17 @@ package com.dmd.admin.mapper;
 
 
 import com.dmd.admin.model.domain.OmsOrder;
-import com.dmd.admin.model.domain.OmsOrderExample;
 import com.dmd.admin.model.dto.OmsOrderDeliveryParam;
 import com.dmd.admin.model.dto.OmsOrderDetail;
 import com.dmd.admin.model.dto.OmsOrderQueryParam;
+import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public interface OmsOrderMapper {
-    long countByExample(OmsOrderExample example);
-
-    int deleteByExample(OmsOrderExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(OmsOrder record);
-
-    int insertSelective(OmsOrder record);
-
-    List<OmsOrder> selectByExample(OmsOrderExample example);
-
-    OmsOrder selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") OmsOrder record, @Param("example") OmsOrderExample example);
-
-    int updateByExample(@Param("record") OmsOrder record, @Param("example") OmsOrderExample example);
-
-    int updateByPrimaryKeySelective(OmsOrder record);
-
-    int updateByPrimaryKey(OmsOrder record);
-
+public interface OmsOrderMapper  extends MyMapper<OmsOrder> {
     /**
      * 条件查询订单
      */
@@ -49,4 +27,11 @@ public interface OmsOrderMapper {
      * 获取订单详情
      */
     OmsOrderDetail getDetail(@Param("id") Long id);
+
+    /**
+     *根据订单编号查询订单信息
+     * @param orderSn
+     * @return
+     */
+    OmsOrder selectByOrderSn(String orderSn);
 }

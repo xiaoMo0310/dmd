@@ -7,9 +7,10 @@ import java.lang.annotation.Target;
 
 
 /**
- * The interface No need access authentication.
- *
- * @author paascloud.net @gmail.com
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/11/4 19:03
+ * @Description 不需要认证注解
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

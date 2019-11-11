@@ -55,4 +55,11 @@ public interface OmsOrderService {
      */
     @Transactional
     int updateNote(Long id, String note, Integer status);
+
+    /**
+     * 根据订单编号查询订单的信息
+     * @param orderSn
+     * @return
+     */
+    OmsOrder selectByOrderSn(String orderSn);
 }

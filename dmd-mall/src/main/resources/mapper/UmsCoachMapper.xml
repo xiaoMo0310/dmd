@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.UmsCoachMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.UmsCoach">
+    <result column="id" property="id" />
+    <result column="creator" property="creator" />
+    <result column="creator_id" property="creatorId" />
+    <result column="created_time" property="createdTime" />
+    <result column="last_operator" property="lastOperator" />
+    <result column="last_operator_id" property="lastOperatorId" />
+    <result column="update_time" property="updateTime" />
+        <result column="open_id" property="openId" />
+        <result column="coach_name" property="coachName" />
+        <result column="nick_name" property="nickName" />
+        <result column="password" property="password" />
+        <result column="icon" property="icon" />
+        <result column="phone" property="phone" />
+        <result column="gender" property="gender" />
+        <result column="coach_grade" property="coachGrade" />
+        <result column="invitation_code" property="invitationCode" />
+        <result column="total_invitation" property="totalInvitation" />
+        <result column="status" property="status" />
+        <result column="personal_album" property="personalAlbum" />
+        <result column="personal_profile" property="personalProfile" />
+        <result column="growth" property="growth" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        creator,
+        creator_id,
+        created_time,
+        last_operator,
+        last_operator_id,
+        update_time,
+        open_id, coach_name, nick_name, password, icon, phone, gender, coach_grade, invitation_code, total_invitation, status, personal_album, personal_profile, growth
+    </sql>
+    <select id="selectCoachMessage" resultType="com.dmd.mall.model.domain.UmsCoach">
+        select <include refid="Base_Column_List"/>
+        from ums_coach
+        where id = #{id}
+        and status = 2
+    </select>
+
+</mapper>

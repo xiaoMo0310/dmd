@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.PmsCertificateMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.PmsCertificate">
+    <result column="id" property="id" />
+    <result column="creator" property="creator" />
+    <result column="creator_id" property="creatorId" />
+    <result column="created_time" property="createdTime" />
+    <result column="last_operator" property="lastOperator" />
+    <result column="last_operator_id" property="lastOperatorId" />
+    <result column="update_time" property="updateTime" />
+        <result column="chinese_name" property="chineseName" />
+        <result column="pic" property="pic" />
+        <result column="english_name" property="englishName" />
+        <result column="english_shorthand" property="englishShorthand" />
+        <result column="certificate_level" property="certificateLevel" />
+        <result column="introduction" property="introduction" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        creator,
+        creator_id,
+        created_time,
+        last_operator,
+        last_operator_id,
+        update_time,
+        chinese_name, english_name, english_shorthand, certificate_level, introduction, status, pic
+    </sql>
+    <select id="selectCertificateList" resultType="com.dmd.mall.model.domain.PmsCertificate">
+        select <include refid="Base_Column_List"/>
+        from pms_certificate
+        where status = 1
+    </select>
+
+</mapper>

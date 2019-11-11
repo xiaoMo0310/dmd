@@ -48,7 +48,7 @@
             and title like '%${title}%'
         </if>
         <if test="sendTime != null">
-            and to_days(created_time) = to_days(#{sendTime})
+            and created_time = #{sendTime,jdbcType=TIMESTAMP}
         </if>
         <if test="isDelete != null">
             and is_delete = #{isDelete}
