@@ -108,4 +108,14 @@ public interface UmsAdminService {
      * 建立角色和权限的关系
      */
     int addPermissionForRole(List<UmsRolePermissionRelation> permissionRelations);
+    //是否启用角色
+    Long isEnableRole(Long id,Long status);
+    //添加角色
+    UmsRole addRole(UmsRole umsRole);
+
+    //删除角色
+    int deleteRoles(List<Long> ids);
+
+    //修改角色信息
+    int modifyRole(UmsRole umsRole);
 }
