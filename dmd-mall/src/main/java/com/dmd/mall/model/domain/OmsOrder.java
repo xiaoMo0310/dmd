@@ -129,6 +129,14 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("删除状态：0->未删除；1->已删除")
     private Integer deleteStatus;
 
+    @Column(name = "approval_status")
+    @ApiModelProperty("审核状态(1:待审核 2:审核通过 3:审核未通过)")
+    private Integer approvalStatus;
+
+    @Column(name = "failure_reason")
+    @ApiModelProperty("未审核通过原因")
+    private String failureReason;
+
     @Column(name = "use_integration")
     @ApiModelProperty("下单时使用的积分")
     private Integer useIntegration;

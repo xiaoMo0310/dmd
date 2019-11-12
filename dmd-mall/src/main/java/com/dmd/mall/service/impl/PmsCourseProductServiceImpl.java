@@ -103,7 +103,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         }
         certificateProductVo.setPmsCertificateVo(certificateVo);
         //查询发布改证书的所有的教练id
-        List<Long> coachIds = pmsCourseProductMapper.selectCoachIdByCertificateId(certificateId);
+        List<Long> coachIds = pmsCourseProductMapper.selectCoachIdByCertificateId(certificateId, 1);
 
         //查询当前登录人的信息
         UmsMember umsMember = umsMemberService.getById(loginAuthDto.getUserId());

@@ -61,7 +61,7 @@ public class PmsCourseProductController extends BaseController {
     }
 
     @PostMapping("/certificateProduct/find/{certificateId}")
-    @ApiOperation(httpMethod = "POST", value = "查询学证产品的详细信息")
+    @ApiOperation(httpMethod = "POST", value = "查询学证产品的详细信息及教练信息,证书信息")
     @ApiImplicitParam(name ="certificateId", value = "证书id", dataType = "Long", paramType = "path")
     public Wrapper findCertificateProduct(@PathVariable Long certificateId) {
         CertificateProductVo certificateProductVo = pmsCourseProductService.findCertificateProduct(getLoginAuthDto(), certificateId);

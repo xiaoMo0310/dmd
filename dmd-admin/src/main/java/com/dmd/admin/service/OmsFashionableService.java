@@ -2,6 +2,7 @@ package com.dmd.admin.service;
 
 import com.dmd.admin.model.domain.OmsFashionable;
 import com.dmd.admin.model.dto.BillingDetailDto;
+import com.dmd.admin.model.vo.FashionableAndOrderVo;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.github.pagehelper.PageInfo;
@@ -36,4 +37,11 @@ public interface OmsFashionableService extends IService<OmsFashionable> {
      * @return
      */
     int updateFashionableStatus(LoginAuthDto loginAuthDto, String collectingNo, Integer status);
+
+    /**
+     * 根据分账id查询分账信息及订单数据
+     * @param fashionableId
+     * @return
+     */
+    FashionableAndOrderVo selectOrderAndFashionableById(Long fashionableId);
 }

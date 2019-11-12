@@ -5,10 +5,7 @@ import com.dmd.admin.model.dto.*;
 import com.dmd.admin.service.OmsOrderService;
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
-import com.dmd.wrapper.WrapMapper;
-import com.dmd.wrapper.Wrapper;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -106,11 +103,4 @@ public class OmsOrderController {
         return CommonResult.failed();
     }
 
-    @GetMapping("/findByOrderSn/{orderSn}")
-    @ApiOperation(httpMethod = "GET", value = "根据订单编号查询订单数据")
-    @ApiImplicitParam(name ="orderSn", value = "订单编号", paramType = "path", dataType = "String")
-    public Wrapper findOrderByOrderSn(@PathVariable String orderSn) {
-        OmsOrder omsOrder = orderService.selectByOrderSn(orderSn);
-        return WrapMapper.ok(omsOrder);
-    }
 }
