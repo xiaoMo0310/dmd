@@ -48,7 +48,7 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("订单编号")
     private String orderNo;
 
-    @Column(name = "order_moey")
+    @Column(name = "order_money")
     @ApiModelProperty("订单金额")
     private BigDecimal orderMoney;
 

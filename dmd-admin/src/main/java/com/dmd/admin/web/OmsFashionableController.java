@@ -3,6 +3,7 @@ package com.dmd.admin.web;
 
 import com.dmd.admin.model.domain.OmsFashionable;
 import com.dmd.admin.model.dto.BillingDetailDto;
+import com.dmd.admin.model.vo.FashionableAndOrderVo;
 import com.dmd.admin.service.OmsFashionableService;
 import com.dmd.core.support.BaseController;
 import com.dmd.wrapper.WrapMapper;
@@ -45,6 +46,14 @@ public class OmsFashionableController extends BaseController {
     public Wrapper updateFashionableStatus(@PathVariable String collectingNo) {
         int result = omsFashionableService.updateFashionableStatus(getLoginAuthDto(), collectingNo, 3);
         return handleResult(result);
+    }
+
+    @GetMapping("/OrderAndFashionable/findById/{fashionableId}")
+    @ApiOperation(httpMethod = "GET", value = "根据分账id查询分账信息及订单数据")
+    @ApiImplicitParam(name ="orderSn", value = "订单编号", paramType = "path", dataType = "String")
+    public Wrapper findOrderAndFashionableById(@PathVariable Long fashionableId) {
+        FashionableAndOrderVo fashionableAndOrderVo = omsFashionableService.selectOrderAndFashionableById(fashionableId);
+        return WrapMapper.ok(fashionableAndOrderVo);
     }
 }
 

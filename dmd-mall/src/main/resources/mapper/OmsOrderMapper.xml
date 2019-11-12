@@ -42,6 +42,8 @@
         <result column="receive_time" property="receiveTime" />
         <result column="end_time" property="endTime" />
         <result column="close_time" property="closeTime" />
+        <result column="approval_status" property="approvalStatus" />
+        <result column="failure_reason" property="failureReason" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -49,11 +51,15 @@
         id,
         creator,
         creator_id,
+        update_time,
         created_time,
         last_operator,
         last_operator_id,
-        update_time,
-        order_sn, member_id, shop_id, member_username, total_amount, pay_amount, freight_amount, promotion_amount, integration_amount, discount_amount, pay_type, source_type, status, order_type, delivery_company, delivery_sn, auto_confirm_day, integration, promotion_info, is_invoice, invoice_id, shipping_id, remark, confirm_status, delete_status, use_integration, payment_time, delivery_time, receive_time, end_time, close_time
+        order_sn, member_id, shop_id, member_username, total_amount, pay_amount,
+        freight_amount, promotion_amount, integration_amount, discount_amount, pay_type,
+        source_type, status, order_type, delivery_company, delivery_sn, auto_confirm_day,
+        integration, promotion_info, is_invoice, invoice_id, shipping_id, remark, confirm_status,
+         delete_status, use_integration, payment_time, delivery_time, receive_time, end_time, close_time, approval_status, failure_reason
     </sql>
 
     <select id="selectByUserIdAndOrderNo" resultMap="BaseResultMap" parameterType="map">

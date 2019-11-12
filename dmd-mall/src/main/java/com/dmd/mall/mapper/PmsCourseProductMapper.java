@@ -5,6 +5,7 @@ import com.dmd.mall.model.domain.PmsCourseProduct;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.vo.PmsCourseListVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
      * @param certificateId
      * @return
      */
-    List<Long> selectCoachIdByCertificateId(Long certificateId);
+    List<Long> selectCoachIdByCertificateId(@Param("certificateId") Long certificateId, @Param("productType") Integer productType);
 
     /**
      * 根据教练id查询商品的信息

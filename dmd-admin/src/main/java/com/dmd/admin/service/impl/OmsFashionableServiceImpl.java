@@ -2,8 +2,11 @@ package com.dmd.admin.service.impl;
 
 import com.dmd.admin.mapper.OmsFashionableMapper;
 import com.dmd.admin.model.domain.OmsFashionable;
+import com.dmd.admin.model.domain.OmsOrder;
 import com.dmd.admin.model.dto.BillingDetailDto;
+import com.dmd.admin.model.vo.FashionableAndOrderVo;
 import com.dmd.admin.service.OmsFashionableService;
+import com.dmd.admin.service.OmsOrderService;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseService;
 import com.github.pagehelper.PageHelper;
@@ -28,6 +31,8 @@ public class OmsFashionableServiceImpl extends BaseService<OmsFashionable> imple
 
     @Autowired
     private OmsFashionableMapper omsFashionableMapper;
+    @Autowired
+    private OmsOrderService omsOrderService;
 
     @Override
     public OmsFashionable selectByCollectingNo(String orderSn) {
@@ -44,5 +49,20 @@ public class OmsFashionableServiceImpl extends BaseService<OmsFashionable> imple
     @Override
     public int updateFashionableStatus(LoginAuthDto loginAuthDto, String collectingNo, Integer status) {
         return omsFashionableMapper.updateFashionableStatus(loginAuthDto.getUserName(), loginAuthDto.getUserId(), collectingNo, status);
+    }
+
+    @Override
+    public FashionableAndOrderVo selectOrderAndFashionableById(Long fashionableId) {
+        //查询分账信息
+        OmsFashionable omsFashionable = omsFashionableMapper.selectByPrimaryKey(fashionableId);
+        if(omsFashionable == null){
+            throw new RuntimeException("没有查询到分账信息");
+        }
+        //查询订单信息
+        OmsOrder omsOrder = omsOrderService.selectByOrderSn(omsFashionable.getOrderNo());
+        FashionableAndOrderVo fashionableAndOrderVo = new FashionableAndOrderVo();
+        fashionableAndOrderVo.setFashionable(omsFashionable);
+        fashionableAndOrderVo.setOrder(omsOrder);
+        return fashionableAndOrderVo;
     }
 }

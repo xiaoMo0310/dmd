@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dmd.mall.mapper.PmsCourseProductMapper">
+<mapper namespace="com.dmd.admin.mapper.PmsCourseProductMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.PmsCourseProduct">
+    <resultMap id="BaseResultMap" type="com.dmd.admin.model.domain.PmsCourseProduct">
     <result column="id" property="id" />
     <result column="creator" property="creator" />
     <result column="creator_id" property="creatorId" />
@@ -18,6 +18,8 @@
         <result column="title" property="title" />
         <result column="price" property="price" />
         <result column="product_type" property="productType" />
+        <result column="certificate_id" property="certificateId" />
+        <result column="address_id" property="addressId" />
         <result column="location" property="location" />
         <result column="length_play" property="lengthPlay" />
         <result column="is_time_limit" property="isTimeLimit" />
@@ -33,10 +35,9 @@
         <result column="content_arrangement" property="contentArrangement" />
         <result column="status" property="status" />
         <result column="approval_status" property="approvalStatus" />
+        <result column="failure_reason" property="failureReason" />
         <result column="sales" property="sales" />
         <result column="sort" property="sort" />
-        <result column="certificate_id" property="certificateId" />
-        <result column="address_id" property="addressId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -48,42 +49,26 @@
         last_operator,
         last_operator_id,
         update_time,
-        product_name, user_id, shop_id, shop_name, title, price, product_type, location, length_play, is_time_limit, start_time, end_time, number_is_limit, number_limit, cost_includes, cost_not_includes, purchase_notes, product_description, image, content_arrangement, status, approval_status, sales, sort, certificate_id, address_id
+        product_name, user_id, shop_id, shop_name, title, price, product_type, certificate_id, address_id, location, length_play, is_time_limit, start_time, end_time, number_is_limit, number_limit, cost_includes, cost_not_includes, purchase_notes, product_description, image, content_arrangement, status, approval_status, sales, sort, failure_reason
     </sql>
-    <select id="selectCourseProductByType" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
-        select
-            uc.id coachId, uc.icon coachIcon, uc.coach_name coachName, uc.coach_grade, psp.id, psp.product_name, psp.title, psp.image, psp.price, psp.location
-        from pms_course_product psp, ums_coach uc
-        where uc.id = psp.shop_id
-        and uc.status = 2
-        and psp.product_type = #{type}
-        and psp.status = 1
-        and psp.approval_status = 2
-        order by sort desc
-    </select>
-    <select id="selectCoachIdByCertificateId" resultType="java.lang.Long">
-        select user_id
-        from pms_course_product
-        where certificate_id = #{certificateId} and product_type = #{productType} and status = 1 and approval_status = 2
-    </select>
-    <select id="selectByCoachId" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
+    <update id="updateProductApprovalStatus">
+        update pms_course_product
+        set approval_status = #{courseProduct.approvalStatus}, failure_reason = #{courseProduct.failureReason}, update_time = now(), last_operator = #{userName}, last_operator_id = #{userId}
+        where id = #{courseProduct.id}
+
+    </update>
+    <select id="selectCourseProductList" resultType="com.dmd.admin.model.domain.PmsCourseProduct">
         select <include refid="Base_Column_List"/>
         from pms_course_product
-        where user_id = #{coachId} and status = 1 and approval_status = 2
-    </select>
-    <select id="selectCourseProductByIds" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
-        select <include refid="Base_Column_List"/>
-        from pms_course_product
-        where status = 1 and approval_status = 2
-        <if test="certificateId != null">
-            and certificate_id = #{certificateId}
+        where 1 = 1
+        <if test="approvalStatus != null">
+            and approval_status = #{approvalStatus}
         </if>
-        <if test="addressId != null">
-            and address_id = #{addressId}
+        <if test="productType != null">
+            and product_type = #{productType}
         </if>
-        <if test="certificateId != null">
-            and user_id = #{userId}
-        </if>
+        order by #{orderBy}
+
     </select>
 
 </mapper>
