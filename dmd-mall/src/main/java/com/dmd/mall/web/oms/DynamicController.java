@@ -200,7 +200,6 @@ public class DynamicController {
         //获取登陆id
         //Long userId = result.getUserId();
         //关联用户ID
-        dynamicBean.setUserId((long)(1));
         int count = dynamicService.addDynamic(dynamicBean);
         if (count > 0) {
             return CommonResult.success(count,"发布成功");
