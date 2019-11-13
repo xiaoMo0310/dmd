@@ -5,6 +5,8 @@ import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * <p>
  * UmsFavoritesMapper Mapper 接口
@@ -17,4 +19,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UmsFavoritesMapper extends MyMapper<UmsFavorites> {
 
+    List<UmsFavorites> queryAttention(Long userId);
 }

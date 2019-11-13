@@ -108,7 +108,7 @@ public class DynamicController {
      * @return
      */
     @ApiOperation("点赞动态")
-    @RequestMapping(value = "/updateDynamicLikePraise",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateDynamicLikePraise",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult updateLikePraise(@RequestParam Long id){
         int count = dynamicService.updateLikePraise(id);
@@ -124,7 +124,7 @@ public class DynamicController {
      * @return
      */
     @ApiOperation("取消点赞动态")
-    @RequestMapping(value = "/updateDynamicCancelPraise",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateDynamicCancelPraise",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult updateCancelPraise(@RequestParam Long id){
         int count = dynamicService.updateCancelPraise(id);
@@ -141,7 +141,7 @@ public class DynamicController {
      * @return
      */
     @ApiOperation("分享数+1")
-    @RequestMapping(value = "/updateDynamicShare",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateDynamicShare",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult updateDynamicrShare(@RequestParam Long id){
         int count = dynamicService.updateDynamicrShare(id);

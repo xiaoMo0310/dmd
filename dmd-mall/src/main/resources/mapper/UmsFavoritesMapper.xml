@@ -21,7 +21,6 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,
-        version,
         creator,
         creator_id,
         created_time,
@@ -31,4 +30,8 @@
         user_id, favorite_type, target_id,status, user_type
     </sql>
 
+
+    <select id="queryAttention" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM ums_favorites WHERE user_id = #{userId}
+    </select>
 </mapper>
