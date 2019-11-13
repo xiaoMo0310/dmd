@@ -1,6 +1,9 @@
 package com.dmd.mall.model.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -21,6 +24,8 @@ public class TopicBean {
     //动态数量
     private Integer topicNum;
     //发布时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
     //话题展示图片
     private String topicPicture;
