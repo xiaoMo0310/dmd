@@ -3,6 +3,7 @@ package com.dmd.mall.model.domain;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Date;
 /**
@@ -77,44 +78,76 @@ public class UmsMember implements Serializable {
     @ApiModelProperty(value = "角色")
     private String role;
 
-    @ApiModelProperty(value = "邀请码")
+
+    @Column(name = "open_id")
+    @ApiModelProperty("微信")
+    private String openId;
+
+    @Column(name = "coach_name")
+    @ApiModelProperty("教练名称")
+    private String coachName;
+
+    @Column(name = "nick_name")
+    @ApiModelProperty("昵称")
+    private String nickName;
+
+    @Column(name = "coach_grade")
+    @ApiModelProperty("教练等级")
+    private String coachGrade;
+
+    @Column(name = "invitation_code")
+    @ApiModelProperty("邀请码")
     private String invitationCode;
 
+    @Column(name = "total_invitation")
+    @ApiModelProperty("邀请总的人数")
+    private Integer totalInvitation;
+
+    @Column(name = "personal_album")
+    @ApiModelProperty("个人影集")
+    private String personalAlbum;
+
+    @Column(name = "personal_profile")
+    @ApiModelProperty("个人简介")
+    private String personalProfile;
 
 
     private static final long serialVersionUID = 1L;
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", memberLevelId=").append(memberLevelId);
-        sb.append(", username=").append(username);
-        sb.append(", password=").append(password);
-        sb.append(", nickname=").append(nickname);
-        sb.append(", phone=").append(phone);
-        sb.append(", status=").append(status);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", icon=").append(icon);
-        sb.append(", gender=").append(gender);
-        sb.append(", birthday=").append(birthday);
-        sb.append(", city=").append(city);
-        sb.append(", job=").append(job);
-        sb.append(", personalizedSignature=").append(personalizedSignature);
-        sb.append(", sourceType=").append(sourceType);
-        sb.append(", integration=").append(integration);
-        sb.append(", growth=").append(growth);
-        sb.append(", luckeyCount=").append(luckeyCount);
-        sb.append(", historyIntegration=").append(historyIntegration);
-        sb.append(", identityCard=").append(identityCard);
-        sb.append(", stature=").append(stature);
-        sb.append(", weight=").append(weight);
-        sb.append(", role=").append(role);
-        sb.append(", invitationCode=").append(invitationCode);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "UmsMember{" +
+                "id=" + id +
+                ", memberLevelId=" + memberLevelId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", icon='" + icon + '\'' +
+                ", gender=" + gender +
+                ", birthday=" + birthday +
+                ", city='" + city + '\'' +
+                ", job='" + job + '\'' +
+                ", personalizedSignature='" + personalizedSignature + '\'' +
+                ", sourceType=" + sourceType +
+                ", integration=" + integration +
+                ", growth=" + growth +
+                ", luckeyCount=" + luckeyCount +
+                ", historyIntegration=" + historyIntegration +
+                ", identityCard='" + identityCard + '\'' +
+                ", stature='" + stature + '\'' +
+                ", weight='" + weight + '\'' +
+                ", role='" + role + '\'' +
+                ", openId='" + openId + '\'' +
+                ", coachName='" + coachName + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", coachGrade='" + coachGrade + '\'' +
+                ", invitationCode='" + invitationCode + '\'' +
+                ", totalInvitation=" + totalInvitation +
+                ", personalAlbum='" + personalAlbum + '\'' +
+                ", personalProfile='" + personalProfile + '\'' +
+                '}';
     }
 }

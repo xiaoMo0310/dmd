@@ -13,9 +13,13 @@ import java.util.Set;
  */
 public interface UmsMemberService {
     /**
-     * 根据用户名获取会员
+     * 根据用户名获取会员(客户端)
      */
     UmsMember getByUsername(String username);
+    /**
+     * 根据用户名获取会员(教练端)
+     */
+    UmsMember getByUsernameCoach(String username);
 
     /**
      * 根据会员编号获取会员
@@ -62,10 +66,14 @@ public interface UmsMemberService {
     @Transactional
     UmsMember register(String username);
 
+
+
     /**
      * 修改个人资料
      * */
     CommonResult updatePersonalData(UmsMember umsMember);
 
     Set<String> getPermission(String username);
+
+
 }

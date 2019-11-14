@@ -41,4 +41,8 @@ public interface UmsMemberMapper {
 
     Integer queryMyIntegral(Long userId);
 
+    UmsMember getByUsernameCoach(@Param("username") String username);
+
+    int insertCoach(UmsMember umsMember);
+
 }
