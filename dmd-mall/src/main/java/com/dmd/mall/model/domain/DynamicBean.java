@@ -1,5 +1,8 @@
 package com.dmd.mall.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -20,6 +23,8 @@ public class DynamicBean {
     //文章内容
     private String dynamicContent;
     //发布时间为当前时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
     //发布地址
     private String dynamicAddress;

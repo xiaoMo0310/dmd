@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -152,6 +153,16 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     @Override
     public PmsCourseProduct findCourseProductByCoachId(Long coachId){
         return pmsCourseProductMapper.selectByCoachId(coachId);
+    }
+
+    @Override
+    public List<PmsCourseProduct> queryPowerNotesPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct) {
+        PageHelper.startPage(pageNum, pageSize);
+        pmsCourseProduct.setUserId(userId);
+        List<PmsCourseProduct> pmsCourseProducts = pmsCourseProductMapper.queryPowerNotesPage(pmsCourseProduct);
+        //查询报名人数
+        //pmsCourseProductMapper.selectNum();
+        return pmsCourseProducts;
     }
 
 }

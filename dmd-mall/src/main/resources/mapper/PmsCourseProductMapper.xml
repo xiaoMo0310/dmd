@@ -86,4 +86,32 @@
         </if>
     </select>
 
+    <select id="queryPowerNotesPage" parameterType="com.dmd.mall.model.domain.PmsCourseProduct" resultMap="BaseResultMap">
+        SELECT DISTINCT
+        pc.user_id,
+        pc.product_name,
+        pc.start_time,
+        pc.image
+    FROM
+        oms_order om
+        LEFT JOIN oms_order_item oi ON om.id = oi.order_id
+        LEFT JOIN pms_course_product pc ON pc.user_id = om.shop_id
+        <include refid="powerNotesWhere"></include>
+    </select>
+
+    <!-- 公用标签 -->
+    <sql id="powerNotesWhere">
+        <where>
+            <!-- 日期区间查询 -->
+            <if test="searchStartTime != null">
+                and start_time &gt;= #{searchStartTime}
+            </if>
+            <if test="searchEndTime != null">
+                and start_time &lt;= #{searchEndTime}
+            </if>
+                AND om.`status` = 2
+                AND om.shop_id IS NOT NULL
+                AND pc.user_id = #{userId}
+        </where>
+    </sql>
 </mapper>

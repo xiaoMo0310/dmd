@@ -3,7 +3,10 @@ package com.dmd.mall.mapper;
 import com.dmd.mall.model.domain.UmsFavorites;
 import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,9 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UmsFavoritesMapper extends MyMapper<UmsFavorites> {
 
+    List<UmsFavorites> queryAttention(Long userId);
+
+    int updateAttentionStatus(@Param("userId") Long userId, @Param("userName") String userName,@Param("umsFavorites") UmsFavorites umsFavorites);
+
+    UmsFavorites selectAttentionMessage(UmsFavorites umsFavorites);
 }
