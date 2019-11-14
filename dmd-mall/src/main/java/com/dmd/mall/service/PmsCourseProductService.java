@@ -68,4 +68,6 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
     PmsCourseProduct findCourseProductByCoachId(Long coachId);
 
     List<PmsCourseProduct> queryPowerNotesPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct);
+
+    Integer queryPepleNum(Long id, Long userId);
 }
