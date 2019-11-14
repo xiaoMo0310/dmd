@@ -45,6 +45,15 @@ public class UmsFavoritesController extends BaseController {
         return handleResult(result);
     }
 
+    @PostMapping("/attentionStatus/update")
+    @ApiOperation(httpMethod = "POST", value = "修改用户的关注状态")
+    @ApiImplicitParam(name ="umsFavoritesDto", value = "用户关注的信息,修改需要提供id", dataType = "UmsFavoritesDto")
+    public Wrapper upda(@RequestBody UmsFavoritesDto umsFavoritesDto) {
+        logger.info("saveAttentionMessage - 修改用户的关注状态. umsFavorites={}", umsFavoritesDto);
+        int result = umsFavoritesService.updateAttentionStatus(getLoginAuthDto(), umsFavoritesDto);
+        return handleResult(result);
+    }
+
     /**
      * 判断用户时候关注用户 商品 商铺
      * @param targetId
@@ -55,12 +64,16 @@ public class UmsFavoritesController extends BaseController {
     @ApiImplicitParams({@ApiImplicitParam(name ="targetId", value = "目标对象id", dataType = "Long", paramType = "path"),
                         @ApiImplicitParam(name ="favoriteType", value = "关注类型(1:普通用户 2:教练用户 3:普通商品 4:课程或潜水商品 5:商铺)", dataType = "int", paramType = "path")})
     public Wrapper<Boolean> checkAttention(@RequestParam("targetId") Long targetId, @RequestParam("favoriteType") Integer favoriteType) {
-        Long userId = getLoginAuthDto().getUserId();
-        logger.info("checkAttention - 判断用户时候关注用户 商品 商铺. userId={}, targetId={}", userId, targetId);
-        Boolean flag = umsFavoritesService.checkAttention(userId, targetId, favoriteType);
+        logger.info("checkAttention - 判断用户时候关注用户 商品 商铺. userId={}, targetId={}", targetId);
+        Boolean flag = umsFavoritesService.checkAttention(getLoginAuthDto(), targetId, favoriteType);
         return WrapMapper.ok(flag);
     }
 
+    /**
+     * 查询我的关注
+     * @param baseQuery
+     * @return
+     */
     @PostMapping("/favoritesList/find")
     @ApiOperation(httpMethod = "POST", value = "查询当前登录人关注的信息")
     @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery")

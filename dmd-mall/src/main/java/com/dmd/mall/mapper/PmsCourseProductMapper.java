@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,4 +45,6 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     PmsCourseProduct selectByCoachId(Long coachId);
 
     PmsCourseProduct selectCourseProductByIds(CertificateProductDto certificateProductDto);
+
+    List<PmsCourseProduct> queryPowerNotesPage(PmsCourseProduct pmsCourseProduct);
 }

@@ -217,6 +217,7 @@ public class DynamicController {
     public CommonResult<PageInfo<DynamicBean>> queryDynamicTime(@RequestParam Integer pageNum,
                                                             @RequestParam Integer pageSize) {
         List<DynamicBean> dynamicList = dynamicService.queryDynamicTime(pageNum,pageSize);
+        System.out.println(dynamicList);
         return CommonResult.success(new PageInfo<>(dynamicList));
     }
 

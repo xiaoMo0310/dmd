@@ -29,12 +29,20 @@ public interface UmsFavoritesService extends IService<UmsFavorites> {
     int saveAttentionMessage(LoginAuthDto loginAuthDto,  UmsFavoritesDto umsFavoritesDto);
 
     /**
+     * 修改用户的关注状态
+     * @param loginAuthDto
+     * @param umsFavoritesDto
+     * @return
+     */
+    int updateAttentionStatus(LoginAuthDto loginAuthDto, UmsFavoritesDto umsFavoritesDto);
+
+    /**
      * 判断用户时候关注用户 商品 商铺
      * @param userId
      * @param targetId
      * @return
      */
-    Boolean checkAttention(Long userId,Long targetId, Integer favoriteType);
+    Boolean checkAttention(LoginAuthDto loginAuthDto, Long targetId, Integer favoriteType);
 
     JSONObject queryAttention(Long userId, BaseQuery baseQuery);
 }

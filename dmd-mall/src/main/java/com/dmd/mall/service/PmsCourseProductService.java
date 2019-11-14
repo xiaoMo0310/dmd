@@ -10,6 +10,9 @@ import com.dmd.mall.model.vo.DivingProductVo;
 import com.dmd.mall.model.vo.PmsCourseListVo;
 import com.github.pagehelper.PageInfo;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * <p>
  * 课程商品表 服务类
@@ -63,4 +66,6 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
      * @return
      */
     PmsCourseProduct findCourseProductByCoachId(Long coachId);
+
+    List<PmsCourseProduct> queryPowerNotesPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct);
 }

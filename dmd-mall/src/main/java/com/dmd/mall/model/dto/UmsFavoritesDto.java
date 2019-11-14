@@ -15,8 +15,6 @@ import javax.persistence.Column;
 @Data
 public class UmsFavoritesDto {
 
-    @ApiModelProperty("id")
-    private Long id;
 
     @ApiModelProperty("关注类型(1:普通用户 2:教练用户 3:普通商品 4:课程或潜水商品 5:商铺)")
     private Integer favoriteType;

@@ -29,9 +29,20 @@
         update_time,
         user_id, favorite_type, target_id,status, user_type
     </sql>
+    <update id="updateAttentionStatus">
+        update ums_favorites
+        set status = #{umsFavorites.status}, update_time = now(), last_operator = #{userName}, last_operator_id = #{userId}
+        where favorite_type = #{umsFavorites.favoriteType} and user_id = #{userId} and target_id = #{umsFavorites.targetId} and user_type = #{umsFavorites.userType}
+    </update>
 
 
     <select id="queryAttention" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT <include refid="Base_Column_List"/> FROM ums_favorites WHERE user_id = #{userId}
+        SELECT <include refid="Base_Column_List"/> FROM ums_favorites WHERE user_id = #{userId} and status =1
+    </select>
+    <select id="selectAttentionMessage" resultType="com.dmd.mall.model.domain.UmsFavorites">
+        select <include refid="Base_Column_List"/>
+        from ums_favorites
+        where user_id = #{userId}
+        and favorite_type = #{favoriteType} and target_id = #{targetId} and user_type = #{userType}
     </select>
 </mapper>

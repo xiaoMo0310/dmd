@@ -65,7 +65,8 @@ public class GoAuthenticationSuccessHandler implements AuthenticationSuccessHand
         // 记录token日志
         String accessToken = token.getValue();
         // 存入redis数据库
-        redisTemplate.opsForValue().set(RedisKeyUtil.getAccessTokenKey(accessToken), loginAuthDto, 9000, TimeUnit.SECONDS);
+        //redisTemplate.opsForValue().set(RedisKeyUtil.getAccessTokenKey(accessToken), loginAuthDto, 9000, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(RedisKeyUtil.getAccessTokenKey(accessToken), loginAuthDto);
 
         response.setHeader("Content-Type", "application/json;charset=utf-8");
         response.getWriter().print(JSONUtil.parse(CommonResult.success(token,"登录成功")));

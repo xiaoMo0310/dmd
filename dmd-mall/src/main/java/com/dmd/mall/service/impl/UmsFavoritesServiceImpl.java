@@ -51,29 +51,46 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
     private UmsCoachService umsCoachService;
     @Override
     public int saveAttentionMessage(LoginAuthDto loginAuthDto, UmsFavoritesDto umsFavoritesDto) {
-        int resultInt;
         UmsFavorites umsFavorites = new UmsFavorites();
         BeanUtils.copyProperties(umsFavoritesDto, umsFavorites);
         umsFavorites.setUpdateInfo(loginAuthDto);
-        if (umsFavorites.isNew()) {
-            //查询是否关注
-            if(checkAttention(loginAuthDto.getUserId(), umsFavorites.getTargetId(), umsFavorites.getFavoriteType())){
-                throw new UmsBizException("已关注");
-            }
-            umsFavorites.setUserId(loginAuthDto.getUserId());
-            //todo 教练类型待完善
-            umsFavorites.setUserType(1);
-            resultInt = umsFavoritesMapper.insertSelective(umsFavorites);
-        } else {
-            resultInt = umsFavoritesMapper.updateByPrimaryKeySelective(umsFavorites);
+        umsFavorites.setUserId(loginAuthDto.getUserId());
+        //todo 教练类型待完善
+        umsFavorites.setUserType(1);
+        //查询是否关注
+        if(checkAttention(loginAuthDto, umsFavorites.getTargetId(), umsFavorites.getFavoriteType())){
+            throw new UmsBizException("已关注");
         }
+        //查询是否有关注的信息
+        UmsFavorites favorites = umsFavoritesMapper.selectAttentionMessage(umsFavorites);
+        int resultInt = 0;
+        if(favorites == null){
+            resultInt = umsFavoritesMapper.insertSelective(umsFavorites);
+        }else {
+            resultInt = this.updateAttentionStatus(loginAuthDto, umsFavoritesDto);
+        }
+
         return resultInt;
     }
 
     @Override
-    public Boolean checkAttention(Long userId, Long targetId, Integer favoriteType) {
+    public int updateAttentionStatus(LoginAuthDto loginAuthDto, UmsFavoritesDto umsFavoritesDto) {
         UmsFavorites umsFavorites = new UmsFavorites();
-        umsFavorites.setUserId(userId);
+        BeanUtils.copyProperties(umsFavoritesDto, umsFavorites);
+        umsFavorites.setUpdateInfo(loginAuthDto);
+        umsFavorites.setUserId(loginAuthDto.getUserId());
+        //todo 教练类型待完善
+        umsFavorites.setUserType(1);
+        int resultInt = umsFavoritesMapper.updateAttentionStatus(loginAuthDto.getUserId(), loginAuthDto.getUserName(), umsFavorites);
+        return resultInt;
+    }
+
+    @Override
+    public Boolean checkAttention(LoginAuthDto loginAuthDto, Long targetId, Integer favoriteType) {
+        UmsFavorites umsFavorites = new UmsFavorites();
+        umsFavorites.setUserId(loginAuthDto.getUserId());
+        //todo 教练类型待完善
+        umsFavorites.setUserType(1);
         umsFavorites.setTargetId(targetId);
         umsFavorites.setFavoriteType(favoriteType);
         umsFavorites.setStatus(1);
@@ -104,4 +121,6 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
         jsonObject.put("total", favoritesPageInfo.getTotal());
         return jsonObject;
     }
+
+
 }
