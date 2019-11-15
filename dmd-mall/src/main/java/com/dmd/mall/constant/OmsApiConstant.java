@@ -33,27 +33,32 @@ public class OmsApiConstant {
 		/**
 		 * Canceled order status enum.
 		 */
-		CANCELED(0, "已取消"),
+		CANCELED(6, "已取消"),
 		/**
 		 * No pay order status enum.
 		 */
-		NO_PAY(10, "未支付"),
+		NO_PAY(0, "未支付"),
 		/**
 		 * Paid order status enum.
 		 */
-		PAID(20, "已付款"),
+		PAID(1, "已付款"),
 		/**
 		 * Shipped order status enum.
 		 */
-		SHIPPED(40, "已发货"),
+		SHIPPED(2, "已发货"),
 		/**
 		 * Order success order status enum.
 		 */
-		ORDER_SUCCESS(50, "订单完成"),
+		ORDER_SUCCESS(3, "订单完成"),
 		/**
 		 * Order close order status enum.
 		 */
-		ORDER_CLOSE(60, "订单关闭");
+		ORDER_CLOSE(4, "订单关闭"),
+
+		/**
+		 * Order afterSale order status enum.
+		 */
+		AFTER_SALE(5, "售后");
 
 
 		OrderStatusEnum(int code, String value) {

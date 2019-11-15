@@ -20,6 +20,6 @@ public interface UmsIntegrationChangeLogService extends IService<UmsIntegrationC
      * @param integration
      * @param operateNote
      */
-    void updateIntegrationAndAddLog(UmsMember umsMember, Integer integration, String operateNote, Integer changeType);
+    void updateIntegrationAndAddLog(UmsMember umsMember, Integer integration, Integer totalIntegration, String operateNote, Integer changeType);
 
 }

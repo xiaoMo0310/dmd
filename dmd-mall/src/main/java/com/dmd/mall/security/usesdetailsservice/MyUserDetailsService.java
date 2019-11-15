@@ -47,6 +47,7 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
                     throw new InternalAuthenticationServiceException("用户信息不存在，请先注册");
                 }
             }
+            member.setLoginType(loginType);
             return new MemberDetails(member);
         }finally {
             type="";

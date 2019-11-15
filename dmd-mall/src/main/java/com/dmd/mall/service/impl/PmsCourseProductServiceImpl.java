@@ -1,15 +1,19 @@
 package com.dmd.mall.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
+import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.exceptions.PmsBizException;
 import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.PmsCourseProductMapper;
+import com.dmd.mall.model.domain.OmsOrderItem;
 import com.dmd.mall.model.domain.PmsCourseProduct;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.dto.CertificateProductDto;
+import com.dmd.mall.model.dto.CourseProductDto;
 import com.dmd.mall.model.vo.*;
 import com.dmd.mall.service.PmsCertificateService;
 import com.dmd.mall.service.PmsCourseProductService;
@@ -23,10 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -51,14 +52,25 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     private UmsMemberService umsMemberService;
 
     @Override
-    public int saveCourseProductMessage(LoginAuthDto loginAuthDto, PmsCourseProduct courseProduct) {
+    public int saveCourseProductMessage(LoginAuthDto loginAuthDto, CourseProductDto courseProductDto) {
+        if(!loginAuthDto.getUserType().equals("coach")){
+            throw new UmsBizException(ErrorCodeEnum.UMS10011023);
+        }
+        PmsCourseProduct courseProduct = new PmsCourseProduct();
+        BeanUtils.copyProperties(courseProductDto, courseProduct);
+        //判断卖家是否有活动
+        int count = pmsCourseProductMapper.selectCheckActivity(courseProductDto.getStartTime(), courseProduct.getEndTime(),courseProduct.getId());
+        if(count > 0){
+            throw new PmsBizException(ErrorCodeEnum.PMS10021029);
+        }
         int resultInt;
         courseProduct.setUpdateInfo(loginAuthDto);
+        courseProduct.setStatus(2);
+        courseProduct.setApprovalStatus(1);
         if (courseProduct.isNew()) {
-            courseProduct.setStatus(2);
-            courseProduct.setApprovalStatus(1);
             resultInt = pmsCourseProductMapper.insertSelective(courseProduct);
         } else {
+            //
             resultInt = pmsCourseProductMapper.updateByPrimaryKeySelective(courseProduct);
         }
         return resultInt;
@@ -165,6 +177,50 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         return pmsCourseProducts;
     }
 
+    @Override
+    public OmsOrderItem createOrderItem(PmsCourseProduct product) {
+        if (product.getApprovalStatus() == 1 || product.getApprovalStatus() == 3) {
+            logger.error("商品未通过审核不能销售, productId={}", product.getId());
+            throw new OmsBizException(ErrorCodeEnum.PMS10021015, product.getId());
+        }
+        if(product.getStatus() == 2 || product.getStatus() == 3){
+            logger.error("商品已下架或者删除, productId={}", product.getId());
+            throw new OmsBizException(ErrorCodeEnum.PMS10021017, product.getId());
+        }
+        //判断该商品是否已经到达时间节点
+        if(System.currentTimeMillis() >= product.getStartTime().getTime()){
+            logger.error("商品活动已经开始不能购买");
+            throw new OmsBizException(ErrorCodeEnum.PMS10021027);
+        }
+        //判断商品的人数限制是否已经足够
+        if(product.getStock() == 0){
+            logger.error("商品已售完");
+            throw new OmsBizException(ErrorCodeEnum.PMS10021016, product.getId());
+        }
+        OmsOrderItem orderDetail = new OmsOrderItem();
+        //封装商品的信息
+        orderDetail.setProductId(product.getId());
+        orderDetail.setProductPic(product.getImage());
+        orderDetail.setProductName(product.getProductName());
+        orderDetail.setProductQuantity(1);
+        orderDetail.setTotalPrice(product.getPrice());
+        //封装商品sku数据
+        Integer productType = product.getProductType();
+        if(productType == 2){
+            orderDetail.setProductType(2);
+        }else if(productType == 1){
+            orderDetail.setProductType(3);
+        }
+        Map map = new HashMap(0);
+        map.put("startToEndTime", product.getStartTime().toString());
+        map.put("endTime", product.getEndTime().toString());
+        map.put("maxPerson", product.getNumberLimit());
+        ArrayList<Object> arrayList = new ArrayList<>();
+        arrayList.add(map);
+        orderDetail.setProductAttr(JSONArray.toJSONString(arrayList));
+        orderDetail.setProductPrice(product.getPrice());
+        return orderDetail;
+    }
     @Override
     public Integer queryPepleNum(Long id, Long userId) {
         return pmsCourseProductMapper.queryPepleNum(id,userId);

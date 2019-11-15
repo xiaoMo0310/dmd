@@ -80,7 +80,7 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("订单来源：0->PC订单；1->app订单")
     private Integer sourceType;
 
-    @ApiModelProperty("订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单")
+    @ApiModelProperty("订单状态：0->待付款；1->已付款；2->进行中；3->已完成；4->已关闭；5->售后 6:取消")
     private Integer status;
 
     @Column(name = "order_type")

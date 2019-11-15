@@ -5,6 +5,7 @@ import com.dmd.mall.model.domain.OmsOrder;
 import com.dmd.mall.model.dto.OrderPageQueryDto;
 import com.dmd.mall.model.vo.OrderDocVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public interface OmsOrderMapper extends MyMapper<OmsOrder> {
      * @param orderSn
      * @return
      */
-    OmsOrder selectByUserIdAndOrderNo(Long userId, String orderSn);
+    OmsOrder selectByUserIdAndOrderNo(@Param("userId")Long userId, @Param("orderSn") String orderSn);
 
     /**
      * 根据用户id查询订单信息
@@ -41,5 +42,21 @@ public interface OmsOrderMapper extends MyMapper<OmsOrder> {
      * @param orderPageQuery
      * @return
      */
-    List<OrderDocVo> queryOrderListWithPage(OrderPageQueryDto orderPageQuery);
+    List<OrderDocVo> queryMemberOrderListWithPage(@Param("userId") Long userId, @Param("orderPageQuery") OrderPageQueryDto orderPageQuery);
+
+    /**
+     *查询卖家订单
+     * @param userId
+     * @param orderSn
+     * @return
+     */
+    OmsOrder selectSellerOrder(Long userId, String orderSn);
+
+    /**
+     * 根据状态查询卖家订单的列表信息
+     * @param coachId
+     * @param orderPageQuery
+     * @return
+     */
+    List<OrderDocVo> queryCoachOrderListWithPage(@Param("coachId") Long coachId, @Param("orderPageQuery") OrderPageQueryDto orderPageQuery);
 }

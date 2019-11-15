@@ -37,6 +37,7 @@
         <result column="sort" property="sort" />
         <result column="certificate_id" property="certificateId" />
         <result column="address_id" property="addressId" />
+        <result column="stock" property="stock" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -48,7 +49,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        product_name, user_id, shop_id, shop_name, title, price, product_type, location, length_play, is_time_limit, start_time, end_time, number_is_limit, number_limit, cost_includes, cost_not_includes, purchase_notes, product_description, image, content_arrangement, status, approval_status, sales, sort, certificate_id, address_id
+        product_name, user_id, shop_id, shop_name, title, price, product_type, location, length_play, is_time_limit, start_time, end_time, number_is_limit, number_limit, cost_includes, cost_not_includes, purchase_notes, product_description, image, content_arrangement, status, approval_status, sales, sort, certificate_id, address_id, stock
     </sql>
     <select id="selectCourseProductByType" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
         select
@@ -124,5 +125,13 @@
             LEFT JOIN oms_order_item oi ON om.id = oi.order_id
             LEFT JOIN pms_course_product pc ON pc.id = oi.product_id
             WHERE om.`status`=2 and om.shop_id is not null and pc.id=#{id} and pc.user_id =#{userId}
+    </select>
+    <select id="selectCheckActivity" resultType="java.lang.Integer">
+        select count(*) from pms_course_product
+        where start_time BETWEEN #{startTime,jdbcType=DATE} and #{endTime,jdbcType=DATE}
+        or end_time BETWEEN BETWEEN #{startTime,jdbcType=DATE} and #{endTime,jdbcType=DATE}
+        <if test="id != null">
+            and id != #{id}
+        </if>
     </select>
 </mapper>

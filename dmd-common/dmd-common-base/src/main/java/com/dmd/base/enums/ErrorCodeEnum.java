@@ -406,9 +406,26 @@ public enum ErrorCodeEnum {
 	 */
 	PMS10021025(10021025, "找不到指定的证书信息, certificateId=%s"),
 	/**
+	 * PMS 10021026 error code enum.
+	 */
+	PMS10021026(10021026, "找不到指定积分商品的信息, productId=%s"),
+	/**
+	 * PMS 10021027 error code enum.
+	 */
+	PMS10021027(10021027, "活动开始不能购买"),
+	/**
+	 * PMS 10021028error code enum.
+	 */
+	PMS10021028(10021028, "减库存失败"),
+
+	/**
+	 * PMS 10021029error code enum.
+	 */
+	PMS10021029(10021029, "有重复的商品活动"),
+// 1003 订单中心
+	/**
 	 * OMS 10031001 error code enum.
 	 */
-// 1003 订单中心
 	OMS10031001(10031001, "购物车为空, userId=%s"),
 	/**
 	 * OMS 10031002 error code enum.
@@ -482,6 +499,10 @@ public enum ErrorCodeEnum {
 	 * OMS 10031019 error code enum.
 	 */
 	OMS10031019(10031019, "订单总金额错误"),
+	/**
+	 * OMS 10031020 error code enum.
+	 */
+	OMS10031020(10031020, "未查询到订单信息"),
 	/**
 	 * Opc 10040001 error code enum.
 	 */

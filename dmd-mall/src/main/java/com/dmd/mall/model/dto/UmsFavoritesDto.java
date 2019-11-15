@@ -3,8 +3,6 @@ package com.dmd.mall.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.Column;
-
 /**
  * @author ChenYanbing
  * @title: UmsFavoritesDto
@@ -16,7 +14,7 @@ import javax.persistence.Column;
 public class UmsFavoritesDto {
 
 
-    @ApiModelProperty("关注类型(1:普通用户 2:教练用户 3:普通商品 4:课程或潜水商品 5:商铺)")
+    @ApiModelProperty("关注类型(1:普通用户 2:教练用户 3:普通商品 4:课程或潜水商品 5:商铺 6:话题)")
     private Integer favoriteType;
 
     @ApiModelProperty("对象id")

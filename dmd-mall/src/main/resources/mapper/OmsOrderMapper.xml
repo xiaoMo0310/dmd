@@ -82,7 +82,7 @@
         order by update_time desc
     </select>
 
-    <select id="queryOrderListWithPage" resultType="com.dmd.mall.model.vo.OrderDocVo">
+    <select id="queryMemberOrderListWithPage" resultType="com.dmd.mall.model.vo.OrderDocVo">
         SELECT
         <include refid="Base_Column_List">
             <property name="alias" value="oder"/>
@@ -90,13 +90,33 @@
         ,shipping.receiver_name
         from pc_omc_order oder
         LEFT JOIN oms_shipping shipping ON oder.shipping_id = shipping.id
-        where 1 = 1
+        where member_id = #{userId}
         <if test="status != null and status != ''">
-            and oder.status = #{status}
+            and oder.status = #{orderPageQuery.status}
         </if>
-        <if test="orderNo != null and orderNo != ''">
-            and oder.order_sn = #{orderSn}
+        ORDER BY #{orderPageQuery.orderBy}
+    </select>
+    <select id="selectSellerOrder" resultType="com.dmd.mall.model.domain.OmsOrder">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="oder"/>
+        </include>
+        from oms_order oder
+        where oder.order_sn = #{orderSn}
+        and oder.shop_id = #{userId}
+    </select>
+    <select id="queryCoachOrderListWithPage" resultType="com.dmd.mall.model.vo.OrderDocVo">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="oder"/>
+        </include>
+        ,shipping.receiver_name
+        from pc_omc_order oder
+        LEFT JOIN oms_shipping shipping ON oder.shipping_id = shipping.id
+        where shop_id = #{coachId}
+        <if test="status != null and status != ''">
+            and oder.status = #{orderPageQuery.status}
         </if>
-        ORDER BY update_time desc
+        ORDER BY #{orderPageQuery.orderBy}
     </select>
 </mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.DmdIntegralGiftMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.DmdIntegralGift">
+    <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="picture" property="picture" />
+        <result column="integral" property="integral" />
+        <result column="introduce" property="introduce" />
+        <result column="createtime" property="createtime" />
+        <result column="updatetime" property="updatetime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        name, picture, integral, introduce, createtime, updatetime
+    </sql>
+
+</mapper>

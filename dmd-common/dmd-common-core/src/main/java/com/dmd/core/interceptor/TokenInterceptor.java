@@ -7,7 +7,6 @@ import com.dmd.base.constant.GlobalConstant;
 import com.dmd.base.dto.LoginAuthDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
@@ -86,17 +85,14 @@ public class TokenInterceptor implements HandlerInterceptor {
 			return true;
 		}
 		//log.info("<== preHandle - 调试模式不走认证.  OPTIONS={}", request.getMethod().toUpperCase());
-
 		if (OPTIONS.equalsIgnoreCase(request.getMethod())) {
 			log.info("<== preHandle - 调试模式不走认证.  url={}", uri);
 			return true;
 		}
-
-		if (isHaveAccess(handler)) {
+		if(isHaveAccess(handler)) {
 			log.info("<== preHandle - 不需要认证注解不走认证.  token={}");
 			return true;
 		}
-
 		String token = StringUtils.substringAfter(request.getHeader(HttpHeaders.AUTHORIZATION), "Bearer ");
 		log.info("<== preHandle - 权限拦截器.  token={}", token);
 		LoginAuthDto loginUser = (LoginAuthDto) redisTemplate.opsForValue().get(RedisKeyUtil.getAccessTokenKey(token));

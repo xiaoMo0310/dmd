@@ -193,19 +193,20 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
-    @Transactional
-    public void updateIntegration(UmsMember umsMember, Integer integration, String operateNote) {
+    @Transactional(rollbackFor = Exception.class)
+    public void updateIntegration(UmsMember umsMember, Integer integration, String operateNote, Integer changeType) {
         Preconditions.checkArgument(umsMember != null, "用户信息不能为空");
         Preconditions.checkArgument(integration != 0, "要消费的积分不能为空");
         //判断用户积分是否充足
         if(umsMember.getIntegration() < integration){
             throw new UmsBizException(ErrorCodeEnum.OMS10031015);
         }
-        umsMember.setHistoryIntegration(umsMember.getIntegration());
-        umsMember.setIntegration(umsMember.getIntegration() - integration);
+        Integer totalIntegration = umsMember.getIntegration();
+        umsMember.setHistoryIntegration(totalIntegration);
+        umsMember.setIntegration(totalIntegration - integration);
         memberMapper.updateByPrimaryKeySelective(umsMember);
-        //记录日志
-        integrationChangeLogService.updateIntegrationAndAddLog(umsMember, integration, operateNote, 1);
+        //记录日志totalIntegration
+        integrationChangeLogService.updateIntegrationAndAddLog(umsMember, integration, totalIntegration, operateNote, changeType);
     }
 
 

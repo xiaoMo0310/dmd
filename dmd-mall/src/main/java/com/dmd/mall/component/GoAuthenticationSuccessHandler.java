@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by macro on 2018/8/6.
@@ -61,7 +60,7 @@ public class GoAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
         //保存用户数据
         MemberDetails principal = (MemberDetails) authentication.getPrincipal();
-        LoginAuthDto loginAuthDto = new LoginAuthDto(principal.getUmsMember().getId(), principal.getUmsMember().getUsername(), principal.getUmsMember().getNickname());
+        LoginAuthDto loginAuthDto = new LoginAuthDto(principal.getUmsMember().getId(), principal.getUmsMember().getUsername(), principal.getUmsMember().getNickname(), principal.getUmsMember().getLoginType());
         // 记录token日志
         String accessToken = token.getValue();
         // 存入redis数据库

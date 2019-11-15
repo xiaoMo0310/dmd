@@ -49,4 +49,6 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     List<PmsCourseProduct> queryPowerNotesPage(PmsCourseProduct pmsCourseProduct);
 
     Integer queryPepleNum(@Param("id") Long id,@Param("userId") Long userId);
+
+    int selectCheckActivity(@Param("startTime") Date startTime, @Param("endTime") Date endTime, @Param("id") Long id);
 }

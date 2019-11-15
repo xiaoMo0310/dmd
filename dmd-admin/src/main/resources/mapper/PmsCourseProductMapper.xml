@@ -53,7 +53,7 @@
     </sql>
     <update id="updateProductApprovalStatus">
         update pms_course_product
-        set approval_status = #{courseProduct.approvalStatus}, failure_reason = #{courseProduct.failureReason}, update_time = now(), last_operator = #{userName}, last_operator_id = #{userId}
+        set approval_status = #{courseProduct.approvalStatus}, failure_reason = #{courseProduct.failureReason}, update_time = now(), last_operator = #{userName}, last_operator_id = #{userId}, status = 1
         where id = #{courseProduct.id}
 
     </update>

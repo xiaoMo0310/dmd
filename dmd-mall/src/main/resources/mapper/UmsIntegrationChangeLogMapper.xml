@@ -20,6 +20,7 @@
         <result column="integral_trend" property="integralTrend" />
         <result column="startTime" property="startTime" />
         <result column="endTime" property="endTime" />
+        <result column="integration" property="integration" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -31,7 +32,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        member_id, change_type, change_count, operate_man, operate_note, source_type
+        member_id, change_type, change_count, operate_man, operate_note, source_type, integration
     </sql>
 
     <select id="selectIntegralIncome" parameterType="map" resultMap="BaseResultMap">

@@ -5,10 +5,12 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * The class Base query.
- *
- * @author paascloud.net@gmail.com
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/11/15 18:32
+ * @Description 
  */
+
 @Data
 public class BaseQuery implements Serializable {
 

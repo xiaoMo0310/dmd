@@ -29,6 +29,9 @@ public class OrderParamDto {
     @ApiModelProperty("单个商家买家留言")
     private String remark;
 
+    @ApiModelProperty("是否开具发票")
+    private Boolean isInvoice = false;
+
     @ApiModelProperty("收货人发票信息ID")
     private Long invoiceId;
 
@@ -38,7 +41,5 @@ public class OrderParamDto {
     @ApiModelProperty("下单使用的积分数")
     private Integer useIntegration = 0;
 
-    @ApiModelProperty("是否开具发票")
-    private Boolean isInvoice = false;
 
 }

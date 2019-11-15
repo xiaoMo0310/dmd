@@ -111,6 +111,11 @@ public class UmsMember implements Serializable {
     @ApiModelProperty("个人简介")
     private String personalProfile;
 
+    /**
+     * 用户类型
+     */
+    private String loginType;
+
 
     private static final long serialVersionUID = 1L;
 
@@ -148,6 +153,7 @@ public class UmsMember implements Serializable {
                 ", totalInvitation=" + totalInvitation +
                 ", personalAlbum='" + personalAlbum + '\'' +
                 ", personalProfile='" + personalProfile + '\'' +
+                ", loginType='" + loginType + '\'' +
                 '}';
     }
 }

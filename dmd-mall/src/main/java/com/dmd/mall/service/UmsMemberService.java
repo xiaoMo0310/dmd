@@ -59,7 +59,7 @@ public interface UmsMemberService {
      * @param integration
      * @param operateNote
      */
-    void updateIntegration(UmsMember umsMember, Integer integration, String operateNote);
+    void updateIntegration(UmsMember umsMember, Integer integration, String operateNote, Integer changeType);
     /**
      * 在手机号或邮箱登陆时，没有账号的话注册账号用的
      * */

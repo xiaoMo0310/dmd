@@ -58,7 +58,7 @@ private static final long serialVersionUID = 1L;
     private String productSn;
 
     @Column(name = "product_type")
-    @ApiModelProperty("商品类型(1:普通商品 2:船宿商品 3:课程商品)")
+    @ApiModelProperty("商品类型(1:普通商品 2:潜水商品 3:学证商品)")
     private Integer productType;
 
     @Column(name = "product_price")

@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseService;
 import com.dmd.mall.mapper.UmsIntegrationChangeLogMapper;
 import com.dmd.mall.model.domain.UmsIntegrationChangeLog;
@@ -28,7 +29,7 @@ public class UmsIntegrationChangeLogServiceImpl extends BaseService<UmsIntegrati
     private UmsMemberService umsMemberService;
 
     @Override
-    public void updateIntegrationAndAddLog(UmsMember umsMember, Integer integration, String operateNote, Integer changeType){
+    public void updateIntegrationAndAddLog(UmsMember umsMember, Integer integration, Integer totalIntegration, String operateNote, Integer changeType){
         //记录日志信息
         UmsIntegrationChangeLog integrationChangeLog = new UmsIntegrationChangeLog();
         integrationChangeLog.setChangeCount(integration);
@@ -36,7 +37,12 @@ public class UmsIntegrationChangeLogServiceImpl extends BaseService<UmsIntegrati
         integrationChangeLog.setMemberId(umsMember.getId());
         integrationChangeLog.setOperateMan(umsMember.getUsername());
         integrationChangeLog.setOperateNote(operateNote);
+        integrationChangeLog.setIntegralTrend(operateNote);
         integrationChangeLog.setSourceType(0);
+        LoginAuthDto loginAuthDto = new LoginAuthDto();
+        loginAuthDto.setUserId(umsMember.getId());
+        loginAuthDto.setUserName(umsMember.getUsername());
+        integrationChangeLog.setUpdateInfo(loginAuthDto);
         umsIntegrationChangeLogMapper.insertSelective(integrationChangeLog);
     }
 

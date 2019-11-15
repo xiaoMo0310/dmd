@@ -3,14 +3,15 @@ package com.dmd.mall.service;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
+import com.dmd.mall.model.domain.OmsOrderItem;
 import com.dmd.mall.model.domain.PmsCourseProduct;
 import com.dmd.mall.model.dto.CertificateProductDto;
+import com.dmd.mall.model.dto.CourseProductDto;
 import com.dmd.mall.model.vo.CertificateProductVo;
 import com.dmd.mall.model.vo.DivingProductVo;
 import com.dmd.mall.model.vo.PmsCourseListVo;
 import com.github.pagehelper.PageInfo;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,10 +27,10 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
     /**
      * 编辑课程产品的信息
      * @param loginAuthDto
-     * @param courseProduct
+     * @param courseProductDto
      * @return
      */
-    int saveCourseProductMessage(LoginAuthDto loginAuthDto, PmsCourseProduct courseProduct);
+    int saveCourseProductMessage(LoginAuthDto loginAuthDto, CourseProductDto courseProductDto);
 
     /**
      *根据id查询详细的信息
@@ -70,4 +71,11 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
     List<PmsCourseProduct> queryPowerNotesPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct);
 
     Integer queryPepleNum(Long id, Long userId);
+
+    /**
+     * 封装订单详情数据
+     * @param product
+     * @return
+     */
+    OmsOrderItem createOrderItem(PmsCourseProduct product);
 }

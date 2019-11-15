@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -58,11 +59,15 @@ private static final long serialVersionUID = 1L;
     @Column(name = "integral_trend")
     @ApiModelProperty("积分动向说明")
     private String integralTrend;
+
+    @ApiModelProperty("更新前的积分数量")
+    private Integer integration;
     /**
      * 开始时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Transient
     private Date startTime;
 
     /**
@@ -70,6 +75,7 @@ private static final long serialVersionUID = 1L;
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Transient
     private Date endTime;
 
 }

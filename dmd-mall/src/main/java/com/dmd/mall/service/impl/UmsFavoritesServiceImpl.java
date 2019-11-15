@@ -3,7 +3,6 @@ package com.dmd.mall.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
-import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
 import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.UmsFavoritesMapper;
@@ -17,16 +16,12 @@ import com.dmd.mall.service.UmsFavoritesService;
 import com.dmd.mall.service.UmsMemberService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.common.base.Preconditions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -55,8 +50,11 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
         BeanUtils.copyProperties(umsFavoritesDto, umsFavorites);
         umsFavorites.setUpdateInfo(loginAuthDto);
         umsFavorites.setUserId(loginAuthDto.getUserId());
-        //todo 教练类型待完善
-        umsFavorites.setUserType(1);
+        if(loginAuthDto.getUserType().equals("member")){
+            umsFavorites.setUserType(1);
+        }else if(loginAuthDto.getUserType().equals("coach")){
+            umsFavorites.setUserType(2);
+        }
         //查询是否关注
         if(checkAttention(loginAuthDto, umsFavorites.getTargetId(), umsFavorites.getFavoriteType())){
             throw new UmsBizException("已关注");
@@ -79,8 +77,11 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
         BeanUtils.copyProperties(umsFavoritesDto, umsFavorites);
         umsFavorites.setUpdateInfo(loginAuthDto);
         umsFavorites.setUserId(loginAuthDto.getUserId());
-        //todo 教练类型待完善
-        umsFavorites.setUserType(1);
+        if(loginAuthDto.getUserType().equals("member")){
+            umsFavorites.setUserType(1);
+        }else if(loginAuthDto.getUserType().equals("coach")){
+            umsFavorites.setUserType(2);
+        }
         int resultInt = umsFavoritesMapper.updateAttentionStatus(loginAuthDto.getUserId(), loginAuthDto.getUserName(), umsFavorites);
         return resultInt;
     }
@@ -89,8 +90,11 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
     public Boolean checkAttention(LoginAuthDto loginAuthDto, Long targetId, Integer favoriteType) {
         UmsFavorites umsFavorites = new UmsFavorites();
         umsFavorites.setUserId(loginAuthDto.getUserId());
-        //todo 教练类型待完善
-        umsFavorites.setUserType(1);
+        if(loginAuthDto.getUserType().equals("member")){
+            umsFavorites.setUserType(1);
+        }else if(loginAuthDto.getUserType().equals("coach")){
+            umsFavorites.setUserType(2);
+        }
         umsFavorites.setTargetId(targetId);
         umsFavorites.setFavoriteType(favoriteType);
         umsFavorites.setStatus(1);

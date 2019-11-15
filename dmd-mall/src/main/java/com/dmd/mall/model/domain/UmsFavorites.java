@@ -37,7 +37,7 @@ private static final long serialVersionUID = 1L;
     private Integer userType;
 
     @Column(name = "favorite_type")
-    @ApiModelProperty("关注类型(1:普通用户 2:教练用户 3:普通商品 4:课程或潜水商品 5:商铺)")
+    @ApiModelProperty("关注类型(1:普通用户 2:教练用户 3:普通商品 4:课程或潜水商品 5:商铺 6:话题)")
     private Integer favoriteType;
 
     @Column(name = "target_id")

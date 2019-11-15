@@ -142,6 +142,7 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
         orderDetail.setProductId(product.getId());
         orderDetail.setProductPic(product.getPic());
         orderDetail.setProductName(product.getName());
+        orderDetail.setProductType(1);
         orderDetail.setProductBrand(product.getBrandName());
         orderDetail.setProductQuantity(quantity);
         orderDetail.setProductCategoryId(product.getProductCategoryId());
@@ -153,4 +154,5 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
         orderDetail.setProductSkuCode(pmsSkuStock.getSkuCode());
         return orderDetail;
     }
+
 }

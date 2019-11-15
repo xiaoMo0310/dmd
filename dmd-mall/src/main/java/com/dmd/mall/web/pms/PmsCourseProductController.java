@@ -5,6 +5,7 @@ import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.domain.PmsCourseProduct;
 import com.dmd.mall.model.dto.CertificateProductDto;
+import com.dmd.mall.model.dto.CourseProductDto;
 import com.dmd.mall.model.vo.CertificateProductVo;
 import com.dmd.mall.model.vo.DivingProductVo;
 import com.dmd.mall.model.vo.PmsCourseListVo;
@@ -37,10 +38,10 @@ public class PmsCourseProductController extends BaseController {
 
     @PostMapping("/courseProduct/save")
     @ApiOperation(httpMethod = "POST", value = "添加或编辑潜水及学习产品的信息")
-    @ApiImplicitParam(name ="courseProduct", value = "课程产品的信息,修改需要提供id", dataType = "PmsCourseProduct")
-    public Wrapper saveCourseProductMessage(@RequestBody PmsCourseProduct courseProduct) {
-        logger.info("saveAttentionMessage - 编辑课程产品的信息. courseProduct={}", courseProduct);
-        int result = pmsCourseProductService.saveCourseProductMessage(getLoginAuthDto(), courseProduct);
+    @ApiImplicitParam(name ="courseProductDto", value = "课程产品的信息,修改需要提供id", dataType = "CourseProductDto", paramType = "body")
+    public Wrapper saveCourseProductMessage(@RequestBody CourseProductDto courseProductDto) {
+        logger.info("saveAttentionMessage - 编辑课程产品的信息. courseProduct={}", courseProductDto);
+        int result = pmsCourseProductService.saveCourseProductMessage(getLoginAuthDto(), courseProductDto);
         return handleResult(result);
     }
 

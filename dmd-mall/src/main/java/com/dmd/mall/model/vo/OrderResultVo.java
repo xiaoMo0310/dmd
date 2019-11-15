@@ -4,19 +4,17 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @author YangAnsheng
  * @version 1.0
- * @createDate 2019/10/16 9:55
- * @Description 创建多订单成功后返回vo类
+ * @createDate 2019/11/13 10:36
+ * @Description 订单生成基础返回 vo
  */
-
 @Data
-public class OrderCreateResultVo implements Serializable {
-    private static final long serialVersionUID = -5581041089047976745L;
+public class OrderResultVo implements Serializable {
 
+    private static final long serialVersionUID = -6434142141140559615L;
     /**
      * 需要支付的价格
      */
@@ -25,5 +23,5 @@ public class OrderCreateResultVo implements Serializable {
     /**
      * 需要支付的订单编号
      */
-    private List<String> orderSns;
+    private String  orderSn;
 }
