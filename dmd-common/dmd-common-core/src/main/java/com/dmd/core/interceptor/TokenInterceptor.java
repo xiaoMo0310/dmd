@@ -7,6 +7,7 @@ import com.dmd.base.constant.GlobalConstant;
 import com.dmd.base.dto.LoginAuthDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
@@ -77,7 +78,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 	 * @return the boolean
 	 */
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
 		String uri = request.getRequestURI();
 		log.info("<== preHandle - 权限拦截器.  url={}", uri);
 		if (uri.contains(AUTH_PATH1) || uri.contains(AUTH_PATH2) || uri.contains(AUTH_PATH3) || uri.contains(AUTH_PATH4)) {
@@ -124,6 +125,24 @@ public class TokenInterceptor implements HandlerInterceptor {
 		Method method = handlerMethod.getMethod();
 		NoNeedAccessAuthentication responseBody = AnnotationUtils.findAnnotation(method, NoNeedAccessAuthentication.class);
 		return responseBody != null;
+	}
+	public static byte[] getRequestPostBytes(HttpServletRequest request)
+			throws IOException {
+		int contentLength = request.getContentLength();
+		if(contentLength<0){
+			return null;
+		}
+		byte buffer[] = new byte[contentLength];
+		for (int i = 0; i < contentLength;) {
+
+			int readlen = request.getInputStream().read(buffer, i,
+					contentLength - i);
+			if (readlen == -1) {
+				break;
+			}
+			i += readlen;
+		}
+		return buffer;
 	}
 }
   

@@ -76,6 +76,11 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
+    public UmsMember getByUsernameCoach(String username) {
+        return memberMapper.getByUsernameCoach(username);
+    }
+
+    @Override
     public UmsMember getById(Long id) {
         return memberMapper.selectByPrimaryKey(id);
     }

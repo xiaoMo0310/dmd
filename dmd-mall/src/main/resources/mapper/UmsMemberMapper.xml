@@ -23,6 +23,13 @@
     <result column="history_integration" jdbcType="INTEGER" property="historyIntegration" />
     <result column="role" jdbcType="VARCHAR" property="role"/>
     <result column="invitation_code" jdbcType="VARCHAR" property="invitationCode"/>
+    <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+    <result column="coach_name" jdbcType="VARCHAR" property="username"/>
+    <result column="coach_grade" jdbcType="VARCHAR" property="coachGrade"/>
+    <result column="total_invitation" jdbcType="VARCHAR" property="totalInvitation"/>
+    <result column="personal_album" jdbcType="VARCHAR" property="personalAlbum"/>
+    <result column="personal_profile" jdbcType="VARCHAR" property="personalProfile"/>
+
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -451,11 +458,19 @@
   </select>
 
   <select id="getCoachUser" resultType="string">
-        select username from ums_member where invitation_code=#{invitationCode}
+        select coach_name from ums_coach where invitation_code=#{invitationCode}
   </select>
 
   <select id="queryMyIntegral" parameterType="java.lang.Long" resultType="java.lang.Integer">
     SELECT integration FROM  ums_member WHERE id = #{userId}
   </select>
+
+  <select id="getByUsernameCoach" resultMap="BaseResultMap">
+    select * from ums_coach where coach_name=#{username}
+  </select>
+  <insert id="insertCoach">
+    insert into ums_coach(coach_name,password,status,phone,created_time,update_time)
+    values (#{username},#{password},1,#{phone},now(),now())
+  </insert>
 
 </mapper>

@@ -291,7 +291,34 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public int addPermissionForRole(List<UmsRolePermissionRelation> permissionRelations) {
+        adminRoleRelationDao.deletePermissionForRole(permissionRelations.get(0).getRoleId());
         return adminRoleRelationDao.addPermissionForRole(permissionRelations);
+    }
+
+    @Override
+    public Long isEnableRole(Long id, Long status) {
+        if (adminRoleRelationDao.isEnableRole(id,status)==1){
+            return status;
+        }
+        return -1L;
+    }
+
+    @Override
+    public UmsRole addRole(UmsRole umsRole) {
+        if (adminRoleRelationDao.addRole(umsRole)==1){
+            return umsRole;
+        }
+        return null;
+    }
+
+    @Override
+    public int deleteRoles(List<Long> ids) {
+        return adminRoleRelationDao.deleteRoles(ids);
+    }
+
+    @Override
+    public int modifyRole(UmsRole umsRole) {
+        return adminRoleRelationDao.modifyRole(umsRole);
     }
 
 //    public List<UmsPermission> getNode(Long pid){

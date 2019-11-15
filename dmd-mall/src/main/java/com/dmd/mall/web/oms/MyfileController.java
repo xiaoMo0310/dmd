@@ -4,6 +4,7 @@ import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ import java.util.*;
  */
 
 @Controller
-@Api(tags = "MyfileController", description = "视频与图片上传")
+@Api(tags = "MyfileController", description = "视频与图片上传",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
 @RequestMapping("/uploadFile")
 public class MyfileController {
 

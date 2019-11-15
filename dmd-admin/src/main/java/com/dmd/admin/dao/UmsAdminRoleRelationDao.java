@@ -37,7 +37,7 @@ public interface UmsAdminRoleRelationDao {
     /**
      * 添加角色
      */
-    int addRoles(UmsRole umsRole);
+    int addRole(UmsRole umsRole);
     /**
      * 建立用户和角色对应关系
      */
@@ -54,11 +54,11 @@ public interface UmsAdminRoleRelationDao {
     /**
      * 建立角色和权限的对应关系
      */
-    int addPermissionForRole(List<UmsRolePermissionRelation> permissionRelations);
+    int addPermissionForRole(@Param("permissionRelations") List<UmsRolePermissionRelation> permissionRelations);
     /**
      * 删除角色和权限的对应关系
      */
-    int deletePermissionForRole(@Param("roleId") String roleId);
+    int deletePermissionForRole(@Param("roleId") Long roleId);
 
     List<UmsPermission> getAllPermission();
 
@@ -68,5 +68,11 @@ public interface UmsAdminRoleRelationDao {
 
     List<UmsRole> roleList();
 
+    //是否启用角色
+    int isEnableRole(@Param("id") Long id,@Param("status") Long status);
+    //删除角色
+    int deleteRoles(@Param("ids") List<Long> ids);
+    //修改角色信息
+    int modifyRole(UmsRole umsRole);
 
 }

@@ -227,5 +227,30 @@ public class UmsAdminController {
     public Wrapper<Integer> addPermissionForRole(@RequestBody List<UmsRolePermissionRelation> permissionRelations) {
         return  WrapMapper.ok(adminService.addPermissionForRole(permissionRelations));
     }
+    @ApiOperation("禁用和启用角色")
+    @RequestMapping(value = "/isEnableRole", method = RequestMethod.POST)
+    @ResponseBody
+    public Wrapper<Long> isEnableRole(@RequestParam("id") Long id,@RequestParam("status") Long status) {
+        return  WrapMapper.ok(adminService.isEnableRole(id,status));
+    }
+    @ApiOperation("添加角色")
+    @RequestMapping(value = "/addRole", method = RequestMethod.POST)
+    @ResponseBody
+    public Wrapper<UmsRole> addRole(@RequestBody UmsRole umsRole) {
+        return  WrapMapper.ok(adminService.addRole(umsRole));
+    }
+
+    @ApiOperation("删除角色")
+    @RequestMapping(value = "/deleteRoles", method = RequestMethod.POST)
+    @ResponseBody
+    public Wrapper<Integer> deleteRoles(@RequestBody List<Long> ids) {
+        return  WrapMapper.ok(adminService.deleteRoles(ids));
+    }
+    @ApiOperation("修改角色信息")
+    @RequestMapping(value = "/modifyRole", method = RequestMethod.POST)
+    @ResponseBody
+    public Wrapper<Integer> modifyRole(@RequestBody UmsRole umsRole) {
+        return  WrapMapper.ok(adminService.modifyRole(umsRole));
+    }
 
 }

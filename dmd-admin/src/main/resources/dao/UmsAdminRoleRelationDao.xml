@@ -59,9 +59,9 @@
     </select>
 
 
-    <insert id="addRoles">
-        insert into ums_role(name,description,admin_count,create_time,status)
-        values(#{name},#{description},0,now(),1)
+    <insert id="addRole" parameterType="com.dmd.admin.model.domain.UmsRole"  useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into ums_role(name,description,admin_count,create_time,status,sort)
+        values(#{name},#{description},0,now(),1,#{sort})
     </insert>
     <insert id="addRolesForAdmin">
         insert into ums_admin_role_relation(admin_id, role_id)
@@ -88,8 +88,8 @@
         values
         <foreach collection="permissionRelations" item="permission" index="index" separator=",">
             (
-            #{permission.role_id,jdbcType=INTEGER},
-            #{permission.permission_id,jdbcType=INTEGER}
+            #{permission.roleId,jdbcType=INTEGER},
+            #{permission.permissionId,jdbcType=INTEGER}
             )
         </foreach>
     </insert>
@@ -117,5 +117,18 @@
         select * from ums_role
     </select>
 
+    <update id="isEnableRole">
+        update ums_role set status=#{status} where id=#{id}
+    </update>
+    <delete id="deleteRoles">
+        delete from ums_role where id in
+        <foreach collection="ids"  item="item" open="(" separator="," close=")"  >
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="modifyRole">
+        update ums_role set status=#{status},name=#{name},description=#{description},sort=#{sort} where id=#{id}
+    </update>
 
 </mapper>
