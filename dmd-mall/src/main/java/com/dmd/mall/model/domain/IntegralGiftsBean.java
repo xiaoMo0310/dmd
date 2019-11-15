@@ -47,16 +47,16 @@ public class IntegralGiftsBean {
     private Date updateTime;
 
     /**
-     * 库存量
+     * 上下架
      */
-    private Integer inventory;
+    private Integer status;
 
-    public Integer getInventory() {
-        return inventory;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setInventory(Integer inventory) {
-        this.inventory = inventory;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Long getId() {
@@ -125,7 +125,7 @@ public class IntegralGiftsBean {
                 ", introduce='" + introduce + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
-                ", inventory=" + inventory +
+                ", status=" + status +
                 '}';
     }
 }

@@ -4,6 +4,7 @@ import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.CommentBean;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.IntegralGiftsBean;
+import com.dmd.mall.model.domain.IntegralGiftsSpeBean;
 import com.dmd.mall.service.IntegralGiftsService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -135,6 +136,17 @@ public class IntegralGiftsController {
         return CommonResult.failed("删除失败");
     }
 
-
+    /**
+     * 根据礼品id查询礼品规格
+     * @param id
+     * @return
+     */
+    @ApiOperation("兑换查询产品规格")
+    @RequestMapping(value = "/selectIntegralGiftsSpeById",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<IntegralGiftsSpeBean>> queryIntegralGiftsSpeById(@RequestParam Long id) {
+        List<IntegralGiftsSpeBean> integralGiftsSpeList = integralGiftsService.queryIntegralGiftsSpeById(id);
+        return CommonResult.success(integralGiftsSpeList);
+    }
 
 }

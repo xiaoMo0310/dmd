@@ -11,11 +11,11 @@
         <result column="introduce" property="introduce" />
         <result column="createtime" property="createTime" />
         <result column="updatetime" property="updateTime" />
-        <result column="inventory" property="inventory" />
+        <result column="status" property="status" />
     </resultMap>
 
     <select id="queryIntegralGifts" resultMap="integralGiftsMap">
-        SELECT id,name,picture,integral,introduce,createtime,updatetime,inventory FROM dmd_integral_gift
+        SELECT id,name,picture,integral,introduce,createtime,updatetime,status FROM dmd_integral_gift
         <include refid="giftsWhere"></include>
     </select>
     <!-- 公用标签 -->
@@ -32,6 +32,9 @@
             <if test="endTime != null">
                 and createTime &lt;= #{endTime}
             </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
         </where>
     </sql>
 
@@ -44,7 +47,7 @@
           introduce,
           createtime,
           updatetime,
-          inventory
+          status
         ) VALUES (
           #{name,jdbcType=VARCHAR},
           #{picture,jdbcType=VARCHAR},
@@ -52,12 +55,12 @@
           #{introduce,jdbcType=VARCHAR},
           #{createTime,jdbcType=TIMESTAMP},
           #{updateTime,jdbcType=TIMESTAMP},
-          #{inventory,jdbcType=INTEGER}
+          0
         )
     </insert>
 
     <select id="findIntegralGiftsInfoById" parameterType="java.lang.Long" resultMap="integralGiftsMap">
-        SELECT id,name,picture,integral,introduce,createtime,updatetime,inventory FROM dmd_integral_gift WHERE id = #{value}
+        SELECT id,name,picture,integral,introduce,createtime,updatetime,status FROM dmd_integral_gift WHERE id = #{value}
     </select>
 
     <update id="updateIntegralGiftsById" parameterType="com.dmd.admin.model.domain.IntegralGiftsBean">
@@ -68,7 +71,7 @@
         introduce = #{introduce},
         createtime = #{createTime},
         updatetime = #{updateTime},
-        inventory = #{inventory}
+        status = #{status}
         where id = #{id}
     </update>
 
@@ -78,4 +81,18 @@
             #{id}
         </foreach>
     </delete>
+
+    <update id="updateIntegralGiftsPass" parameterType="java.lang.Long" >
+        UPDATE dmd_integral_gift SET status = 0 WHERE id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateIntegralGiftsNoPass" parameterType="java.lang.Long" >
+        UPDATE dmd_integral_gift SET status = 1 WHERE id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

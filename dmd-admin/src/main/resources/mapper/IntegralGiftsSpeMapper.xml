@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.admin.mapper.IntegralGiftsSpeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="integralGiftsMap" type="com.dmd.admin.model.domain.IntegralGiftsSpeBean">
+        <result column="id" property="id" />
+        <result column="giftId" property="giftId" />
+        <result column="specStock" property="specStock" />
+        <result column="size" property="size" />
+        <result column="color" property="color" />
+    </resultMap>
+
+    <insert id="addIntegralGiftsSpe" parameterType="list">
+
+        INSERT INTO dmd_integral_gift_spe(
+        giftId,
+        specStock,
+        size,
+        color
+        ) VALUES
+        <foreach collection="list" item="dept" index="index" separator=",">
+            (
+            #{dept.giftId,jdbcType=BIGINT},
+            #{dept.specStock,jdbcType=INTEGER},
+            #{dept.size,jdbcType=VARCHAR},
+            #{dept.color,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryIntegralGiftsSpeById" parameterType="java.lang.Long" resultMap="integralGiftsMap">
+        SELECT
+        id,
+        giftId,
+        size,
+        specStock,
+        color
+        FROM
+        dmd_integral_gift_spe
+        WHERE
+        giftId = #{id}
+    </select>
+</mapper>
