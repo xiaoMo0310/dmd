@@ -1,13 +1,7 @@
 package com.dmd.admin.service.impl;
 
-import com.dmd.admin.mapper.IntegralGiftsMapper;
-import com.dmd.admin.mapper.IntegralRuleMapper;
-import com.dmd.admin.mapper.UmsIntegrationChangeHistoryMapper;
-import com.dmd.admin.mapper.UmsMemberMapper;
-import com.dmd.admin.model.domain.IntegralGiftsBean;
-import com.dmd.admin.model.domain.IntegralRuleBean;
-import com.dmd.admin.model.domain.UmsIntegrationChangeHistory;
-import com.dmd.admin.model.domain.UmsMember;
+import com.dmd.admin.mapper.*;
+import com.dmd.admin.model.domain.*;
 import com.dmd.admin.service.IntegralAdminService;
 import com.dmd.base.result.CommonResult;
 import com.github.pagehelper.PageHelper;
@@ -38,6 +32,10 @@ public class IntegralAdminServiceImpl implements IntegralAdminService{
 
     @Autowired
     private IntegralGiftsMapper integralGiftsMapper;
+
+    @Autowired
+    private IntegralGiftsSpeMapper integralGiftsSpeMapper;
+
 
     @Override
     public List<IntegralRuleBean> queryIntegralRule() {
@@ -131,5 +129,26 @@ public class IntegralAdminServiceImpl implements IntegralAdminService{
     @Override
     public int deleteIntegralGiftsById(List<Long> ids) {
         return integralGiftsMapper.deleteIntegralGiftsById(ids);
+    }
+
+    @Override
+    public int addIntegralGiftsSpe(List<IntegralGiftsSpeBean> list) {
+        return integralGiftsSpeMapper.addIntegralGiftsSpe(list);
+    }
+
+    @Override
+    public List<IntegralGiftsSpeBean> queryIntegralGiftsSpeById(Long id) {
+
+        return integralGiftsSpeMapper.queryIntegralGiftsSpeById(id);
+    }
+
+    @Override
+    public int updateIntegralGiftsPass(List<Long> ids) {
+        return integralGiftsMapper.updateIntegralGiftsPass(ids);
+    }
+
+    @Override
+    public int updateIntegralGiftsNoPass(List<Long> ids) {
+        return integralGiftsMapper.updateIntegralGiftsNoPass(ids);
     }
 }

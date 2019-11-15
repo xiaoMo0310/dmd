@@ -1,9 +1,6 @@
 package com.dmd.admin.web;
 
-import com.dmd.admin.model.domain.IntegralGiftsBean;
-import com.dmd.admin.model.domain.IntegralRuleBean;
-import com.dmd.admin.model.domain.TopicBean;
-import com.dmd.admin.model.domain.UmsIntegrationChangeHistory;
+import com.dmd.admin.model.domain.*;
 import com.dmd.admin.service.IntegralAdminService;
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
@@ -318,4 +315,73 @@ public class IntegralAdminController {
         return CommonResult.failed("删除失败");
     }
 
+    /**
+     * 添加积分好礼规格
+     * @param list
+     * @return
+     */
+    @ApiOperation("添加积分好礼规格")
+    @RequestMapping(value = "/addIntegralGiftsSpe",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult addIntegralGiftsSpe(@RequestParam("id")Long id,@RequestBody List<IntegralGiftsSpeBean> list) {
+
+        //循环赋值
+        for (IntegralGiftsSpeBean aList : list) {
+            aList.setGiftId(id);
+        }
+            System.out.println(list);
+        int count = integralAdminService.addIntegralGiftsSpe(list);
+        if (count > 0) {
+            return CommonResult.success(count,"添加成功");
+        }
+        return CommonResult.failed("添加失败");
+    }
+
+    /**
+     * 查询产品的规格
+     * @param id
+     * @return
+     */
+    @ApiOperation("查询产品的规格")
+    @RequestMapping(value = "/selectIntegralGiftsSpeById",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<CommonPage<IntegralGiftsSpeBean>> queryIntegralGiftsSpeById(
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,
+            @RequestParam Long id) {
+        List<IntegralGiftsSpeBean> integralGiftsSpeList = integralAdminService.queryIntegralGiftsSpeById(id);
+        return CommonResult.success(CommonPage.restPage(integralGiftsSpeList));
+    }
+
+    /**
+     * 礼品批量上架
+     * @param ids
+     * @return
+     */
+    @ApiOperation("礼品批量上架")
+    @RequestMapping(value = "/updateIntegralGiftsPass",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateIntegralGiftsPass(@RequestParam("ids") List<Long> ids){
+        int count = integralAdminService.updateIntegralGiftsPass(ids);
+        if (count > 0) {
+            return CommonResult.success(count,"上架成功");
+        }
+        return CommonResult.failed("上架失败");
+    }
+
+    /**
+     * 礼品批量下架
+     * @param ids
+     * @return
+     */
+    @ApiOperation("礼品批量下架")
+    @RequestMapping(value = "/updateIntegralGiftsNoPass",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateIntegralGiftsNoPass(@RequestParam("ids") List<Long> ids){
+        int count = integralAdminService.updateIntegralGiftsNoPass(ids);
+        if (count > 0) {
+            return CommonResult.success(count,"下架成功");
+        }
+        return CommonResult.failed("下架失败");
+    }
 }

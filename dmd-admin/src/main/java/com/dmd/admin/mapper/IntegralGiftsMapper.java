@@ -21,4 +21,8 @@ public interface IntegralGiftsMapper {
     int addIntegralGifts(IntegralGiftsBean integralGiftsBean);
 
     int deleteIntegralGiftsById(List<Long> ids);
+
+    int updateIntegralGiftsPass(List<Long> ids);
+
+    int updateIntegralGiftsNoPass(List<Long> ids);
 }

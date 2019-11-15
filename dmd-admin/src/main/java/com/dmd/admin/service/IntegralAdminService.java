@@ -1,6 +1,7 @@
 package com.dmd.admin.service;
 
 import com.dmd.admin.model.domain.IntegralGiftsBean;
+import com.dmd.admin.model.domain.IntegralGiftsSpeBean;
 import com.dmd.admin.model.domain.IntegralRuleBean;
 import com.dmd.admin.model.domain.UmsIntegrationChangeHistory;
 
@@ -37,4 +38,12 @@ public interface IntegralAdminService {
     int addIntegralGifts(IntegralGiftsBean integralGiftsBean);
 
     int deleteIntegralGiftsById(List<Long> ids);
+
+    int addIntegralGiftsSpe(List<IntegralGiftsSpeBean> list);
+
+    List<IntegralGiftsSpeBean> queryIntegralGiftsSpeById(Long id);
+
+    int updateIntegralGiftsPass(List<Long> ids);
+
+    int updateIntegralGiftsNoPass(List<Long> ids);
 }

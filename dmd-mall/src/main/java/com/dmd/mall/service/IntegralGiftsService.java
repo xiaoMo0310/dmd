@@ -1,6 +1,7 @@
 package com.dmd.mall.service;
 
 import com.dmd.mall.model.domain.IntegralGiftsBean;
+import com.dmd.mall.model.domain.IntegralGiftsSpeBean;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface IntegralGiftsService {
     int updateIntegralGiftsById(IntegralGiftsBean integralGiftsBean);
 
     int deleteIntegralGiftsById(Long id);
+
+    List<IntegralGiftsSpeBean> queryIntegralGiftsSpeById(Long id);
 }

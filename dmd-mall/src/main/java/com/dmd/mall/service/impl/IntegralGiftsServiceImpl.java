@@ -1,7 +1,9 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.mall.mapper.IntegralGiftSpeMapper;
 import com.dmd.mall.mapper.IntegralGiftsMapper;
 import com.dmd.mall.model.domain.IntegralGiftsBean;
+import com.dmd.mall.model.domain.IntegralGiftsSpeBean;
 import com.dmd.mall.service.IntegralGiftsService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class IntegralGiftsServiceImpl implements IntegralGiftsService{
 
     @Autowired
     private IntegralGiftsMapper integralGiftsMapper;
+
+    @Autowired
+    private IntegralGiftSpeMapper integralGiftSpeMapper;
 
     @Override
     public List<IntegralGiftsBean> queryIntegralGifts() {
@@ -61,6 +66,11 @@ public class IntegralGiftsServiceImpl implements IntegralGiftsService{
     @Override
     public int deleteIntegralGiftsById(Long id) {
         return integralGiftsMapper.deleteIntegralGiftsById(id);
+    }
+
+    @Override
+    public List<IntegralGiftsSpeBean> queryIntegralGiftsSpeById(Long id) {
+        return integralGiftSpeMapper.queryIntegralGiftsSpeById(id);
     }
 
 
