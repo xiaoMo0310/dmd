@@ -45,10 +45,10 @@ public class PmsCourseProductController extends BaseController {
         return handleResult(result);
     }
 
-    @GetMapping("/courseProduct/{id}")
+    @GetMapping("/courseProduct")
     @ApiOperation(httpMethod = "GET", value = "查看商品的详细信息")
-    @ApiImplicitParam(name ="id", value = "主键id", dataType = "long", paramType = "path")
-    public Wrapper findCourseProductById(@PathVariable Long id) {
+    @ApiImplicitParam(name ="id", value = "主键id", dataType = "long", paramType = "query")
+    public Wrapper findCourseProductById(@RequestParam("id") Long id) {
         DivingProductVo divingProductVo = pmsCourseProductService.findCourseProductById(id);
         return WrapMapper.ok(divingProductVo);
     }
@@ -61,10 +61,10 @@ public class PmsCourseProductController extends BaseController {
         return WrapMapper.ok(productList);
     }
 
-    @PostMapping("/certificateProduct/find/{certificateId}")
-    @ApiOperation(httpMethod = "POST", value = "查询学证产品的详细信息及教练信息,证书信息")
-    @ApiImplicitParam(name ="certificateId", value = "证书id", dataType = "Long", paramType = "path")
-    public Wrapper findCertificateProduct(@PathVariable Long certificateId) {
+    @GetMapping("/certificateProduct/find")
+    @ApiOperation(httpMethod = "GET", value = "查询学证产品的详细信息及教练信息,证书信息")
+    @ApiImplicitParam(name ="certificateId", value = "证书id", dataType = "Long", paramType = "query")
+    public Wrapper findCertificateProduct(@RequestParam("certificateId") Long certificateId) {
         CertificateProductVo certificateProductVo = pmsCourseProductService.findCertificateProduct(getLoginAuthDto(), certificateId);
         return WrapMapper.ok(certificateProductVo);
     }
