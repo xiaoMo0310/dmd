@@ -38,23 +38,24 @@ public class PowerNotesController {
 
     /**
      * 教练日程明细查询
+     *
      * @param pageNum
      * @param pageSize
      * @param userId
      * @return
      */
     @ApiOperation("教练日程明细查询")
-    @RequestMapping(value = "/selectPowerNotes",method = RequestMethod.GET)
+    @RequestMapping(value = "/selectPowerNotes", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<PageInfo<PmsCourseProduct>> queryPowerNotesPage(@RequestParam Integer pageNum,
                                                                         @RequestParam Integer pageSize,
                                                                         @RequestParam Long userId,
                                                                         PmsCourseProduct pmsCourseProduct) {
-        if(pmsCourseProduct.getSearchStartTime() != null){
+        if (pmsCourseProduct.getSearchStartTime() != null) {
             String time = "";
             String time2 = "";
             String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(pmsCourseProduct.getSearchStartTime());
-            if(StringUtils.isNotBlank(dateStr)){
+            if (StringUtils.isNotBlank(dateStr)) {
                 StringBuilder sb = new StringBuilder(dateStr);
                 StringBuilder sb2 = new StringBuilder(dateStr);
                 sb.replace(11, 19, "00:00:00");
@@ -63,7 +64,7 @@ public class PowerNotesController {
                 time2 = sb2.toString();
             }
 
-            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
                 Date date = format.parse(time);
                 Date date2 = format.parse(time2);
@@ -74,8 +75,23 @@ public class PowerNotesController {
             }
         }
 
-        List<PmsCourseProduct> powerNotesList = pmsCourseProductService.queryPowerNotesPage(pageNum,pageSize,userId,pmsCourseProduct);
+        List<PmsCourseProduct> powerNotesList = pmsCourseProductService.queryPowerNotesPage(pageNum, pageSize, userId, pmsCourseProduct);
         return CommonResult.success(new PageInfo<>(powerNotesList));
     }
+
+    /**
+     * 查询报名人数
+     * @param id
+     * @param userId
+     * @return
+     */
+    @ApiOperation("查询报名人数")
+    @RequestMapping(value = "/selectPepleNum", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<Integer> queryPepleNum(@RequestParam Long id, @RequestParam Long userId) {
+        Integer num = pmsCourseProductService.queryPepleNum(id, userId);
+        return CommonResult.success(num);
+    }
+
 
 }

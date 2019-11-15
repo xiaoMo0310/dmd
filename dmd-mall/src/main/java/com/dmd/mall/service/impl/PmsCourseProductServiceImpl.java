@@ -165,4 +165,9 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         return pmsCourseProducts;
     }
 
+    @Override
+    public Integer queryPepleNum(Long id, Long userId) {
+        return pmsCourseProductMapper.queryPepleNum(id,userId);
+    }
+
 }

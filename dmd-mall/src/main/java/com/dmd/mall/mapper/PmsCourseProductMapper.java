@@ -47,4 +47,6 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     PmsCourseProduct selectCourseProductByIds(CertificateProductDto certificateProductDto);
 
     List<PmsCourseProduct> queryPowerNotesPage(PmsCourseProduct pmsCourseProduct);
+
+    Integer queryPepleNum(@Param("id") Long id,@Param("userId") Long userId);
 }

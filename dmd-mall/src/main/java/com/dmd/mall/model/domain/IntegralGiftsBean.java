@@ -46,6 +46,19 @@ public class IntegralGiftsBean {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updateTime;
 
+    /**
+     * 库存量
+     */
+    private Integer inventory;
+
+    public Integer getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Integer inventory) {
+        this.inventory = inventory;
+    }
+
     public Long getId() {
         return id;
     }
@@ -112,6 +125,7 @@ public class IntegralGiftsBean {
                 ", introduce='" + introduce + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", inventory=" + inventory +
                 '}';
     }
 }

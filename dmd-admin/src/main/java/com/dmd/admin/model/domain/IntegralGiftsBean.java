@@ -64,6 +64,18 @@ public class IntegralGiftsBean {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endTime;
+    /**
+     * 库存
+     */
+    private Integer inventory;
+
+    public Integer getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Integer inventory) {
+        this.inventory = inventory;
+    }
 
     public Date getStratTime() {
         return stratTime;
@@ -149,6 +161,7 @@ public class IntegralGiftsBean {
                 ", updateTime=" + updateTime +
                 ", stratTime=" + stratTime +
                 ", endTime=" + endTime +
+                ", inventory=" + inventory +
                 '}';
     }
 }

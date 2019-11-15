@@ -18,12 +18,8 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableTransactionManagement
 @MapperScan("com.dmd.mall.mapper")
 
-public class DmdMallApplication extends SpringBootServletInitializer{
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
-    {
-        return application.sources(DmdMallApplication.class);
-    }
+public class DmdMallApplication{
+
     public static void main(String[] args) {
         SpringApplication.run(DmdMallApplication.class, args);
         System.out.println(

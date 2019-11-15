@@ -11,10 +11,11 @@
         <result column="introduce" property="introduce" />
         <result column="createtime" property="createTime" />
         <result column="updatetime" property="updateTime" />
+        <result column="inventory" property="inventory" />
     </resultMap>
 
     <select id="queryIntegralGifts" resultMap="integralGiftsMap">
-        SELECT id,name,picture,integral,introduce,createtime,updatetime FROM dmd_integral_gift
+        SELECT id,name,picture,integral,introduce,createtime,updatetime,inventory FROM dmd_integral_gift
         <include refid="giftsWhere"></include>
     </select>
     <!-- 公用标签 -->
@@ -42,19 +43,21 @@
           integral,
           introduce,
           createtime,
-          updatetime
+          updatetime,
+          inventory
         ) VALUES (
           #{name,jdbcType=VARCHAR},
           #{picture,jdbcType=VARCHAR},
           #{integral,jdbcType=INTEGER},
           #{introduce,jdbcType=VARCHAR},
           #{createTime,jdbcType=TIMESTAMP},
-          #{updateTime,jdbcType=TIMESTAMP}
+          #{updateTime,jdbcType=TIMESTAMP},
+          #{inventory,jdbcType=INTEGER}
         )
     </insert>
 
     <select id="findIntegralGiftsInfoById" parameterType="java.lang.Long" resultMap="integralGiftsMap">
-        SELECT id,name,picture,integral,introduce,createtime,updatetime FROM dmd_integral_gift WHERE id = #{value}
+        SELECT id,name,picture,integral,introduce,createtime,updatetime,inventory FROM dmd_integral_gift WHERE id = #{value}
     </select>
 
     <update id="updateIntegralGiftsById" parameterType="com.dmd.admin.model.domain.IntegralGiftsBean">
@@ -64,7 +67,8 @@
         integral = #{integral},
         introduce = #{introduce},
         createtime = #{createTime},
-        updatetime = #{updateTime}
+        updatetime = #{updateTime},
+        inventory = #{inventory}
         where id = #{id}
     </update>
 
