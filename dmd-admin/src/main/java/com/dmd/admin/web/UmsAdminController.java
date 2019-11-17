@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.UmsAdmin;
 import com.dmd.admin.model.domain.UmsPermission;
 import com.dmd.admin.model.domain.UmsRole;
@@ -197,6 +198,7 @@ public class UmsAdminController {
     @ApiOperation("禁用和启用权限")
     @RequestMapping(value = "/isForbiddenPermission", method = RequestMethod.POST)
     @ResponseBody
+    @OperationLog(content = "禁用和启用")
     public CommonResult<Integer> isForbiddenPermission(@RequestParam("id") Long id,@RequestParam("status") int status) {
         return CommonResult.success(adminService.isForbiddenPermission(id,status));
     }
