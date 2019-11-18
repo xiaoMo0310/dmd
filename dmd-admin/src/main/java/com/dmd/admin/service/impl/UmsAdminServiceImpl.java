@@ -257,6 +257,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
         List<UmsPermission> umsPermissions=adminRoleRelationDao.getAllPermission();
         List<UmsPermission> rolePermission=adminRoleRelationDao.roleForPermission(baseQuery.getRoleId());
+        //用于判断所有权限中角色的权限
         for (UmsPermission umsPermission:umsPermissions){
             for (UmsPermission umsPermission1: rolePermission){
                 if (umsPermission.getName().equals(umsPermission1.getName())){
@@ -319,6 +320,11 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     @Override
     public int modifyRole(UmsRole umsRole) {
         return adminRoleRelationDao.modifyRole(umsRole);
+    }
+
+    @Override
+    public int addRolesForAdmin(List<UmsAdminRoleRelation> adminRoleRelation) {
+        return adminRoleRelationDao.addRolesForAdmin(adminRoleRelation);
     }
 
 //    public List<UmsPermission> getNode(Long pid){

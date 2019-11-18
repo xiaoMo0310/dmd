@@ -1,7 +1,9 @@
 package com.dmd.admin.model.domain;
 
 import com.dmd.base.dto.BaseQuery;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,9 +21,13 @@ public class UmsRole extends BaseQuery implements Serializable {
     @ApiModelProperty(value = "后台用户数量")
     private Integer adminCount;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "启用状态：0->禁用；1->启用")
     private Integer status;
 
