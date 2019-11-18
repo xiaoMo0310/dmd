@@ -69,6 +69,8 @@ public class BaseEntity implements Serializable {
 	@Transient
 	private String orderBy;
 
+
+
 	/**
 	 * Is new boolean.
 	 *
