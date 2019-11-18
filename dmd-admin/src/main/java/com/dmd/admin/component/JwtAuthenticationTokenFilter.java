@@ -54,7 +54,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             String username = jwtTokenUtil.getUserNameFromToken(authToken);
             Long id = jwtTokenUtil.getIdFromToken(authToken);
             //保存用户信息
-            LoginAuthDto loginAuthDto = new LoginAuthDto(id, username);
+            LoginAuthDto loginAuthDto = new LoginAuthDto(id, username, "admin");
             ThreadLocalMap.put(GlobalConstant.Sys.TOKEN_AUTH_DTO, loginAuthDto);
             LOGGER.info("checking username:{}", username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
