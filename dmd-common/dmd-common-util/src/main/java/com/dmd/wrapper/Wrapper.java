@@ -1,7 +1,5 @@
 package com.dmd.wrapper;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,7 +11,6 @@ import java.io.Serializable;
  * @param <T> the type parameter @author paascloud.net@gmail.com
  */
 @Data
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Wrapper<T> implements Serializable {
 
 	/**
@@ -136,7 +133,7 @@ public class Wrapper<T> implements Serializable {
 	 *
 	 * @return code =200,true;否则 false.
 	 */
-	@JsonIgnore
+	//@JsonIgnore
 	public boolean success() {
 		return Wrapper.SUCCESS_CODE == this.code;
 	}
@@ -146,7 +143,7 @@ public class Wrapper<T> implements Serializable {
 	 *
 	 * @return code !=200,true;否则 false.
 	 */
-	@JsonIgnore
+	//@JsonIgnore
 	public boolean error() {
 		return !success();
 	}

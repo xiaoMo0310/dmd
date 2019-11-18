@@ -1,11 +1,14 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.BeanUtils;
+import com.dmd.base.dto.LoginAuthDto;
+import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
+import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.UmsCoachMapper;
 import com.dmd.mall.model.domain.UmsCoach;
 import com.dmd.mall.model.vo.UmsCoachVo;
 import com.dmd.mall.service.UmsCoachService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,5 +34,17 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
         UmsCoachVo umsCoachVo = new UmsCoachVo();
         BeanUtils.copyProperties(umsCoach, umsCoachVo);
         return umsCoachVo;
+    }
+
+    @Override
+    public UmsCoach selectByLoginAuthDto(LoginAuthDto loginAuthDto) {
+        UmsCoach umsCoach = null;
+        if(loginAuthDto.getUserType().equals("member")){
+            umsCoach = umsCoachMapper.selectByPrimaryKey(loginAuthDto.getUserId());
+        }
+        if(umsCoach == null){
+            throw new UmsBizException(ErrorCodeEnum.UMS10011003, loginAuthDto.getUserId());
+        }
+        return umsCoach;
     }
 }

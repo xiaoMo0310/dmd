@@ -58,7 +58,7 @@ private static final long serialVersionUID = 1L;
     private String productSn;
 
     @Column(name = "product_type")
-    @ApiModelProperty("商品类型(1:普通商品 2:潜水商品 3:学证商品)")
+    @ApiModelProperty("商品类型(1:普通商品 2:潜水商品 3:课程商品 4:积分商品)")
     private Integer productType;
 
     @Column(name = "product_price")
@@ -96,6 +96,10 @@ private static final long serialVersionUID = 1L;
     @Column(name = "product_attr")
     @ApiModelProperty("商品销售属性:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]")
     private String productAttr;
+
+    @Column(name = "product_title")
+    @ApiModelProperty("商品标题")
+    private String productTitle;
 
 
 }

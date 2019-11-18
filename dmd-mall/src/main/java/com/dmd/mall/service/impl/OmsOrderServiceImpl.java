@@ -2,7 +2,6 @@ package com.dmd.mall.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.BigDecimalUtil;
-import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
@@ -62,6 +61,8 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     @Autowired
     private OmsShippingMapper omsShippingMapper;
     @Autowired
+    private UmsCoachService umsCoachService;
+    @Autowired
     private PmsProductService pmsProductService;
     @Autowired
     private DmdIntegralGiftService integralGiftService;
@@ -118,7 +119,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             //订单积分抵扣的钱数
             BigDecimal integrationAmount = new BigDecimal("0.00");
             //判断是否使用积分
-            if (!orderCreateVo.getIsUserIntegration()) {
+            if (orderCreateVo.getIsUserIntegration() == 0) {
                 //不使用积分
                 for (OmsOrderItem orderItem : orderItemList) {
                     orderItem.setIntegrationAmount(new BigDecimal(0));
@@ -181,7 +182,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         //订单积分抵扣的钱数
         BigDecimal integrationAmount = new BigDecimal("0.00");
         //判断是否使用积分
-        if (orderParamDto.getIsUserIntegration()) {
+        if (orderParamDto.getIsUserIntegration() == 1) {
             //判断用户是否有这么多积分
             if (orderParamDto.getUseIntegration().compareTo(umsMember.getIntegration()) > 0) {
                 throw new OmsBizException(ErrorCodeEnum.OMS10031015);
@@ -202,7 +203,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             throw new OmsBizException(ErrorCodeEnum.OMS10031002);
         }
         //扣减积分
-        if(orderParamDto.getIsUserIntegration()){
+        if(orderParamDto.getIsUserIntegration() == 1){
             umsMemberService.updateIntegration(umsMember, orderParamDto.getUseIntegration(), "积分兑换商品扣减积分", 1);
         }
     }
@@ -225,7 +226,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         //订单积分抵扣的钱数
         BigDecimal integrationAmount = new BigDecimal("0.00");
         //判断是否使用积分
-        if (!orderParamDto.getIsUserIntegration()) {
+        if (orderParamDto.getIsUserIntegration() == 0) {
             //不使用积分
             orderItem.setIntegrationAmount(new BigDecimal(0));
         } else {
@@ -319,14 +320,6 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     }
 
     @Override
-    public PageInfo queryUserOrderListWithPage(Long userId, BaseQuery baseQuery) {
-        PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
-        List<OmsOrder> orderList = omsOrderMapper.selectByUserId(userId);
-        List<OrderVo> orderVoList = assembleOrderVoList(orderList);
-        return new PageInfo<>(orderVoList);
-    }
-
-    @Override
     public PageInfo queryOrderListWithPage(LoginAuthDto loginAuthDto, OrderPageQueryDto orderPageQuery) {
         String userType = loginAuthDto.getUserType();
         PageHelper.startPage(orderPageQuery.getPageNum(), orderPageQuery.getPageSize());
@@ -340,6 +333,23 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             throw new OmsBizException(ErrorCodeEnum.OMS10031020);
         }
         return new PageInfo<>(orderList);
+    }
+
+    @Override
+    public PageInfo queryUserOrderList(LoginAuthDto loginAuthDto, Integer status) {
+        UmsMember umsMember = umsMemberService.selectByLoginAuthDto(loginAuthDto);
+        //查询该用户下的的订单
+        List<CourseOrderDetailVo> courseOrderDetailVos = omsOrderMapper.selectByStatus(status);
+        CourseOrderDetailVo courseOrderDetailVo = new CourseOrderDetailVo();
+        //courseOrderDetailVo.setUserIcon(umsMember.getuser);
+
+        return null;
+    }
+
+    @Override
+    public PageInfo querySellerOrderListWithPage(LoginAuthDto loginAuthDto, Integer status) {
+        UmsCoach umsCoach = umsCoachService.selectByLoginAuthDto(loginAuthDto);
+        return null;
     }
 
     /**
@@ -376,14 +386,12 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         order.setOrderType(0);
         order.setApprovalStatus(2);
         order.setShippingId(orderCreateVo.getShippingId());
-        if(isCourseProduct){
-            order.setOrderType(1);
-        }
+        order.setOrderType(1);
         order.setSourceType(1);
         order.setMemberId(umsMember.getId());
         order.setShopId(shopId);
         order.setMemberUsername(umsMember.getUsername());
-        if(orderCreateVo.getIsInvoice()){
+        if(orderCreateVo.getIsInvoice() == 1){
             order.setInvoiceId(orderCreateVo.getInvoiceId());
         }else {
             order.setInvoiceId(0L);
@@ -548,10 +556,4 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         return orderItemVo;
     }
 
-    private List<OrderVo> assembleOrderVoList(List<OmsOrder> orderList) {
-        return orderList.stream().map(order -> {
-             List<OmsOrderItem> orderItemList = omsOrderItemService.getListByOrderNoUserId(order.getOrderSn());
-             return assembleOrderVo(order, orderItemList);
-        }).collect(Collectors.toList());
-    }
 }

@@ -1,9 +1,9 @@
 package com.dmd.mall.web.pms;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
-import com.dmd.mall.model.domain.PmsCourseProduct;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.dto.CourseProductDto;
 import com.dmd.mall.model.vo.CertificateProductVo;
@@ -15,6 +15,7 @@ import com.dmd.wrapper.Wrapper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -63,18 +64,28 @@ public class PmsCourseProductController extends BaseController {
 
     @GetMapping("/certificateProduct/find")
     @ApiOperation(httpMethod = "GET", value = "查询学证产品的详细信息及教练信息,证书信息")
+    @ApiImplicitParams({@ApiImplicitParam(name ="certificateId", value = "证书id", dataType = "Long", paramType = "query"),
+                        @ApiImplicitParam(name ="addressId", value = "地址id", dataType = "Long", paramType = "query")})
     @ApiImplicitParam(name ="certificateId", value = "证书id", dataType = "Long", paramType = "query")
-    public Wrapper findCertificateProduct(@RequestParam("certificateId") Long certificateId) {
-        CertificateProductVo certificateProductVo = pmsCourseProductService.findCertificateProduct(getLoginAuthDto(), certificateId);
+    public Wrapper findCertificateProduct(@RequestParam("certificateId") Long certificateId, @RequestParam(value = "addressId", required = false) Long addressId) {
+        CertificateProductVo certificateProductVo = pmsCourseProductService.findCertificateProduct(getLoginAuthDto(), certificateId, addressId);
         return WrapMapper.ok(certificateProductVo);
     }
 
-    @PostMapping("/certificateProduct/find")
+    @PostMapping("/certificateProductDetail/find")
     @ApiOperation(httpMethod = "POST", value = "查询学证产品的详细信息")
     @ApiImplicitParam(name ="certificateProductDto", value = "查询学证产品需要的参数", dataType = "CertificateProductDto", paramType = "body")
     public Wrapper findCourseProductByIds(@RequestBody CertificateProductDto certificateProductDto) {
-        PmsCourseProduct pmsCourseProduct = pmsCourseProductService.findCourseProductByIds(certificateProductDto);
-        return WrapMapper.ok(pmsCourseProduct);
+        JSONObject jsonObject = pmsCourseProductService.findCourseProductByIds(certificateProductDto);
+        return WrapMapper.ok(jsonObject);
+    }
+
+    @GetMapping("courseProduct/settlement")
+    @ApiOperation(httpMethod = "GET", value = "结算潜水学证商品")
+    @ApiImplicitParam(name ="productId", value = "商品id", dataType = "Long", paramType = "query")
+    public Wrapper queryOrderListWithPage(@RequestParam("productId") Long productId) {
+        PmsCourseListVo pmsCourseListVo = pmsCourseProductService.settlementCourseProduct(getLoginAuthDto(),productId);
+        return WrapMapper.ok(pmsCourseListVo);
     }
 }
 

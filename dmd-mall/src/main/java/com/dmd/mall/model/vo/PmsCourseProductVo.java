@@ -1,12 +1,25 @@
 package com.dmd.mall.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
-
+import java.util.Date;
+/**
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/11/18 13:53
+ * @Description
+ */
 @Data
 public class PmsCourseProductVo {
+
+    /**
+     * 商品id
+     */
+    private Long id;
 
     /**
      * 卖家id
@@ -80,5 +93,13 @@ public class PmsCourseProductVo {
      * 证书id
      */
     private Long certificateId;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date startTime;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date endTime;
 
 }
