@@ -18,4 +18,10 @@ public interface IntegralGiftsSpeMapper {
     List<IntegralGiftsSpeBean> queryIntegralGiftsSpeById(Long id);
 
     int addGiftsSpe(IntegralGiftsSpeBean integralGiftsSpeBean);
+
+    int updateIntegralGiftsSpe(IntegralGiftsSpeBean integralGiftsSpeBean);
+
+    IntegralGiftsSpeBean findIntegralGiftsSpeInfoById(Long id);
+
+    int deleteIntegralGiftsSpeById(List<Long> ids);
 }

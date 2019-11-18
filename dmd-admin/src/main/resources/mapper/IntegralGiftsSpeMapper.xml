@@ -55,4 +55,32 @@
         #{color,jdbcType=VARCHAR}
         )
     </insert>
+
+    <update id="updateIntegralGiftsSpe" parameterType="com.dmd.admin.model.domain.IntegralGiftsSpeBean">
+        UPDATE dmd_integral_gift_spe SET
+        giftId = #{giftId},
+        specStock = #{specStock},
+        size = #{size},
+        color = #{color}
+        where id = #{id}
+    </update>
+
+    <select id="findIntegralGiftsSpeInfoById" parameterType="java.lang.Long" resultMap="integralGiftsMap">
+        SELECT
+        id,
+        giftId,
+        size,
+        specStock,
+        color
+        FROM
+        dmd_integral_gift_spe
+        WHERE id = #{id}
+    </select>
+
+    <delete id="deleteIntegralGiftsSpeById" parameterType="java.lang.Long">
+        DELETE FROM  dmd_integral_gift_spe  WHERE id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

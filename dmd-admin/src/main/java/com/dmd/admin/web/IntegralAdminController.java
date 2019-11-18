@@ -413,4 +413,51 @@ public class IntegralAdminController {
         }
         return CommonResult.failed("下架失败");
     }
+
+    /**
+     * 修改礼品规格
+     * @param id
+     * @param integralGiftsSpeBean
+     * @return
+     */
+    @ApiOperation("修改礼品规格")
+    @RequestMapping(value = "/updateIntegralGiftsSpe",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateIntegralGiftsSpe(@RequestParam Long id,@RequestBody IntegralGiftsSpeBean integralGiftsSpeBean) {
+        integralGiftsSpeBean.setId(id);
+        int count = integralAdminService.updateIntegralGiftsSpe(integralGiftsSpeBean);
+        if (count > 0) {
+            return CommonResult.success(count,"修改成功");
+        }
+        return CommonResult.failed("修改失败");
+    }
+
+    /**
+     * 回显好礼规格
+     * @param id
+     * @return
+     */
+    @ApiOperation("回显好礼规格")
+    @RequestMapping(value = "/findIntegralGiftsSpeInfoById",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<IntegralGiftsSpeBean> findIntegralGiftsSpeInfoById(@RequestParam Long id){
+        IntegralGiftsSpeBean integralGiftsBean = integralAdminService.findIntegralGiftsSpeInfoById(id);
+        return CommonResult.success(integralGiftsBean);
+    }
+
+    /**
+     * 批量删除礼品规格
+     * @param ids
+     * @return
+     */
+    @ApiOperation("批量删除礼品规格")
+    @RequestMapping(value = "/deleteIntegralGiftsSpeById",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult deleteIntegralGiftsSpeById(@RequestParam("ids") List<Long> ids){
+        int count = integralAdminService.deleteIntegralGiftsSpeById(ids);
+        if (count > 0) {
+            return CommonResult.success(count,"删除成功");
+        }
+        return CommonResult.failed("删除失败");
+    }
 }

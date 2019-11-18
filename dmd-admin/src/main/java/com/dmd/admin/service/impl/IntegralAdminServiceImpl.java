@@ -156,4 +156,19 @@ public class IntegralAdminServiceImpl implements IntegralAdminService{
     public int addGiftsSpe(IntegralGiftsSpeBean integralGiftsSpeBean) {
         return integralGiftsSpeMapper.addGiftsSpe(integralGiftsSpeBean);
     }
+
+    @Override
+    public int updateIntegralGiftsSpe(IntegralGiftsSpeBean integralGiftsSpeBean) {
+        return integralGiftsSpeMapper.updateIntegralGiftsSpe(integralGiftsSpeBean);
+    }
+
+    @Override
+    public IntegralGiftsSpeBean findIntegralGiftsSpeInfoById(Long id) {
+        return integralGiftsSpeMapper.findIntegralGiftsSpeInfoById(id);
+    }
+
+    @Override
+    public int deleteIntegralGiftsSpeById(List<Long> ids) {
+        return integralGiftsSpeMapper.deleteIntegralGiftsSpeById(ids);
+    }
 }

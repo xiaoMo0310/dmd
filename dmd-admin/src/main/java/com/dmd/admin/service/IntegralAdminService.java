@@ -48,4 +48,10 @@ public interface IntegralAdminService {
     int updateIntegralGiftsNoPass(List<Long> ids);
 
     int addGiftsSpe(IntegralGiftsSpeBean integralGiftsSpeBean);
+
+    int updateIntegralGiftsSpe(IntegralGiftsSpeBean integralGiftsSpeBean);
+
+    IntegralGiftsSpeBean findIntegralGiftsSpeInfoById(Long id);
+
+    int deleteIntegralGiftsSpeById(List<Long> ids);
 }
