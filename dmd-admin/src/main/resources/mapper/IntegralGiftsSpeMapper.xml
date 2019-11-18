@@ -46,13 +46,21 @@
         INSERT INTO dmd_integral_gift_spe(
         giftId,
         specStock,
+        <if test="size != null" >
         size,
+        </if>
+        <if test="color != null" >
         color
+        </if>
         ) VALUES(
         #{giftId,jdbcType=BIGINT},
         #{specStock,jdbcType=INTEGER},
+        <if test="size != null" >
         #{size,jdbcType=VARCHAR},
+        </if>
+        <if test="color != null" >
         #{color,jdbcType=VARCHAR}
+        </if>
         )
     </insert>
 
