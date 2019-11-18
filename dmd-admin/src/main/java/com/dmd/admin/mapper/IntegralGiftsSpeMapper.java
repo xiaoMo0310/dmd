@@ -16,4 +16,6 @@ public interface IntegralGiftsSpeMapper {
     int addIntegralGiftsSpe(@Param("list") List<IntegralGiftsSpeBean> list);
 
     List<IntegralGiftsSpeBean> queryIntegralGiftsSpeById(Long id);
+
+    int addGiftsSpe(IntegralGiftsSpeBean integralGiftsSpeBean);
 }

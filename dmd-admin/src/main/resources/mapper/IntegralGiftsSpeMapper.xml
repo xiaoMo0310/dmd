@@ -41,4 +41,18 @@
         WHERE
         giftId = #{id}
     </select>
+
+    <insert id="addGiftsSpe" parameterType="com.dmd.admin.model.domain.IntegralGiftsSpeBean">
+        INSERT INTO dmd_integral_gift_spe(
+        giftId,
+        specStock,
+        size,
+        color
+        ) VALUES(
+        #{giftId,jdbcType=BIGINT},
+        #{specStock,jdbcType=INTEGER},
+        #{size,jdbcType=VARCHAR},
+        #{color,jdbcType=VARCHAR}
+        )
+    </insert>
 </mapper>

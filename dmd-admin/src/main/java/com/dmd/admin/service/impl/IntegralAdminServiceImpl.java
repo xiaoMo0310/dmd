@@ -151,4 +151,9 @@ public class IntegralAdminServiceImpl implements IntegralAdminService{
     public int updateIntegralGiftsNoPass(List<Long> ids) {
         return integralGiftsMapper.updateIntegralGiftsNoPass(ids);
     }
+
+    @Override
+    public int addGiftsSpe(IntegralGiftsSpeBean integralGiftsSpeBean) {
+        return integralGiftsSpeMapper.addGiftsSpe(integralGiftsSpeBean);
+    }
 }

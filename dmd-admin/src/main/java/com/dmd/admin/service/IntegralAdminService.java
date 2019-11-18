@@ -46,4 +46,6 @@ public interface IntegralAdminService {
     int updateIntegralGiftsPass(List<Long> ids);
 
     int updateIntegralGiftsNoPass(List<Long> ids);
+
+    int addGiftsSpe(IntegralGiftsSpeBean integralGiftsSpeBean);
 }
