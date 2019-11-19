@@ -72,7 +72,6 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         if (courseProduct.isNew()) {
             resultInt = pmsCourseProductMapper.insertSelective(courseProduct);
         } else {
-            //
             resultInt = pmsCourseProductMapper.updateByPrimaryKeySelective(courseProduct);
         }
         return resultInt;
@@ -166,7 +165,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         coachVos.remove(coachVoA);
         coachVos.add(0, coachVoA);
         if(pmsCourseProduct == null){
-            throw new PmsBizException(ErrorCodeEnum.PMS10021003);
+            throw new PmsBizException(ErrorCodeEnum.PMS10021030);
         }
         BeanUtils.copyProperties(pmsCourseProduct, certificateProductVo);
         return certificateProductVo;
@@ -230,6 +229,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         orderDetail.setProductName(product.getProductName());
         orderDetail.setProductQuantity(1);
         orderDetail.setTotalPrice(product.getPrice());
+        orderDetail.setProductTitle(product.getTitle());
         //封装商品sku数据
         Integer productType = product.getProductType();
         if(productType == 2){

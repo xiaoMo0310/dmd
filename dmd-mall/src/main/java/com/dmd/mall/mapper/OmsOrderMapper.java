@@ -2,9 +2,7 @@ package com.dmd.mall.mapper;
 
 import com.dmd.core.mybatis.MyMapper;
 import com.dmd.mall.model.domain.OmsOrder;
-import com.dmd.mall.model.dto.OrderPageQueryDto;
 import com.dmd.mall.model.vo.CourseOrderDetailVo;
-import com.dmd.mall.model.vo.OrderDocVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -39,32 +37,15 @@ public interface OmsOrderMapper extends MyMapper<OmsOrder> {
     List<OmsOrder> selectByUserId(Long userId);
 
     /**
-     * 根据订单编号和订单状态查询订单和收货地址信息
-     * @param orderPageQuery
-     * @return
-     */
-    List<OrderDocVo> queryMemberOrderListWithPage(@Param("userId") Long userId, @Param("orderPageQuery") OrderPageQueryDto orderPageQuery);
-
-    /**
-     *查询卖家订单
-     * @param userId
-     * @param orderSn
-     * @return
-     */
-    OmsOrder selectSellerOrder(Long userId, String orderSn);
-
-    /**
-     * 根据状态查询卖家订单的列表信息
-     * @param coachId
-     * @param orderPageQuery
-     * @return
-     */
-    List<OrderDocVo> queryCoachOrderListWithPage(@Param("coachId") Long coachId, @Param("orderPageQuery") OrderPageQueryDto orderPageQuery);
-
-    /**
      * 根据订单状态查询当前用户的订单信息
      * @param status
      * @return
      */
-    List<CourseOrderDetailVo> selectByStatus(Integer status);
+    List<CourseOrderDetailVo> selectUserOrderByStatus(@Param("userId") Long userId,@Param("status") Integer status);
+
+    List<CourseOrderDetailVo> selectSellerOrderByStatus(@Param("coachId") Long coachId, @Param("status") Integer status);
+
+    CourseOrderDetailVo selectUserOrderByOrderSn(@Param("userId") Long userId, @Param("orderSn") String orderSn);
+
+    CourseOrderDetailVo selectSellerOrderByOrderSn(@Param("coachId") Long coachId,@Param("orderSn") String orderSn);
 }

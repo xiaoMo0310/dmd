@@ -1,5 +1,6 @@
 package com.dmd.mall.service;
 
+import com.dmd.mall.model.domain.DmdIntegralGift;
 import com.dmd.mall.model.domain.OmsOrderItem;
 import com.dmd.core.support.IService;
 
@@ -27,4 +28,11 @@ public interface OmsOrderItemService extends IService<OmsOrderItem> {
      * @return
      */
     List<OmsOrderItem> getListByOrderNoUserId(String orderSn);
+
+    /**
+     * 封装积分好礼订单详情数据
+     * @param integralGift
+     * @return
+     */
+    OmsOrderItem createIntegralOrderItem(DmdIntegralGift integralGift, Long skuId, Integer quantity);
 }

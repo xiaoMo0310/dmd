@@ -82,44 +82,44 @@
         order by update_time desc
     </select>
 
-    <select id="queryMemberOrderListWithPage" resultType="com.dmd.mall.model.vo.OrderDocVo">
-        SELECT
-        <include refid="Base_Column_List">
-            <property name="alias" value="oder"/>
-        </include>
-        ,shipping.receiver_name
-        from pc_omc_order oder
-        LEFT JOIN oms_shipping shipping ON oder.shipping_id = shipping.id
-        where member_id = #{userId}
-        <if test="status != null and status != ''">
-            and oder.status = #{orderPageQuery.status}
-        </if>
-        ORDER BY #{orderPageQuery.orderBy}
+    <select id="selectUserOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+         SELECT uc.coach_name userName, uc.icon userIcon, uc.coach_Grade, uc.id userId, oo.order_sn, oo.total_amount,
+                oo.pay_amount, oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
+                oo.status, oo.order_type, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity, ooi.product_attr spec
+         FROM oms_order oo
+        left join ums_coach uc on oo.shop_id = uc.id
+        left join oms_order_item ooi
+        on oo.id = ooi.order_id
+        where oo.member_id = #{userId} and oo.status = #{status} order by update_time desc
     </select>
-    <select id="selectSellerOrder" resultType="com.dmd.mall.model.domain.OmsOrder">
-        SELECT
-        <include refid="Base_Column_List">
-            <property name="alias" value="oder"/>
-        </include>
-        from oms_order oder
-        where oder.order_sn = #{orderSn}
-        and oder.shop_id = #{userId}
+    <select id="selectSellerOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+        SELECT um.nick_name userName, um.icon userIcon, um.id userId, oo.order_sn, oo.total_amount,oo.pay_amount,
+                oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
+                oo.status, oo.order_type, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity
+         FROM oms_order oo
+        left join ums_member um on oo.member_id = um.id
+        left join oms_order_item ooi
+        on oo.id = ooi.order_id
+        where oo.shop_id = #{coachId} and oo.status = #{status} order by update_time desc
     </select>
-    <select id="queryCoachOrderListWithPage" resultType="com.dmd.mall.model.vo.OrderDocVo">
-        SELECT
-        <include refid="Base_Column_List">
-            <property name="alias" value="oder"/>
-        </include>
-        ,shipping.receiver_name
-        from pc_omc_order oder
-        LEFT JOIN oms_shipping shipping ON oder.shipping_id = shipping.id
-        where shop_id = #{coachId}
-        <if test="status != null and status != ''">
-            and oder.status = #{orderPageQuery.status}
-        </if>
-        ORDER BY #{orderPageQuery.orderBy}
+    <select id="selectUserOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+        SELECT uc.coach_name userName, uc.icon userIcon, uc.coach_Grade, uc.id userId, oo.order_sn, oo.total_amount,
+                oo.pay_amount, oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
+                oo.status, oo.order_type, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity, , ooi.product_attr spec
+         FROM oms_order oo
+        left join ums_coach uc on oo.shop_id = uc.id
+        left join oms_order_item ooi
+        on oo.id = ooi.order_id
+        where oo.member_id = #{userId} and oo.order_sn = #{orderSn}
     </select>
-    <select id="selectByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
-
+    <select id="selectSellerOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+        SELECT um.nick_name userName, um.icon userIcon, um.id userId, oo.order_sn, oo.total_amount,oo.pay_amount,
+                oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
+                oo.status, oo.order_type, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity
+         FROM oms_order oo
+        left join ums_member um on oo.member_id = um.id
+        left join oms_order_item ooi
+        on oo.id = ooi.order_id
+        where oo.shop_id = #{coachId} and oo.order_sn = #{orderSn}
     </select>
 </mapper>

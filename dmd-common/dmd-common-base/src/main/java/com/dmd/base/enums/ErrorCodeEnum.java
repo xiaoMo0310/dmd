@@ -330,6 +330,10 @@ public enum ErrorCodeEnum {
 	 */
 	UMS10015009(10015009, "找不到上级组织, groupId=%s"),
 	/**
+	 * UMS 10015010error code enum.
+	 */
+	UMS10015010(10015010, "找不到教练信息, coachId=%s"),
+	/**
 	 * PMS 10021001 error code enum.
 	 */
 // 1002 数据中心
@@ -422,6 +426,15 @@ public enum ErrorCodeEnum {
 	 * PMS 10021029error code enum.
 	 */
 	PMS10021029(10021029, "有重复的商品活动"),
+
+	/**
+	 * PMS 10021030error code enum.
+	 */
+	PMS10021030(10021030, "暂无此商品信息"),
+    /**
+	 * PMS 10021031error code enum.
+	 */
+	PMS10021031(10021031, "查询不到商品规格库存信息, id=%s"),
 // 1003 订单中心
 	/**
 	 * OMS 10031001 error code enum.
