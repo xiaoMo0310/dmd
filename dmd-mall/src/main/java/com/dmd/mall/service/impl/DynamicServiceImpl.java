@@ -136,4 +136,9 @@ public class DynamicServiceImpl implements DynamicService{
         PageHelper.startPage(pageNum, pageSize);
         return dynamicMapper.queryDynamicHeat();
     }
+
+    @Override
+    public Integer queryDynamicCount(Long userId) {
+        return dynamicMapper.queryDynamicCount(userId);
+    }
 }

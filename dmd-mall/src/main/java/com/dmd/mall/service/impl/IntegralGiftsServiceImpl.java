@@ -73,5 +73,10 @@ public class IntegralGiftsServiceImpl implements IntegralGiftsService{
         return integralGiftSpeMapper.queryIntegralGiftsSpeById(id);
     }
 
+    @Override
+    public Integer selectIntegralGiftsSpecStock(Long id, String size, String color) {
+        return integralGiftSpeMapper.selectIntegralGiftsSpecStock(id,size,color);
+    }
+
 
 }

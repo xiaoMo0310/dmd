@@ -25,4 +25,6 @@ public interface UmsFavoritesMapper extends MyMapper<UmsFavorites> {
     int updateAttentionStatus(@Param("userId") Long userId, @Param("userName") String userName,@Param("umsFavorites") UmsFavorites umsFavorites);
 
     UmsFavorites selectAttentionMessage(UmsFavorites umsFavorites);
+
+    Integer queryFavoritesCount(Long userId);
 }

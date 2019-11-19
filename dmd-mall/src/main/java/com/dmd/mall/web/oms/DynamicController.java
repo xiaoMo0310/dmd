@@ -234,4 +234,18 @@ public class DynamicController {
         List<DynamicBean> dynamicList = dynamicService.queryDynamicHeat(pageNum,pageSize);
         return CommonResult.success(new PageInfo<>(dynamicList));
     }
+
+    /**
+     * 查询我的总动态数
+     * @param userId
+     * @return
+     */
+    @ApiOperation("查询我的总动态数")
+    @RequestMapping(value = "/selectDynamicCount",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<Integer> queryDynamicCount(@RequestParam Long userId) {
+        Integer count = dynamicService.queryDynamicCount(userId);
+        System.out.println(count);
+        return CommonResult.success(count);
+    }
 }

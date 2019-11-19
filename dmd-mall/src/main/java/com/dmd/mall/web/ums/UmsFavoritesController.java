@@ -3,6 +3,7 @@ package com.dmd.mall.web.ums;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.base.dto.BaseQuery;
+import com.dmd.base.result.CommonResult;
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.dto.UmsFavoritesDto;
 import com.dmd.mall.service.UmsFavoritesService;
@@ -76,6 +77,20 @@ public class UmsFavoritesController extends BaseController {
     public Wrapper<JSONObject> findFavoritesList(@RequestBody BaseQuery baseQuery) {
         JSONObject jsonObject = umsFavoritesService.queryAttention(getLoginAuthDto().getUserId(), baseQuery);
         return WrapMapper.ok(jsonObject);
+    }
+
+    /**
+     * 查询我的关注数量
+     * @param userId
+     * @return
+     */
+    @ApiOperation("查询我的关注数量")
+    @RequestMapping(value = "/selectFavoritesCount",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<Integer> queryFavoritesCount(@RequestParam Long userId) {
+        Integer count = umsFavoritesService.queryFavoritesCount(userId);
+        System.out.println(count);
+        return CommonResult.success(count);
     }
 
 }

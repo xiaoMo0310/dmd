@@ -126,5 +126,10 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
         return jsonObject;
     }
 
+    @Override
+    public Integer queryFavoritesCount(Long userId) {
+        return umsFavoritesMapper.queryFavoritesCount(userId);
+    }
+
 
 }

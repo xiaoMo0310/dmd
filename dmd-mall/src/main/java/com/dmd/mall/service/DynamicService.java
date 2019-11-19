@@ -41,4 +41,6 @@ public interface DynamicService {
     List<DynamicBean> queryDynamicTime(Integer pageNum,Integer pageSize);
 
     List<DynamicBean> queryDynamicHeat(Integer pageNum,Integer pageSize);
+
+    Integer queryDynamicCount(Long userId);
 }

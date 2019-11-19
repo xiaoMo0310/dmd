@@ -44,4 +44,6 @@ public interface DynamicMapper {
     List<DynamicBean> queryDynamicHeat();
 
     List<DynamicBean> queryDynamicByContent(@Param("content") String content);
+
+    Integer queryDynamicCount(Long userId);
 }
