@@ -3,6 +3,7 @@ package com.dmd.mall.mapper;
 import com.dmd.core.mybatis.MyMapper;
 import com.dmd.mall.model.domain.OmsOrder;
 import com.dmd.mall.model.dto.OrderPageQueryDto;
+import com.dmd.mall.model.vo.CourseOrderDetailVo;
 import com.dmd.mall.model.vo.OrderDocVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -59,4 +60,11 @@ public interface OmsOrderMapper extends MyMapper<OmsOrder> {
      * @return
      */
     List<OrderDocVo> queryCoachOrderListWithPage(@Param("coachId") Long coachId, @Param("orderPageQuery") OrderPageQueryDto orderPageQuery);
+
+    /**
+     * 根据订单状态查询当前用户的订单信息
+     * @param status
+     * @return
+     */
+    List<CourseOrderDetailVo> selectByStatus(Integer status);
 }

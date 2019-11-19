@@ -1,10 +1,7 @@
 package com.dmd.admin.web;
 
 import com.dmd.admin.annotation.OperationLog;
-import com.dmd.admin.model.domain.UmsAdmin;
-import com.dmd.admin.model.domain.UmsPermission;
-import com.dmd.admin.model.domain.UmsRole;
-import com.dmd.admin.model.domain.UmsRolePermissionRelation;
+import com.dmd.admin.model.domain.*;
 import com.dmd.admin.model.dto.UmsAdminLoginParam;
 import com.dmd.admin.model.dto.UmsAdminParam;
 import com.dmd.admin.service.UmsAdminService;
@@ -253,6 +250,12 @@ public class UmsAdminController {
     @ResponseBody
     public Wrapper<Integer> modifyRole(@RequestBody UmsRole umsRole) {
         return  WrapMapper.ok(adminService.modifyRole(umsRole));
+    }
+    @ApiOperation("建立角色和用户的对应关系")
+    @RequestMapping(value = "/addRolesForAdmin", method = RequestMethod.POST)
+    @ResponseBody
+    public Wrapper<Integer> addRolesForAdmin(@RequestBody List<UmsAdminRoleRelation> adminRoleRelation) {
+        return  WrapMapper.ok(adminService.addRolesForAdmin(adminRoleRelation));
     }
 
 }

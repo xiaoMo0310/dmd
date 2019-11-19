@@ -84,7 +84,7 @@ private static final long serialVersionUID = 1L;
     private Integer status;
 
     @Column(name = "order_type")
-    @ApiModelProperty("订单类型：0->正常订单；1->预约订单")
+    @ApiModelProperty("订单类型：0->普通订单；1->潜水学订单 2->积分商品订单")
     private Integer orderType;
 
     @Column(name = "delivery_company")

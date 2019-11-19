@@ -2,7 +2,6 @@ package com.dmd.mall.web.oms;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.dto.OrderPageQueryDto;
@@ -55,16 +54,16 @@ public class OmsOrderController extends BaseController {
 
     @PostMapping("/courseProductOrder/create")
     @ApiOperation(httpMethod = "POST", value = "创建潜水学证订单")
-    @ApiImplicitParam(name ="courseProductDto", value = "创建订单需要的参数", dataType = "PmsCourseProductDto", paramType = "body")
+    @ApiImplicitParam(name ="courseProductDto", value = "创建订单需要的参数", dataType = "PmsCourseOrderDto", paramType = "body")
     public Wrapper createCourseProductOrder(@RequestBody PmsCourseOrderDto courseProductDto) {
         JSONObject jsonObject = omsOrderService.createCourseProductOrder(getLoginAuthDto(), courseProductDto);
         return WrapMapper.ok(jsonObject);
     }
 
-    @GetMapping("cancelOrderDoc/{orderSn}")
+    @GetMapping("cancelOrderDoc")
     @ApiOperation(httpMethod = "GET", value = "根据订单编号取消订单")
     @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "Long", paramType = "path")
-    public Wrapper cancelOrderDoc(@PathVariable String orderSn) {
+    public Wrapper cancelOrderDoc(@RequestParam("orderSn") String orderSn) {
         logger.info("cancelOrderDoc - 取消订单. orderSn={}", orderSn);
         LoginAuthDto loginAuthDto = getLoginAuthDto();
         logger.info("操作人信息. loginAuthDto={}", loginAuthDto);
@@ -72,26 +71,27 @@ public class OmsOrderController extends BaseController {
         return handleResult(result);
     }
 
-    @GetMapping("queryUserOrderDetailList/{orderSn}")
+    /*@GetMapping("/orderDetail/courseProduct/query")
+    @ApiOperation(httpMethod = "GET", value = "查询潜水学证商品订单的详细信息")
+    @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "Long", paramType = "path")
+    public void queryCourseProductOrderDetail(@RequestParam("orderSn") String orderSn) {
+        logger.info("queryCourseProductOrderDetail - 查询潜水学证商品订单的详细信息. orderSn={}", orderSn);
+        LoginAuthDto loginAuthDto = getLoginAuthDto();
+        logger.info("登录人信息. loginAuthDto={}", loginAuthDto);
+        *//*int result = omsOrderService.queryCourseProductOrderDetail(loginAuthDto, orderSn);
+        return handleResult(result);*//*
+    }*/
+
+    @GetMapping("queryUserOrderDetailList")
     @ApiOperation(httpMethod = "GET", value = "查询登陆人订单详情")
     @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "Long", paramType = "path")
-    public Wrapper queryUserOrderDetailList(@PathVariable String orderSn) {
+    public Wrapper queryUserOrderDetailList(@RequestParam("orderSn") String orderSn) {
         logger.info("queryUserOrderDetailList - 查询用户订单明细. orderSn={}", orderSn);
         logger.info("操作人信息. userId={}", getLoginAuthDto().getUserId());
         OrderVo orderVo = omsOrderService.getOrderDetail(getLoginAuthDto(), orderSn);
         return WrapMapper.ok(orderVo);
     }
 
-    @PostMapping("queryUserOrderListWithPage")
-    @ApiOperation(httpMethod = "POST", value = "查询用户全部订单列表")
-    @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery")
-    public Wrapper queryUserOrderListWithPage(@RequestBody BaseQuery baseQuery) {
-        logger.info("queryUserOrderListWithPage - 查询用户订单集合. baseQuery={}", baseQuery);
-        Long userId = getLoginAuthDto().getUserId();
-        logger.info("操作人信息. userId={}", userId);
-        PageInfo pageInfo = omsOrderService.queryUserOrderListWithPage(userId, baseQuery);
-        return WrapMapper.ok(pageInfo);
-    }
 
     @PostMapping("queryOrderListWithPage")
     @ApiOperation(httpMethod = "POST", value = "根据订单的状态查询订单列表")
@@ -99,6 +99,22 @@ public class OmsOrderController extends BaseController {
     public Wrapper queryOrderListWithPage(@RequestBody OrderPageQueryDto orderPageQuery) {
         logger.info("queryOrderListWithPage - 查询订单集合. orderPageQuery={}", orderPageQuery);
         PageInfo pageInfo = omsOrderService.queryOrderListWithPage(getLoginAuthDto(), orderPageQuery);
+        return WrapMapper.ok(pageInfo);
+    }
+
+    @GetMapping("userOrderList/findByStatus")
+    @ApiOperation(httpMethod = "GET", value = "根据订单的状态查询用户订单列表")
+    @ApiImplicitParam(name ="status", value = "订单状态：0->待付款；1->已付款；2->进行中；3->已完成；4->已关闭；5->售后 6:取消", dataType = "int", paramType = "query")
+    public Wrapper queryUserOrderListWithPage(@RequestParam("status") Integer status) {
+        PageInfo pageInfo = omsOrderService.queryUserOrderList(getLoginAuthDto(), status);
+        return WrapMapper.ok(pageInfo);
+    }
+
+    @GetMapping("sellerOrderList/findByStatus")
+    @ApiOperation(httpMethod = "GET", value = "根据订单的状态查询卖家订单列表")
+    @ApiImplicitParam(name ="status", value = "订单状态：0->待付款；1->已付款；2->进行中；3->已完成；4->已关闭；5->售后 6:取消", dataType = "int", paramType = "query")
+    public Wrapper querySellerOrderListWithPage(@RequestParam("status") Integer status) {
+        PageInfo pageInfo = omsOrderService.querySellerOrderListWithPage(getLoginAuthDto(), status);
         return WrapMapper.ok(pageInfo);
     }
 }

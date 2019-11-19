@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.exceptions.UmsBizException;
@@ -276,5 +277,17 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     @Override
     public Set<String> getPermission(String username) {
         return memberMapper.getPermission(username);
+    }
+
+    @Override
+    public UmsMember selectByLoginAuthDto(LoginAuthDto loginAuthDto) {
+        UmsMember umsMember = null;
+        if(loginAuthDto.getUserType().equals("member")){
+            umsMember = memberMapper.selectByPrimaryKey(loginAuthDto.getUserId());
+        }
+        if(umsMember == null){
+            throw new UmsBizException(ErrorCodeEnum.UMS10011003, loginAuthDto.getUserId());
+        }
+        return umsMember;
     }
 }

@@ -10,8 +10,8 @@ spring:
     jackson:
       joda-date-time-format: yyyy-MM-dd HH:mm:ss
       date-format: yyyy-MM-dd HH:mm:ss
-  jackson:
-    default-property-inclusion: NON_NULL
+#  jackson:
+#    default-property-inclusion: NON_NULL
   application:
     name: @pom.artifactId@
   profiles:

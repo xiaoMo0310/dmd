@@ -1,5 +1,6 @@
 package com.dmd.mall.service;
 
+import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.UmsCoach;
 import com.dmd.mall.model.vo.UmsCoachVo;
@@ -20,4 +21,6 @@ public interface UmsCoachService extends IService<UmsCoach> {
      * @return
      */
     UmsCoachVo selectCoachMessage(Long id);
+
+    UmsCoach selectByLoginAuthDto(LoginAuthDto loginAuthDto);
 }

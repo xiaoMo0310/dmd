@@ -38,11 +38,11 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     List<Long> selectCoachIdByCertificateId(@Param("certificateId") Long certificateId, @Param("productType") Integer productType);
 
     /**
-     * 根据教练id查询商品的信息
+     * 根据教练id查询学证商品的信息
      * @param coachId
      * @return
      */
-    PmsCourseProduct selectByCoachId(Long coachId);
+    PmsCourseProduct selectByCoachId(@Param("coachId") Long coachId, @Param("addressId") Long addressId);
 
     PmsCourseProduct selectCourseProductByIds(CertificateProductDto certificateProductDto);
 
@@ -51,4 +51,6 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     Integer queryPepleNum(@Param("id") Long id,@Param("userId") Long userId);
 
     int selectCheckActivity(@Param("startTime") Date startTime, @Param("endTime") Date endTime, @Param("id") Long id);
+
+    PmsCourseListVo selectCourseProductById(Long productId);
 }

@@ -1,7 +1,6 @@
 package com.dmd.mall.web.oms;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.PmsCourseProduct;
 import com.dmd.mall.service.PmsCourseProductService;
 import com.github.pagehelper.PageInfo;
@@ -88,8 +87,8 @@ public class PowerNotesController {
     @ApiOperation("查询报名人数")
     @RequestMapping(value = "/selectPepleNum", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<Integer> queryPepleNum(@RequestParam Long id, @RequestParam Long userId) {
-        Integer num = pmsCourseProductService.queryPepleNum(id, userId);
+    public CommonResult<Integer> queryPeopleNum(@RequestParam Long id, @RequestParam Long userId) {
+        Integer num = pmsCourseProductService.queryPeopleNum(id, userId);
         return CommonResult.success(num);
     }
 

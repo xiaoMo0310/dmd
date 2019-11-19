@@ -1,5 +1,6 @@
 package com.dmd.mall.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
@@ -49,28 +50,30 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
 
     /**
      * 查询学证产品的详细信息
+     * @param loginAuthDto
      * @param certificateId
+     * @param addressId
      * @return
      */
-    CertificateProductVo findCertificateProduct(LoginAuthDto loginAuthDto, Long certificateId);
+    CertificateProductVo findCertificateProduct(LoginAuthDto loginAuthDto, Long certificateId, Long addressId);
 
     /**
      * 根据证书id,卖家id,地址id查询商品信息
      * @param certificateProductDto
      * @return
      */
-    PmsCourseProduct findCourseProductByIds(CertificateProductDto certificateProductDto);
+    JSONObject findCourseProductByIds(CertificateProductDto certificateProductDto);
 
     /**
-     * 根据教练id查询商品信息
+     * 根据教练id学证商品的信息
      * @param coachId
      * @return
      */
-    PmsCourseProduct findCourseProductByCoachId(Long coachId);
+    PmsCourseProduct findCourseProductByCoachId(Long coachId, Long addressId);
 
     List<PmsCourseProduct> queryPowerNotesPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct);
 
-    Integer queryPepleNum(Long id, Long userId);
+    Integer queryPeopleNum(Long id, Long userId);
 
     /**
      * 封装订单详情数据
@@ -78,4 +81,11 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
      * @return
      */
     OmsOrderItem createOrderItem(PmsCourseProduct product);
+
+    /**
+     * 结算商品
+     * @param productId
+     * @return
+     */
+    PmsCourseListVo settlementCourseProduct(LoginAuthDto loginAuthDto, Long productId);
 }

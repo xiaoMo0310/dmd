@@ -1,6 +1,8 @@
 package com.dmd.mall.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.dmd.BeanUtils;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
@@ -10,6 +12,7 @@ import com.dmd.mall.exceptions.PmsBizException;
 import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.PmsCourseProductMapper;
 import com.dmd.mall.model.domain.OmsOrderItem;
+import com.dmd.mall.model.domain.PmsCertificate;
 import com.dmd.mall.model.domain.PmsCourseProduct;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.dto.CertificateProductDto;
@@ -22,7 +25,6 @@ import com.dmd.mall.service.UmsMemberService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,6 +86,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         if(pmsCourseProduct == null){
             throw new PmsBizException(ErrorCodeEnum.PMS10021004, pmsCourseProduct.getId());
         }
+        pmsCourseProduct.setImage(pmsCourseProduct.getImage().split(",")[0]);
         DivingProductVo divingProductVo = new DivingProductVo();
         BeanUtils.copyProperties(pmsCourseProduct, divingProductVo);
         //查询教练信息
@@ -103,11 +106,14 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         if(CollectionUtils.isEmpty(pmsCourseProductVos)){
             throw new PmsBizException(ErrorCodeEnum.PMS10021003);
         }
+        for (PmsCourseListVo pmsCourseProductVo : pmsCourseProductVos) {
+            pmsCourseProductVo.setImage(pmsCourseProductVo.getImage().split(",")[0]);
+        }
         return new PageInfo<>(pmsCourseProductVos);
     }
 
     @Override
-    public CertificateProductVo findCertificateProduct(LoginAuthDto loginAuthDto, Long certificateId) {
+    public CertificateProductVo findCertificateProduct(LoginAuthDto loginAuthDto, Long certificateId, Long addressId) {
         CertificateProductVo certificateProductVo = new CertificateProductVo();
         //查询证书的信息
         PmsCertificateVo certificateVo = certificateService.selectCertificateById(certificateId);
@@ -131,40 +137,60 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         certificateProductVo.setUmsCoachVos(coachVos);
         //判断当前登录人和卖家的关系
         PmsCourseProduct pmsCourseProduct = null;
+        UmsCoachVo coachVoA = null;
+        Boolean flag = true;
         for (UmsCoachVo coachVo : coachVos) {
             if(coachVo.getInvitationCode().equals(umsMember.getInvitationCode())){
                 //查询该教练的商品信息
                 try {
-                    pmsCourseProduct = this.findCourseProductByCoachId(coachVo.getId());
+                    pmsCourseProduct = this.findCourseProductByCoachId(coachVo.getId(), addressId);
+                    //将该教练的信息放到首位
+                    coachVoA = coachVo;
                 } catch (Exception e) {
                     throw new PmsBizException(ErrorCodeEnum.PMS10021004, coachVo.getId());
                 }
-            }else {
-                //查询等级高的教练的商品信息
-                UmsCoachVo maxCoach = coachVos.stream().filter(Objects::nonNull).max(Comparator.comparingInt(umsCoachVo -> Integer.valueOf(umsCoachVo.getCoachGrade()))).orElse(new UmsCoachVo());
-                try {
-                    pmsCourseProduct = this.findCourseProductByCoachId(maxCoach.getId());
-                } catch (Exception e) {
-                    throw new PmsBizException(ErrorCodeEnum.PMS10021004, coachVo.getId());
-                }
+                flag = false;
+                continue;
             }
+        }
+        if(flag){
+            //查询等级高的教练的商品信息
+            UmsCoachVo maxCoach = coachVos.stream().filter(Objects::nonNull).max(Comparator.comparingInt(umsCoachVo -> Integer.valueOf(umsCoachVo.getCoachGrade()))).orElse(new UmsCoachVo());
+            try {
+                pmsCourseProduct = this.findCourseProductByCoachId(maxCoach.getId(), addressId);
+                coachVoA = maxCoach;
+            } catch (Exception e) {
+                throw new PmsBizException(ErrorCodeEnum.PMS10021004, maxCoach.getId());
+            }
+        }
+        coachVos.remove(coachVoA);
+        coachVos.add(0, coachVoA);
+        if(pmsCourseProduct == null){
+            throw new PmsBizException(ErrorCodeEnum.PMS10021003);
         }
         BeanUtils.copyProperties(pmsCourseProduct, certificateProductVo);
         return certificateProductVo;
     }
 
     @Override
-    public PmsCourseProduct findCourseProductByIds(CertificateProductDto certificateProductDto){
+    public JSONObject findCourseProductByIds(CertificateProductDto certificateProductDto){
         PmsCourseProduct pmsCourseProduct = pmsCourseProductMapper.selectCourseProductByIds(certificateProductDto);
-        if(pmsCourseProduct == null){
+        //获取证书信息
+        PmsCertificate pmsCertificate = certificateService.selectByKey(certificateProductDto.getAddressId());
+        PmsCertificateVo pmsCertificateVo = new PmsCertificateVo();
+        BeanUtils.copyProperties(pmsCertificate, pmsCertificateVo);
+        if(pmsCourseProduct == null || pmsCertificate == null){
             throw new PmsBizException(ErrorCodeEnum.PMS10021003);
         }
-        return pmsCourseProduct;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("pmsCourseProduct", pmsCourseProduct);
+        jsonObject.put("pmsCertificate", pmsCertificateVo);
+        return jsonObject;
     }
 
     @Override
-    public PmsCourseProduct findCourseProductByCoachId(Long coachId){
-        return pmsCourseProductMapper.selectByCoachId(coachId);
+    public PmsCourseProduct findCourseProductByCoachId(Long coachId, Long addressId){
+        return pmsCourseProductMapper.selectByCoachId(coachId, addressId);
     }
 
     @Override
@@ -211,18 +237,45 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         }else if(productType == 1){
             orderDetail.setProductType(3);
         }
-        Map map = new HashMap(0);
-        map.put("startToEndTime", product.getStartTime().toString());
-        map.put("endTime", product.getEndTime().toString());
-        map.put("maxPerson", product.getNumberLimit());
+        Map mapA = new HashMap(0);
+        mapA.put("key","开始时间");
+        mapA.put("value", product.getStartTime().toString());
+        Map mapB = new HashMap(0);
+        mapB.put("key","结束时间");
+        mapB.put("value", product.getEndTime().toString());
+        Map mapC = new HashMap(0);
+        mapC.put("key","最大人数限制");
+        mapC.put("value", product.getNumberLimit());
         ArrayList<Object> arrayList = new ArrayList<>();
-        arrayList.add(map);
+        arrayList.add(mapA);
+        arrayList.add(mapB);
+        arrayList.add(mapC);
         orderDetail.setProductAttr(JSONArray.toJSONString(arrayList));
         orderDetail.setProductPrice(product.getPrice());
         return orderDetail;
     }
+
     @Override
-    public Integer queryPepleNum(Long id, Long userId) {
+    public PmsCourseListVo settlementCourseProduct(LoginAuthDto loginAuthDto, Long productId) {
+        PmsCourseListVo pmsCourseListVo = pmsCourseProductMapper.selectCourseProductById(productId);
+        if(pmsCourseListVo == null){
+            throw new PmsBizException(ErrorCodeEnum.PMS10021003);
+        }
+        pmsCourseListVo.setImage(pmsCourseListVo.getImage().split(",")[0]);
+        //查询当前用户可用积分数量
+        UmsMember umsmember = null;
+        if(loginAuthDto.getUserType().equals("member")){
+            umsmember = umsMemberService.getById(loginAuthDto.getUserId());
+        }
+        if(umsmember == null){
+            throw new UmsBizException(ErrorCodeEnum.UMS10011003, loginAuthDto.getUserId());
+        }
+        pmsCourseListVo.setAvailableIntegral(umsmember.getIntegration());
+        return pmsCourseListVo;
+    }
+
+    @Override
+    public Integer queryPeopleNum(Long id, Long userId) {
         return pmsCourseProductMapper.queryPepleNum(id,userId);
     }
 

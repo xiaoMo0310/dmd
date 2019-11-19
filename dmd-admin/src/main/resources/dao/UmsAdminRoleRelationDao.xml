@@ -131,4 +131,5 @@
         update ums_role set status=#{status},name=#{name},description=#{description},sort=#{sort} where id=#{id}
     </update>
 
+
 </mapper>

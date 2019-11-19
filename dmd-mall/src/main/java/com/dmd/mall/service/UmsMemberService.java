@@ -1,5 +1,6 @@
 package com.dmd.mall.service;
 
+import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.UmsMember;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,4 +77,10 @@ public interface UmsMemberService {
     Set<String> getPermission(String username);
 
 
+    /**
+     * 根据登录人信息查询
+     * @param loginAuthDto
+     * @return
+     */
+    UmsMember selectByLoginAuthDto(LoginAuthDto loginAuthDto);
 }

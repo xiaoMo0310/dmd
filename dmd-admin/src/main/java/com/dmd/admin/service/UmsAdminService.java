@@ -1,9 +1,6 @@
 package com.dmd.admin.service;
 
-import com.dmd.admin.model.domain.UmsAdmin;
-import com.dmd.admin.model.domain.UmsPermission;
-import com.dmd.admin.model.domain.UmsRole;
-import com.dmd.admin.model.domain.UmsRolePermissionRelation;
+import com.dmd.admin.model.domain.*;
 import com.dmd.admin.model.dto.UmsAdminParam;
 import com.dmd.base.dto.BaseQuery;
 import com.github.pagehelper.PageInfo;
@@ -118,4 +115,7 @@ public interface UmsAdminService {
 
     //修改角色信息
     int modifyRole(UmsRole umsRole);
+
+    //建立角色和用户的对应关系
+    int addRolesForAdmin(List<UmsAdminRoleRelation> adminRoleRelation);
 }

@@ -119,4 +119,7 @@
         </if>
         ORDER BY #{orderPageQuery.orderBy}
     </select>
+    <select id="selectByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+
+    </select>
 </mapper>

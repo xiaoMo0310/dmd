@@ -1,7 +1,6 @@
 package com.dmd.mall.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.OmsOrder;
@@ -62,18 +61,25 @@ public interface OmsOrderService extends IService<OmsOrder> {
     OrderVo getOrderDetail(LoginAuthDto loginAuthDto, String orderSn);
 
     /**
-     * 查询用户全部订单列表.
-     * @param userId    the user id
-     * @param baseQuery the base query
-     * @return the page info
-     */
-    PageInfo queryUserOrderListWithPage(Long userId, BaseQuery baseQuery);
-
-    /**
      * 根据订单的状态查询用户订单列表.
      * @param orderPageQuery the order page query
      * @return the page info
      */
     PageInfo queryOrderListWithPage(LoginAuthDto loginAuthDto, OrderPageQueryDto orderPageQuery);
 
+    /**
+     * 根据订单的状态查询用户订单列表
+     * @param loginAuthDto
+     * @param status
+     * @return
+     */
+    PageInfo queryUserOrderList(LoginAuthDto loginAuthDto, Integer status);
+
+    /**
+     * 根据订单的状态查询卖家订单列表
+     * @param loginAuthDto
+     * @param status
+     * @return
+     */
+    PageInfo querySellerOrderListWithPage(LoginAuthDto loginAuthDto, Integer status);
 }

@@ -34,4 +34,9 @@ public class PmsCertificateVo {
      * 图片
      */
     private String pic;
+
+    /**
+     * 简介
+     */
+    private String introduction;
 }

@@ -53,7 +53,7 @@
     </sql>
     <select id="selectCourseProductByType" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
         select
-            uc.id coachId, uc.icon coachIcon, uc.coach_name coachName, uc.coach_grade, psp.id, psp.product_name, psp.title, psp.image, psp.price, psp.location
+            uc.id coachId, uc.icon coachIcon, uc.coach_name coachName, uc.coach_grade, psp.id, psp.product_name, psp.title, psp.image, psp.price, psp.location, psp.start_time, psp.end_time
         from pms_course_product psp, ums_coach uc
         where uc.id = psp.shop_id
         and uc.status = 2
@@ -70,19 +70,22 @@
     <select id="selectByCoachId" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
         select <include refid="Base_Column_List"/>
         from pms_course_product
-        where user_id = #{coachId} and status = 1 and approval_status = 2
+        where user_id = #{coachId} and status = 1 and approval_status = 2 and product_type = 1
+        <if test="addressId != null">
+            and address_id = #{addressId}
+        </if>
     </select>
     <select id="selectCourseProductByIds" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
         select <include refid="Base_Column_List"/>
         from pms_course_product
-        where status = 1 and approval_status = 2
+        where status = 1 and approval_status = 2 and product_type = 1
         <if test="certificateId != null">
             and certificate_id = #{certificateId}
         </if>
         <if test="addressId != null">
             and address_id = #{addressId}
         </if>
-        <if test="certificateId != null">
+        <if test="userId != null">
             and user_id = #{userId}
         </if>
     </select>
@@ -133,5 +136,16 @@
         <if test="id != null">
             and id != #{id}
         </if>
+    </select>
+    <select id="selectCourseProductById" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
+        select
+            uc.id coachId, uc.icon coachIcon, uc.coach_name coachName, uc.coach_grade, psp.id, psp.product_name, psp.title, psp.image, psp.price, psp.location, psp.start_time, psp.end_time
+        from pms_course_product psp, ums_coach uc
+        where uc.id = psp.shop_id
+        and uc.status = 2
+        and psp.id = #{productId}
+        and psp.status = 1
+        and psp.approval_status = 2
+        order by sort desc
     </select>
 </mapper>

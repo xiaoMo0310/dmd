@@ -17,8 +17,8 @@ public class PmsCourseOrderDto {
     @ApiModelProperty("商品id")
     private Long productId;
 
-    @ApiModelProperty("是否使用积分")
-    private Boolean isUserIntegration = false;
+    @ApiModelProperty("是否使用积分 0:不使用 1:使用积分")
+    private Integer isUserIntegration = 0;
 
     @ApiModelProperty("下单使用的积分数")
     private Integer useIntegration = 0;
