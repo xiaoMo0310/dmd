@@ -45,4 +45,9 @@
         where user_id = #{userId}
         and favorite_type = #{favoriteType} and target_id = #{targetId} and user_type = #{userType}
     </select>
+
+
+    <select id="queryFavoritesCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(*) FROM ums_favorites WHERE user_id = #{userId}
+    </select>
 </mapper>

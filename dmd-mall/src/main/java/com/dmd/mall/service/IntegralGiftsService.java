@@ -28,4 +28,6 @@ public interface IntegralGiftsService {
     int deleteIntegralGiftsById(Long id);
 
     List<IntegralGiftsSpeBean> queryIntegralGiftsSpeById(Long id);
+
+    Integer selectIntegralGiftsSpecStock(Long id, String size, String color);
 }

@@ -133,4 +133,8 @@
         </where>
         ORDER BY r_createtime DESC
     </select>
+
+    <select id="queryDynamicCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM dmd_dynamic WHERE r_userid = #{userId}
+    </select>
 </mapper>

@@ -149,4 +149,19 @@ public class IntegralGiftsController {
         return CommonResult.success(integralGiftsSpeList);
     }
 
+    /**
+     * 查询各种规格对应库存
+     * @param id
+     * @param size
+     * @param color
+     * @return
+     */
+    @ApiOperation("查询各种规格对应库存")
+    @RequestMapping(value = "/selectIntegralGiftsSpecStock",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<Integer> selectIntegralGiftsSpecStock(@RequestParam Long id,String size,String color) {
+        Integer specStock = integralGiftsService.selectIntegralGiftsSpecStock(id,size,color);
+        return CommonResult.success(specStock);
+    }
+
 }
