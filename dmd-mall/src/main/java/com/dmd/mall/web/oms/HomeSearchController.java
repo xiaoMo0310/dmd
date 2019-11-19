@@ -34,8 +34,12 @@ public class HomeSearchController {
     private HomeSearchService homeSearchService;
 
     /**
-     * 查询全部我的动态
+     * 首页--搜索动态/商品/话题添加历史搜索记录
+     * @param content
      * @param userId
+     * @param searchType
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     @ApiOperation("首页--搜索动态/商品/话题添加历史搜索记录")
@@ -62,8 +66,12 @@ public class HomeSearchController {
 
 
     /**
-     * 查询全部我的动态
+     * 首页--搜索动态/商品/话题
+     * @param content
      * @param userId
+     * @param searchType
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     @ApiOperation("首页--搜索动态/商品/话题")
