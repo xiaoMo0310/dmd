@@ -71,5 +71,20 @@ public class HomeSearchServiceImpl implements HomeSearchService{
         return pmsCourseProductMapper.queryPmsCourseProduct(content);
     }
 
+    @Override
+    public List<DynamicBean> queryDynamicContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+        return dynamicMapper.queryDynamicByContent(content);
+    }
+
+    @Override
+    public List<PmsProduct> queryPmsCourseProductContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+        return pmsCourseProductMapper.queryPmsCourseProduct(content);
+    }
+
+    @Override
+    public List<TopicBean> queryTopicContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+        return topicMapper.queryTopicByContent(content);
+    }
+
 
 }

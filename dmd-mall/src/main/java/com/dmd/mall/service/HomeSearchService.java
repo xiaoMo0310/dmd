@@ -26,4 +26,10 @@ public interface HomeSearchService {
     int deleteHistoryByUserid(Long userid);
 
     List<PmsProduct> queryPmsCourseProduct(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
+
+    List<DynamicBean> queryDynamicContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
+
+    List<PmsProduct> queryPmsCourseProductContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
+
+    List<TopicBean> queryTopicContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
 }

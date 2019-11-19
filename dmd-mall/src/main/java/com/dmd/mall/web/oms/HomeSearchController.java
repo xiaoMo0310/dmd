@@ -38,8 +38,8 @@ public class HomeSearchController {
      * @param userId
      * @return
      */
-    @ApiOperation("首页--搜索动态/商品/话题")
-    @RequestMapping(value = "/searchCount",method = RequestMethod.GET)
+    @ApiOperation("首页--搜索动态/商品/话题添加历史搜索记录")
+    @RequestMapping(value = "/searchAndAddContent",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<PageInfo> querycontent(@RequestParam String content ,@RequestParam Long userId,@RequestParam Integer searchType,@RequestParam Integer pageNum,
                                            @RequestParam Integer pageSize) {
@@ -55,6 +55,34 @@ public class HomeSearchController {
         }
         if(searchType == 3){
             List<TopicBean> TopicList = homeSearchService.queryTopic(userId,content,searchType,pageNum,pageSize);
+            list=TopicList;
+        }
+        return CommonResult.success(new PageInfo<>(list));
+    }
+
+
+    /**
+     * 查询全部我的动态
+     * @param userId
+     * @return
+     */
+    @ApiOperation("首页--搜索动态/商品/话题")
+    @RequestMapping(value = "/searchcontent",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<PageInfo> searchcontent(@RequestParam String content ,@RequestParam Long userId,@RequestParam Integer searchType,@RequestParam Integer pageNum,
+                                               @RequestParam Integer pageSize) {
+        List list = new ArrayList<>();
+        if(searchType == 1){
+            List<DynamicBean> dynamicList = homeSearchService.queryDynamicContent(userId,content,searchType,pageNum,pageSize);
+            list=dynamicList;
+        }
+        if(searchType == 2){
+            //List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType,pageNum,pageSize);
+            List<PmsProduct> pmsProductList = homeSearchService.queryPmsCourseProductContent(userId,content,searchType,pageNum,pageSize);
+            list=pmsProductList;
+        }
+        if(searchType == 3){
+            List<TopicBean> TopicList = homeSearchService.queryTopicContent(userId,content,searchType,pageNum,pageSize);
             list=TopicList;
         }
         return CommonResult.success(new PageInfo<>(list));
