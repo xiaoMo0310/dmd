@@ -148,4 +148,28 @@
         and psp.approval_status = 2
         order by sort desc
     </select>
+
+    <select id="queryPmsCourseProduct" parameterType="java.lang.String" resultMap="BaseResultMap">
+      SELECT
+        pc.id,
+        pc.user_id,
+        pc.location,
+        pc.title,
+        pc.image,
+        pc.price,
+        uc.icon AS icon,
+        uc.nick_name AS nickName,
+        uc.coach_grade AS coachGrade
+      FROM
+	    pms_course_product pc
+	  LEFT JOIN ums_coach uc ON pc.user_id = uc.id
+        <where>
+            <if test="content != null and content != ''">
+                AND pc.title LIKE CONCAT(CONCAT('%',#{content}),'%')
+            </if>
+            AND pc.approval_status = 2
+            AND pc.status = 1
+        </where>
+        ORDER BY pc.sales DESC
+    </select>
 </mapper>

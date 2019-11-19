@@ -1,13 +1,7 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.mall.mapper.DynamicMapper;
-import com.dmd.mall.mapper.HomeSearchMapper;
-import com.dmd.mall.mapper.PmsProductMapper;
-import com.dmd.mall.mapper.TopicMapper;
-import com.dmd.mall.model.domain.DynamicBean;
-import com.dmd.mall.model.domain.HomeSearchRecordBean;
-import com.dmd.mall.model.domain.PmsProduct;
-import com.dmd.mall.model.domain.TopicBean;
+import com.dmd.mall.mapper.*;
+import com.dmd.mall.model.domain.*;
 import com.dmd.mall.service.HomeSearchService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +31,8 @@ public class HomeSearchServiceImpl implements HomeSearchService{
     @Autowired
     private TopicMapper topicMapper;
 
+    @Autowired
+    private PmsCourseProductMapper pmsCourseProductMapper;
     @Override
     public List<DynamicBean> queryDynamic(Long userId, String content, Integer searchType,Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -66,6 +62,13 @@ public class HomeSearchServiceImpl implements HomeSearchService{
     @Override
     public int deleteHistoryByUserid(Long userid) {
         return homeSearchMapper.deleteHistoryByUserid(userid);
+    }
+
+    @Override
+    public List<PmsProduct> queryPmsCourseProduct(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        homeSearchMapper.addHomeSearchRecord(userId,content,searchType);
+        return pmsCourseProductMapper.queryPmsCourseProduct(content);
     }
 
 

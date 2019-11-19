@@ -49,7 +49,8 @@ public class HomeSearchController {
             list=dynamicList;
         }
         if(searchType == 2){
-            List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType,pageNum,pageSize);
+            //List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType,pageNum,pageSize);
+            List<PmsProduct> pmsProductList = homeSearchService.queryPmsCourseProduct(userId,content,searchType,pageNum,pageSize);
             list=pmsProductList;
         }
         if(searchType == 3){

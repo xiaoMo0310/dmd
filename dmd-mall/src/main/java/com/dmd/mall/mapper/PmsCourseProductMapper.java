@@ -2,6 +2,7 @@ package com.dmd.mall.mapper;
 
 import com.dmd.core.mybatis.MyMapper;
 import com.dmd.mall.model.domain.PmsCourseProduct;
+import com.dmd.mall.model.domain.PmsProduct;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.vo.PmsCourseListVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -53,4 +54,6 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     int selectCheckActivity(@Param("startTime") Date startTime, @Param("endTime") Date endTime, @Param("id") Long id);
 
     PmsCourseListVo selectCourseProductById(Long productId);
+
+    List<PmsProduct> queryPmsCourseProduct(@Param("content")String content);
 }

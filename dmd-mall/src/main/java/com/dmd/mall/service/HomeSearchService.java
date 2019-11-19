@@ -24,4 +24,6 @@ public interface HomeSearchService {
     List<HomeSearchRecordBean> queryHistory(Long userId);
 
     int deleteHistoryByUserid(Long userid);
+
+    List<PmsProduct> queryPmsCourseProduct(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
 }

@@ -149,4 +149,17 @@ private static final long serialVersionUID = 1L;
     @Transient
     private Date searchEndTime;
 
+
+    @ApiModelProperty("教练头像")
+    @Transient
+    private String icon;
+
+    @ApiModelProperty("教练昵称")
+    @Transient
+    private String nickName;
+
+    @ApiModelProperty("教练等级")
+    @Transient
+    private String coachGrade;
+
 }
