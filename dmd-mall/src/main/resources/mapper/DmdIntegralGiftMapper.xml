@@ -11,12 +11,13 @@
         <result column="introduce" property="introduce" />
         <result column="createtime" property="createtime" />
         <result column="updatetime" property="updatetime" />
+        <result column="status" property="status" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,
-        name, picture, integral, introduce, createtime, updatetime
+        name, picture, integral, introduce, createtime, updatetime, status
     </sql>
 
 </mapper>

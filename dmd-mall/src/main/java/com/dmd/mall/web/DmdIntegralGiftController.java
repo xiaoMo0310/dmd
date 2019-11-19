@@ -25,6 +25,8 @@ public class DmdIntegralGiftController extends BaseController {
     @Autowired
     private DmdIntegralGiftService dmdIntegralGiftService;
 
+    //todo 结算积分好礼商品
+
 
 }
 

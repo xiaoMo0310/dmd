@@ -16,6 +16,9 @@ import java.util.Date;
 @Data
 public class CourseOrderDetailVo {
 
+    /**
+     * 订单编号
+     */
     private String orderSn;
 
     /**
@@ -89,7 +92,7 @@ public class CourseOrderDetailVo {
      * 订单创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private Date createdTime;
 
     /**
      * 订单完成时间

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.DmdIntegralGiftSpeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.DmdIntegralGiftSpe">
+    <result column="id" property="id" />
+        <result column="giftId" property="giftId" />
+        <result column="specStock" property="specStock" />
+        <result column="size" property="size" />
+        <result column="color" property="color" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        giftId, specStock, size, color
+    </sql>
+    <select id="selectByGiftId" resultType="com.dmd.mall.model.domain.DmdIntegralGiftSpe">
+        select <include refid="Base_Column_List"/> from dmd_integral_gift_spe where giftId = #{giftId}
+    </select>
+
+</mapper>

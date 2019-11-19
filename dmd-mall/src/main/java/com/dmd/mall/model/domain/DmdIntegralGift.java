@@ -4,11 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -23,10 +26,12 @@ import java.util.Date;
 @Table(name = "dmd_integral_gift")
 @Alias(value = "DmdIntegralGift")
 @ApiModel
-public class DmdIntegralGift {
+public class DmdIntegralGift implements Serializable {
 
-private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = -810251235558254749L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ApiModelProperty("商品的名称")
     private String name;
@@ -49,6 +54,9 @@ private static final long serialVersionUID = 1L;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty("修改时间")
     private Date updatetime;
+
+    @ApiModelProperty("状态0=上架 1=下架")
+    private Integer status;
 
 
 }

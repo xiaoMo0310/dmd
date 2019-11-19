@@ -31,6 +31,9 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
     @Override
     public UmsCoachVo selectCoachMessage(Long id) {
         UmsCoach umsCoach = umsCoachMapper.selectCoachMessage(id);
+        if(umsCoach == null){
+            throw new UmsBizException(ErrorCodeEnum.UMS10015010, id);
+        }
         UmsCoachVo umsCoachVo = new UmsCoachVo();
         BeanUtils.copyProperties(umsCoach, umsCoachVo);
         return umsCoachVo;
@@ -39,7 +42,7 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
     @Override
     public UmsCoach selectByLoginAuthDto(LoginAuthDto loginAuthDto) {
         UmsCoach umsCoach = null;
-        if(loginAuthDto.getUserType().equals("member")){
+        if(loginAuthDto.getUserType().equals("coach")){
             umsCoach = umsCoachMapper.selectByPrimaryKey(loginAuthDto.getUserId());
         }
         if(umsCoach == null){
