@@ -157,8 +157,8 @@
         pc.title,
         pc.image,
         pc.price,
-        uc.icon AS icon,
-        uc.nick_name AS nickName,
+        uc.icon AS coachIcon,
+        uc.coach_name AS coachName,
         uc.coach_grade AS coachGrade
       FROM
 	    pms_course_product pc

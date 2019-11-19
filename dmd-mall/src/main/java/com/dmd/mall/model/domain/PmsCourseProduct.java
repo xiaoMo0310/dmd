@@ -152,11 +152,11 @@ private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("教练头像")
     @Transient
-    private String icon;
+    private String coachIcon;
 
     @ApiModelProperty("教练昵称")
     @Transient
-    private String nickName;
+    private String coachName;
 
     @ApiModelProperty("教练等级")
     @Transient
