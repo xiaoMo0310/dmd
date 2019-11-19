@@ -83,8 +83,8 @@ public class HomeSearchController {
     @ApiOperation("删除历史记录")
     @RequestMapping(value = "/deleteHistoryByUserid",method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult deleteHistoryByUserid(@RequestParam Long userid){
-        int count = homeSearchService.deleteHistoryByUserid(userid);
+    public CommonResult deleteHistoryByUserid(@RequestParam Long userId){
+        int count = homeSearchService.deleteHistoryByUserid(userId);
         if (count > 0) {
             return CommonResult.success(count,"清除历史记录成功");
         }
