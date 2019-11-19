@@ -51,7 +51,7 @@ public class MemberDetails implements UserDetails, SocialUserDetails {
 
     @Override
     public boolean isEnabled() {
-        return umsMember.getStatus() == 1;
+        return umsMember.getStatus() == 2;
     }
 
     public UmsMember getUmsMember() {

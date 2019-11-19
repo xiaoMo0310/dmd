@@ -15,7 +15,7 @@ public class JwtUtil {
     private static ObjectMapper objectMapper=new ObjectMapper();
     private static Logger logger= LoggerFactory.getLogger(JwtUtil.class);
     public static Claims getDate(HttpServletRequest request) throws JsonProcessingException, UnsupportedEncodingException {
-        String token = StringUtils.substringAfter(request.getHeader("Authorization"), "bearer ");
+        String token = StringUtils.substringAfter(request.getHeader("Authorization"), "Bearer ");
         Claims claims = Jwts.parser().setSigningKey("dmd".getBytes("UTF-8")).parseClaimsJws(token).getBody();
         return claims;
     }

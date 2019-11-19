@@ -4,8 +4,12 @@ import com.dmd.FileUtil;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.service.UmsMemberService;
+import com.dmd.mall.util.JwtUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.modelmapper.internal.util.Members;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 @Controller
 @Api(tags = "UmsMemberAuthenticationController", description = "登陆后会员的操作接口")
@@ -41,12 +46,23 @@ public class UmsMemberAuthenticationController {
     @ApiOperation("修改个人信心")
     @RequestMapping(value = "/updatePersonalData", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updatePersonalData(@RequestBody UmsMember umsMember, MultipartFile file, Authentication authentication, HttpServletRequest request) {
+    public CommonResult updatePersonalData(@RequestBody UmsMember umsMember,HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+        Claims claims=JwtUtil.getDate(request);
+        umsMember.setUsername((String) claims.get("username"));
+        return memberService.updatePersonalData(umsMember);
+
+    }
+    @ApiOperation("修改头像")
+    @RequestMapping(value = "/updateIcon", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateIcon(@RequestBody MultipartFile file,HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+        UmsMember umsMember=new UmsMember();
+        Claims claims=JwtUtil.getDate(request);
+        umsMember.setUsername((String) claims.get("username"));
         if (file!=null){
             String icon=FileUtil.FileUpload(file,request);
             umsMember.setIcon(icon);
         }
-        umsMember.setUsername(authentication.getPrincipal().toString());
         return memberService.updatePersonalData(umsMember);
 
     }
