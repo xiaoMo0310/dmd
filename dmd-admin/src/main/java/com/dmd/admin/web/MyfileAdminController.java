@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
@@ -85,7 +86,7 @@ public class MyfileAdminController {
     @ApiOperation("图片上传")
     @RequestMapping(value="/saveFile",produces="application/json;charset=UTF-8")
     @ResponseBody
-    public String filesUpload(@RequestParam(value = "myfiles" ) MultipartFile[] files,
+    public CommonResult filesUpload(@RequestParam(value = "myfiles" ) MultipartFile[] files,
                               HttpServletRequest request) {
         List<String> list = new ArrayList<>();
         if (files != null && files.length > 0) {
@@ -102,7 +103,7 @@ public class MyfileAdminController {
         // 数组转String字符串
         String newStr = StringUtils.join(list, ",");
         System.out.println(newStr);
-        return newStr;
+        return CommonResult.success(newStr);
     }
 
     private List<String> saveFile(HttpServletRequest request,
@@ -112,7 +113,7 @@ public class MyfileAdminController {
             try {
                 // 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中
                 // )
-                String filePath = "/project/tomcat/fileUploadAdmin/picture" + (new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + file.getOriginalFilename());
+                String filePath = "/project/tomcat/webapps/fileUpload/picture" + (new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + file.getOriginalFilename());
 
                 list.add(filePath);
                 File saveDir = new File(filePath);

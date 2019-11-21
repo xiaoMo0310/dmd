@@ -98,7 +98,7 @@ public class HomeSearchController {
 
 
     /**
-     * 查询历史记录
+     * 查询历史搜索记录
      * @param userId
      * @return
      */
@@ -113,7 +113,7 @@ public class HomeSearchController {
 
     /**
      * 删除历史记录
-     * @param userid
+     * @param userId
      * @return
      */
     @ApiOperation("删除历史记录")
