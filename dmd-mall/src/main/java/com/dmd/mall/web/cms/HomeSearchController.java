@@ -34,12 +34,16 @@ public class HomeSearchController {
     private HomeSearchService homeSearchService;
 
     /**
-     * 查询全部我的动态
+     * 首页--搜索动态/商品/话题添加历史搜索记录
+     * @param content
      * @param userId
+     * @param searchType
+     * @param pageNum
+     * @param pageSize
      * @return
      */
-    @ApiOperation("首页--搜索动态/商品/话题")
-    @RequestMapping(value = "/searchCount",method = RequestMethod.GET)
+    @ApiOperation("首页--搜索动态/商品/话题添加历史搜索记录")
+    @RequestMapping(value = "/searchAndAddContent",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<PageInfo> querycontent(@RequestParam String content ,@RequestParam Long userId,@RequestParam Integer searchType,@RequestParam Integer pageNum,
                                            @RequestParam Integer pageSize) {
@@ -62,7 +66,39 @@ public class HomeSearchController {
 
 
     /**
-     * 查询历史记录
+     * 首页--搜索动态/商品/话题
+     * @param content
+     * @param userId
+     * @param searchType
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @ApiOperation("首页--搜索动态/商品/话题")
+    @RequestMapping(value = "/searchcontent",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<PageInfo> searchcontent(@RequestParam String content ,@RequestParam Long userId,@RequestParam Integer searchType,@RequestParam Integer pageNum,
+                                               @RequestParam Integer pageSize) {
+        List list = new ArrayList<>();
+        if(searchType == 1){
+            List<DynamicBean> dynamicList = homeSearchService.queryDynamicContent(userId,content,searchType,pageNum,pageSize);
+            list=dynamicList;
+        }
+        if(searchType == 2){
+            //List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType,pageNum,pageSize);
+            List<PmsProduct> pmsProductList = homeSearchService.queryPmsCourseProductContent(userId,content,searchType,pageNum,pageSize);
+            list=pmsProductList;
+        }
+        if(searchType == 3){
+            List<TopicBean> TopicList = homeSearchService.queryTopicContent(userId,content,searchType,pageNum,pageSize);
+            list=TopicList;
+        }
+        return CommonResult.success(new PageInfo<>(list));
+    }
+
+
+    /**
+     * 查询历史搜索记录
      * @param userId
      * @return
      */
@@ -77,7 +113,7 @@ public class HomeSearchController {
 
     /**
      * 删除历史记录
-     * @param userid
+     * @param userId
      * @return
      */
     @ApiOperation("删除历史记录")
