@@ -1,7 +1,10 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.domain.DmdIntegralGiftSpe;
 import com.dmd.core.support.IService;
+import com.dmd.mall.model.domain.DmdIntegralGiftSpe;
+import com.dmd.mall.model.domain.IntegralGiftsSpeBean;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,4 +17,8 @@ import com.dmd.core.support.IService;
 public interface DmdIntegralGiftSpeService extends IService<DmdIntegralGiftSpe> {
 
     DmdIntegralGiftSpe selectByGiftId(Long giftId);
+
+    List<IntegralGiftsSpeBean> queryIntegralGiftsSpeById(Long id);
+
+    Integer selectIntegralGiftsSpecStock(Long id, String size, String color);
 }

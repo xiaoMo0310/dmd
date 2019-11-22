@@ -239,10 +239,10 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         }
         Map mapA = new HashMap(0);
         mapA.put("key","开始时间");
-        mapA.put("value", product.getStartTime().toString());
+        mapA.put("value", product.getStartTime());
         Map mapB = new HashMap(0);
         mapB.put("key","结束时间");
-        mapB.put("value", product.getEndTime().toString());
+        mapB.put("value", product.getEndTime());
         Map mapC = new HashMap(0);
         mapC.put("key","最大人数限制");
         mapC.put("value", product.getNumberLimit());
@@ -250,7 +250,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         arrayList.add(mapA);
         arrayList.add(mapB);
         arrayList.add(mapC);
-        orderDetail.setProductAttr(JSONArray.toJSONString(arrayList));
+        orderDetail.setProductAttr(JSONArray.toJSONStringWithDateFormat(arrayList, "yyyy-MM-dd HH:mm:ss"));
         orderDetail.setProductPrice(product.getPrice());
         return orderDetail;
     }
@@ -263,14 +263,8 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         }
         pmsCourseListVo.setImage(pmsCourseListVo.getImage().split(",")[0]);
         //查询当前用户可用积分数量
-        UmsMember umsmember = null;
-        if(loginAuthDto.getUserType().equals("member")){
-            umsmember = umsMemberService.getById(loginAuthDto.getUserId());
-        }
-        if(umsmember == null){
-            throw new UmsBizException(ErrorCodeEnum.UMS10011003, loginAuthDto.getUserId());
-        }
-        pmsCourseListVo.setAvailableIntegral(umsmember.getIntegration());
+        UmsMember umsMember = umsMemberService.selectByLoginAuthDto(loginAuthDto);
+        pmsCourseListVo.setAvailableIntegral(umsMember.getIntegration());
         return pmsCourseListVo;
     }
 

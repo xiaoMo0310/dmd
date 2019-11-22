@@ -1,5 +1,6 @@
 package com.dmd.mall.service;
 
+import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.OmsCart;
 import com.dmd.mall.model.domain.OmsOrderItem;
@@ -21,7 +22,7 @@ public interface OmsCartService extends IService<OmsCart> {
         public List<OmsCart> findOmsCartById(List<Long> ids);//根据id查询购物车信息
         public int addOmsCart(OmsCart omsCart);//添加购物车信息
         public int updateOmsCart(String quantity, String deleteStatus, List<Long> id, String updateTime);
-        public Map<String,Object> beforeSubmitOrder(List<Long> ids,Long memberId,Long productId);
+        public Map<String,Object> beforeSubmitOrder(List<Long> ids, LoginAuthDto loginAuthDto, Long productId);
 
         /**
          * 根据用户id和购物车id查询购物车的信息

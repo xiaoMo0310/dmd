@@ -27,7 +27,7 @@ public interface OmsOrderMapper extends MyMapper<OmsOrder> {
      * @param orderSn
      * @return
      */
-    OmsOrder selectByUserIdAndOrderNo(@Param("userId")Long userId, @Param("orderSn") String orderSn);
+    OmsOrder selectByUserIdAndOrderNo(@Param("userId")Long userId, @Param("userType") String userType, @Param("orderSn") String orderSn);
 
     /**
      * 根据用户id查询订单信息
@@ -41,11 +41,13 @@ public interface OmsOrderMapper extends MyMapper<OmsOrder> {
      * @param status
      * @return
      */
-    List<CourseOrderDetailVo> selectUserOrderByStatus(@Param("userId") Long userId,@Param("status") Integer status);
+    List<CourseOrderDetailVo> selectUserOrderByStatus(@Param("userId") Long userId,@Param("userType") String userType, @Param("status") Integer status);
 
-    List<CourseOrderDetailVo> selectSellerOrderByStatus(@Param("coachId") Long coachId, @Param("status") Integer status);
+    List<CourseOrderDetailVo> selectSellerOrderByStatus(@Param("coachId") Long coachId, @Param("userType") String userType, @Param("status") Integer status);
 
     CourseOrderDetailVo selectUserOrderByOrderSn(@Param("userId") Long userId, @Param("orderSn") String orderSn);
 
     CourseOrderDetailVo selectSellerOrderByOrderSn(@Param("coachId") Long coachId,@Param("orderSn") String orderSn);
+
+    OmsOrder selectByUserIdAndOrderId(@Param("userId") Long userId,@Param("userType") String userType, @Param("orderId") Long orderId);
 }

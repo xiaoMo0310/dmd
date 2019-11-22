@@ -63,10 +63,6 @@ public class OmsOrderItem implements Serializable {
     @ApiModelProperty(value = "该商品经过优惠后的分解金额")
     private BigDecimal realAmount;
 
-    private Integer giftIntegration;
-
-    private Integer giftGrowth;
-
     @ApiModelProperty(value = "商品销售属性:[{'key':'颜色','value':'颜色'},{'key':'容量','value':'4G'}]")
     private String productAttr;
 }

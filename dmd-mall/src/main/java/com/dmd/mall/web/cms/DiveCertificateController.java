@@ -1,9 +1,7 @@
-package com.dmd.mall.web.oms;
+package com.dmd.mall.web.cms;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.domain.CommentBean;
 import com.dmd.mall.model.domain.DiveCertificateBean;
-import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.service.DiveCertificateServuce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +23,6 @@ import java.util.List;
 @RequestMapping("/diveCertificate")
 public class DiveCertificateController {
 
-
     @Autowired
     private DiveCertificateServuce diveCertificateServuce;
 
@@ -40,7 +37,6 @@ public class DiveCertificateController {
         List<DiveCertificateBean> list = diveCertificateServuce.queryDiveCertificate(userId);
         return CommonResult.success(list);
     }
-
 
     @ApiOperation("上传我的证书")
     @RequestMapping(value = "/addDiveCertificate",method = RequestMethod.POST)

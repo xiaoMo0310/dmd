@@ -83,7 +83,7 @@ public class PmsCourseProductController extends BaseController {
     @GetMapping("courseProduct/settlement")
     @ApiOperation(httpMethod = "GET", value = "结算潜水学证商品")
     @ApiImplicitParam(name ="productId", value = "商品id", dataType = "Long", paramType = "query")
-    public Wrapper queryOrderListWithPage(@RequestParam("productId") Long productId) {
+    public Wrapper settlementCourseProduct(@RequestParam("productId") Long productId) {
         PmsCourseListVo pmsCourseListVo = pmsCourseProductService.settlementCourseProduct(getLoginAuthDto(),productId);
         return WrapMapper.ok(pmsCourseListVo);
     }

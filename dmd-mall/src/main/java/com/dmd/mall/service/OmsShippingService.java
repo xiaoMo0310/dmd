@@ -3,6 +3,7 @@ package com.dmd.mall.service;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.OmsShipping;
+import com.dmd.mall.model.dto.OmsShippingDto;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -22,57 +23,46 @@ public interface OmsShippingService extends IService<OmsShipping> {
      *
      * @param loginAuthDto the login auth dto
      * @param shipping     the shipping
-     *
      * @return the int
      */
-    int saveShipping(LoginAuthDto loginAuthDto, OmsShipping shipping);
+    int saveShipping(LoginAuthDto loginAuthDto, OmsShippingDto shipping);
 
     /**
-     * 删除收货人地址.
-     *
-     * @param userId     the user id
-     * @param shippingId the shipping id
-     *
-     * @return the int
+     * 删除收货人地址
+     * @param loginAuthDto
+     * @param shippingId
+     * @return
      */
-    int deleteShipping(Long userId, Long shippingId);
+    int deleteShipping(LoginAuthDto loginAuthDto, Long shippingId);
 
     /**
-     * 根据Id查询收货人地址.
-     *
-     * @param userId     the user id
-     * @param shippingId the shipping id
-     *
-     * @return the omc shipping
+     * 根据Id查询收货人地址
+     * @param loginAuthDto
+     * @param shippingId
+     * @return
      */
-    OmsShipping selectByShippingIdUserId(Long userId, Long shippingId);
+    OmsShipping selectByShippingIdUserId(LoginAuthDto loginAuthDto, Long shippingId);
 
     /**
-     * 分页查询当前用户收货人地址列表.
-     *
-     * @param userId   the user id
-     * @param pageNum  the page num
-     * @param pageSize the page size
-     *
-     * @return the page info
+     * 分页查询当前用户收货人地址列表
+     * @param loginAuthDto
+     * @param pageNum
+     * @param pageSize
+     * @return
      */
-    PageInfo queryListWithPageByUserId(Long userId, int pageNum, int pageSize);
+    PageInfo queryListWithPageByUserId(LoginAuthDto loginAuthDto, int pageNum, int pageSize);
 
     /**
-     * Select by user id list.
-     *
-     * @param userId the user id
-     *
-     * @return the list
+     * 分页查询当前用户收货人地址列表
+     * @param loginAuthDto
+     * @return
      */
-    List<OmsShipping> selectByUserId(Long userId);
+    List<OmsShipping> selectByUserId(LoginAuthDto loginAuthDto);
 
     /**
      * 设置默认收货地址.
-     *
      * @param loginAuthDto the login auth dto
      * @param shippingId    the shipping id
-     *
      * @return the default address
      */
     int setDefaultAddress(LoginAuthDto loginAuthDto, Long shippingId);

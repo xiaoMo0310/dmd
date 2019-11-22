@@ -27,7 +27,6 @@
         <result column="order_type" property="orderType" />
         <result column="delivery_company" property="deliveryCompany" />
         <result column="delivery_sn" property="deliverySn" />
-        <result column="auto_confirm_day" property="autoConfirmDay" />
         <result column="integration" property="integration" />
         <result column="promotion_info" property="promotionInfo" />
         <result column="is_invoice" property="isInvoice" />
@@ -44,6 +43,7 @@
         <result column="close_time" property="closeTime" />
         <result column="approval_status" property="approvalStatus" />
         <result column="failure_reason" property="failureReason" />
+        <result column="user_type" property="userType" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -57,11 +57,16 @@
         last_operator_id,
         order_sn, member_id, shop_id, member_username, total_amount, pay_amount,
         freight_amount, promotion_amount, integration_amount, discount_amount, pay_type,
-        source_type, status, order_type, delivery_company, delivery_sn, auto_confirm_day,
+        source_type, status, order_type, delivery_company, delivery_sn,
         integration, promotion_info, is_invoice, invoice_id, shipping_id, remark, confirm_status,
-         delete_status, use_integration, payment_time, delivery_time, receive_time, end_time, close_time, approval_status, failure_reason
+         delete_status, use_integration, payment_time, delivery_time, receive_time, end_time, close_time, approval_status, failure_reason, user_type
     </sql>
-
+    <sql id="Course_Product_Order_List">
+        uc.coach_name userName, uc.icon userIcon, uc.coach_Grade, uc.id userId, oo.order_sn, oo.total_amount, oo.id orderId,
+        oo.pay_amount, oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
+        oo.status, oo.order_type, ooi.id orderItmeId, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity,
+         ooi.product_attr spec, ooi.product_type, ooi.product_id, ooi.real_amount
+    </sql>
     <select id="selectByUserIdAndOrderNo" resultMap="BaseResultMap" parameterType="map">
         SELECT
         <include refid="Base_Column_List">
@@ -70,6 +75,7 @@
         from oms_order oder
         where oder.order_sn = #{orderSn}
         and oder.member_id = #{userId}
+        and oder.user_type = #{userType}
     </select>
 
     <select id="selectByUserId" resultMap="BaseResultMap" parameterType="long">
@@ -83,29 +89,23 @@
     </select>
 
     <select id="selectUserOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
-         SELECT uc.coach_name userName, uc.icon userIcon, uc.coach_Grade, uc.id userId, oo.order_sn, oo.total_amount,
-                oo.pay_amount, oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
-                oo.status, oo.order_type, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity, ooi.product_attr spec
+         SELECT <include refid="Course_Product_Order_List"/>
          FROM oms_order oo
         left join ums_coach uc on oo.shop_id = uc.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
-        where oo.member_id = #{userId} and oo.status = #{status} order by update_time desc
+        where oo.member_id = #{userId} and oo.status = #{status} and oo.user_type = #{userType} order by oo.update_time desc
     </select>
     <select id="selectSellerOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
-        SELECT um.nick_name userName, um.icon userIcon, um.id userId, oo.order_sn, oo.total_amount,oo.pay_amount,
-                oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
-                oo.status, oo.order_type, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity
+        SELECT <include refid="Course_Product_Order_List"/>
          FROM oms_order oo
         left join ums_member um on oo.member_id = um.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
-        where oo.shop_id = #{coachId} and oo.status = #{status} order by update_time desc
+        where oo.shop_id = #{coachId} and oo.status = #{status} and oo.user_type = #{userType} order by oo.update_time desc
     </select>
     <select id="selectUserOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
-        SELECT uc.coach_name userName, uc.icon userIcon, uc.coach_Grade, uc.id userId, oo.order_sn, oo.total_amount,
-                oo.pay_amount, oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
-                oo.status, oo.order_type, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity, , ooi.product_attr spec
+        SELECT <include refid="Course_Product_Order_List"/>
          FROM oms_order oo
         left join ums_coach uc on oo.shop_id = uc.id
         left join oms_order_item ooi
@@ -113,13 +113,21 @@
         where oo.member_id = #{userId} and oo.order_sn = #{orderSn}
     </select>
     <select id="selectSellerOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
-        SELECT um.nick_name userName, um.icon userIcon, um.id userId, oo.order_sn, oo.total_amount,oo.pay_amount,
-                oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
-                oo.status, oo.order_type, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity
+        SELECT <include refid="Course_Product_Order_List"/>
          FROM oms_order oo
         left join ums_member um on oo.member_id = um.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
         where oo.shop_id = #{coachId} and oo.order_sn = #{orderSn}
+    </select>
+    <select id="selectByUserIdAndOrderId" resultType="com.dmd.mall.model.domain.OmsOrder">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="oder"/>
+        </include>
+        from oms_order oder
+        where oder.id = #{orderId}
+        and oder.member_id = #{userId}
+        and oder.user_type = #{userType}
     </select>
 </mapper>

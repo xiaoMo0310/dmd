@@ -1,4 +1,4 @@
-package com.dmd.mall.web.oms;
+package com.dmd.mall.web.cms;
 
 import com.dmd.FileUtil;
 import com.dmd.base.result.CommonResult;

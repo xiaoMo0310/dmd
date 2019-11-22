@@ -1,9 +1,12 @@
 package com.dmd.mall.mapper;
 
-import com.dmd.mall.model.domain.DmdIntegralGift;
 import com.dmd.core.mybatis.MyMapper;
+import com.dmd.mall.model.domain.DmdIntegralGift;
+import com.dmd.mall.model.domain.IntegralGiftsBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,17 @@ import org.springframework.stereotype.Component;
 @Component
 public interface DmdIntegralGiftMapper extends MyMapper<DmdIntegralGift> {
 
+    List<IntegralGiftsBean> queryIntegralGifts();
+
+    List<IntegralGiftsBean> queryIntegralGiftsById(Long id);
+
+    int addIntegralGifts(IntegralGiftsBean integralGiftsBean);
+
+    IntegralGiftsBean findIntegralGiftsInfoById(Long id);
+
+    int updateIntegralGiftsById(IntegralGiftsBean integralGiftsBean);
+
+    int deleteIntegralGiftsById(Long id);
+
+    DmdIntegralGift selectById(Long productId);
 }

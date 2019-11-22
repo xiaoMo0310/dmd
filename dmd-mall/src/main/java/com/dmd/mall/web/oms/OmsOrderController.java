@@ -60,9 +60,9 @@ public class OmsOrderController extends BaseController {
         return WrapMapper.ok(jsonObject);
     }
 
-    @GetMapping("cancelOrderDoc")
+    @GetMapping("/cancelOrderDoc")
     @ApiOperation(httpMethod = "GET", value = "根据订单编号取消订单")
-    @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "Long", paramType = "query")
     public Wrapper cancelOrderDoc(@RequestParam("orderSn") String orderSn) {
         logger.info("cancelOrderDoc - 取消订单. orderSn={}", orderSn);
         LoginAuthDto loginAuthDto = getLoginAuthDto();
@@ -71,7 +71,18 @@ public class OmsOrderController extends BaseController {
         return handleResult(result);
     }
 
-    @GetMapping("userOrderDetail/query")
+    @GetMapping("/confirmationCompleted/order")
+    @ApiOperation(httpMethod = "GET", value = "确认完成订单")
+    @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "Long", paramType = "query")
+    public Wrapper confirmationCompletedOrder(@RequestParam("orderSn") String orderSn) {
+        logger.info("cancelOrderDoc - 取消订单. orderSn={}", orderSn);
+        LoginAuthDto loginAuthDto = getLoginAuthDto();
+        logger.info("操作人信息. loginAuthDto={}", loginAuthDto);
+        int result = omsOrderService.confirmationCompletedOrder(loginAuthDto, orderSn);
+        return handleResult(result);
+    }
+
+    @GetMapping("/userOrderDetail/query")
     @ApiOperation(httpMethod = "GET", value = "查询登陆人订单详情")
     @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "Long", paramType = "query")
     public Wrapper queryUserOrderDetail(@RequestParam("orderSn") String orderSn) {
@@ -79,7 +90,7 @@ public class OmsOrderController extends BaseController {
         return WrapMapper.ok(courseOrderDetailVo);
     }
 
-    @GetMapping("sellerOrderDetail/query")
+    @GetMapping("/sellerOrderDetail/query")
     @ApiOperation(httpMethod = "GET", value = "查询卖家订单详情")
     @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "Long", paramType = "query")
     public Wrapper querySellerOrderDetail(@RequestParam("orderSn") String orderSn) {
@@ -87,12 +98,11 @@ public class OmsOrderController extends BaseController {
         return WrapMapper.ok(courseOrderDetailVo);
     }
 
-    @GetMapping("userOrderList/findByStatus")
+    @GetMapping("/userOrderList/findByStatus")
     @ApiOperation(httpMethod = "GET", value = "根据订单的状态查询用户订单列表")
     @ApiImplicitParams({@ApiImplicitParam(name ="status", value = "订单状态：0->待付款；1->已付款；2->进行中；3->已完成；4->已关闭；5->售后 6:取消", dataType = "int", paramType = "query"),
                         @ApiImplicitParam(name ="pageNum", value = "页数", dataType = "int", paramType = "query"),
                         @ApiImplicitParam(name ="pageSize", value = "每页显示条数", dataType = "int", paramType = "query")})
-
     public Wrapper queryUserOrderListWithPage(@RequestParam("status") Integer status,
                                               @RequestParam("pageNum") Integer pageNum,
                                               @RequestParam("pageSize") Integer pageSize) {
@@ -100,12 +110,11 @@ public class OmsOrderController extends BaseController {
         return WrapMapper.ok(pageInfo);
     }
 
-    @GetMapping("sellerOrderList/findByStatus")
+    @GetMapping("/sellerOrderList/findByStatus")
     @ApiOperation(httpMethod = "GET", value = "根据订单的状态查询卖家订单列表")
     @ApiImplicitParams({@ApiImplicitParam(name ="status", value = "订单状态：0->待付款；1->已付款；2->进行中；3->已完成；4->已关闭；5->售后 6:取消", dataType = "int", paramType = "query"),
                         @ApiImplicitParam(name ="pageNum", value = "页数", dataType = "int", paramType = "query"),
                         @ApiImplicitParam(name ="pageSize", value = "每页显示条数", dataType = "int", paramType = "query")})
-
     public Wrapper querySellerOrderListWithPage(@RequestParam("status") Integer status,
                                               @RequestParam("pageNum") Integer pageNum,
                                               @RequestParam("pageSize") Integer pageSize) {

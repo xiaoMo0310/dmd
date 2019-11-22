@@ -1,4 +1,4 @@
-package com.dmd.mall.web;
+package com.dmd.mall.web.pms;
 
 
 import com.dmd.core.support.BaseController;

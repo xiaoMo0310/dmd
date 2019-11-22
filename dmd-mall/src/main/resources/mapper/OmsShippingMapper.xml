@@ -5,8 +5,6 @@
 <!-- 通用查询映射结果 -->
 <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.OmsShipping">
         <result column="id" property="id"/>
-
-        <result column="version" property="version"/>
         <result column="user_id" property="userId"/>
         <result column="receiver_name" property="receiverName"/>
         <result column="receiver_phone_no" property="receiverPhoneNo"/>
@@ -20,13 +18,13 @@
         <result column="detail_address" property="detailAddress"/>
         <result column="receiver_zip_code" property="receiverZipCode"/>
         <result column="default_address" property="defaultAddress"/>
-
         <result column="creator" property="creator"/>
         <result column="creator_id" property="creatorId"/>
         <result column="created_time" property="createdTime"/>
         <result column="last_operator" property="lastOperator"/>
         <result column="last_operator_id" property="lastOperatorId"/>
         <result column="update_time" property="updateTime"/>
+        <result column="user_type" property="userType"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -38,33 +36,33 @@
             last_operator AS lastOperator,
             last_operator_id AS lastOperatorId,
             update_time AS updateTime,
-            version, user_id AS userId, receiver_name AS receiverName, receiver_phone_no AS receiverPhoneNo, receiver_mobile_no AS receiverMobileNo, province_id AS provinceId, province_name AS provinceName, city_id AS cityId, city_name AS cityName, district_id AS districtId, district_name AS districtName, detail_address AS detailAddress, receiver_zip_code AS receiverZipCode, default_address AS defaultAddress
+            version, user_id AS userId, receiver_name AS receiverName, receiver_phone_no AS receiverPhoneNo, receiver_mobile_no AS receiverMobileNo, province_id AS provinceId, province_name AS provinceName, city_id AS cityId, city_name AS cityName, district_id AS districtId, district_name AS districtName, detail_address AS detailAddress, receiver_zip_code AS receiverZipCode, default_address AS defaultAddress, user_type
     </sql>
 
     <delete id="deleteByShippingIdUserId" parameterType="map">
         DELETE FROM oms_shipping
         WHERE id = #{shippingId}
-              AND user_id = #{userId}
+              AND user_id = #{userId} and user_type = #{userType}
     </delete>
     <select id="selectByShippingIdUserId" resultMap="BaseResultMap" parameterType="map">
         SELECT
         <include refid="Base_Column_List"/>
         from oms_shipping
         where id = #{shippingId}
-        and user_id = #{userId}
+        and user_id = #{userId} and user_type = #{userType}
     </select>
     <select id="selectByUserId" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         from oms_shipping
-        where user_id = #{userId}
+        where user_id = #{userId} and user_type = #{userType}
     </select>
     <select id="selectDefaultAddressByUserId"
             resultType="com.dmd.mall.model.domain.OmsShipping">
         SELECT
         <include refid="Base_Column_List"/>
         from oms_shipping
-        where id = #{shippingId}
+        where user_id = #{userId} and user_type = #{userType}
         and default = 1
     </select>
 </mapper>

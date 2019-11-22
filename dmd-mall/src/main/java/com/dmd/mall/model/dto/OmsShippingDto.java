@@ -1,39 +1,20 @@
-package com.dmd.mall.model.domain;
+package com.dmd.mall.model.dto;
 
-import com.dmd.core.mybatis.BaseEntity;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.apache.ibatis.type.Alias;
 
 import javax.persistence.Column;
-import javax.persistence.Table;
-
 
 /**
- * <p>
- * 收货人信息表
- * </p>
- *
- * @author YangAnsheng123
- * @since 2019-09-20
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/11/20 13:41
+ * @Description 地址信息 dto
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Table(name = "oms_shipping")
-@Alias(value = "OmsShipping")
-@ApiModel
-public class OmsShipping extends BaseEntity {
+public class OmsShippingDto {
 
-    private static final long serialVersionUID = -3416567894360995961L;
-    @Column(name = "user_id")
-    @ApiModelProperty("用户id")
-    private Long userId;
-
-    @Column(name = "user_type")
-    @ApiModelProperty("用户类型")
-    private String userType;
+    private Long id;
 
     @Column(name = "receiver_name")
     @ApiModelProperty("收货姓名")
@@ -82,6 +63,5 @@ public class OmsShipping extends BaseEntity {
     @Column(name = "default_address")
     @ApiModelProperty("默认地址 1默认地址")
     private Integer defaultAddress;
-
 
 }

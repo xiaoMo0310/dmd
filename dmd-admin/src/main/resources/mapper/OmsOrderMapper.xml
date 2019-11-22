@@ -3,6 +3,7 @@
 <mapper namespace="com.dmd.admin.mapper.OmsOrderMapper">
 
   <resultMap id="orderDetailResultMap" type="com.dmd.admin.model.dto.OmsOrderDetail" extends="BaseResultMap">
+      <association property="omsShipping" resultMap="com.dmd.admin.mapper.OmsShippingMapper.BaseResultMap" columnPrefix="shipping_"/>
     <collection property="orderItemList" resultMap="com.dmd.admin.mapper.OmsOrderItemMapper.BaseResultMap" columnPrefix="item_"/>
     <collection property="historyList" resultMap="com.dmd.admin.mapper.OmsOrderOperateHistoryMapper.BaseResultMap" columnPrefix="history_"/>
   </resultMap>
@@ -31,7 +32,6 @@
     <result column="order_type" property="orderType" />
     <result column="delivery_company" property="deliveryCompany" />
     <result column="delivery_sn" property="deliverySn" />
-    <result column="auto_confirm_day" property="autoConfirmDay" />
     <result column="integration" property="integration" />
     <result column="promotion_info" property="promotionInfo" />
     <result column="is_invoice" property="isInvoice" />
@@ -48,6 +48,7 @@
     <result column="close_time" property="closeTime" />
       <result column="approval_status" property="approvalStatus" />
       <result column="failure_reason" property="failureReason" />
+      <result column="user_type" property="userType" />
   </resultMap>
 
   <!-- 通用查询结果列 -->
@@ -59,12 +60,15 @@
         last_operator,
         last_operator_id,
         update_time,
-        order_sn, member_id, shop_id, member_username, total_amount, pay_amount, freight_amount, promotion_amount, integration_amount, discount_amount, pay_type, source_type, status, order_type, delivery_company, delivery_sn, auto_confirm_day, integration, promotion_info, is_invoice, invoice_id, shipping_id, remark, confirm_status, delete_status, use_integration, payment_time, delivery_time, receive_time, end_time, close_time, approval_status, failure_reason
+        order_sn, member_id, shop_id, member_username, total_amount, pay_amount, freight_amount, promotion_amount, integration_amount,
+        discount_amount, pay_type, source_type, status, order_type, delivery_company, delivery_sn,integration,promotion_info,
+        is_invoice, invoice_id, shipping_id, remark, confirm_status, delete_status, use_integration, payment_time,delivery_time,
+        receive_time, end_time, close_time, approval_status, failure_reason, user_type
     </sql>
 
 
   <select id="getList" resultMap="com.dmd.admin.mapper.OmsOrderMapper.BaseResultMap">
-    SELECT *
+    SELECT <include refid="Base_Column_List"/>
     FROM
     oms_order
     WHERE
@@ -83,12 +87,6 @@
     </if>
     <if test="queryParam.createTime!=null and queryParam.createTime!=''">
       AND create_time LIKE concat(#{queryParam.createTime},"%")
-    </if>
-    <if test="queryParam.receiverKeyword!=null and queryParam.receiverKeyword!=''">
-      AND (
-      receiver_name LIKE concat("%",#{queryParam.receiverKeyword},"%")
-      OR receiver_phone LIKE concat("%",#{queryParam.receiverKeyword},"%")
-      )
     </if>
   </select>
   <update id="delivery">
@@ -136,11 +134,20 @@
             oh.operate_man history_operate_man,
             oh.create_time history_create_time,
             oh.order_status history_order_status,
-            oh.note history_note
+            oh.note history_note,
+            os.id shipping_id,
+            os.receiver_name shipping_receiver_name,
+            os.receiver_mobile_no shipping_receiver_mobile_no,
+            os.receiver_zip_code shipping_receiver_zip_code,
+            os.province_name shipping_province_name,
+            os.city_name shipping_city_name,
+            os.district_name shipping_district_name,
+            os.detail_address shipping_detail_address
         FROM
             oms_order o
             LEFT JOIN oms_order_item oi ON o.id = oi.order_id
             LEFT JOIN oms_order_operate_history oh ON o.id = oh.order_id
+            LEFT JOIN oms_shipping os ON o.shipping_id = os.id
         WHERE
             o.id = #{id}
         ORDER BY oi.id ASC,oh.create_time DESC

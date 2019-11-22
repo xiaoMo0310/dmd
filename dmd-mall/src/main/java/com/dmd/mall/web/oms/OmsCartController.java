@@ -2,15 +2,15 @@ package com.dmd.mall.web.oms;
 
 
 import com.dmd.base.result.CommonResult;
+import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.domain.OmsCart;
-import io.swagger.annotations.ApiParam;
-import org.springframework.web.bind.annotation.*;
 import com.dmd.mall.service.OmsCartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.MediaType;
-import com.dmd.core.support.BaseController;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -69,9 +69,9 @@ public class OmsCartController extends BaseController {
     @ApiOperation("提交订单前的页面")
     @RequestMapping(value = "/beforeSubmitOrder", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult beforeSubmitOrder(@ApiParam(name="ids",value="购物车id的集合，这个参数需要在请求体里以json格式传入")@RequestBody List<Long> ids,@ApiParam(name="memberId",value="用户Id，这个参数需要拼接在url里") Long memberId,@ApiParam(name="productId",value="商品ID，在立即购买时需要传递此参数，这个参数需要拼接在url里") Long productId){
+    public CommonResult beforeSubmitOrder(@ApiParam(name="ids",value="购物车id的集合，这个参数需要在请求体里以json格式传入")@RequestBody List<Long> ids,@ApiParam(name="productId",value="商品ID，在立即购买时需要传递此参数，这个参数需要拼接在url里") Long productId){
         Map<String,Object> map=new TreeMap<>();
-        map=omsCartService.beforeSubmitOrder(ids,memberId,productId);
+        map=omsCartService.beforeSubmitOrder(ids, getLoginAuthDto(),productId);
         return CommonResult.success(map);
     }
 

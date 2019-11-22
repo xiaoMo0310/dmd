@@ -1,9 +1,13 @@
 package com.dmd.mall.mapper;
 
-import com.dmd.mall.model.domain.DmdIntegralGiftSpe;
 import com.dmd.core.mybatis.MyMapper;
+import com.dmd.mall.model.domain.DmdIntegralGiftSpe;
+import com.dmd.mall.model.domain.IntegralGiftsSpeBean;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,6 +20,10 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface DmdIntegralGiftSpeMapper extends MyMapper<DmdIntegralGiftSpe> {
+
+    List<IntegralGiftsSpeBean> queryIntegralGiftsSpeById(Long id);
+
+    Integer selectIntegralGiftsSpecStock(@Param("id")Long id, @Param("size") String size, @Param("color") String color);
 
     DmdIntegralGiftSpe selectByGiftId(Long giftId);
 }

@@ -86,4 +86,27 @@ public interface OmsOrderService extends IService<OmsOrder> {
      */
     PageInfo querySellerOrderListWithPage(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer status);
 
+    /**
+     * 确认完成订单
+     * @param loginAuthDto
+     * @param orderSn
+     * @return
+     */
+    int confirmationCompletedOrder(LoginAuthDto loginAuthDto, String orderSn);
+
+    /**
+     * 根据订单编号查询当前登录人的订单信息
+     * @param loginAuthDto
+     * @param orderSn
+     * @return
+     */
+    OmsOrder getOmsOrderByOrderSn(LoginAuthDto loginAuthDto, String orderSn);
+
+    /**
+     * 根据订单号查询订单信息
+     * @param loginAuthDto
+     * @param orderId
+     * @return
+     */
+    OmsOrder getOmsOrderByOrderId(LoginAuthDto loginAuthDto, Long orderId);
 }

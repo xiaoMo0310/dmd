@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.BeanUtils;
 import com.dmd.PublicUtil;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
@@ -8,6 +9,7 @@ import com.dmd.mall.constant.OmsApiConstant;
 import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.mapper.OmsShippingMapper;
 import com.dmd.mall.model.domain.OmsShipping;
+import com.dmd.mall.model.dto.OmsShippingDto;
 import com.dmd.mall.service.OmsShippingService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -34,40 +36,43 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
     private OmsShippingMapper omsShippingMapper;
 
     @Override
-    public int saveShipping(LoginAuthDto loginAuthDto, OmsShipping shipping) {
+    public int saveShipping(LoginAuthDto loginAuthDto, OmsShippingDto shipping) {
+        OmsShipping omsShipping = new OmsShipping();
+        BeanUtils.copyProperties(shipping, omsShipping);
         int resultInt;
-        shipping.setUpdateInfo(loginAuthDto);
-        if (shipping.isNew()) {
-            resultInt = omsShippingMapper.insertSelective(shipping);
+        omsShipping.setUpdateInfo(loginAuthDto);
+        if (omsShipping.isNew()) {
+            omsShipping.setUserId(loginAuthDto.getUserId());
+            omsShipping.setUserType(loginAuthDto.getUserType());
+            resultInt = omsShippingMapper.insertSelective(omsShipping);
         } else {
-            resultInt = omsShippingMapper.updateByPrimaryKeySelective(shipping);
+            resultInt = omsShippingMapper.updateByPrimaryKeySelective(omsShipping);
         }
         return resultInt;
     }
 
     @Override
-    public int deleteShipping(Long userId, Long shippingId) {
-        return omsShippingMapper.deleteByShippingIdUserId(userId, shippingId);
+    public int deleteShipping(LoginAuthDto loginAuthDto, Long shippingId) {
+        return omsShippingMapper.deleteByShippingIdUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType(), shippingId);
     }
 
     @Override
-    public OmsShipping selectByShippingIdUserId(Long userId, Long shippingId) {
-        return omsShippingMapper.selectByShippingIdUserId(userId, shippingId);
+    public OmsShipping selectByShippingIdUserId(LoginAuthDto loginAuthDto, Long shippingId) {
+        return omsShippingMapper.selectByShippingIdUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType(), shippingId);
     }
 
     @Override
-    public PageInfo queryListWithPageByUserId(Long userId, int pageNum, int pageSize) {
-        Preconditions.checkArgument(userId != null, ErrorCodeEnum.UMS10011001.msg());
+    public PageInfo queryListWithPageByUserId(LoginAuthDto loginAuthDto, int pageNum, int pageSize) {
+        Preconditions.checkArgument(loginAuthDto.getUserId() != null, ErrorCodeEnum.UMS10011001.msg());
         PageHelper.startPage(pageNum, pageSize);
-        //TODO 写死 不维护收人列表
-        List<OmsShipping> OmsShippingList = this.selectByUserId(1L);
+        List<OmsShipping> OmsShippingList = this.selectByUserId(loginAuthDto);
         return new PageInfo<>(OmsShippingList);
     }
 
     @Override
-    public List<OmsShipping> selectByUserId(Long userId) {
-        Preconditions.checkArgument(userId != null, ErrorCodeEnum.UMS10011001.msg());
-        return omsShippingMapper.selectByUserId(userId);
+    public List<OmsShipping> selectByUserId(LoginAuthDto loginAuthDto) {
+        Preconditions.checkArgument(loginAuthDto.getUserId() != null, ErrorCodeEnum.UMS10011001.msg());
+        return omsShippingMapper.selectByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -77,7 +82,7 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
         Preconditions.checkArgument(shippingId != null, "地址ID不能为空");
 
         // 1. 查找当前默认地址
-        OmsShipping OmsShipping = omsShippingMapper.selectDefaultAddressByUserId(userId);
+        OmsShipping OmsShipping = omsShippingMapper.selectDefaultAddressByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
         if (PublicUtil.isEmpty(OmsShipping)) {
             throw new OmsBizException(ErrorCodeEnum.OMS10031007);
         }

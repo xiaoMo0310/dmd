@@ -11,6 +11,35 @@
         <result column="color" property="color" />
     </resultMap>
 
+    <select id="queryIntegralGiftsSpeById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+          size,
+          specStock,
+          giftId,
+          color
+        FROM
+          dmd_integral_gift_spe
+        WHERE
+          giftId = #{id}
+    </select>
+
+    <select id="selectIntegralGiftsSpecStock" parameterType="map" resultType="java.lang.Integer">
+        SELECT SUM(specStock) FROM dmd_integral_gift_spe
+        <include refid="giftsWhere"></include>
+    </select>
+    <sql id="giftsWhere">
+        <where>
+            <!-- 根据尺码查询 -->
+            <if test="size !=null and size != ''">
+                and size = #{size}
+            </if>
+            <!-- 根据颜色查询 -->
+            <if test="color !=null and color != ''">
+                and color = #{color}
+            </if>
+            and giftId = #{id}
+        </where>
+    </sql>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,

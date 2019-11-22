@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.OmsOrderAppraiseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.OmsOrderAppraise">
+    <result column="id" property="id" />
+    <result column="creator" property="creator" />
+    <result column="creator_id" property="creatorId" />
+    <result column="created_time" property="createdTime" />
+    <result column="last_operator" property="lastOperator" />
+    <result column="last_operator_id" property="lastOperatorId" />
+    <result column="update_time" property="updateTime" />
+        <result column="order_id" property="orderId" />
+        <result column="product_id" property="productId" />
+        <result column="user_id" property="userId" />
+        <result column="info" property="info" />
+        <result column="level" property="level" />
+        <result column="desc_star" property="descStar" />
+        <result column="logistics_star" property="logisticsStar" />
+        <result column="attitude_star" property="attitudeStar" />
+        <result column="pic" property="pic" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        creator,
+        creator_id,
+        created_time,
+        last_operator,
+        last_operator_id,
+        update_time,
+        order_id, product_id, user_id, info, level, desc_star, logistics_star, attitude_star, pic
+    </sql>
+    <select id="selectAppraiseMessageByProductId" resultType="com.dmd.mall.model.vo.ProductAppraiseVo">
+        select um.id userId, um.icon userIcon, um.username userName, ooa.info ,ooa.pic,
+                ooa.created_time, ooa.level, ooa.desc_star, ooa.logistics_star, ooa.attitude_star
+        from oms_order_appraise ooa
+        left join ums_member um
+        on ooa.user_id = um.id
+        where ooa.product_id = #{productId}
+    </select>
+
+</mapper>

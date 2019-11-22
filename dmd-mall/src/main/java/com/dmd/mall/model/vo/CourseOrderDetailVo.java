@@ -17,6 +17,16 @@ import java.util.Date;
 public class CourseOrderDetailVo {
 
     /**
+     * 订单id
+     */
+    private Long orderId;
+
+    /**
+     * 订单详情id
+     */
+    private Long orderItemId;
+
+    /**
      * 订单编号
      */
     private String orderSn;
@@ -40,6 +50,11 @@ public class CourseOrderDetailVo {
      * 教练等级
      */
     private String coachGrade;
+
+    /**
+     * 电话
+     */
+    private String phone;
 
     /**
      * 订单总金额
@@ -74,6 +89,10 @@ public class CourseOrderDetailVo {
     private Integer status;
 
     /**
+     * 商品id
+     */
+    private Long productId;
+    /**
      * 商品图片
      */
     private String productPic;
@@ -87,6 +106,11 @@ public class CourseOrderDetailVo {
      * 商品价格
      */
     private BigDecimal productPrice;
+
+    /**
+     * 商品类型
+     */
+    private Integer productType;
 
     /**
      * 订单创建时间
@@ -114,11 +138,13 @@ public class CourseOrderDetailVo {
     /**
      * 商品数量
      */
-    private String productQuantity;
+    private Integer productQuantity;
 
     /**
      * 订单类型
      */
     private Integer orderType;
+
+    private BigDecimal realAmount;
 
 }

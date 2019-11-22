@@ -40,6 +40,10 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("用户id")
     private Long memberId;
 
+    @Column(name = "user_Type")
+    @ApiModelProperty("用户类型")
+    private String userType;
+
     @Column(name = "shop_id")
     @ApiModelProperty("商铺id")
     private Long shopId;
@@ -80,11 +84,11 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("订单来源：0->PC订单；1->app订单")
     private Integer sourceType;
 
-    @ApiModelProperty("订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单")
+    @ApiModelProperty("订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->售后 6->取消")
     private Integer status;
 
     @Column(name = "order_type")
-    @ApiModelProperty("订单类型：0->正常订单；1->预约订单")
+    @ApiModelProperty("订单类型：0->普通订单；1->潜水学证订单 2->积分商品订单")
     private Integer orderType;
 
     @Column(name = "delivery_company")
@@ -94,10 +98,6 @@ private static final long serialVersionUID = 1L;
     @Column(name = "delivery_sn")
     @ApiModelProperty("物流单号")
     private String deliverySn;
-
-    @Column(name = "auto_confirm_day")
-    @ApiModelProperty("自动确认时间（天）")
-    private Integer autoConfirmDay;
 
     @ApiModelProperty("可以获得的积分")
     private Integer integration;

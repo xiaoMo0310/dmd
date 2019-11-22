@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
 import com.dmd.mall.exceptions.OmsBizException;
@@ -66,11 +67,11 @@ public class OmsCartServiceImpl extends BaseService<OmsCart> implements OmsCartS
     }
 
     @Override
-    public Map<String, Object> beforeSubmitOrder(List<Long> ids, Long memberId,Long productId) {
+    public Map<String, Object> beforeSubmitOrder(List<Long> ids, LoginAuthDto loginAuthDto, Long productId) {
         Map<String,Object> map=new TreeMap<>();
         List<OmsCart> omsCarts=findOmsCartById(ids);
         PmsShopDetails pmsShopDetails=pmsShopProductMapper.shopProductDetails(productId);//点击立即购买时需要的商品信息
-        List<OmsShipping> omsShippings=omsShippingMapper.selectByUserId(memberId);
+        List<OmsShipping> omsShippings=omsShippingMapper.selectByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
         map.put("omsCarts",omsCarts);
         map.put("omsShippings",omsShippings);
         map.put("pmsShopDetails",pmsShopDetails);

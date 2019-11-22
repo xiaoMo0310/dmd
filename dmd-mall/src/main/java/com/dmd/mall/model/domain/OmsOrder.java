@@ -95,10 +95,6 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("物流单号")
     private String deliverySn;
 
-    @Column(name = "auto_confirm_day")
-    @ApiModelProperty("自动确认时间（天）")
-    private Integer autoConfirmDay;
-
     @ApiModelProperty("可以获得的积分")
     private Integer integration;
 
@@ -171,5 +167,8 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("订单关闭时间")
     private Date closeTime;
 
+    @Column(name = "user_type")
+    @ApiModelProperty("用户类型")
+    private String userType;
 
 }

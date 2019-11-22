@@ -20,4 +20,57 @@
         name, picture, integral, introduce, createtime, updatetime, status
     </sql>
 
+    <select id="queryIntegralGifts" resultMap="BaseResultMap">
+        SELECT id,name,picture,integral,introduce,createtime,updatetime,status FROM dmd_integral_gift WHERE status = 0
+    </select>
+
+    <select id="queryIntegralGiftsById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT id,name,picture,integral,introduce,createtime,updatetime,status FROM dmd_integral_gift WHERE id = #{value} AND status = 0
+    </select>
+
+    <insert id="addIntegralGifts" parameterType="com.dmd.mall.model.domain.IntegralGiftsBean">
+        INSERT INTO dmd_integral_gift
+        (
+          name,
+          picture,
+          integral,
+          introduce,
+          createtime,
+          updatetime,
+          status
+        ) VALUES (
+          #{name,jdbcType=VARCHAR},
+          #{picture,jdbcType=VARCHAR},
+          #{integral,jdbcType=INTEGER},
+          #{introduce,jdbcType=VARCHAR},
+          #{createTime,jdbcType=TIMESTAMP},
+          #{updateTime,jdbcType=TIMESTAMP},
+          0
+        )
+    </insert>
+
+    <select id="findIntegralGiftsInfoById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT id,name,picture,integral,introduce,createtime,updatetime FROM dmd_integral_gift WHERE id = #{value} AND status = 0
+    </select>
+
+    <update id="updateIntegralGiftsById" parameterType="com.dmd.mall.model.domain.IntegralGiftsBean">
+        UPDATE dmd_integral_gift SET
+        name = #{name},
+        picture = #{picture},
+        integral = #{integral},
+        introduce = #{introduce},
+        createtime = #{createTime},
+        updatetime = #{updateTime}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteIntegralGiftsById" parameterType="java.lang.Long">
+        DELETE FROM dmd_integral_gift WHERE id = #{id}
+    </delete>
+    <select id="selectById" resultType="com.dmd.mall.model.domain.DmdIntegralGift">
+        select <include refid="Base_Column_List"/>
+        from dmd_integral_gift
+        where id = #{productId} and status = 0
+    </select>
+
 </mapper>

@@ -1,4 +1,4 @@
-package com.dmd.mall.web.oms;
+package com.dmd.mall.web.cms;
 
 import com.dmd.TLSSigAPIv2;
 import io.swagger.annotations.Api;

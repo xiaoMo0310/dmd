@@ -20,8 +20,6 @@
     <result column="coupon_amount" jdbcType="DECIMAL" property="couponAmount" />
     <result column="integration_amount" jdbcType="DECIMAL" property="integrationAmount" />
     <result column="real_amount" jdbcType="DECIMAL" property="realAmount" />
-    <result column="gift_integration" jdbcType="INTEGER" property="giftIntegration" />
-    <result column="gift_growth" jdbcType="INTEGER" property="giftGrowth" />
     <result column="product_attr" jdbcType="VARCHAR" property="productAttr" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -86,7 +84,7 @@
     id, order_id, order_sn, product_id, product_pic, product_name, product_brand, product_sn, 
     product_price, product_quantity, product_sku_id, product_sku_code, product_category_id, 
     sp1, sp2, sp3, promotion_name, promotion_amount, coupon_amount, integration_amount, 
-    real_amount, gift_integration, gift_growth, product_attr
+    real_amount, product_attr
   </sql>
   <select id="selectByExample" parameterType="com.dmd.admin.model.domain.OmsOrderItemExample" resultMap="BaseResultMap">
     select

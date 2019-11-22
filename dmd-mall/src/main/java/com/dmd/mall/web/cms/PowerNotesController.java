@@ -1,4 +1,4 @@
-package com.dmd.mall.web.oms;
+package com.dmd.mall.web.cms;
 
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.PmsCourseProduct;
