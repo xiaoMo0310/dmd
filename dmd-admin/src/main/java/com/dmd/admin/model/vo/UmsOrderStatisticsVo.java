@@ -82,7 +82,7 @@ public class UmsOrderStatisticsVo {
     /**
      * 积分抵扣金额
      */
-    @Excel(name = "积分抵扣金额(单位/RMN)", orderNum = "11",isStatistics = true, width = 20)
+    @Excel(name = "积分抵扣金额(单位/RMN)", orderNum = "11",isStatistics = true, width = 30)
     private BigDecimal integrationAmount;
     /**
      * 用户积分奖励

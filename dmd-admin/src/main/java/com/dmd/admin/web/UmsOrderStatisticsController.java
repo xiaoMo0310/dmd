@@ -57,6 +57,13 @@ public class UmsOrderStatisticsController {
         return CommonResult.success(CommonPage.restPage(umsOrderStatisticsList));
     }
 
+    /**
+     * 导出订单明细信息xls
+     * @param response
+     * @param umsOrderStatisticsVo
+     * @return
+     * @throws Exception
+     */
     @ApiOperation("导出订单明细信息xls")
     @RequestMapping(value = "/exportOrderStatistics",method = RequestMethod.GET)
     public CommonResult export(HttpServletResponse response,UmsOrderStatisticsVo umsOrderStatisticsVo) throws Exception {
