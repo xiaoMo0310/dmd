@@ -11,6 +11,16 @@ public class SmsCodeAuthenticationToken extends AbstractAuthenticationToken {
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
     private String type;
 
+    public String getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(String loginType) {
+        this.loginType = loginType;
+    }
+
+    private String loginType;
+
     public String getType() {
         return type;
     }
@@ -20,10 +30,11 @@ public class SmsCodeAuthenticationToken extends AbstractAuthenticationToken {
     }
 
     private final Object principal;
-    public SmsCodeAuthenticationToken(String moblie,String type) {
+    public SmsCodeAuthenticationToken(String moblie,String type,String loginType) {
         super(null);
         this.principal = moblie;
         this.type=type;
+        this.loginType=loginType;
         setAuthenticated(false);
     }
 
