@@ -44,6 +44,17 @@ public class DynamicBean {
     private String topicName;
     //是否删除
     private Integer delflag;
+    //登录人是否关注动态发布用户关注人(0==未关注)(1==已关注)
+    private Integer Identification;
+
+
+    public Integer getIdentification() {
+        return Identification;
+    }
+
+    public void setIdentification(Integer identification) {
+        Identification = identification;
+    }
 
     public Integer getDelflag() {
         return delflag;
@@ -174,6 +185,7 @@ public class DynamicBean {
                 ", topicId=" + topicId +
                 ", topicName='" + topicName + '\'' +
                 ", delflag=" + delflag +
+                ", Identification=" + Identification +
                 '}';
     }
 }

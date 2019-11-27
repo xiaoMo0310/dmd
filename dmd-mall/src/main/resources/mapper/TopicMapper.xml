@@ -13,7 +13,7 @@
     </resultMap>
 
     <select id="queryTopicPage" resultMap="topicMap">
-        SELECT id,topicName,topicPicture FROM dmd_dynamic_topic ORDER BY topicNum DESC
+        SELECT id,topicName,topicPicture,topicNum FROM dmd_dynamic_topic ORDER BY topicNum DESC
     </select>
 
 

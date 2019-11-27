@@ -46,4 +46,6 @@ public interface DynamicMapper {
     List<DynamicBean> queryDynamicByContent(@Param("content") String content);
 
     Integer queryDynamicCount(Long userId);
+
+    Integer selectFavorites(@Param("userId")Long userId,@Param("userId1")Long userId1);
 }

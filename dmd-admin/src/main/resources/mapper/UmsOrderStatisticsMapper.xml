@@ -17,26 +17,133 @@
         <result column="pay_amount" property="payAmount" />
         <result column="integration_amount" property="integrationAmount" />
         <result column="integration" property="integration" />
+        <result column="status" property="status" />
+
     </resultMap>
 
     <select id="queryOrderStatisticsPage" parameterType="com.dmd.admin.model.vo.UmsOrderStatisticsVo" resultMap="umsOrderStatisticsMap">
     SELECT
-	oo.member_id ,
-	um.username ,
-	um.phone ,
-	um.create_time ,
-	um.invitation_code ,
-	oo.created_time ,
-	oo.payment_time ,
-	oo.end_time ,
-	oi.product_name ,
-	oo.total_amount ,
-	oo.pay_amount ,
-	oo.integration_amount ,
-	oo.integration
+        oo.member_id ,
+        um.username ,
+        um.phone ,
+        um.create_time ,
+        um.invitation_code ,
+        oo.created_time ,
+        oo.payment_time ,
+        oo.end_time ,
+        oi.product_name ,
+        oo.total_amount ,
+        oo.pay_amount ,
+        oo.integration_amount ,
+        oo.integration,
+        oo.status
     FROM
 	oms_order oo
 	LEFT JOIN ums_member um ON oo.member_id = um.id
 	LEFT JOIN oms_order_item oi ON oo.id = oi.order_id
+        <include refid="orderStatisticsWhere"></include>
     </select>
+
+    <!-- 公用标签 -->
+    <sql id="orderStatisticsWhere">
+        <where>
+            <!-- 用户ID -->
+            <if test="memberId !=null">
+                and oo.member_id = #{memberId}
+            </if>
+            <!-- 用户名 -->
+            <if test="userName !=null and userName != ''">
+                and um.username like '%${userName}%'
+            </if>
+            <!-- 注册手机号 -->
+            <if test="phone != null and phone != ''">
+                and um.phone like '%${phone}%'
+            </if>
+            <!-- 注册日期区间查询 -->
+            <if test="startUserCreateTime != null">
+                and um.create_time >= #{startUserCreateTime}
+            </if>
+            <if test="endUserCreateTime != null">
+                and um.create_time &lt;= #{endUserCreateTime}
+            </if>
+            <!-- 邀请码查询 -->
+            <if test="invitationCode !=null and invitationCode != ''">
+                and um.invitation_code like '%${invitationCode}%'
+            </if>
+            <!-- 下单日期区间查询 -->
+            <if test="startOrderCreatedTime != null">
+                and oo.created_time >= #{startOrderCreatedTime}
+            </if>
+            <if test="endOrderCreatedTime != null">
+                and oo.created_time &lt;= #{endOrderCreatedTime}
+            </if>
+            <!-- 付款日期区间查询 -->
+            <if test="startOrderPaymentTime != null">
+                and oo.payment_time >= #{startOrderPaymentTime}
+            </if>
+            <if test="endOrderPaymentTime != null">
+                and oo.payment_time &lt;= #{endOrderPaymentTime}
+            </if>
+            <!-- 完成日期区间查询 -->
+            <if test="startOrderEndTime != null">
+                and oo.end_time >= #{startOrderEndTime}
+            </if>
+            <if test="endOrderEndTime != null">
+                and oo.end_time &lt;= #{endOrderEndTime}
+            </if>
+            <!-- 商品名称 -->
+            <if test="productName != null and productName != ''">
+                and oi.product_name like '%${productName}%'
+            </if>
+            <!-- 付款金额 -->
+            <if test="startTotalAmount != null">
+                and oo.total_amount >= #{startTotalAmount}
+            </if>
+            <if test="endTotalAmount != null">
+                and oo.total_amount &lt;= #{endTotalAmount}
+            </if>
+            <!-- 订单金额 -->
+            <if test="startTotalAmount != null">
+                and oo.total_amount >= #{startTotalAmount}
+            </if>
+            <if test="endTotalAmount != null">
+                and oo.total_amount &lt;= #{endTotalAmount}
+            </if>
+            <!-- 实际付款金额 -->
+            <if test="startPayAmount != null">
+                and oo.pay_amount >= #{startPayAmount}
+            </if>
+            <if test="endPayAmount != null">
+                and oo.pay_amount &lt;= #{endPayAmount}
+            </if>
+            <!-- 当日数据 -->
+            <if test="identifier != null and identifier == 1">
+                and to_days( oo.created_time ) = to_days(now())
+            </if>
+            <!-- 一周数据 -->
+            <if test="identifier != null and identifier == 2">
+                and DATE_SUB( CURDATE(), INTERVAL 7 DAY ) &lt;= date( oo.created_time )
+            </if>
+            <!-- 近三十天数据 -->
+            <if test="identifier != null and identifier == 3">
+                and  DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;=date(oo.created_time)
+            </if>
+            <!-- 本月数据 -->
+            <if test="identifier != null and identifier == 4">
+                and  DATE_FORMAT( oo.created_time, '%Y%m' ) =DATE_FORMAT( CURDATE() , '%Y%m' )
+            </if>
+            <!-- 季度数据 -->
+            <if test="identifier != null and identifier == 5">
+                and  QUARTER(oo.created_time)=QUARTER(now())
+            </if>
+            <!-- 本年数据 -->
+            <if test="identifier != null and identifier == 6">
+                and  YEAR(oo.created_time)=YEAR(NOW())
+            </if>
+            <!-- 订单状态 -->
+            <if test="status != null">
+                and oo.status = #{status}
+            </if>
+        </where>
+    </sql>
 </mapper>

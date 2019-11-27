@@ -156,5 +156,21 @@ public class ExcelUtil {
         }
         return columnList;
     }*/
+
+    /**
+     * 获取下载路径
+     *
+     * @param filename 文件名称
+     */
+    public static String getAbsoluteFile(String filename)
+    {
+        String downloadPath = "D://" + filename;
+        File desc = new File(downloadPath);
+        if (!desc.getParentFile().exists())
+        {
+            desc.getParentFile().mkdirs();
+        }
+        return downloadPath;
+    }
 }
 
