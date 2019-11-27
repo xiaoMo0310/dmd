@@ -1,6 +1,8 @@
 package com.dmd.admin.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
@@ -38,6 +40,22 @@ public class UmsOrderStatisticsVo {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date userCreateTime;
+
+    /**
+     * 注册查询开始时间
+     */
+    @ApiModelProperty(value = "注册查询开始时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date startUserCreateTime;
+    /**
+     * 注册查询结束时间
+     */
+    @ApiModelProperty(value = "注册查询结束时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date endUserCreateTime;
+
     /**
      * 邀请码
      */
@@ -50,6 +68,22 @@ public class UmsOrderStatisticsVo {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date orderCreatedTime;
+
+    /**
+     * 下单查询开始时间
+     */
+    @ApiModelProperty(value = "下单查询开始时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date startOrderCreatedTime;
+    /**
+     * 下单查询结束时间
+     */
+    @ApiModelProperty(value = "下单查询结束时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date endOrderCreatedTime;
+
     /**
      * 付款时间
      */
@@ -57,6 +91,22 @@ public class UmsOrderStatisticsVo {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date orderPaymentTime;
+
+    /**
+     * 付款查询开始时间
+     */
+    @ApiModelProperty(value = "付款查询开始时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date startOrderPaymentTime;
+    /**
+     * 付款查询结束时间
+     */
+    @ApiModelProperty(value = "付款查询结束时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date endOrderPaymentTime;
+
     /**
      * 完成时间
      */
@@ -64,6 +114,22 @@ public class UmsOrderStatisticsVo {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date orderEndTime;
+
+    /**
+     * 付款完成开始时间
+     */
+    @ApiModelProperty(value = "付款完成开始时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date startOrderEndTime;
+    /**
+     * 付款完成结束时间
+     */
+    @ApiModelProperty(value = "付款完成结束时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date endOrderEndTime;
+
     /**
      * 商品名称
      */
@@ -74,11 +140,29 @@ public class UmsOrderStatisticsVo {
      */
     @Excel(name = "订单金额(单位/RMN)", orderNum = "9",isStatistics = true, width = 20)
     private BigDecimal total_amount;
+
+    /**
+     * 订单金额区间查询(开始)
+     */
+    private BigDecimal startTotalAmount;
+    /**
+     * 订单金额区间查询(结束)
+     */
+    private BigDecimal endTotalAmount;
     /**
      * 付款金额
      */
     @Excel(name = "付款金额(单位/RMN)", orderNum = "10",isStatistics = true, width = 20)
     private BigDecimal payAmount;
+
+    /**
+     * 付款金额区间查询(开始)
+     */
+    private BigDecimal startPayAmount;
+    /**
+     * 付款金额区间查询(结束)
+     */
+    private BigDecimal endPayAmount;
     /**
      * 积分抵扣金额
      */
@@ -89,6 +173,18 @@ public class UmsOrderStatisticsVo {
      */
     @Excel(name = "用户积分奖励", orderNum = "12",isStatistics = true)
     private Integer integration;
+
+    /**
+     * 日周月季年标识符(1==日，2==周，3==近三十天，4==本月，5==季，6==年)
+     */
+    private Integer identifier;
+
+    /**
+     * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->售后; 6->取消
+     */
+    @Excel(name = "订单状态", orderNum = "13",replace = {"待付款_0", "待发货_1","已发货_2","已完成_3","已关闭_4","售后_5","取消_6"})
+    private Integer status;
+
 
     public Long getMemberId() {
         return memberId;
@@ -122,6 +218,22 @@ public class UmsOrderStatisticsVo {
         this.userCreateTime = userCreateTime;
     }
 
+    public Date getStartUserCreateTime() {
+        return startUserCreateTime;
+    }
+
+    public void setStartUserCreateTime(Date startUserCreateTime) {
+        this.startUserCreateTime = startUserCreateTime;
+    }
+
+    public Date getEndUserCreateTime() {
+        return endUserCreateTime;
+    }
+
+    public void setEndUserCreateTime(Date endUserCreateTime) {
+        this.endUserCreateTime = endUserCreateTime;
+    }
+
     public String getInvitationCode() {
         return invitationCode;
     }
@@ -138,6 +250,22 @@ public class UmsOrderStatisticsVo {
         this.orderCreatedTime = orderCreatedTime;
     }
 
+    public Date getStartOrderCreatedTime() {
+        return startOrderCreatedTime;
+    }
+
+    public void setStartOrderCreatedTime(Date startOrderCreatedTime) {
+        this.startOrderCreatedTime = startOrderCreatedTime;
+    }
+
+    public Date getEndOrderCreatedTime() {
+        return endOrderCreatedTime;
+    }
+
+    public void setEndOrderCreatedTime(Date endOrderCreatedTime) {
+        this.endOrderCreatedTime = endOrderCreatedTime;
+    }
+
     public Date getOrderPaymentTime() {
         return orderPaymentTime;
     }
@@ -146,12 +274,44 @@ public class UmsOrderStatisticsVo {
         this.orderPaymentTime = orderPaymentTime;
     }
 
+    public Date getStartOrderPaymentTime() {
+        return startOrderPaymentTime;
+    }
+
+    public void setStartOrderPaymentTime(Date startOrderPaymentTime) {
+        this.startOrderPaymentTime = startOrderPaymentTime;
+    }
+
+    public Date getEndOrderPaymentTime() {
+        return endOrderPaymentTime;
+    }
+
+    public void setEndOrderPaymentTime(Date endOrderPaymentTime) {
+        this.endOrderPaymentTime = endOrderPaymentTime;
+    }
+
     public Date getOrderEndTime() {
         return orderEndTime;
     }
 
     public void setOrderEndTime(Date orderEndTime) {
         this.orderEndTime = orderEndTime;
+    }
+
+    public Date getStartOrderEndTime() {
+        return startOrderEndTime;
+    }
+
+    public void setStartOrderEndTime(Date startOrderEndTime) {
+        this.startOrderEndTime = startOrderEndTime;
+    }
+
+    public Date getEndOrderEndTime() {
+        return endOrderEndTime;
+    }
+
+    public void setEndOrderEndTime(Date endOrderEndTime) {
+        this.endOrderEndTime = endOrderEndTime;
     }
 
     public String getProductName() {
@@ -170,12 +330,44 @@ public class UmsOrderStatisticsVo {
         this.total_amount = total_amount;
     }
 
+    public BigDecimal getStartTotalAmount() {
+        return startTotalAmount;
+    }
+
+    public void setStartTotalAmount(BigDecimal startTotalAmount) {
+        this.startTotalAmount = startTotalAmount;
+    }
+
+    public BigDecimal getEndTotalAmount() {
+        return endTotalAmount;
+    }
+
+    public void setEndTotalAmount(BigDecimal endTotalAmount) {
+        this.endTotalAmount = endTotalAmount;
+    }
+
     public BigDecimal getPayAmount() {
         return payAmount;
     }
 
     public void setPayAmount(BigDecimal payAmount) {
         this.payAmount = payAmount;
+    }
+
+    public BigDecimal getStartPayAmount() {
+        return startPayAmount;
+    }
+
+    public void setStartPayAmount(BigDecimal startPayAmount) {
+        this.startPayAmount = startPayAmount;
+    }
+
+    public BigDecimal getEndPayAmount() {
+        return endPayAmount;
+    }
+
+    public void setEndPayAmount(BigDecimal endPayAmount) {
+        this.endPayAmount = endPayAmount;
     }
 
     public BigDecimal getIntegrationAmount() {
@@ -194,6 +386,22 @@ public class UmsOrderStatisticsVo {
         this.integration = integration;
     }
 
+    public Integer getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(Integer identifier) {
+        this.identifier = identifier;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "UmsOrderStatisticsVo{" +
@@ -201,15 +409,29 @@ public class UmsOrderStatisticsVo {
                 ", userName='" + userName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", userCreateTime=" + userCreateTime +
+                ", startUserCreateTime=" + startUserCreateTime +
+                ", endUserCreateTime=" + endUserCreateTime +
                 ", invitationCode='" + invitationCode + '\'' +
                 ", orderCreatedTime=" + orderCreatedTime +
+                ", startOrderCreatedTime=" + startOrderCreatedTime +
+                ", endOrderCreatedTime=" + endOrderCreatedTime +
                 ", orderPaymentTime=" + orderPaymentTime +
+                ", startOrderPaymentTime=" + startOrderPaymentTime +
+                ", endOrderPaymentTime=" + endOrderPaymentTime +
                 ", orderEndTime=" + orderEndTime +
+                ", startOrderEndTime=" + startOrderEndTime +
+                ", endOrderEndTime=" + endOrderEndTime +
                 ", productName='" + productName + '\'' +
                 ", total_amount=" + total_amount +
+                ", startTotalAmount=" + startTotalAmount +
+                ", endTotalAmount=" + endTotalAmount +
                 ", payAmount=" + payAmount +
+                ", startPayAmount=" + startPayAmount +
+                ", endPayAmount=" + endPayAmount +
                 ", integrationAmount=" + integrationAmount +
                 ", integration=" + integration +
+                ", identifier=" + identifier +
+                ", status=" + status +
                 '}';
     }
 }
