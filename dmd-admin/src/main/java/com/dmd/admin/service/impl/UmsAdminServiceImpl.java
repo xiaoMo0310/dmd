@@ -261,7 +261,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         for (UmsPermission umsPermission:umsPermissions){
             for (UmsPermission umsPermission1: rolePermission){
                 if (umsPermission.getName().equals(umsPermission1.getName())){
-                    umsPermission.setCheck(true);
+                    umsPermission.setBeCheck(true);
                 }
             }
         }
@@ -286,13 +286,30 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     @Override
     public PageInfo getRoleList(BaseQuery baseQuery) {
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
+        List<UmsRole> umsRolesForAmin=new ArrayList<>();
         List<UmsRole> umsRoles =adminRoleRelationDao.roleList();
+        if (baseQuery.getAdminId()!=null){
+            if (baseQuery.getAdminId()!=null){
+                umsRolesForAmin=adminRoleRelationDao.roleForAdminList(baseQuery.getAdminId());
+            }
+        }
+        for(UmsRole umsRole:umsRoles){
+            for(UmsRole umsRole1:umsRolesForAmin){
+                if (umsRole.getName().equals(umsRole1.getName())){
+                    umsRole.setBeCheck(true);
+                }
+            }
+        }
+
         return new PageInfo<>(umsRoles);
     }
 
     @Override
     public int addPermissionForRole(List<UmsRolePermissionRelation> permissionRelations) {
         adminRoleRelationDao.deletePermissionForRole(permissionRelations.get(0).getRoleId());
+        if (permissionRelations.size()==1&&permissionRelations.get(0).getPermissionId()==null){
+            return 0;
+        }
         return adminRoleRelationDao.addPermissionForRole(permissionRelations);
     }
 
@@ -324,7 +341,30 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public int addRolesForAdmin(List<UmsAdminRoleRelation> adminRoleRelation) {
+        adminRoleRelationDao.deleteRoleForAdmin(adminRoleRelation.get(0).getAdminId());
+        if (adminRoleRelation.size()==1&&adminRoleRelation.get(0).getRoleId()==null){
+            return 0;
+        }
         return adminRoleRelationDao.addRolesForAdmin(adminRoleRelation);
+    }
+
+    @Override
+    public UmsAdmin updateAdminInfo(UmsAdmin umsAdmin) {
+        if(umsAdmin.getPassword()!=null){
+            umsAdmin.setPassword(passwordEncoder.encode(umsAdmin.getPassword()));
+        }
+        int result=adminRoleRelationDao.updateAdminInfo(umsAdmin);
+        if (result>0){
+            return umsAdmin;
+        }else {
+            return null;
+        }
+
+    }
+
+    @Override
+    public int deleteUser(Long id) {
+        return adminRoleRelationDao.deleteUser(id);
     }
 
 //    public List<UmsPermission> getNode(Long pid){

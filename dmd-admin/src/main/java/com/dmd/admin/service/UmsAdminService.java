@@ -118,4 +118,8 @@ public interface UmsAdminService {
 
     //建立角色和用户的对应关系
     int addRolesForAdmin(List<UmsAdminRoleRelation> adminRoleRelation);
+
+    //更新用户信息
+    UmsAdmin updateAdminInfo(UmsAdmin umsAdmin);
+    int deleteUser(Long id);
 }

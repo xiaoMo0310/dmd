@@ -66,10 +66,10 @@
     <insert id="addRolesForAdmin">
         insert into ums_admin_role_relation(admin_id, role_id)
         values
-        <foreach collection="adminRoleRelation" item="role" index="index" separator=",">
+        <foreach collection="adminRoleRelation" item="adminForRole" index="index" separator=",">
             (
-            #{role.role_id,jdbcType=INTEGER},
-            #{role.permission_id,jdbcType=INTEGER}
+            #{adminForRole.adminId,jdbcType=INTEGER},
+            #{adminForRole.roleId,jdbcType=INTEGER}
             )
         </foreach>
     </insert>
@@ -116,6 +116,13 @@
     <select id="roleList" resultType="com.dmd.admin.model.domain.UmsRole">
         select * from ums_role
     </select>
+    <select id="roleForAdminList" resultType="com.dmd.admin.model.domain.UmsRole">
+        select ur.* from ums_role ur
+        inner join ums_admin_role_relation uarr on ur.id=uarr.role_id
+        inner join ums_admin ua on uarr.admin_id=ua.id
+        where ua.id=#{adminId}
+    </select>
+
 
     <update id="isEnableRole">
         update ums_role set status=#{status} where id=#{id}
@@ -130,6 +137,24 @@
     <update id="modifyRole">
         update ums_role set status=#{status},name=#{name},description=#{description},sort=#{sort} where id=#{id}
     </update>
+    <delete id="deleteRoleForAdmin">
+        delete from ums_admin_role_relation where admin_id=#{adminId}
+    </delete>
 
-
+    <!--更新用户信息-->
+    <update id="updateAdminInfo">
+        update ums_admin
+                set status=#{status},
+                username=#{username},
+                password=#{password},
+                email=#{email},
+                icon=#{icon},
+                nick_name=#{nickName},
+                note=#{note}
+        where id=#{id}
+    </update>
+    <!--删除用户信息-->
+    <delete id="deleteUser">
+        delete from ums_admin where id=#{id}
+    </delete>
 </mapper>

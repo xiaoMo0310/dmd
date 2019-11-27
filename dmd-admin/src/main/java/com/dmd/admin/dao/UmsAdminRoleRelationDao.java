@@ -1,9 +1,6 @@
 package com.dmd.admin.dao;
 
-import com.dmd.admin.model.domain.UmsAdminRoleRelation;
-import com.dmd.admin.model.domain.UmsPermission;
-import com.dmd.admin.model.domain.UmsRole;
-import com.dmd.admin.model.domain.UmsRolePermissionRelation;
+import com.dmd.admin.model.domain.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.parameters.P;
 
@@ -41,7 +38,7 @@ public interface UmsAdminRoleRelationDao {
     /**
      * 建立用户和角色对应关系
      */
-    int addRolesForAdmin(List<UmsAdminRoleRelation> adminRoleRelation);
+    int addRolesForAdmin(@Param("adminRoleRelation") List<UmsAdminRoleRelation> adminRoleRelation);
     /**
      * 删除用户和角色对应关系
      */
@@ -67,6 +64,7 @@ public interface UmsAdminRoleRelationDao {
     List<UmsPermission> roleForPermission(@Param("roleId") Long roleId);
 
     List<UmsRole> roleList();
+    List<UmsRole> roleForAdminList(@Param("adminId") Long adminId);
 
     //是否启用角色
     int isEnableRole(@Param("id") Long id,@Param("status") Long status);
@@ -74,5 +72,7 @@ public interface UmsAdminRoleRelationDao {
     int deleteRoles(@Param("ids") List<Long> ids);
     //修改角色信息
     int modifyRole(UmsRole umsRole);
-
+    int deleteRoleForAdmin(@Param("adminId") Long adminId);
+    int updateAdminInfo(UmsAdmin umsAdmin);
+    int deleteUser(@Param("id") Long id);
 }

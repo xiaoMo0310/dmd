@@ -108,6 +108,7 @@ public class UmsAdminController {
                                                    @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<UmsAdmin> adminList = adminService.list(name, pageSize, pageNum);
         for (int i=0;i<adminList.size();i++) {
+            adminList.get(i).setPassword(null);
             if (adminList.get(i).getUsername().equals("admin")){
                 adminList.remove(i);
             }
@@ -256,6 +257,18 @@ public class UmsAdminController {
     @ResponseBody
     public Wrapper<Integer> addRolesForAdmin(@RequestBody List<UmsAdminRoleRelation> adminRoleRelation) {
         return  WrapMapper.ok(adminService.addRolesForAdmin(adminRoleRelation));
+    }
+    @ApiOperation("更新用户信息")
+    @RequestMapping(value = "/updateAdminInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public Wrapper<UmsAdmin> updateAdminInfo(@RequestBody UmsAdmin umsAdmin) {
+        return  WrapMapper.ok(adminService.updateAdminInfo(umsAdmin));
+    }
+    @ApiOperation("删除用户信息")
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+    @ResponseBody
+    public Wrapper<Integer> deleteUser(@RequestParam("id") Long id) {
+        return  WrapMapper.ok(adminService.deleteUser(id));
     }
 
 }
