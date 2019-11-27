@@ -33,12 +33,13 @@ public class BaseQuery implements Serializable {
 	/**
 	 * 排序 例:xxx asc, xxx desc
 	 */
-	private boolean isCheck=false;
+	private boolean beCheck=false;
 	/**
 	 * 排序 例:xxx asc, xxx desc
 	 */
 	private Long roleId;
 
+	private Long adminId;
 
 
 }
