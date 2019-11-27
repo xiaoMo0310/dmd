@@ -66,4 +66,13 @@ public class UmsMemberAuthenticationController {
         return memberService.updatePersonalData(umsMember);
 
     }
+
+    @ApiOperation("更改手机号")
+    @RequestMapping(value = "/updatePhone", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updatePhone(@RequestParam String telephone,
+                                    @RequestParam String authCode,
+                                    HttpServletRequest request) {
+        return memberService.updatePhone(telephone,authCode,request);
+    }
 }

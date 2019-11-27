@@ -15,9 +15,12 @@ import com.dmd.mall.service.RedisService;
 import com.dmd.mall.service.UmsIntegrationChangeLogService;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.CodeValidateUtil;
+import com.dmd.mall.util.JwtUtil;
 import com.dmd.mall.util.MailUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -289,5 +293,22 @@ public class UmsMemberServiceImpl implements UmsMemberService {
             throw new UmsBizException(ErrorCodeEnum.UMS10011003, loginAuthDto.getUserId());
         }
         return umsMember;
+    }
+
+    @Override
+    public CommonResult updatePhone(String telephone, String authCode, HttpServletRequest request) {
+        try {
+            ValidateCode validateCode=validateCodeRepository.get(new ServletWebRequest(request));
+            CodeValidateUtil.vailDateCode(validateCode,authCode);
+        }catch (ValidateCodeException e){
+            return CommonResult.failed(e.getMessage());
+        }
+        String username=null;
+        try {
+            username=(String) JwtUtil.getDate(request).get("username");
+        } catch (JsonProcessingException | UnsupportedEncodingException e) {
+            return CommonResult.failed(e.getMessage());
+        }
+        return CommonResult.success(memberMapper.updatePhone(telephone,username));
     }
 }

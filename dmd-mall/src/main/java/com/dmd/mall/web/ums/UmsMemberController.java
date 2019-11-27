@@ -52,4 +52,5 @@ public class UmsMemberController {
                                        HttpServletRequest request) {
         return memberService.findPassword(telephone, password,confirmPassword, authCode,request);
     }
+
 }

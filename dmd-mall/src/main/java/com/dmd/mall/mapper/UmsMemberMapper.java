@@ -44,5 +44,6 @@ public interface UmsMemberMapper {
     UmsMember getByUsernameCoach(@Param("username") String username);
 
     int insertCoach(UmsMember umsMember);
+    int updatePhone(@Param("phone") String phone,@Param("username") String username);
 
 }
