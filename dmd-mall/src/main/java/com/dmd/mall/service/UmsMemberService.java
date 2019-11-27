@@ -83,4 +83,6 @@ public interface UmsMemberService {
      * @return
      */
     UmsMember selectByLoginAuthDto(LoginAuthDto loginAuthDto);
+    @Transactional
+    CommonResult updatePhone(String telephone,String authCode,HttpServletRequest request);
 }

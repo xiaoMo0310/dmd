@@ -31,13 +31,14 @@ public class SmsCodeAuthenticationFilter extends
 
         String mobile = obtainMobile(request);
         String type=request.getParameter("type");
+        String loginType=request.getParameter("loginType");
         if (mobile == null) {
             mobile = "";
         }
 
         mobile = mobile.trim();
 
-        SmsCodeAuthenticationToken authRequest = new SmsCodeAuthenticationToken(mobile,type);
+        SmsCodeAuthenticationToken authRequest = new SmsCodeAuthenticationToken(mobile,type,loginType);
 
         // Allow subclasses to set the "details" property
         setDetails(request, authRequest);

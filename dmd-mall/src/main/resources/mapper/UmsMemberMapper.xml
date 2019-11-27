@@ -472,5 +472,8 @@
     insert into ums_coach(coach_name,password,status,phone,created_time,update_time)
     values (#{username},#{password},1,#{phone},now(),now())
   </insert>
+  <update id="updatePhone">
+    update ums_member set username=#{phone} where username=#{username}
+  </update>
 
 </mapper>
