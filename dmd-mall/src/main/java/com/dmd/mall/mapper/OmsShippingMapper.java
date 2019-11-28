@@ -38,7 +38,7 @@ public interface OmsShippingMapper extends MyMapper<OmsShipping> {
      *
      * @return the omc shipping
      */
-    OmsShipping selectByShippingIdUserId(@Param("userId") Long userId, @Param("userType") String userType);
+    List<OmsShipping> selectByShippingIdUserId(@Param("userId") Long userId, @Param("userType") String userType);
 
     /**
      * Select by user id list.

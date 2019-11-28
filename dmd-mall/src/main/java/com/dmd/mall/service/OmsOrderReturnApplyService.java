@@ -1,9 +1,10 @@
 package com.dmd.mall.service;
 
 import com.dmd.base.dto.LoginAuthDto;
-import com.dmd.mall.model.domain.OmsOrderReturnApply;
 import com.dmd.core.support.IService;
+import com.dmd.mall.model.domain.OmsOrderReturnApply;
 import com.dmd.mall.model.dto.OrderReturnApplyDto;
+import com.dmd.mall.model.vo.OrderReturnApplyVo;
 
 /**
  * <p>
@@ -27,5 +28,5 @@ public interface OmsOrderReturnApplyService extends IService<OmsOrderReturnApply
      * @param orderSn
      * @return
      */
-    OrderReturnApplyDto findOrderReturnApplyMessage(String orderSn);
+    OrderReturnApplyVo findOrderReturnApplyMessage(LoginAuthDto loginAuthDto, String orderSn);
 }

@@ -36,9 +36,8 @@ public interface OmsShippingService extends IService<OmsShipping> {
     int deleteShipping(LoginAuthDto loginAuthDto, Long shippingId);
 
     /**
-     * 根据Id查询收货人地址
+     * 查询用户默认地址
      * @param loginAuthDto
-     * @param shippingId
      * @return
      */
     OmsShipping selectByShippingIdUserId(LoginAuthDto loginAuthDto);

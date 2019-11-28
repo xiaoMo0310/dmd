@@ -54,14 +54,16 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
         umsFavorites.setUserId(loginAuthDto.getUserId());
         if(loginAuthDto.getUserType().equals("member")){
             umsFavorites.setUserType(1);
+            if(umsFavoritesDto.getFavoriteType() == 1 && loginAuthDto.getUserId() == umsFavoritesDto.getTargetId()){
+                throw new UmsBizException("不允许关注自己");
+            }
         }else if(loginAuthDto.getUserType().equals("coach")){
             umsFavorites.setUserType(2);
+            if(umsFavoritesDto.getFavoriteType() == 2 && loginAuthDto.getUserId() == umsFavoritesDto.getTargetId()){
+                throw new UmsBizException("不允许关注自己");
+            }
         }
-        //查询是否关注
-        if(checkAttention(loginAuthDto, umsFavorites.getTargetId(), umsFavorites.getFavoriteType())){
-            throw new UmsBizException("已关注");
-        }
-        //查询是否有关注的信息
+        //查询关注的信息
         UmsFavorites favorites = umsFavoritesMapper.selectAttentionMessage(umsFavorites);
         int resultInt = 0;
         if(favorites == null){

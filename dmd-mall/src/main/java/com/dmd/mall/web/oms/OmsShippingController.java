@@ -3,6 +3,7 @@ package com.dmd.mall.web.oms;
 
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
+import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.model.domain.OmsShipping;
 import com.dmd.mall.model.dto.OmsShippingDto;
 import com.dmd.mall.service.OmsShippingService;
@@ -101,8 +102,11 @@ public class OmsShippingController extends BaseController {
     @PostMapping("/selectShippingById")
     @ApiOperation(httpMethod = "POST", value = "根据Id查询收货人地址")
     public Wrapper<OmsShipping> selectShippingById() {
-        OmsShipping OmsShipping = omsShippingService.selectByShippingIdUserId(getLoginAuthDto());
-        return WrapMapper.ok(OmsShipping);
+        OmsShipping omsShipping = omsShippingService.selectByShippingIdUserId(getLoginAuthDto());
+        if(omsShipping == null){
+            throw new OmsBizException("暂无收货地址信息");
+        }
+        return WrapMapper.ok(omsShipping);
     }
 
     /**

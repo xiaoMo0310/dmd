@@ -1,8 +1,6 @@
 package com.dmd.mall.web.cms;
 
-import com.dmd.annotation.NoNeedAccessAuthentication;
 import com.dmd.base.result.CommonResult;
-import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.service.DynamicService;
 import com.github.pagehelper.PageInfo;

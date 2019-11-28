@@ -3,6 +3,7 @@ package com.dmd.mall.model.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,8 @@ import java.util.Date;
  * @description: TODO 积分好礼实体类
  * @date 2019/10/910:18
  */
-public class IntegralGiftsBean {
+public class IntegralGiftsBean implements Serializable {
+    private static final long serialVersionUID = 7303432343041565652L;
     /**
      * 主键ID
      */
