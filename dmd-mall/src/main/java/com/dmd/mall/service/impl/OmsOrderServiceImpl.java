@@ -250,11 +250,10 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             if (integrationAmount.compareTo(new BigDecimal(0)) == 0) {
                 throw new OmsBizException(ErrorCodeEnum.OMS10031015);
             } else {
-                //分摊到可用商品中
-                BigDecimal perAmount = orderItem.getProductPrice().divide(orderItem.getTotalPrice() , 3, RoundingMode.HALF_EVEN).multiply(integrationAmount);
-                orderItem.setIntegrationAmount(perAmount);
+                orderItem.setIntegrationAmount(integrationAmount);
             }
         }
+        orderItem.setRealAmount(orderItem.getTotalPrice().subtract(integrationAmount));
         //该订单需要支付的运费 todo 运费计算逻辑待开发
         BigDecimal postage = new BigDecimal("0.00");
         if(productType == 3){
@@ -352,15 +351,19 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     }
 
     @Override
-    public int confirmationCompletedOrder(LoginAuthDto loginAuthDto, String orderSn) {
+    public int updateOrderStatus(LoginAuthDto loginAuthDto, String orderSn, Integer status) {
         OmsOrder order = getOmsOrderByOrderSn(loginAuthDto, orderSn);
-        if (order.getStatus() != OmsApiConstant.OrderStatusEnum.SHIPPED.getCode()) {
-            throw new OmsBizException(ErrorCodeEnum.OMS10031022);
-        }
         order.setUpdateInfo(loginAuthDto);
-        order.setEndTime(new Date());
-        order.setConfirmStatus(1);
-        order.setStatus(OmsApiConstant.OrderStatusEnum.ORDER_SUCCESS.getCode());
+        if(status  == 3){
+            if (order.getStatus() != OmsApiConstant.OrderStatusEnum.SHIPPED.getCode()) {
+                throw new OmsBizException(ErrorCodeEnum.OMS10031022);
+            }
+            order.setEndTime(new Date());
+            order.setConfirmStatus(1);
+        }else if(status  == 4){
+            order.setCloseTime(new Date());
+        }
+        order.setStatus(status);
         return omsOrderMapper.updateByPrimaryKeySelective(order);
     }
 
@@ -388,6 +391,11 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         return order;
     }
 
+    @Override
+    public List<CourseOrderDetailVo> queryOrderListByStatus(Integer orderType, Integer status) {
+        return omsOrderMapper.selectByStatus(orderType, status);
+    }
+
     /**
      *计算每个商铺订单总的金额
      * @param orderItemList
@@ -406,7 +414,12 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
      */
     private OmsOrder assembleOrder(UmsMember umsMember, String userType, Long shopId, OrderCreateVo orderCreateVo, BigDecimal payment, BigDecimal postage, BigDecimal integrationAmount, BigDecimal promotionAmount, LoginAuthDto loginAuthDto, String remark,Boolean isIntegralProduct, Boolean isCourseProduct) {
         OmsOrder order = new OmsOrder();
-        order.setStatus(OmsApiConstant.OrderStatusEnum.NO_PAY.getCode());
+        //order.setStatus(OmsApiConstant.OrderStatusEnum.NO_PAY.getCode());
+        //todo 假数据
+        order.setStatus(OmsApiConstant.OrderStatusEnum.PAID.getCode());
+        order.setPayType(1);
+        order.setPaymentTime(new Date());
+
         order.setDeleteStatus(0);
         order.setUserType(userType);
         order.setFreightAmount(postage);

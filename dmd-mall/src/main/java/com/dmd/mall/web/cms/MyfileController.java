@@ -52,9 +52,9 @@ public class MyfileController {
 
 
         //加个时间戳，尽量避免文件名称重复
-        String path = "/project/tomcat/webapps/afileUpload/video" +fileName;
-        String relativePath="afileUpload/video" +fileName;
-        //String path = "C:/fileUpload/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
+        //String path = "/project/tomcat/webapps/afileUpload/video" +fileName;
+        String relativePath="http://192.168.0.246/dmd/" +fileName;
+        String path = "D:/home/dmd/"+ fileName;
         //文件绝对路径
         System.out.print("保存文件绝对路径"+path+"\n");
 
@@ -125,7 +125,6 @@ public class MyfileController {
         }
         // 数组转String字符串
         String newStr = StringUtils.join(list, ",");
-        System.out.println(newStr);
         map.put("paths",newStr);
         return CommonResult.success(map);
     }
@@ -138,8 +137,11 @@ public class MyfileController {
                 // 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中
                 // )
                 String fileName=new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + file.getOriginalFilename();
-                String filePath = "/project/tomcat/webapps/fileUpload/picture" + fileName;
-                String relativePath="fileUpload/picture" +fileName;
+                /*String filePath = "/project/tomcat/webapps/fileUpload/picture" + fileName;
+                String relativePath="fileUpload/picture" +fileName;*/
+                String relativePath="http://192.168.0.246/dmd/" +fileName;
+                String filePath = "D:/home/dmd/"+ fileName;
+
                 list.add(relativePath);
                 File saveDir = new File(filePath);
                 if (!saveDir.getParentFile().exists())

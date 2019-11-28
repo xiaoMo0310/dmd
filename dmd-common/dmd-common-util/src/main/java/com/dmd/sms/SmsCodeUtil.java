@@ -37,7 +37,6 @@ public class SmsCodeUtil {
                 "application/json"));
         //设置参数到请求对象中
         httpPost.setEntity(s);
-        System.out.println("请求地址："+urlStr);
 
         //设置header信息
         //指定报文头【Content-type】、【User-Agent】

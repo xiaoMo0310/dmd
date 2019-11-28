@@ -2,7 +2,6 @@ package com.dmd.mall.web.ums;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.result.CommonResult;
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.dto.UmsFavoritesDto;
@@ -66,16 +65,15 @@ public class UmsFavoritesController extends BaseController {
         return WrapMapper.ok(flag);
     }
 
-    /**
-     * 查询我的关注
-     * @param baseQuery
-     * @return
-     */
-    @PostMapping("/favoritesList/find")
-    @ApiOperation(httpMethod = "POST", value = "查询当前登录人关注的信息")
-    @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery")
-    public Wrapper<JSONObject> findFavoritesList(@RequestBody BaseQuery baseQuery) {
-        JSONObject jsonObject = umsFavoritesService.queryAttention(getLoginAuthDto().getUserId(), baseQuery);
+    @GetMapping("/favoritesList/find")
+    @ApiOperation(httpMethod = "GET", value = "查询当前登录人关注的信息")
+    @ApiImplicitParams({@ApiImplicitParam(name ="pageNum", value = "页数", dataType = "int", paramType = "query"),
+                        @ApiImplicitParam(name ="pageSize", value = "每页显示条数", dataType = "int", paramType = "query"),
+                        @ApiImplicitParam(name ="favoriteType", value = "关注类型(1:用户 2:话题)", dataType = "int", paramType = "query")})
+    public Wrapper<JSONObject> findFavoritesList(@RequestParam("pageNum") Integer pageNum,
+                                                 @RequestParam("pageSize") Integer pageSize,
+                                                 @RequestParam("favoriteType") Integer favoriteType) {
+        JSONObject jsonObject = umsFavoritesService.queryAttention(getLoginAuthDto().getUserId(), pageNum, pageSize, favoriteType);
         return WrapMapper.ok(jsonObject);
     }
 
@@ -89,7 +87,6 @@ public class UmsFavoritesController extends BaseController {
     @ResponseBody
     public CommonResult<Integer> queryFavoritesCount(@RequestParam Long userId) {
         Integer count = umsFavoritesService.queryFavoritesCount(userId);
-        System.out.println(count);
         return CommonResult.success(count);
     }
 

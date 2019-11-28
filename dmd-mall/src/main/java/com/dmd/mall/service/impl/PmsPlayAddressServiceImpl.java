@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -44,5 +43,10 @@ public class PmsPlayAddressServiceImpl extends BaseService<PmsPlayAddress> imple
             BeanUtils.copyProperties(pmsPlayAddress, playAddressVo);
             return playAddressVo;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public PmsPlayAddress selectDefaultAddress() {
+        return pmsPlayAddressMapper.selectDefaultAddress();
     }
 }

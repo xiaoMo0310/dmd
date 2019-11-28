@@ -41,7 +41,7 @@ public interface OmsShippingService extends IService<OmsShipping> {
      * @param shippingId
      * @return
      */
-    OmsShipping selectByShippingIdUserId(LoginAuthDto loginAuthDto, Long shippingId);
+    OmsShipping selectByShippingIdUserId(LoginAuthDto loginAuthDto);
 
     /**
      * 分页查询当前用户收货人地址列表

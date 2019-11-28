@@ -20,4 +20,6 @@ import java.util.List;
 public interface PmsPlayAddressMapper extends MyMapper<PmsPlayAddress> {
 
     List<PmsPlayAddress> selectAllPlayAddress();
+
+    PmsPlayAddress selectDefaultAddress();
 }

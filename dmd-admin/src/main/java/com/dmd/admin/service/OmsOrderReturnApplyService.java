@@ -4,31 +4,25 @@ import com.dmd.admin.model.domain.OmsOrderReturnApply;
 import com.dmd.admin.model.dto.OmsOrderReturnApplyResult;
 import com.dmd.admin.model.dto.OmsReturnApplyQueryParam;
 import com.dmd.admin.model.dto.OmsUpdateStatusParam;
+import com.dmd.core.support.IService;
 
 import java.util.List;
 
 /**
- * 退货申请管理Service
- * Created by macro on 2018/10/18.
+ * <p>
+ * 订单退货申请 服务类
+ * </p>
+ *
+ * @author YangAnsheng
+ * @since 2019-11-26
  */
-public interface OmsOrderReturnApplyService {
-    /**
-     * 分页查询申请
-     */
+public interface OmsOrderReturnApplyService extends IService<OmsOrderReturnApply> {
+
     List<OmsOrderReturnApply> list(OmsReturnApplyQueryParam queryParam, Integer pageSize, Integer pageNum);
 
-    /**
-     * 批量删除申请
-     */
-    int delete(List<Long> ids);
+    int deleteByIds(List<Long> ids);
 
-    /**
-     * 修改申请状态
-     */
-    int updateStatus(Long id, OmsUpdateStatusParam statusParam);
-
-    /**
-     * 获取指定申请详情
-     */
     OmsOrderReturnApplyResult getItem(Long id);
+
+    int updateStatus(Long id, OmsUpdateStatusParam statusParam);
 }

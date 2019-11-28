@@ -11,10 +11,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,10 +31,10 @@ public class SmsHomeAdvertiseController extends BaseController {
     @Autowired
     private SmsHomeAdvertiseService smsHomeAdvertiseService;
 
-     @GetMapping("/advertisePic/find/{type}")
+     @GetMapping("/advertisePic/find")
     @ApiOperation(httpMethod = "GET", value = "根据显示位置查询图片")
     @ApiImplicitParam(name ="type", value = "轮播位置：1->app首页轮播；2->app商场轮播图；3->启动页 4->引导页", dataType = "int", paramType = "path")
-    public Wrapper findAdvertisePicList(@PathVariable Integer type) {
+    public Wrapper findAdvertisePicList(@RequestParam("type") Integer type) {
         List<SmsHomeAdvertise> pics = smsHomeAdvertiseService.selectAdvertisePicList(type);
         return WrapMapper.ok(pics);
     }

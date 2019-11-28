@@ -21,7 +21,6 @@
         SELECT id,topicName,topicNum,topicDescribes,createTime,topicPicture FROM dmd_dynamic_topic WHERE id = #{value}
     </select>
 
-
     <select id="queryTopic" resultMap="topicMap">
         SELECT id,topicName,topicPicture,topicNum FROM dmd_dynamic_topic ORDER BY topicNum DESC
     </select>

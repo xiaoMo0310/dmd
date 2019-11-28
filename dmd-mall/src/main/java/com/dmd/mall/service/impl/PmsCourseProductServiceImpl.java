@@ -11,17 +11,11 @@ import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.exceptions.PmsBizException;
 import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.PmsCourseProductMapper;
-import com.dmd.mall.model.domain.OmsOrderItem;
-import com.dmd.mall.model.domain.PmsCertificate;
-import com.dmd.mall.model.domain.PmsCourseProduct;
-import com.dmd.mall.model.domain.UmsMember;
+import com.dmd.mall.model.domain.*;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.dto.CourseProductDto;
 import com.dmd.mall.model.vo.*;
-import com.dmd.mall.service.PmsCertificateService;
-import com.dmd.mall.service.PmsCourseProductService;
-import com.dmd.mall.service.UmsCoachService;
-import com.dmd.mall.service.UmsMemberService;
+import com.dmd.mall.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
@@ -52,6 +46,8 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     private UmsCoachService umsCoachService;
     @Autowired
     private UmsMemberService umsMemberService;
+    @Autowired
+    PmsPlayAddressService playAddressService;
 
     @Override
     public int saveCourseProductMessage(LoginAuthDto loginAuthDto, CourseProductDto courseProductDto) {
@@ -60,6 +56,13 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         }
         PmsCourseProduct courseProduct = new PmsCourseProduct();
         BeanUtils.copyProperties(courseProductDto, courseProduct);
+        //判断是否有证书商品
+        if(courseProductDto.getProductType() == 1){
+            int count = pmsCourseProductMapper.selectByUserId(loginAuthDto.getUserId());
+            if(count > 0){
+                throw new PmsBizException(ErrorCodeEnum.PMS10021029);
+            }
+        }
         //判断卖家是否有活动
         int count = pmsCourseProductMapper.selectCheckActivity(courseProductDto.getStartTime(), courseProduct.getEndTime(),courseProduct.getId());
         if(count > 0){
@@ -113,6 +116,15 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
 
     @Override
     public CertificateProductVo findCertificateProduct(LoginAuthDto loginAuthDto, Long certificateId, Long addressId) {
+        if(addressId == null){
+            //查询默认地址
+            PmsPlayAddress pmsPlayAddress = playAddressService.selectDefaultAddress();
+            if(pmsPlayAddress == null){
+                addressId = 1L;
+            }else {
+                addressId = pmsPlayAddress.getId();
+            }
+        }
         CertificateProductVo certificateProductVo = new CertificateProductVo();
         //查询证书的信息
         PmsCertificateVo certificateVo = certificateService.selectCertificateById(certificateId);
@@ -121,7 +133,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         }
         certificateProductVo.setPmsCertificateVo(certificateVo);
         //查询发布改证书的所有的教练id
-        List<Long> coachIds = pmsCourseProductMapper.selectCoachIdByCertificateId(certificateId, 1);
+        List<Long> coachIds = pmsCourseProductMapper.selectCoachIdByCertificateId(certificateId, addressId, 1);
 
         //查询当前登录人的信息
         UmsMember umsMember = umsMemberService.getById(loginAuthDto.getUserId());
@@ -246,7 +258,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         Map mapC = new HashMap(0);
         mapC.put("key","最大人数限制");
         mapC.put("value", product.getNumberLimit());
-        ArrayList<Object> arrayList = new ArrayList<>();
+        List<Map> arrayList = new ArrayList<>();
         arrayList.add(mapA);
         arrayList.add(mapB);
         arrayList.add(mapC);

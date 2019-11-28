@@ -50,4 +50,6 @@ public interface OmsOrderMapper extends MyMapper<OmsOrder> {
     CourseOrderDetailVo selectSellerOrderByOrderSn(@Param("coachId") Long coachId,@Param("orderSn") String orderSn);
 
     OmsOrder selectByUserIdAndOrderId(@Param("userId") Long userId,@Param("userType") String userType, @Param("orderId") Long orderId);
+
+    List<CourseOrderDetailVo> selectByStatus(@Param("orderType")Integer orderType, @Param("status") Integer status);
 }

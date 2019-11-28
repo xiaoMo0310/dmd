@@ -48,7 +48,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         from oms_shipping
-        where id = #{shippingId}
+        where default_address = 1
         and user_id = #{userId} and user_type = #{userType}
     </select>
     <select id="selectByUserId" resultMap="BaseResultMap">

@@ -1,11 +1,11 @@
 package com.dmd.mall.web.pms;
 
-import com.dmd.annotation.NoNeedAccessAuthentication;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.PmsComment;
 import com.dmd.mall.model.domain.SmsHomeAdvertise;
 import com.dmd.mall.model.domain.UmsShop;
 import com.dmd.mall.service.PmsShopService;
+import com.dmd.mall.service.SmsHomeAdvertiseService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +22,8 @@ import java.util.Map;
 public class PmsShopController {
     @Autowired
     private PmsShopService pmsShopService;
+    @Autowired
+    private SmsHomeAdvertiseService smsHomeAdvertiseService;
 
     @ApiOperation("获取商场首页数据")
     @RequestMapping(value = "/getShop", method = RequestMethod.POST)
@@ -51,10 +53,9 @@ public class PmsShopController {
     @ApiOperation("轮播图")
     @RequestMapping(value = "/shopAdvertise", method = RequestMethod.POST)
     @ResponseBody
-    @NoNeedAccessAuthentication
     public CommonResult<List<SmsHomeAdvertise>> shopAdvertise(@RequestBody UmsShop umsShop) {
-        List<SmsHomeAdvertise> map =pmsShopService.getShopAdvertise(umsShop.getType());
-        return CommonResult.success(map);
+        List<SmsHomeAdvertise> pics = smsHomeAdvertiseService.selectAdvertisePicList(Integer.valueOf(umsShop.getType()));
+        return CommonResult.success(pics);
     }
 
 }

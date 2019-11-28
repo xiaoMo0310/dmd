@@ -31,7 +31,6 @@ import java.util.List;
  * @since 2019-11-22
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class OmsOrderAppraiseServiceImpl extends BaseService<OmsOrderAppraise> implements OmsOrderAppraiseService {
 
     @Autowired
@@ -40,6 +39,7 @@ public class OmsOrderAppraiseServiceImpl extends BaseService<OmsOrderAppraise> i
     private OmsOrderService omsOrderService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertAppraiseMessage(LoginAuthDto loginAuthDto, OrderAppraiseDto orderAppraiseDto) {
         OmsOrder order = omsOrderService.getOmsOrderByOrderId(loginAuthDto, orderAppraiseDto.getOrderId());
         if (order.getStatus() != OmsApiConstant.OrderStatusEnum.ORDER_SUCCESS.getCode()) {
@@ -49,6 +49,8 @@ public class OmsOrderAppraiseServiceImpl extends BaseService<OmsOrderAppraise> i
         BeanUtils.copyProperties(orderAppraiseDto, omsOrderAppraise);
         omsOrderAppraise.setUserId(loginAuthDto.getUserId());
         omsOrderAppraise.setUpdateInfo(loginAuthDto);
+        //修改订单状态为关闭
+        omsOrderService.updateOrderStatus(loginAuthDto, order.getOrderSn(), OmsApiConstant.OrderStatusEnum.ORDER_CLOSE.getCode());
         return omsOrderAppraiseMapper.insertSelective(omsOrderAppraise);
     }
 

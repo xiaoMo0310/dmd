@@ -15,6 +15,7 @@
         <result column="address_introduction" property="addressIntroduction" />
         <result column="atlas" property="atlas" />
         <result column="status" property="status" />
+        <result column="is_default" property="isDefault" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -26,13 +27,18 @@
         last_operator,
         last_operator_id,
         update_time,
-        address, address_introduction, atlas, status
+        address, address_introduction, atlas, status, is_default
     </sql>
     <select id="selectAllPlayAddress" resultType="com.dmd.mall.model.domain.PmsPlayAddress">
         select <include refid="Base_Column_List"/>
         from pms_play_address
         where status = 1
         order by update_time desc
+    </select>
+    <select id="selectDefaultAddress" resultType="com.dmd.mall.model.domain.PmsPlayAddress">
+        select <include refid="Base_Column_List"/>
+        from pms_play_address
+        where status = 1 and is_default = 1
     </select>
 
 </mapper>

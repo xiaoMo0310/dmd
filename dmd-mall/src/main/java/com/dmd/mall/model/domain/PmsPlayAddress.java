@@ -41,5 +41,8 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("状态(1:启用 2:禁用)")
     private Integer status;
 
+    @Column(name = "is_default")
+    @ApiModelProperty("是否默认")
+    private Integer isDefault;
 
 }

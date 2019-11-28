@@ -1,21 +1,23 @@
 package com.dmd.mall.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseService;
 import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.UmsFavoritesMapper;
+import com.dmd.mall.model.domain.TopicBean;
 import com.dmd.mall.model.domain.UmsCoach;
 import com.dmd.mall.model.domain.UmsFavorites;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.dto.UmsFavoritesDto;
 import com.dmd.mall.model.vo.UmsFavoritesVo;
+import com.dmd.mall.service.TopicService;
 import com.dmd.mall.service.UmsCoachService;
 import com.dmd.mall.service.UmsFavoritesService;
 import com.dmd.mall.service.UmsMemberService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,12 +40,12 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
 
     @Autowired
     private UmsFavoritesMapper umsFavoritesMapper;
-
     @Autowired
     private UmsMemberService umsMemberService;
-
     @Autowired
     private UmsCoachService umsCoachService;
+    @Autowired
+    private TopicService topicService;
     @Override
     public int saveAttentionMessage(LoginAuthDto loginAuthDto, UmsFavoritesDto umsFavoritesDto) {
         UmsFavorites umsFavorites = new UmsFavorites();
@@ -103,20 +105,37 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
     }
 
     @Override
-    public JSONObject queryAttention(Long userId, BaseQuery baseQuery) {
-        PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
-        List<UmsFavorites> umsFavorites = umsFavoritesMapper.queryAttention(userId);
+    public JSONObject queryAttention(Long userId, Integer pageNum, Integer pageSize, Integer favoriteType) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<UmsFavorites> umsFavorites = null;
+        if(favoriteType == 1){
+            //查询普通用户和教练的
+             umsFavorites = umsFavoritesMapper.queryAttentionUser(userId);
+        }else if(favoriteType == 2){
+            //查询话题
+            umsFavorites = umsFavoritesMapper.queryAttentionTopic(userId);
+        }
         PageInfo<UmsFavorites> favoritesPageInfo = new PageInfo<>(umsFavorites);
         List<UmsFavoritesVo> umsFavoritesVos = favoritesPageInfo.getList().stream().map(favoritePageInfo -> {
             UmsFavoritesVo umsFavoritesVo = new UmsFavoritesVo();
-            BeanUtils.copyProperties(favoritePageInfo, umsFavoritesVo);
             if (favoritePageInfo.getFavoriteType() == 1) {
                 UmsMember umsMember = umsMemberService.getById(favoritePageInfo.getTargetId());
                 BeanUtils.copyProperties(umsMember, umsFavoritesVo);
+                BeanUtils.copyProperties(favoritePageInfo, umsFavoritesVo);
             }
             if (favoritePageInfo.getFavoriteType() == 2) {
                 UmsCoach umsCoach = umsCoachService.selectByKey(favoritePageInfo.getTargetId());
                 BeanUtils.copyProperties(umsCoach, umsFavoritesVo);
+                BeanUtils.copyProperties(favoritePageInfo, umsFavoritesVo);
+            }
+            if (favoritePageInfo.getFavoriteType() == 6) {
+                List<TopicBean> topicBeans = topicService.queryTopicById(Integer.valueOf(favoritePageInfo.getTargetId() + ""));
+                if(!CollectionUtils.isEmpty(topicBeans)){
+                    TopicBean topicBean = topicBeans.get(0);
+                    umsFavoritesVo.setTopicName(topicBean.getTopicName());
+                    umsFavoritesVo.setTopicNum(topicBean.getTopicNum());
+                    BeanUtils.copyProperties(favoritePageInfo, umsFavoritesVo);
+                }
             }
             return umsFavoritesVo;
         }).collect(Collectors.toList());

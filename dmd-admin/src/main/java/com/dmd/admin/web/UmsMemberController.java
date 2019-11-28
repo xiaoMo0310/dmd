@@ -45,7 +45,6 @@ public class UmsMemberController extends BaseController {
     @ApiOperation(httpMethod = "GET", value = "统计昨日访问用户的数量")
     public Wrapper countYesterdayVisitUser(){
         Long visitUser = umsMemberService.countYesterdayVisitUser();
-        System.out.println(visitUser);
         return WrapMapper.ok(visitUser);
     }
 

@@ -2,26 +2,35 @@ package com.dmd.admin.service.impl;
 
 import com.dmd.admin.mapper.OmsOrderReturnApplyMapper;
 import com.dmd.admin.model.domain.OmsOrderReturnApply;
-import com.dmd.admin.model.domain.OmsOrderReturnApplyExample;
 import com.dmd.admin.model.dto.OmsOrderReturnApplyResult;
 import com.dmd.admin.model.dto.OmsReturnApplyQueryParam;
 import com.dmd.admin.model.dto.OmsUpdateStatusParam;
 import com.dmd.admin.service.OmsOrderReturnApplyService;
+import com.dmd.core.support.BaseService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * 订单退货管理Service
- * Created by macro on 2018/10/18.
+ * <p>
+ * 订单退货申请 服务实现类
+ * </p>
+ *
+ * @author YangAnsheng
+ * @since 2019-11-26
  */
 @Service
-public class OmsOrderReturnApplyServiceImpl implements OmsOrderReturnApplyService {
+@Transactional(rollbackFor = Exception.class)
+public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnApply> implements OmsOrderReturnApplyService {
+
     @Autowired
     private OmsOrderReturnApplyMapper returnApplyMapper;
+
     @Override
     public List<OmsOrderReturnApply> list(OmsReturnApplyQueryParam queryParam, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum,pageSize);
@@ -29,9 +38,9 @@ public class OmsOrderReturnApplyServiceImpl implements OmsOrderReturnApplyServic
     }
 
     @Override
-    public int delete(List<Long> ids) {
-        OmsOrderReturnApplyExample example = new OmsOrderReturnApplyExample();
-        example.createCriteria().andIdIn(ids).andStatusEqualTo(3);
+    public int deleteByIds(List<Long> ids) {
+        Example example = new Example(OmsOrderReturnApply.class);
+        example.createCriteria().andIn("id", ids).andEqualTo("status", 3);
         return returnApplyMapper.deleteByExample(example);
     }
 
@@ -44,7 +53,7 @@ public class OmsOrderReturnApplyServiceImpl implements OmsOrderReturnApplyServic
             returnApply.setId(id);
             returnApply.setStatus(1);
             returnApply.setReturnAmount(statusParam.getReturnAmount());
-            returnApply.setCompanyAddressId(statusParam.getCompanyAddressId());
+            returnApply.setShippingId(statusParam.getShippingId());
             returnApply.setHandleTime(new Date());
             returnApply.setHandleMan(statusParam.getHandleMan());
             returnApply.setHandleNote(statusParam.getHandleNote());

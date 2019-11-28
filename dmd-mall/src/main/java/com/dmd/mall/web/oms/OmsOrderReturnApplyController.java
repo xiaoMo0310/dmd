@@ -11,10 +11,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -37,7 +34,15 @@ public class OmsOrderReturnApplyController extends BaseController {
     @ApiImplicitParam(name ="returnApplyDto", value = "申请信息", dataType = "OrderReturnApplyDto", paramType = "body")
     public Wrapper orderReturnApply(@RequestBody OrderReturnApplyDto returnApplyDto) {
         int result= omsOrderReturnApplyService.insertOrderReturnMessage(getLoginAuthDto(), returnApplyDto);
-        return WrapMapper.ok(result);
+        return handleResult(result);
+    }
+
+    @GetMapping("/returnApplyDetail/find")
+    @ApiOperation(httpMethod = "GET", value = "查询退款详情")
+    @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "String", paramType = "query")
+    public Wrapper findOrderReturnApplyMessage(@RequestParam String orderSn) {
+        OrderReturnApplyDto orderReturnApplyDto = omsOrderReturnApplyService.findOrderReturnApplyMessage(orderSn);
+        return WrapMapper.ok(orderReturnApplyDto);
     }
 
 }

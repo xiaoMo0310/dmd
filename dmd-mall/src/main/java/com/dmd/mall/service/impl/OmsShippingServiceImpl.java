@@ -57,8 +57,8 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
     }
 
     @Override
-    public OmsShipping selectByShippingIdUserId(LoginAuthDto loginAuthDto, Long shippingId) {
-        return omsShippingMapper.selectByShippingIdUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType(), shippingId);
+    public OmsShipping selectByShippingIdUserId(LoginAuthDto loginAuthDto) {
+        return omsShippingMapper.selectByShippingIdUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
     }
 
     @Override

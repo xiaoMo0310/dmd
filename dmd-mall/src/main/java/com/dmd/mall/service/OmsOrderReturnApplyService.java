@@ -21,4 +21,11 @@ public interface OmsOrderReturnApplyService extends IService<OmsOrderReturnApply
      * @param returnApplyDto
      */
      int insertOrderReturnMessage(LoginAuthDto loginAuthDto, OrderReturnApplyDto returnApplyDto);
+
+    /**
+     * 查询退款详情
+     * @param orderSn
+     * @return
+     */
+    OrderReturnApplyDto findOrderReturnApplyMessage(String orderSn);
 }

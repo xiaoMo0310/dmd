@@ -98,16 +98,10 @@ public class OmsShippingController extends BaseController {
         return handleResult(result);
     }
 
-    /**
-     * 根据Id查询收货人地址.
-     * @param shippingId the shipping id
-     * @return the wrapper
-     */
-    @PostMapping("/selectShippingById/{shippingId}")
+    @PostMapping("/selectShippingById")
     @ApiOperation(httpMethod = "POST", value = "根据Id查询收货人地址")
-    @ApiImplicitParam(name ="shippingId", value = "收货人地址id", dataType = "long", paramType = "path")
-    public Wrapper<OmsShipping> selectShippingById(@PathVariable Long shippingId) {
-        OmsShipping OmsShipping = omsShippingService.selectByShippingIdUserId(getLoginAuthDto(), shippingId);
+    public Wrapper<OmsShipping> selectShippingById() {
+        OmsShipping OmsShipping = omsShippingService.selectByShippingIdUserId(getLoginAuthDto());
         return WrapMapper.ok(OmsShipping);
     }
 

@@ -11,6 +11,8 @@ import com.dmd.mall.model.vo.OrderCreateResultVo;
 import com.dmd.mall.model.vo.OrderCreateVo;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 /**
  * <p>
  * 订单表 服务类
@@ -92,7 +94,7 @@ public interface OmsOrderService extends IService<OmsOrder> {
      * @param orderSn
      * @return
      */
-    int confirmationCompletedOrder(LoginAuthDto loginAuthDto, String orderSn);
+    int updateOrderStatus(LoginAuthDto loginAuthDto, String orderSn, Integer status);
 
     /**
      * 根据订单编号查询当前登录人的订单信息
@@ -109,4 +111,6 @@ public interface OmsOrderService extends IService<OmsOrder> {
      * @return
      */
     OmsOrder getOmsOrderByOrderId(LoginAuthDto loginAuthDto, Long orderId);
+
+    List<CourseOrderDetailVo> queryOrderListByStatus(Integer orderType, Integer status);
 }

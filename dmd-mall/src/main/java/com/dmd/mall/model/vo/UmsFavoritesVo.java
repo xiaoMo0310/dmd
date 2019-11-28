@@ -16,8 +16,12 @@ public class UmsFavoritesVo {
 
     private String icon;
 
+    private String topicName;
+
     private Long targetId;
 
     private Integer status;
+
+    private Integer topicNum;
 
 }

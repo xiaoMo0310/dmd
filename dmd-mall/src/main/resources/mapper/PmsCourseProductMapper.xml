@@ -65,7 +65,7 @@
     <select id="selectCoachIdByCertificateId" resultType="java.lang.Long">
         select user_id
         from pms_course_product
-        where certificate_id = #{certificateId} and product_type = #{productType} and status = 1 and approval_status = 2
+        where certificate_id = #{certificateId} and address_id = #{addressId} and product_type = #{productType} and status = 1 and approval_status = 2
     </select>
     <select id="selectByCoachId" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
         select <include refid="Base_Column_List"/>
@@ -133,7 +133,7 @@
     <select id="selectCheckActivity" resultType="java.lang.Integer">
         select count(*) from pms_course_product
         where start_time BETWEEN #{startTime,jdbcType=DATE} and #{endTime,jdbcType=DATE}
-        or end_time BETWEEN BETWEEN #{startTime,jdbcType=DATE} and #{endTime,jdbcType=DATE}
+        or end_time BETWEEN #{startTime,jdbcType=DATE} and #{endTime,jdbcType=DATE}
         <if test="id != null">
             and id != #{id}
         </if>
@@ -172,5 +172,8 @@
             AND pc.status = 1
         </where>
         ORDER BY pc.sales DESC
+    </select>
+    <select id="selectByUserId" resultType="java.lang.Integer">
+        select count(1) from pms_course_product where user_id = #{userId}
     </select>
 </mapper>

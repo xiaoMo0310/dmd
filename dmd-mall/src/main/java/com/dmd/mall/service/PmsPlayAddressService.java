@@ -21,4 +21,10 @@ public interface PmsPlayAddressService extends IService<PmsPlayAddress> {
      * @return
      */
     List<PmsPlayAddressVo> findAllPlayAddress();
+
+    /**
+     * 查询默认地址
+     * @return
+     */
+    PmsPlayAddress selectDefaultAddress();
 }

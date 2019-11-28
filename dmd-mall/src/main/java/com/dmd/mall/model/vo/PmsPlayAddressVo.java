@@ -19,4 +19,9 @@ public class PmsPlayAddressVo {
      * 地址
      */
     private String address;
+
+    /**
+     * 是否默认(0-非默认 1-默认)
+     */
+    private Integer isDefault;
 }

@@ -4,6 +4,7 @@ package com.dmd.mall.web.oms;
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseController;
+import com.dmd.mall.constant.OmsApiConstant;
 import com.dmd.mall.model.dto.OrderParamDto;
 import com.dmd.mall.model.dto.PmsCourseOrderDto;
 import com.dmd.mall.model.vo.CourseOrderDetailVo;
@@ -78,7 +79,7 @@ public class OmsOrderController extends BaseController {
         logger.info("cancelOrderDoc - 取消订单. orderSn={}", orderSn);
         LoginAuthDto loginAuthDto = getLoginAuthDto();
         logger.info("操作人信息. loginAuthDto={}", loginAuthDto);
-        int result = omsOrderService.confirmationCompletedOrder(loginAuthDto, orderSn);
+        int result = omsOrderService.updateOrderStatus(loginAuthDto, orderSn, OmsApiConstant.OrderStatusEnum.ORDER_SUCCESS.getCode());
         return handleResult(result);
     }
 

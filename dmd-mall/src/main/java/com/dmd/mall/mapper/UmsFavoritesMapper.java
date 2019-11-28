@@ -20,11 +20,13 @@ import java.util.List;
 @Component
 public interface UmsFavoritesMapper extends MyMapper<UmsFavorites> {
 
-    List<UmsFavorites> queryAttention(Long userId);
+    List<UmsFavorites> queryAttentionUser(Long userId);
 
     int updateAttentionStatus(@Param("userId") Long userId, @Param("userName") String userName,@Param("umsFavorites") UmsFavorites umsFavorites);
 
     UmsFavorites selectAttentionMessage(UmsFavorites umsFavorites);
 
     Integer queryFavoritesCount(Long userId);
+
+    List<UmsFavorites> queryAttentionTopic(Long userId);
 }

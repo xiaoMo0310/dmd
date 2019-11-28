@@ -68,5 +68,8 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("排序")
     private Integer sort;
 
+    @ApiModelProperty(value = "链接类型(1-商品 2-话题 3-页面)")
+    @Column(name = "link_type")
+    private Integer linkType;
 
 }

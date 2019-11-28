@@ -524,7 +524,7 @@ public enum ErrorCodeEnum {
 	/**
 	 * OMS 10031022 error code enum.
 	 */
-	OMS10031022(10031022, "非进行中的订单不能,无法完成订单"),
+	OMS10031022(10031022, "非进行中的订单无法完成订单"),
 	/**
 	 * OMS 10031023 error code enum.
 	 */
@@ -537,6 +537,14 @@ public enum ErrorCodeEnum {
 	 * OMS 10031025 error code enum.
 	 */
 	OMS10031025(10031025, "已提交售后申请"),
+	/**
+	 * OMS 10031026 error code enum.
+	 */
+	OMS10031026(10031026, "修改订单状态失败"),
+	/**
+	 * OMS 10031027 error code enum.
+	 */
+	OMS10031027(10031027, "积分商品不能售后"),
 	/**
 	 * Opc 10040001 error code enum.
 	 */

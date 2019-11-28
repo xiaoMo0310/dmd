@@ -130,4 +130,14 @@
         and oder.member_id = #{userId}
         and oder.user_type = #{userType}
     </select>
+    <select id="selectByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+        SELECT
+        oo.member_id userId, oo.order_sn, oo.total_amount, oo.id orderId,oo.pay_amount, oo.integration_amount, oo.pay_type, oo.payment_time,
+        oo.close_time, oo.created_time, oo.end_time,oo.status, oo.order_type, ooi.id orderItmeId, ooi.product_pic,
+        ooi.product_title, ooi.product_price, ooi.product_quantity,ooi.product_attr spec, ooi.product_type, ooi.product_id, ooi.real_amount
+        FROM oms_order oo
+        left join oms_order_item ooi
+        on oo.id = ooi.order_id
+        where status = #{status} and order_type = #{orderType}
+    </select>
 </mapper>

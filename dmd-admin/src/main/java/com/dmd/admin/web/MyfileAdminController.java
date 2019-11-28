@@ -96,13 +96,8 @@ public class MyfileAdminController {
                 list = saveFile(request, file, list);
             }
         }
-        //测试
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println("集合里面的数据" + list.get(i));
-        }
         // 数组转String字符串
         String newStr = StringUtils.join(list, ",");
-        System.out.println(newStr);
         return CommonResult.success(newStr);
     }
 

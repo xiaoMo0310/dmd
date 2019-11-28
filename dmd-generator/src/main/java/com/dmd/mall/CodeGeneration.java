@@ -22,7 +22,7 @@ import java.util.Map;
 public class CodeGeneration {
 
     public static void main(String[] args) {
-        mybatisPlusCodeGeneratro(new String[]{"oms_order_return_apply"}, "dmd-mall", "mall");
+        mybatisPlusCodeGeneratro(new String[]{"oms_order_return_apply"}, "dmd-admin", "admin");
     }
 
     /**
@@ -126,7 +126,6 @@ public class CodeGeneration {
         focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                System.out.println(tableInfo);
                 return file + "\\src\\main\\resources\\mapper\\" + tableInfo.getEntityName() + "Mapper.xml";
             }
         });

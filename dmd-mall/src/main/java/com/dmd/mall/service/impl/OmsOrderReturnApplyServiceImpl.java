@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+
 /**
  * <p>
  * 订单退货申请 服务实现类
@@ -25,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2019-11-22
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnApply> implements OmsOrderReturnApplyService {
 
     @Autowired
@@ -34,16 +35,23 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
     private OmsOrderService omsOrderService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertOrderReturnMessage(LoginAuthDto loginAuthDto, OrderReturnApplyDto returnApplyDto) {
         OmsOrderReturnApply omsOrderReturnApply = omsOrderReturnApplyMapper.selectByOrderSn(returnApplyDto.getOrderSn());
-        if(omsOrderReturnApply == null){
+        if(omsOrderReturnApply != null){
             throw new OmsBizException(ErrorCodeEnum.OMS10031025);
         }
         //查询订单详细信息
         CourseOrderDetailVo userOrderDetail = omsOrderService.getUserOrderDetail(loginAuthDto, returnApplyDto.getOrderSn());
         //判断订单的状态
-        if (userOrderDetail.getStatus() != OmsApiConstant.OrderStatusEnum.PAID.getCode()) {
+        if (userOrderDetail.getStatus() == OmsApiConstant.OrderStatusEnum.AFTER_SALE.getCode()) {
+            throw new OmsBizException(ErrorCodeEnum.OMS10031025);
+        }if (userOrderDetail.getStatus() != OmsApiConstant.OrderStatusEnum.PAID.getCode()) {
             throw new OmsBizException(ErrorCodeEnum.OMS10031024);
+        }
+        //判断商品类型
+        if(userOrderDetail.getProductType() == 4){
+            throw new OmsBizException(ErrorCodeEnum.OMS10031027);
         }
         omsOrderReturnApply = new OmsOrderReturnApply();
         BeanUtils.copyProperties(returnApplyDto, omsOrderReturnApply);
@@ -54,8 +62,29 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
         omsOrderReturnApply.setReturnPhone(userOrderDetail.getPhone());
         omsOrderReturnApply.setStatus(0);
         omsOrderReturnApply.setProductCount(userOrderDetail.getProductQuantity());
+        omsOrderReturnApply.setProductAttr(userOrderDetail.getSpec());
         omsOrderReturnApply.setProductRealPrice(userOrderDetail.getRealAmount());
         omsOrderReturnApply.setUpdateInfo(loginAuthDto);
-        return omsOrderReturnApplyMapper.insertSelective(omsOrderReturnApply);
+        int data = omsOrderReturnApplyMapper.insertSelective(omsOrderReturnApply);
+        //修改订单状态为售后
+        int result = omsOrderService.updateOrderStatus(loginAuthDto, userOrderDetail.getOrderSn(), OmsApiConstant.OrderStatusEnum.AFTER_SALE.getCode());
+        if(result <= 0){
+            throw new OmsBizException(ErrorCodeEnum.OMS10031026);
+        }
+        return data;
+
+    }
+
+    @Override
+    public OrderReturnApplyDto findOrderReturnApplyMessage(String orderSn) {
+        OmsOrderReturnApply omsOrderReturnApply = omsOrderReturnApplyMapper.selectByOrderSn(orderSn);
+        OrderReturnApplyDto orderReturnApplyDto = new OrderReturnApplyDto();
+        if(omsOrderReturnApply != null){
+            BeanUtils.copyProperties(omsOrderReturnApply, orderReturnApplyDto);
+            if(omsOrderReturnApply.getProofPics() != null){
+                orderReturnApplyDto.setPicList(Arrays.asList(omsOrderReturnApply.getProofPics().split(",")));
+            }
+        }
+        return orderReturnApplyDto;
     }
 }

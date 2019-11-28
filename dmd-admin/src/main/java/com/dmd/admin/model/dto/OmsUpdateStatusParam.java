@@ -16,7 +16,7 @@ public class OmsUpdateStatusParam {
     @ApiModelProperty("服务单号")
     private Long id;
     @ApiModelProperty("收货地址关联id")
-    private Long companyAddressId;
+    private Long shippingId;
     @ApiModelProperty("确认退款金额")
     private BigDecimal returnAmount;
     @ApiModelProperty("处理备注")

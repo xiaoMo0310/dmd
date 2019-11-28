@@ -27,7 +27,7 @@ import java.util.List;
  * @since 2019-11-13
  */
 @RestController
-@RequestMapping("/integralGifts")
+@RequestMapping("/integralGift")
 @Api(tags = "DmdIntegralGiftController", description = "积分商品中心", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class DmdIntegralGiftController extends BaseController {
 

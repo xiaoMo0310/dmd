@@ -1,14 +1,10 @@
 package com.dmd.mall.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
-import com.dmd.mall.model.domain.UmsFavorites;
 import com.dmd.core.support.IService;
+import com.dmd.mall.model.domain.UmsFavorites;
 import com.dmd.mall.model.dto.UmsFavoritesDto;
-import com.dmd.mall.model.vo.UmsFavoritesVo;
-
-import java.util.List;
 
 /**
  * <p>
@@ -44,7 +40,7 @@ public interface UmsFavoritesService extends IService<UmsFavorites> {
      */
     Boolean checkAttention(LoginAuthDto loginAuthDto, Long targetId, Integer favoriteType);
 
-    JSONObject queryAttention(Long userId, BaseQuery baseQuery);
+    JSONObject queryAttention(Long userId, Integer pageNum, Integer pageSize, Integer favoriteType);
 
     Integer queryFavoritesCount(Long userId);
 }
