@@ -14,6 +14,7 @@ import com.dmd.mall.service.OmsShippingService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,13 +40,32 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
     public int saveShipping(LoginAuthDto loginAuthDto, OmsShippingDto shipping) {
         OmsShipping omsShipping = new OmsShipping();
         BeanUtils.copyProperties(shipping, omsShipping);
+        //查询当前用户是否有地址信息
         int resultInt;
         omsShipping.setUpdateInfo(loginAuthDto);
         if (omsShipping.isNew()) {
+            //查询当前用户是否有地址
+            List<OmsShipping> omsShippings = omsShippingMapper.selectByShippingIdUserId(loginAuthDto.getUserId(), loginAuthDto.getUserName());
+            if(CollectionUtils.isEmpty(omsShippings)){
+                omsShipping.setDefaultAddress(1);
+            }else {
+                if(shipping.getDefaultAddress() == 1){
+                    OmsShipping omsShippingB = omsShippingMapper.selectDefaultAddressByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
+                    if(omsShippingB != null){
+                        this.setDefault(loginAuthDto, omsShippingB.getId(), OmsApiConstant.Shipping.NOT_DEFAULT);
+                    }
+                }
+            }
             omsShipping.setUserId(loginAuthDto.getUserId());
             omsShipping.setUserType(loginAuthDto.getUserType());
             resultInt = omsShippingMapper.insertSelective(omsShipping);
         } else {
+            if(shipping.getDefaultAddress() == 1){
+                OmsShipping omsShippingC = omsShippingMapper.selectDefaultAddressByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
+                if (!shipping.getId().equals(omsShippingC.getId())) {
+                    this.setDefault(loginAuthDto, omsShippingC.getId(), OmsApiConstant.Shipping.NOT_DEFAULT);
+                }
+            }
             resultInt = omsShippingMapper.updateByPrimaryKeySelective(omsShipping);
         }
         return resultInt;
@@ -58,7 +78,7 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
 
     @Override
     public OmsShipping selectByShippingIdUserId(LoginAuthDto loginAuthDto) {
-        return omsShippingMapper.selectByShippingIdUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
+        return omsShippingMapper.selectDefaultAddressByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
     }
 
     @Override

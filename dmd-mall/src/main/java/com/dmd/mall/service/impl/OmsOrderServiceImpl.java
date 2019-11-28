@@ -327,7 +327,8 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     }
 
     @Override
-    public PageInfo queryUserOrderList(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer status) {
+    public PageInfo
+    queryUserOrderList(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer status) {
         //获取当前登录人信息
         UmsMember umsMember = umsMemberService.selectByLoginAuthDto(loginAuthDto);
         //查询该用户下的的订单
@@ -583,7 +584,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             return zeroAmount;
         }
         //是否超过订单抵用最高百分比
-        BigDecimal integrationAmount = new BigDecimal(useIntegration).divide(new BigDecimal(integrationRuleSetting.getUseUnit()), 2, RoundingMode.HALF_EVEN);
+        BigDecimal integrationAmount = new BigDecimal(useIntegration).divide(new BigDecimal(integrationRuleSetting.getDeductionPerAmount()), 2, RoundingMode.HALF_EVEN);
         BigDecimal maxPercent = new BigDecimal(integrationRuleSetting.getMaxPercentPerOrder()).divide(new BigDecimal(100), 2, RoundingMode.HALF_EVEN);
         if (integrationAmount.compareTo(totalAmount.multiply(maxPercent)) > 0) {
             return zeroAmount;

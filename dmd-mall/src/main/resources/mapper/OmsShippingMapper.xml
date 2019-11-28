@@ -48,7 +48,6 @@
         SELECT
         <include refid="Base_Column_List"/>
         from oms_shipping
-        where default_address = 1
         and user_id = #{userId} and user_type = #{userType}
     </select>
     <select id="selectByUserId" resultMap="BaseResultMap">
@@ -63,6 +62,6 @@
         <include refid="Base_Column_List"/>
         from oms_shipping
         where user_id = #{userId} and user_type = #{userType}
-        and default = 1
+        and default_address = 1
     </select>
 </mapper>

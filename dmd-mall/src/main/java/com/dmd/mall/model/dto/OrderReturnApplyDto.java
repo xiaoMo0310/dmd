@@ -34,6 +34,9 @@ public class OrderReturnApplyDto {
 
     private List<String> picList = new ArrayList<String>(0);
 
+    @ApiModelProperty("申请状态：0->待处理；1->退款(货)中；2->已完成；3->已拒绝")
+    private Integer status;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createdTime;

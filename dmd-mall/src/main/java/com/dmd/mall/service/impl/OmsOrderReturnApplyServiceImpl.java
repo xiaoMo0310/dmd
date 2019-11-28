@@ -10,6 +10,7 @@ import com.dmd.mall.mapper.OmsOrderReturnApplyMapper;
 import com.dmd.mall.model.domain.OmsOrderReturnApply;
 import com.dmd.mall.model.dto.OrderReturnApplyDto;
 import com.dmd.mall.model.vo.CourseOrderDetailVo;
+import com.dmd.mall.model.vo.OrderReturnApplyVo;
 import com.dmd.mall.service.OmsOrderReturnApplyService;
 import com.dmd.mall.service.OmsOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,8 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
         //判断订单的状态
         if (userOrderDetail.getStatus() == OmsApiConstant.OrderStatusEnum.AFTER_SALE.getCode()) {
             throw new OmsBizException(ErrorCodeEnum.OMS10031025);
-        }if (userOrderDetail.getStatus() != OmsApiConstant.OrderStatusEnum.PAID.getCode()) {
+        }
+        if (userOrderDetail.getStatus() != OmsApiConstant.OrderStatusEnum.PAID.getCode()) {
             throw new OmsBizException(ErrorCodeEnum.OMS10031024);
         }
         //判断商品类型
@@ -54,8 +56,10 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
             throw new OmsBizException(ErrorCodeEnum.OMS10031027);
         }
         omsOrderReturnApply = new OmsOrderReturnApply();
-        BeanUtils.copyProperties(returnApplyDto, omsOrderReturnApply);
-        BeanUtils.copyProperties(userOrderDetail, omsOrderReturnApply);
+        if(returnApplyDto != null && userOrderDetail != null){
+            BeanUtils.copyProperties(returnApplyDto, omsOrderReturnApply);
+            BeanUtils.copyProperties(userOrderDetail, omsOrderReturnApply);
+        }
         omsOrderReturnApply.setMemberUsername(userOrderDetail.getUserName());
         omsOrderReturnApply.setReturnAmount(userOrderDetail.getPayAmount());
         omsOrderReturnApply.setReturnName(userOrderDetail.getUserName());
@@ -76,7 +80,12 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
     }
 
     @Override
-    public OrderReturnApplyDto findOrderReturnApplyMessage(String orderSn) {
+    public OrderReturnApplyVo findOrderReturnApplyMessage(LoginAuthDto loginAuthDto, String orderSn) {
+        CourseOrderDetailVo userOrderDetail = omsOrderService.getUserOrderDetail(loginAuthDto, orderSn);
+        OrderReturnApplyVo orderReturnApplyVo = new OrderReturnApplyVo();
+        if(userOrderDetail != null){
+            BeanUtils.copyProperties(userOrderDetail, orderReturnApplyVo);
+        }
         OmsOrderReturnApply omsOrderReturnApply = omsOrderReturnApplyMapper.selectByOrderSn(orderSn);
         OrderReturnApplyDto orderReturnApplyDto = new OrderReturnApplyDto();
         if(omsOrderReturnApply != null){
@@ -85,6 +94,7 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
                 orderReturnApplyDto.setPicList(Arrays.asList(omsOrderReturnApply.getProofPics().split(",")));
             }
         }
-        return orderReturnApplyDto;
+        orderReturnApplyVo.setReturnApplyDto(orderReturnApplyDto);
+        return orderReturnApplyVo;
     }
 }

@@ -61,7 +61,6 @@ public class GoAuthenticationSuccessHandler implements AuthenticationSuccessHand
         //保存用户数据
         MemberDetails principal = (MemberDetails) authentication.getPrincipal();
         LoginAuthDto loginAuthDto = new LoginAuthDto(principal.getUmsMember().getId(), principal.getUmsMember().getUsername(), principal.getUmsMember().getNickname(), principal.getUmsMember().getLoginType());
-        // 记录token日志
         String accessToken = token.getValue();
         // 存入redis数据库
         //redisTemplate.opsForValue().set(RedisKeyUtil.getAccessTokenKey(accessToken), loginAuthDto, 9000, TimeUnit.SECONDS);

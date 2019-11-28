@@ -1,15 +1,13 @@
 package com.dmd.mall.web.ums;
 
 import com.dmd.base.result.CommonResult;
+import com.dmd.mall.model.dto.FindPasswordDto;
 import com.dmd.mall.service.UmsMemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,12 +43,8 @@ public class UmsMemberController {
     @ApiOperation("找回密码")
     @RequestMapping(value = "/findPassword", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult findPassword(@RequestParam String telephone,
-                                       @RequestParam String password,
-                                       @RequestParam String confirmPassword,
-                                       @RequestParam String authCode,
-                                       HttpServletRequest request) {
-        return memberService.findPassword(telephone, password,confirmPassword, authCode,request);
+    public CommonResult findPassword(@RequestBody FindPasswordDto findPasswordDto, HttpServletRequest request) {
+        return memberService.findPassword(findPasswordDto.getTelephone(), findPasswordDto.getPassword(),findPasswordDto.getConfirmPassword(), findPasswordDto.getAuthCode(),request);
     }
 
 }

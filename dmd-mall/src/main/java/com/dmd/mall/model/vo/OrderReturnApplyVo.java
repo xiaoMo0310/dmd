@@ -1,21 +1,24 @@
 package com.dmd.mall.model.vo;
 
+import com.dmd.mall.model.dto.OrderReturnApplyDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * @author YangAnsheng
  * @version 1.0
- * @createDate 2019/11/18 13:54
- * @Description 学证商品订单详情vo类
+ * @createDate 2019/11/28 16:28
+ * @Description 订单退款返回 vo
  */
 @Data
-public class CourseOrderDetailVo {
+public class OrderReturnApplyVo implements Serializable {
 
+    private static final long serialVersionUID = 4154991502815065372L;
     /**
      * 订单id
      */
@@ -149,4 +152,8 @@ public class CourseOrderDetailVo {
 
     private Integer returnStatus;
 
+    /**
+     * 退款信息
+     */
+    private OrderReturnApplyDto returnApplyDto;
 }

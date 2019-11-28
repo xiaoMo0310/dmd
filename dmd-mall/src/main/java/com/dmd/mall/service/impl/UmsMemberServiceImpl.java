@@ -20,7 +20,6 @@ import com.dmd.mall.util.MailUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,13 +142,13 @@ public class UmsMemberServiceImpl implements UmsMemberService {
             sb.append(random.nextInt(10));
         }
         //验证码绑定设备id并存储到redis
-        ValidateCode validateCode=new ValidateCode(sb.toString(),AUTH_CODE_EXPIRE_SECONDS);
+        ValidateCode validateCode=new ValidateCode("666666",AUTH_CODE_EXPIRE_SECONDS);
         validateCodeRepository.save(new ServletWebRequest(request),validateCode);//保存验证码到redis
 //        SmsCode smsCode=new SmsCode();
 //        SmsCodeResponse result=null;
         if (telephone.contains("@")){
             try {
-                MailUtil.send_mail(telephone,sb.toString());
+                MailUtil.send_mail(telephone,"666666");
             } catch (MessagingException e) {
                 logger.info(e.getMessage()+"发送邮件失败");
                 validateCodeRepository.remove(new ServletWebRequest(request));
@@ -160,7 +159,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
 //            String password=smsCode.getPassword();
 //            String passwordMd5= MD5Gen.getMD5(MD5Gen.getMD5(password)+tKey);
 //            smsCode.setMobile(telephone);
-//            smsCode.setContent("【潜水伴侣】您正在登陆验证，验证码"+sb.toString()+",请在15分钟内按页面提示提交验证码，切勿将验证码泄露给他人");
+//            smsCode.setContent("【潜水伴侣】您正在登陆验证，验证码"+"666666"+",请在15分钟内按页面提示提交验证码，切勿将验证码泄露给他人");
 //            smsCode.setTKey(Long.toString(tKey));
 //            smsCode.setPassword(passwordMd5);
 //            try {
@@ -169,7 +168,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
 //                return CommonResult.failed("链接关闭异常");
 //            }
         }
-        return CommonResult.success(sb.toString(), "发送成功");//在真实环境下需要把验证码的数据改成null不该也行可以让app再证一次
+        return CommonResult.success("666666", "发送成功");//在真实环境下需要把验证码的数据改成null不该也行可以让app再证一次
     }
 
     @Override

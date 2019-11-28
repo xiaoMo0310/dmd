@@ -105,11 +105,10 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     public PageInfo<PmsCourseListVo> findCourseProductListByType(BaseQuery baseQuery, Integer type){
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
         List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectCourseProductByType(type);
-        if(CollectionUtils.isEmpty(pmsCourseProductVos)){
-            throw new PmsBizException(ErrorCodeEnum.PMS10021003);
-        }
-        for (PmsCourseListVo pmsCourseProductVo : pmsCourseProductVos) {
-            pmsCourseProductVo.setImage(pmsCourseProductVo.getImage().split(",")[0]);
+        if(!CollectionUtils.isEmpty(pmsCourseProductVos)){
+            for (PmsCourseListVo pmsCourseProductVo : pmsCourseProductVos) {
+                pmsCourseProductVo.setImage(pmsCourseProductVo.getImage().split(",")[0]);
+            }
         }
         return new PageInfo<>(pmsCourseProductVos);
     }
