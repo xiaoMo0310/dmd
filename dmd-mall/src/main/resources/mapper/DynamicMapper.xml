@@ -129,13 +129,13 @@
             <if test="content != null and content != ''">
                 AND dy.r_content LIKE CONCAT(CONCAT('%',#{content}),'%')
             </if>
-                AND delflag = 0
+            AND delflag = 0
         </where>
         ORDER BY r_createtime DESC
     </select>
 
     <select id="queryDynamicCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM dmd_dynamic WHERE r_userid = #{userId}
+        SELECT COUNT(*) FROM dmd_dynamic WHERE r_userid = #{userId} and delflag = 0
     </select>
 
     <select id="selectFavorites" parameterType="map" resultType="java.lang.Integer">

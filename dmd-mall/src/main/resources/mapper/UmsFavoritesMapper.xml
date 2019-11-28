@@ -4,14 +4,14 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.UmsFavorites">
-    <result column="id" property="id" />
-    <result column="status" property="status" />
-    <result column="creator" property="creator" />
-    <result column="creator_id" property="creatorId" />
-    <result column="created_time" property="createdTime" />
-    <result column="last_operator" property="lastOperator" />
-    <result column="last_operator_id" property="lastOperatorId" />
-    <result column="update_time" property="updateTime" />
+        <result column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="creator" property="creator" />
+        <result column="creator_id" property="creatorId" />
+        <result column="created_time" property="createdTime" />
+        <result column="last_operator" property="lastOperator" />
+        <result column="last_operator_id" property="lastOperatorId" />
+        <result column="update_time" property="updateTime" />
         <result column="user_id" property="userId" />
         <result column="user_type" property="userType" />
         <result column="favorite_type" property="favoriteType" />
@@ -36,8 +36,8 @@
     </update>
 
 
-    <select id="queryAttentionUser" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT <include refid="Base_Column_List"/> FROM ums_favorites WHERE user_id = #{userId} and status =1 and favorite_type = 1 or favorite_type = 2
+    <select id="queryAttention" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM ums_favorites WHERE user_id = #{userId} and status =1
     </select>
     <select id="selectAttentionMessage" resultType="com.dmd.mall.model.domain.UmsFavorites">
         select <include refid="Base_Column_List"/>
@@ -48,9 +48,6 @@
 
 
     <select id="queryFavoritesCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT count(*) FROM ums_favorites WHERE user_id = #{userId} and status = 1
-    </select>
-    <select id="queryAttentionTopic" resultType="com.dmd.mall.model.domain.UmsFavorites">
-        SELECT <include refid="Base_Column_List"/> FROM ums_favorites WHERE user_id = #{userId} and status =1 and favorite_type = 6
+        SELECT count(*) FROM ums_favorites WHERE user_id = #{userId} AND (favorite_type = 1 OR favorite_type = 2 OR favorite_type = 6) and status = 1
     </select>
 </mapper>

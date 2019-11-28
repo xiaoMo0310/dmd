@@ -58,15 +58,308 @@ public class UmsOrderStatisticsController {
     public CommonResult<CommonPage<UmsOrderStatisticsVo>> queryOrderStatisticsPage(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                                                    @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                                                    UmsOrderStatisticsVo umsOrderStatisticsVo) {
+        if(umsOrderStatisticsVo.getStartUserCreateTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getStartUserCreateTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setStartUserCreateTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(umsOrderStatisticsVo.getEndUserCreateTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getEndUserCreateTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setEndUserCreateTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if(umsOrderStatisticsVo.getStartOrderCreatedTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getStartOrderCreatedTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setStartOrderCreatedTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(umsOrderStatisticsVo.getEndOrderCreatedTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getEndOrderCreatedTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setEndOrderCreatedTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(umsOrderStatisticsVo.getStartOrderPaymentTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getStartOrderPaymentTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setStartOrderPaymentTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(umsOrderStatisticsVo.getEndOrderPaymentTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getEndOrderPaymentTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setEndOrderPaymentTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        if(umsOrderStatisticsVo.getStartOrderEndTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getStartOrderEndTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setStartOrderEndTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(umsOrderStatisticsVo.getEndOrderEndTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getEndOrderEndTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setEndOrderEndTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         List<UmsOrderStatisticsVo> umsOrderStatisticsList = umsOrderStatisticsService.queryOrderStatisticsPage(pageNum,pageSize,umsOrderStatisticsVo);
         return CommonResult.success(CommonPage.restPage(umsOrderStatisticsList));
     }
 
 
-    @ApiOperation("分页查询订单明细信息/条查")
+    /**
+     * Easypoi导出Excel
+     * @param umsOrderStatisticsVo
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation("Easypoi导出Excel")
     @RequestMapping(value = "/exportOrderStatistics",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult exportOrderStatistics(UmsOrderStatisticsVo umsOrderStatisticsVo,HttpServletResponse response) throws Exception{
+        if(umsOrderStatisticsVo.getStartUserCreateTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getStartUserCreateTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setStartUserCreateTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(umsOrderStatisticsVo.getEndUserCreateTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getEndUserCreateTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setEndUserCreateTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if(umsOrderStatisticsVo.getStartOrderCreatedTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getStartOrderCreatedTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setStartOrderCreatedTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(umsOrderStatisticsVo.getEndOrderCreatedTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getEndOrderCreatedTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setEndOrderCreatedTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(umsOrderStatisticsVo.getStartOrderPaymentTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getStartOrderPaymentTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setStartOrderPaymentTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(umsOrderStatisticsVo.getEndOrderPaymentTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getEndOrderPaymentTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setEndOrderPaymentTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        if(umsOrderStatisticsVo.getStartOrderEndTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getStartOrderEndTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setStartOrderEndTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(umsOrderStatisticsVo.getEndOrderEndTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsOrderStatisticsVo.getEndOrderEndTime());
+            if(org.apache.commons.lang.StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsOrderStatisticsVo.setEndOrderEndTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         //从数据库获取需要导出的数据
         List<UmsOrderStatisticsVo> umsOrderStatisticsList = umsOrderStatisticsService.queryOrderStatistics(umsOrderStatisticsVo);
         ExportParams ex = new ExportParams("订单明细信息", "订单明细信息");
@@ -87,7 +380,7 @@ public class UmsOrderStatisticsController {
      * @param fileName 文件名称
      * @param delete 是否删除
      */
-    @ApiOperation("分页查询订单明细信息/条查")
+    @ApiOperation("Easypoi导出Excel")
     @RequestMapping(value = "/exportOrderStatistics2",method = RequestMethod.GET)
     @ResponseBody
     public void fileDownload(@RequestParam("fileName") String fileName,@RequestParam("delete") Boolean delete, HttpServletResponse response, HttpServletRequest request)
