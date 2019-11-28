@@ -36,7 +36,7 @@
             last_operator AS lastOperator,
             last_operator_id AS lastOperatorId,
             update_time AS updateTime,
-            version, user_id AS userId, receiver_name AS receiverName, receiver_phone_no AS receiverPhoneNo, receiver_mobile_no AS receiverMobileNo, province_id AS provinceId, province_name AS provinceName, city_id AS cityId, city_name AS cityName, district_id AS districtId, district_name AS districtName, detail_address AS detailAddress, receiver_zip_code AS receiverZipCode, default_address AS defaultAddress, user_type
+            user_id AS userId, receiver_name AS receiverName, receiver_phone_no AS receiverPhoneNo, receiver_mobile_no AS receiverMobileNo, province_id AS provinceId, province_name AS provinceName, city_id AS cityId, city_name AS cityName, district_id AS districtId, district_name AS districtName, detail_address AS detailAddress, receiver_zip_code AS receiverZipCode, default_address AS defaultAddress, user_type
     </sql>
 
     <delete id="deleteByShippingIdUserId" parameterType="map">

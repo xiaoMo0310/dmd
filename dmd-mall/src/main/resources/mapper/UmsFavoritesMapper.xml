@@ -37,7 +37,7 @@
 
 
     <select id="queryAttentionUser" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT <include refid="Base_Column_List"/> FROM ums_favorites WHERE user_id = #{userId} and status =1 and favorite_type = 1 or and favorite_type = 2
+        SELECT <include refid="Base_Column_List"/> FROM ums_favorites WHERE user_id = #{userId} and status =1 and favorite_type = 1 or favorite_type = 2
     </select>
     <select id="selectAttentionMessage" resultType="com.dmd.mall.model.domain.UmsFavorites">
         select <include refid="Base_Column_List"/>
