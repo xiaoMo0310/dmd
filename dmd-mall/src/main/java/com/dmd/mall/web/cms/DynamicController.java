@@ -156,7 +156,7 @@ public class DynamicController {
      * @return
      */
     @ApiOperation("动态删除")
-    @RequestMapping(value = "/updateDynamicDelflag",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateDynamicDelflag",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult updateDynamicDelflag(@RequestParam Long id){
         int count = dynamicService.updateDynamicDelflag(id);
