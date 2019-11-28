@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Enumeration;
 
 /**
  * token拦截器验证
@@ -79,7 +80,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
 
-		/*Enumeration<String> paraNames=request.getParameterNames();
+		Enumeration<String> paraNames=request.getParameterNames();
 		for(Enumeration<String> e = paraNames; e.hasMoreElements();){
 			String thisName=e.nextElement().toString();
 			String thisValue=request.getParameter(thisName);
@@ -90,7 +91,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 			String thisName=e.nextElement().toString();
 			String thisValue=request.getHeader(thisName);
 			System.out.println("header的key:"+thisName+"--------------header的value:"+thisValue);
-		}*/
+		}
 		String uri = request.getRequestURI();
 		log.info("<== preHandle - 权限拦截器.  url={}", uri);
 		if (uri.contains(AUTH_PATH1) || uri.contains(AUTH_PATH2) || uri.contains(AUTH_PATH3) || uri.contains(AUTH_PATH4)) {
