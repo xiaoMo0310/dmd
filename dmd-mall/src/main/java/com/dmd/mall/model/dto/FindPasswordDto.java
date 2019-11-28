@@ -23,4 +23,10 @@ public class FindPasswordDto {
 
     @ApiModelProperty("验证码")
     private String authCode;
+
+    @ApiModelProperty("旧密码")
+    private String oldPassword;
+
+    @ApiModelProperty("新密码")
+    private String newPassword;
 }

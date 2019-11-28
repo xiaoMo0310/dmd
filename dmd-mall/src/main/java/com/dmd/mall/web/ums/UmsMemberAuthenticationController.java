@@ -3,13 +3,13 @@ package com.dmd.mall.web.ums;
 import com.dmd.FileUtil;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.UmsMember;
+import com.dmd.mall.model.dto.FindPasswordDto;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.JwtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.modelmapper.internal.util.Members;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +31,10 @@ public class UmsMemberAuthenticationController {
     @ApiOperation("修改密码")
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updatePassword(@RequestParam String telephone,
-                                       @RequestParam String oldPassword,
-                                       @RequestParam String confirmPassword,
-                                       @RequestParam String newPassword,
+    public CommonResult updatePassword(@RequestBody FindPasswordDto findPasswordDto,
                                        Authentication authentication) {
-        if (authentication.getPrincipal().equals(telephone)){
-            return memberService.updatePassword(telephone, oldPassword,newPassword,confirmPassword);
+        if (authentication.getPrincipal().equals(findPasswordDto.getTelephone())){
+            return memberService.updatePassword(findPasswordDto.getTelephone(), findPasswordDto.getOldPassword(),findPasswordDto.getNewPassword(),findPasswordDto.getConfirmPassword());
         }else {
             return CommonResult.failed("无权修改他人的信息");
         }
