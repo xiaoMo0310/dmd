@@ -67,8 +67,9 @@ public class HomeSearchController {
                     tmpList.add(pmsProduct);
                 }
             }
+            List valuesList = new ArrayList<>(map.values());
             System.out.println(map);
-            list= pmsProductList;
+            list= valuesList;
         }
         if(searchType == 3){
             List<TopicBean> TopicList = homeSearchService.queryTopic(userId,content,searchType,pageNum,pageSize);
@@ -101,7 +102,20 @@ public class HomeSearchController {
         if(searchType == 2){
             //List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType,pageNum,pageSize);
             List<PmsCourseProduct> pmsProductList = homeSearchService.queryPmsCourseProductContent(userId,content,searchType,pageNum,pageSize);
-            list=pmsProductList;
+            Map<Integer, List<PmsCourseProduct>> map = new HashMap<>();
+            for (PmsCourseProduct pmsProduct : pmsProductList) {
+                List<PmsCourseProduct> tmpList = map.get(pmsProduct.getProductType());
+                if (tmpList == null) {
+                    tmpList = new ArrayList<>();
+                    tmpList.add(pmsProduct);
+                    map.put(pmsProduct.getProductType(), tmpList);
+                } else {
+                    tmpList.add(pmsProduct);
+                }
+            }
+            List valuesList = new ArrayList<>(map.values());
+            System.out.println(map);
+            list= valuesList;
         }
         if(searchType == 3){
             List<TopicBean> TopicList = homeSearchService.queryTopicContent(userId,content,searchType,pageNum,pageSize);
