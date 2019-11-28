@@ -47,6 +47,16 @@ public class DynamicBean {
     //登录人是否关注动态发布用户关注人(0==未关注)(1==已关注)
     private Integer Identification;
 
+    //登录人是否点赞动态发布者的动态(0==已点赞)(1==未点赞)
+    private Integer identificationPraise;
+
+    public Integer getIdentificationPraise() {
+        return identificationPraise;
+    }
+
+    public void setIdentificationPraise(Integer identificationPraise) {
+        this.identificationPraise = identificationPraise;
+    }
 
     public Integer getIdentification() {
         return Identification;
@@ -186,6 +196,7 @@ public class DynamicBean {
                 ", topicName='" + topicName + '\'' +
                 ", delflag=" + delflag +
                 ", Identification=" + Identification +
+                ", identificationPraise=" + identificationPraise +
                 '}';
     }
 }

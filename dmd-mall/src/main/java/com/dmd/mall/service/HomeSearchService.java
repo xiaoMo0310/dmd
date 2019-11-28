@@ -1,9 +1,6 @@
 package com.dmd.mall.service;
 
-import com.dmd.mall.model.domain.DynamicBean;
-import com.dmd.mall.model.domain.HomeSearchRecordBean;
-import com.dmd.mall.model.domain.PmsProduct;
-import com.dmd.mall.model.domain.TopicBean;
+import com.dmd.mall.model.domain.*;
 
 import java.util.List;
 
@@ -25,11 +22,15 @@ public interface HomeSearchService {
 
     int deleteHistoryByUserid(Long userid);
 
-    List<PmsProduct> queryPmsCourseProduct(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
+    List<PmsCourseProduct> queryPmsCourseProduct(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
 
     List<DynamicBean> queryDynamicContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
 
-    List<PmsProduct> queryPmsCourseProductContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
+    List<PmsCourseProduct> queryPmsCourseProductContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
 
     List<TopicBean> queryTopicContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
+
+    /*List<PmsProduct> queryPmsCourseProductByType(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
+
+    List<PmsProduct> queryPmsCourseProductByTypeContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);*/
 }

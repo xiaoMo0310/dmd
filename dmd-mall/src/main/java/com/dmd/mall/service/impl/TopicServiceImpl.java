@@ -1,6 +1,8 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.mapper.TopicMapper;
+import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.TopicBean;
 import com.dmd.mall.service.TopicService;
 import com.github.pagehelper.PageHelper;
@@ -30,7 +32,19 @@ public class TopicServiceImpl implements TopicService{
 
     @Override
     public List<TopicBean> queryTopicById(Integer id) {
-        return topicMapper.queryTopicById(id);
+        //当前登录人ID
+        Long userId = RequestUtil.getLoginUser().getUserId();
+        System.out.println(userId);
+        //当前发布动态用户ID
+        List<TopicBean> topicBeans = topicMapper.queryTopicById(id);
+        Integer topicId = topicBeans.get(0).getId();
+        Integer biaoshifu =  topicMapper.selectFavorites(userId,topicId);
+        if (biaoshifu == 0){
+            topicBeans.get(0).setIdentification(0);
+        }if(biaoshifu !=0 ){
+            topicBeans.get(0).setIdentification(1);
+        }
+        return topicBeans;
     }
 
     @Override

@@ -141,4 +141,36 @@
     <select id="selectFavorites" parameterType="map" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM ums_favorites WHERE target_id = #{userId1} and user_id = #{userId} and status = 1 and (favorite_type = 1 or favorite_type = 2)
     </select>
+
+    <select id="insertUserPraise" parameterType="map" >
+        INSERT INTO dmd_dynamic_praise_status(
+            user_id,
+            dynamic_id,
+            status
+        )VALUES (
+            #{userId},
+            #{dynamicId},
+            0
+        )
+    </select>
+
+    <select id="updateUserPraise" parameterType="map">
+        UPDATE dmd_dynamic_praise_status SET status = 1 WHERE user_id = #{userId} AND dynamic_id = #{dynamicId}
+    </select>
+
+    <select id="selectFavoritespraise" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM dmd_dynamic_praise_status WHERE user_id = #{userId} and dynamic_id = #{id} and status = 0
+    </select>
+
+    <select id="selectFavoritespraiseTopic" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM dmd_dynamic_praise_status WHERE user_id = #{userId} and dynamic_id = #{dynamicId} and status = 0
+    </select>
+
+    <select id="selectUserIdBypraise" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(1) from dmd_dynamic_praise_status WHERE user_id = #{userId} AND dynamic_id = #{id}
+    </select>
+
+    <update id="updateUserPraiseLike" parameterType="map" >
+        UPDATE dmd_dynamic_praise_status SET status = 0 WHERE user_id = #{userId} AND dynamic_id = #{id}
+    </update>
 </mapper>

@@ -48,4 +48,16 @@ public interface DynamicMapper {
     Integer queryDynamicCount(Long userId);
 
     Integer selectFavorites(@Param("userId")Long userId,@Param("userId1")Long userId1);
+
+    void insertUserPraise(@Param("dynamicId")Long id,@Param("userId")Long userId);
+
+    void updateUserPraise(@Param("dynamicId")Long id,@Param("userId") Long userId);
+
+    Integer selectFavoritespraise(@Param("userId")Long userId,@Param("id") Long id);
+
+    Integer selectFavoritespraiseTopic(@Param("userId")Long userId,@Param("dynamicId") Long dynamicId);
+
+    Integer selectUserIdBypraise(@Param("id")Long id,@Param("userId")Long userId);
+
+    void updateUserPraiseLike(@Param("id")Long id,@Param("userId") Long userId);
 }

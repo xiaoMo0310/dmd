@@ -1,22 +1,21 @@
 package com.dmd.mall.web.cms;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.domain.DynamicBean;
-import com.dmd.mall.model.domain.HomeSearchRecordBean;
-import com.dmd.mall.model.domain.PmsProduct;
-import com.dmd.mall.model.domain.TopicBean;
+import com.dmd.mall.model.domain.*;
 import com.dmd.mall.service.HomeSearchService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author ChenYanbing
@@ -47,20 +46,35 @@ public class HomeSearchController {
     @ResponseBody
     public CommonResult<PageInfo> querycontent(@RequestParam String content ,@RequestParam Long userId,@RequestParam Integer searchType,@RequestParam Integer pageNum,
                                            @RequestParam Integer pageSize) {
+
         List list = new ArrayList<>();
         if(searchType == 1){
             List<DynamicBean> dynamicList = homeSearchService.queryDynamic(userId,content,searchType,pageNum,pageSize);
             list=dynamicList;
         }
         if(searchType == 2){
+            //查寻产品
             //List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType,pageNum,pageSize);
-            List<PmsProduct> pmsProductList = homeSearchService.queryPmsCourseProduct(userId,content,searchType,pageNum,pageSize);
-            list=pmsProductList;
+            List<PmsCourseProduct> pmsProductList = homeSearchService.queryPmsCourseProduct(userId,content,searchType,pageNum,pageSize);
+            Map<Integer, List<PmsCourseProduct>> map = new HashMap<>();
+            for (PmsCourseProduct pmsProduct : pmsProductList) {
+                List<PmsCourseProduct> tmpList = map.get(pmsProduct.getProductType());
+                if (tmpList == null) {
+                    tmpList = new ArrayList<>();
+                    tmpList.add(pmsProduct);
+                    map.put(pmsProduct.getProductType(), tmpList);
+                } else {
+                    tmpList.add(pmsProduct);
+                }
+            }
+            System.out.println(map);
+            list= pmsProductList;
         }
         if(searchType == 3){
             List<TopicBean> TopicList = homeSearchService.queryTopic(userId,content,searchType,pageNum,pageSize);
             list=TopicList;
         }
+
         return CommonResult.success(new PageInfo<>(list));
     }
 
@@ -86,13 +100,14 @@ public class HomeSearchController {
         }
         if(searchType == 2){
             //List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType,pageNum,pageSize);
-            List<PmsProduct> pmsProductList = homeSearchService.queryPmsCourseProductContent(userId,content,searchType,pageNum,pageSize);
+            List<PmsCourseProduct> pmsProductList = homeSearchService.queryPmsCourseProductContent(userId,content,searchType,pageNum,pageSize);
             list=pmsProductList;
         }
         if(searchType == 3){
             List<TopicBean> TopicList = homeSearchService.queryTopicContent(userId,content,searchType,pageNum,pageSize);
             list=TopicList;
         }
+
         return CommonResult.success(new PageInfo<>(list));
     }
 

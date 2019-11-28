@@ -228,7 +228,6 @@ public class DynamicController {
     @ApiOperation("首页--最热动态分页查询")
     @RequestMapping(value = "/selectDynamicHeat",method = RequestMethod.GET)
     @ResponseBody
-    @NoNeedAccessAuthentication
     public CommonResult<PageInfo<DynamicBean>> queryDynamicHeat(@RequestParam Integer pageNum,
                                                             @RequestParam Integer pageSize) {
         List<DynamicBean> dynamicList = dynamicService.queryDynamicHeat(pageNum,pageSize);

@@ -65,7 +65,7 @@ public class HomeSearchServiceImpl implements HomeSearchService{
     }
 
     @Override
-    public List<PmsProduct> queryPmsCourseProduct(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+    public List<PmsCourseProduct> queryPmsCourseProduct(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         homeSearchMapper.addHomeSearchRecord(userId,content,searchType);
         return pmsCourseProductMapper.queryPmsCourseProduct(content);
@@ -77,7 +77,7 @@ public class HomeSearchServiceImpl implements HomeSearchService{
     }
 
     @Override
-    public List<PmsProduct> queryPmsCourseProductContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+    public List<PmsCourseProduct> queryPmsCourseProductContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
         return pmsCourseProductMapper.queryPmsCourseProduct(content);
     }
 
@@ -85,6 +85,18 @@ public class HomeSearchServiceImpl implements HomeSearchService{
     public List<TopicBean> queryTopicContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
         return topicMapper.queryTopicByContent(content);
     }
+
+    /*@Override
+    public List<PmsCourseProduct> queryPmsCourseProductByType(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        homeSearchMapper.addHomeSearchRecord(userId,content,searchType);
+        return pmsCourseProductMapper.queryPmsCourseProductByType(content);
+    }
+
+    @Override
+    public List<PmsCourseProduct> queryPmsCourseProductByTypeContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+        return pmsCourseProductMapper.queryPmsCourseProductByType(content);
+    }*/
 
 
 }

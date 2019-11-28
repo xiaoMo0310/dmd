@@ -26,4 +26,6 @@ public interface TopicMapper {
     List<TopicBean> queryTopicName(@Param("topicName") String topicName);
 
     List<TopicBean> queryTopicByContent(@Param("content") String content);
+
+    Integer selectFavorites(@Param("userId")Long userId,@Param("topicId") Integer topicId);
 }

@@ -29,6 +29,16 @@ public class TopicBean {
     private Date createTime;
     //话题展示图片
     private String topicPicture;
+    //登录人是否关注动态发布用户关注人(0==未关注)(1==已关注)
+    private Integer identification;
+
+    public Integer getIdentification() {
+        return identification;
+    }
+
+    public void setIdentification(Integer identification) {
+        this.identification = identification;
+    }
 
     public Integer getId() {
         return id;
@@ -87,6 +97,7 @@ public class TopicBean {
                 ", topicNum=" + topicNum +
                 ", createTime=" + createTime +
                 ", topicPicture='" + topicPicture + '\'' +
+                ", identification=" + identification +
                 '}';
     }
 }

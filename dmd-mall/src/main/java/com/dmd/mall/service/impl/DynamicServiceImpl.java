@@ -36,13 +36,39 @@ public class DynamicServiceImpl implements DynamicService{
 
     @Override
     public List<DynamicBean> queryDynamic(Long userId) {
-        return dynamicMapper.queryDynamic(userId);
+        //当前登录人ID
+        System.out.println(userId);
+        List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamic(userId);
+        for (int i = 0; i < dynamicBeanList.size(); i++) {
+            //动态id
+            Long id = dynamicBeanList.get(i).getId();
+            Integer biaoshifu =  dynamicMapper.selectFavoritespraise(userId,id);
+            System.out.println(biaoshifu+"====================================");
+            for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                dynamicBeanList.get(i).setIdentificationPraise(biaoshifu);
+            }
+        }
+        //System.out.println(biaoshifu);
+        return dynamicBeanList;
     }
 
     @Override
     public List<DynamicBean> queryDynamicPage(Long userId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        return dynamicMapper.queryDynamic(userId);
+        //当前登录人ID
+        System.out.println(userId);
+        List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamic(userId);
+        for (int i = 0; i < dynamicBeanList.size(); i++) {
+            //动态id
+            Long id = dynamicBeanList.get(i).getId();
+            Integer biaoshifu =  dynamicMapper.selectFavoritespraise(userId,id);
+            System.out.println(biaoshifu+"====================================");
+            for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                dynamicBeanList.get(i).setIdentificationPraise(biaoshifu);
+            }
+        }
+        //System.out.println(biaoshifu);
+        return dynamicBeanList;
     }
 
     @Override
@@ -62,11 +88,24 @@ public class DynamicServiceImpl implements DynamicService{
 
     @Override
     public int updateLikePraise(Long id) {
+        //用戶ID
+        Long userId = RequestUtil.getLoginUser().getUserId();
+        //判断用户是否点过赞
+        Integer or = dynamicMapper.selectUserIdBypraise(id,userId);
+        if(or == 0){
+            dynamicMapper.insertUserPraise(id,userId);
+        }
+        if(or != 0){
+            dynamicMapper.updateUserPraiseLike(id,userId);
+        }
         return dynamicMapper.updateLikePraise(id);
     }
 
     @Override
     public int updateCancelPraise(Long id) {
+        //用戶ID
+        Long userId = RequestUtil.getLoginUser().getUserId();
+        dynamicMapper.updateUserPraise(id,userId);
         return dynamicMapper.updateCancelPraise(id);
     }
 
@@ -104,7 +143,14 @@ public class DynamicServiceImpl implements DynamicService{
             }
         }
         //System.out.println(biaoshifu);
-
+        for (int i = 0; i < dynamicBeanList.size(); i++) {
+            Long dynamicId = dynamicBeanList.get(i).getId();
+            Integer biaoshifuPraise =  dynamicMapper.selectFavoritespraiseTopic(userId,dynamicId);
+            System.out.println(biaoshifuPraise+"====================================");
+            for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                dynamicBeanList.get(i).setIdentificationPraise(biaoshifuPraise);
+            }
+        }
         return dynamicBeanList;
     }
 
@@ -115,13 +161,23 @@ public class DynamicServiceImpl implements DynamicService{
         Long userId = RequestUtil.getLoginUser().getUserId();
         System.out.println(userId);
         //当前发布动态用户ID
-        List<DynamicBean> dynamicBeanList = dynamicMapper.queryTopicByDynamicTime(id);
+        List<DynamicBean> dynamicBeanList = dynamicMapper.selectTopicByDynamicHeat(id);
         for (int i = 0; i < dynamicBeanList.size(); i++) {
             Long userId1 = dynamicBeanList.get(i).getUserId();
             Integer biaoshifu =  dynamicMapper.selectFavorites(userId,userId1);
             System.out.println(biaoshifu+"====================================");
             for (int j = 0; j <dynamicBeanList.size() ; j++) {
                 dynamicBeanList.get(i).setIdentification(biaoshifu);
+            }
+        }
+
+        //System.out.println(biaoshifu);
+        for (int i = 0; i < dynamicBeanList.size(); i++) {
+            Long dynamicId = dynamicBeanList.get(i).getId();
+            Integer biaoshifuPraise =  dynamicMapper.selectFavoritespraiseTopic(userId,dynamicId);
+            System.out.println(biaoshifuPraise+"====================================");
+            for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                dynamicBeanList.get(i).setIdentificationPraise(biaoshifuPraise);
             }
         }
         //System.out.println(biaoshifu);
@@ -139,17 +195,21 @@ public class DynamicServiceImpl implements DynamicService{
             Long userId1 = dynamicBeanList.get(0).getUserId();
             Integer biaoshifu =  dynamicMapper.selectFavorites(userId,userId1);
             if (biaoshifu == 0){
-
-                    dynamicBeanList.get(0).setIdentification(0);
-
+                dynamicBeanList.get(0).setIdentification(0);
             }if(biaoshifu !=0 ){
-                for (int j = 0; j <dynamicBeanList.size() ; j++) {
-                    dynamicBeanList.get(0).setIdentification(1);
-                }
+                dynamicBeanList.get(0).setIdentification(1);
             }
 
-        //System.out.println(biaoshifu);
-
+        for (int i = 0; i < dynamicBeanList.size(); i++) {
+            //动态id
+            Integer praiseBiaoshifu =  dynamicMapper.selectFavoritespraise(userId,id);
+            System.out.println(praiseBiaoshifu);
+            if (praiseBiaoshifu == 0){
+                dynamicBeanList.get(0).setIdentificationPraise(0);
+            }if(praiseBiaoshifu !=0 ){
+                dynamicBeanList.get(0).setIdentificationPraise(1);
+            }
+        }
         return dynamicBeanList;
     }
 
@@ -183,7 +243,6 @@ public class DynamicServiceImpl implements DynamicService{
         Long userId = RequestUtil.getLoginUser().getUserId();
         System.out.println(userId);
         //当前发布动态用户ID
-        Integer biaoshifu2 = null;
         List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamicTime();
         for (int i = 0; i < dynamicBeanList.size(); i++) {
             Long userId1 = dynamicBeanList.get(i).getUserId();
@@ -191,6 +250,15 @@ public class DynamicServiceImpl implements DynamicService{
             System.out.println(biaoshifu+"====================================");
             for (int j = 0; j <dynamicBeanList.size() ; j++) {
                 dynamicBeanList.get(i).setIdentification(biaoshifu);
+            }
+        }
+
+        for (int i = 0; i < dynamicBeanList.size(); i++) {
+            Long id = dynamicBeanList.get(i).getId();
+            Integer biaoshifuPraise =  dynamicMapper.selectFavoritespraise(userId,id);
+            System.out.println(biaoshifuPraise+"====================================");
+            for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                dynamicBeanList.get(i).setIdentificationPraise(biaoshifuPraise);
             }
         }
         //System.out.println(biaoshifu);
@@ -205,13 +273,22 @@ public class DynamicServiceImpl implements DynamicService{
         Long userId = RequestUtil.getLoginUser().getUserId();
         System.out.println(userId);
         //当前发布动态用户ID
-        List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamicTime();
+        List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamicHeat();
         for (int i = 0; i < dynamicBeanList.size(); i++) {
             Long userId1 = dynamicBeanList.get(i).getUserId();
             Integer biaoshifu =  dynamicMapper.selectFavorites(userId,userId1);
             System.out.println(biaoshifu+"====================================");
             for (int j = 0; j <dynamicBeanList.size() ; j++) {
                 dynamicBeanList.get(i).setIdentification(biaoshifu);
+            }
+        }
+
+        for (int i = 0; i < dynamicBeanList.size(); i++) {
+            Long id = dynamicBeanList.get(i).getId();
+            Integer biaoshifuPraise =  dynamicMapper.selectFavoritespraise(userId,id);
+            System.out.println(biaoshifuPraise+"====================================");
+            for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                dynamicBeanList.get(i).setIdentificationPraise(biaoshifuPraise);
             }
         }
         //System.out.println(biaoshifu);
@@ -221,6 +298,7 @@ public class DynamicServiceImpl implements DynamicService{
 
     @Override
     public Integer queryDynamicCount(Long userId) {
+
         return dynamicMapper.queryDynamicCount(userId);
     }
 }

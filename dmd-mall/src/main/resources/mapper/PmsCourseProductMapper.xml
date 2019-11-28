@@ -160,7 +160,8 @@
         pc.price,
         uc.icon AS coachIcon,
         uc.coach_name AS coachName,
-        uc.coach_grade AS coachGrade
+        uc.coach_grade AS coachGrade,
+        pc.product_type
       FROM
 	    pms_course_product pc
 	  LEFT JOIN ums_coach uc ON pc.user_id = uc.id
@@ -175,5 +176,31 @@
     </select>
     <select id="selectByUserId" resultType="java.lang.Integer">
         select count(1) from pms_course_product where user_id = #{userId}
+    </select>
+
+    <select id="queryPmsCourseProductByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        pc.id,
+        pc.user_id,
+        pc.location,
+        pc.title,
+        pc.image,
+        pc.price,
+        uc.icon AS coachIcon,
+        uc.coach_name AS coachName,
+        uc.coach_grade AS coachGrade,
+        pc.product_type
+        FROM
+        pms_course_product pc
+        LEFT JOIN ums_coach uc ON pc.user_id = uc.id
+        <where>
+            <if test="content != null and content != ''">
+                AND pc.title LIKE CONCAT(CONCAT('%',#{content}),'%')
+            </if>
+            AND pc.approval_status = 2
+            AND pc.status = 1
+            AND pc.product_type = 1
+        </where>
+        ORDER BY pc.sales DESC
     </select>
 </mapper>
