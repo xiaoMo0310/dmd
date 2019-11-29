@@ -23,7 +23,7 @@ public class DiveCertificateServuceImpl implements DiveCertificateServuce{
     private DiveCertificateMapper diveCertificateMapper;
 
     @Override
-    public List<DiveCertificateBean> queryDiveCertificate(Long userId) {
+    public DiveCertificateBean queryDiveCertificate(Long userId) {
         return diveCertificateMapper.queryDiveCertificate(userId);
     }
 

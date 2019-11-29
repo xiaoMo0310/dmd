@@ -33,8 +33,8 @@ public class DiveCertificateController {
     @ApiOperation("查询我的证书")
     @RequestMapping(value = "/selectDiveCertificate",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DiveCertificateBean>> queryDiveCertificate(Long userId) {
-        List<DiveCertificateBean> list = diveCertificateServuce.queryDiveCertificate(userId);
+    public CommonResult<DiveCertificateBean> queryDiveCertificate(Long userId) {
+        DiveCertificateBean list = diveCertificateServuce.queryDiveCertificate(userId);
         return CommonResult.success(list);
     }
 

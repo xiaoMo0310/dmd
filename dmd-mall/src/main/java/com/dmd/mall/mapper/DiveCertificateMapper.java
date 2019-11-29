@@ -12,7 +12,7 @@ import java.util.List;
  * @date 2019/11/413:31
  */
 public interface DiveCertificateMapper {
-    List<DiveCertificateBean> queryDiveCertificate(Long userId);
+    DiveCertificateBean queryDiveCertificate(Long userId);
 
     Integer queryUserId(Long userId);
 
