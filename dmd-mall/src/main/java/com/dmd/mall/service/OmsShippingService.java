@@ -25,7 +25,7 @@ public interface OmsShippingService extends IService<OmsShipping> {
      * @param shipping     the shipping
      * @return the int
      */
-    int saveShipping(LoginAuthDto loginAuthDto, OmsShippingDto shipping);
+    int saveShipping(LoginAuthDto loginAuthDto, OmsShippingDto omsShippingDto);
 
     /**
      * 删除收货人地址

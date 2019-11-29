@@ -1,7 +1,6 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.BeanUtils;
-import com.dmd.PublicUtil;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
@@ -45,7 +44,7 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
         omsShipping.setUpdateInfo(loginAuthDto);
         if (omsShipping.isNew()) {
             //查询当前用户是否有地址
-            List<OmsShipping> omsShippings = omsShippingMapper.selectByShippingIdUserId(loginAuthDto.getUserId(), loginAuthDto.getUserName());
+            List<OmsShipping> omsShippings = omsShippingMapper.selectByShippingIdUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
             if(CollectionUtils.isEmpty(omsShippings)){
                 omsShipping.setDefaultAddress(1);
             }else {
@@ -62,8 +61,10 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
         } else {
             if(shipping.getDefaultAddress() == 1){
                 OmsShipping omsShippingC = omsShippingMapper.selectDefaultAddressByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
-                if (!shipping.getId().equals(omsShippingC.getId())) {
-                    this.setDefault(loginAuthDto, omsShippingC.getId(), OmsApiConstant.Shipping.NOT_DEFAULT);
+                if(omsShippingC != null){
+                    if (!shipping.getId().equals(omsShippingC.getId())) {
+                        this.setDefault(loginAuthDto, omsShippingC.getId(), OmsApiConstant.Shipping.NOT_DEFAULT);
+                    }
                 }
             }
             resultInt = omsShippingMapper.updateByPrimaryKeySelective(omsShipping);
@@ -85,8 +86,9 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
     public PageInfo queryListWithPageByUserId(LoginAuthDto loginAuthDto, int pageNum, int pageSize) {
         Preconditions.checkArgument(loginAuthDto.getUserId() != null, ErrorCodeEnum.UMS10011001.msg());
         PageHelper.startPage(pageNum, pageSize);
-        List<OmsShipping> OmsShippingList = this.selectByUserId(loginAuthDto);
-        return new PageInfo<>(OmsShippingList);
+        List<OmsShipping> omsShippingList = omsShippingMapper.selectByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
+        System.out.println(omsShippingList);
+        return new PageInfo<>(omsShippingList);
     }
 
     @Override
@@ -102,19 +104,15 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
         Preconditions.checkArgument(shippingId != null, "地址ID不能为空");
 
         // 1. 查找当前默认地址
-        OmsShipping OmsShipping = omsShippingMapper.selectDefaultAddressByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
-        if (PublicUtil.isEmpty(OmsShipping)) {
-            throw new OmsBizException(ErrorCodeEnum.OMS10031007);
+        OmsShipping omsShipping = omsShippingMapper.selectDefaultAddressByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
+        if (omsShipping == null) {
+            setDefault(loginAuthDto, shippingId, OmsApiConstant.Shipping.DEFAULT);
+        }else {
+            if(shippingId != omsShipping.getId()){
+                setDefault(loginAuthDto, omsShipping.getId(), OmsApiConstant.Shipping.NOT_DEFAULT);
+            }
+            setDefault(loginAuthDto, shippingId, OmsApiConstant.Shipping.DEFAULT);
         }
-        // 2. 判断默认地址和当前传入地址是否相同
-        if (shippingId.equals(OmsShipping.getId())) {
-            logger.info("所选地址和当前用户默认地址相同 userId={}, addressId={}", userId, shippingId);
-            return 1;
-        }
-        // 3. 相同不处理不相同把当前改为非默认, 把当前地址改为默认地址
-        setDefault(loginAuthDto, shippingId, OmsApiConstant.Shipping.DEFAULT);
-        setDefault(loginAuthDto, OmsShipping.getId(), OmsApiConstant.Shipping.NOT_DEFAULT);
-
         return 1;
     }
 

@@ -136,6 +136,7 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
                     TopicBean topicBean = topicBeans.get(0);
                     umsFavoritesVo.setTopicName(topicBean.getTopicName());
                     umsFavoritesVo.setTopicNum(topicBean.getTopicNum());
+                    umsFavoritesVo.setTopicPicture(topicBean.getTopicPicture());
                     BeanUtils.copyProperties(favoritePageInfo, umsFavoritesVo);
                 }
             }

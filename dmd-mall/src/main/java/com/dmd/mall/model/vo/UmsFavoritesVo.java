@@ -24,4 +24,6 @@ public class UmsFavoritesVo {
 
     private Integer topicNum;
 
+    private String topicPicture;
+
 }

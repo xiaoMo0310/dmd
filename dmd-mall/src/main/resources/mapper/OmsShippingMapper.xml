@@ -46,13 +46,13 @@
     </delete>
     <select id="selectByShippingIdUserId" resultMap="BaseResultMap" parameterType="map">
         SELECT
-        <include refid="Base_Column_List"/>
+        *
         from oms_shipping
-        and user_id = #{userId} and user_type = #{userType}
+        where user_id = #{userId} and user_type = #{userType}
     </select>
     <select id="selectByUserId" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+        *
         from oms_shipping
         where user_id = #{userId} and user_type = #{userType}
     </select>

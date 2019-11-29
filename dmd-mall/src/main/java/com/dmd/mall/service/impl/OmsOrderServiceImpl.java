@@ -68,6 +68,8 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     @Autowired
     private PmsCourseProductService courseProductService;
     @Autowired
+    private OmsOrderReturnApplyService orderReturnApplyService;
+    @Autowired
     private RedisTemplate redisTemplate;
     @Value("${redis.key.prefix.orderId}")
     private String REDIS_KEY_PREFIX_ORDER_ID;
@@ -182,21 +184,17 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         //查询积分规则信息
         UmsIntegrationRuleSetting integrationRuleSetting = integrationRuleSettingMapper.selectByPrimaryKey(1L);
         //订单积分抵扣的钱数
-        BigDecimal integrationAmount = new BigDecimal("0.00");
-        //判断是否使用积分
-        if (orderParamDto.getIsUserIntegration() == 1) {
-            //判单商品的积分和使用的商品积分相同
-            if(!orderParamDto.getUseIntegration().equals(integralGift.getIntegral() * orderParamDto.getQuantity())){
-                throw new OmsBizException(ErrorCodeEnum.OMS10031015);
-            }
-            //判断用户是否有这么多积分
-            if (orderParamDto.getUseIntegration().compareTo(umsMember.getIntegration()) > 0) {
-                throw new OmsBizException(ErrorCodeEnum.OMS10031015);
-            }
-            integrationAmount = new BigDecimal(orderParamDto.getUseIntegration()).divide(new BigDecimal(integrationRuleSetting.getUseUnit()), 2, RoundingMode.HALF_EVEN);
-        }else {
+
+        //判单商品的积分和使用的商品积分相同
+        /*if(!orderParamDto.getUseIntegration().equals(integralGift.getIntegral() * orderParamDto.getQuantity())){
             throw new OmsBizException(ErrorCodeEnum.OMS10031015);
+        }*/
+        //判断用户是否有这么多积分
+        if (integralGift.getIntegral() * orderParamDto.getQuantity().compareTo(umsMember.getIntegration()) > 0) {
+            throw new OmsBizException("积分不足");
         }
+        BigDecimal integrationAmount = new BigDecimal(orderParamDto.getUseIntegration()).divide(new BigDecimal(integrationRuleSetting.getDeductionPerAmount()), 2, RoundingMode.HALF_EVEN);
+
         //该订单需要支付的运费 todo 运费计算逻辑待开发
         BigDecimal postage = new BigDecimal("0.00");
         //todo 促销待做
@@ -311,6 +309,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             throw new OmsBizException(ErrorCodeEnum.OMS10031020);
         }
         courseOrderDetailVo.setProductPic(courseOrderDetailVo.getProductPic().split(",")[0]);
+        updateReturnStatus(courseOrderDetailVo);
         courseOrderDetailVo.setPhone(umsMember.getPhone());
         return courseOrderDetailVo;
     }
@@ -327,17 +326,31 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     }
 
     @Override
-    public PageInfo
-    queryUserOrderList(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer status) {
+    public PageInfo queryUserOrderList(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer status) {
         //获取当前登录人信息
         UmsMember umsMember = umsMemberService.selectByLoginAuthDto(loginAuthDto);
         //查询该用户下的的订单
         PageHelper.startPage(pageNum, pageSize);
         List<CourseOrderDetailVo> courseOrderDetailVos = omsOrderMapper.selectUserOrderByStatus(umsMember.getId(), loginAuthDto.getUserType(), status);
         //截取图片
-        courseOrderDetailVos.forEach(courseOrderDetailVo -> courseOrderDetailVo.setProductPic(courseOrderDetailVo.getProductPic().split(",")[0]));
+        courseOrderDetailVos.forEach(courseOrderDetailVo -> {
+            courseOrderDetailVo.setProductPic(courseOrderDetailVo.getProductPic().split(",")[0]);
+            updateReturnStatus(courseOrderDetailVo);
+        });
         PageInfo<CourseOrderDetailVo> orderDetailVoPageInfo = new PageInfo<>(courseOrderDetailVos);
         return orderDetailVoPageInfo;
+    }
+
+    /**
+     * 添加退款订单的状态
+     * @param courseOrderDetailVo
+     */
+    public void updateReturnStatus(CourseOrderDetailVo courseOrderDetailVo) {
+        if(courseOrderDetailVo.getStatus() == OmsApiConstant.OrderStatusEnum.AFTER_SALE.getCode()){
+            //查询售后的状态
+            OmsOrderReturnApply applyMessageByOrderSn = orderReturnApplyService.findReturnApplyMessageByOrderSn(courseOrderDetailVo.getOrderSn());
+            courseOrderDetailVo.setReturnStatus(applyMessageByOrderSn.getStatus());
+        }
     }
 
     @Override
@@ -453,6 +466,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         }
         if(isIntegralProduct){
             order.setTotalAmount(new BigDecimal(0.00));
+            order.setPayAmount(new BigDecimal(0.00));
             order.setStatus(OmsApiConstant.OrderStatusEnum.SHIPPED.getCode());
             order.setPayType(3);
             order.setPaymentTime(new Date());

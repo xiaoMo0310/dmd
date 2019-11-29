@@ -10,7 +10,6 @@ import com.dmd.mall.mapper.OmsOrderReturnApplyMapper;
 import com.dmd.mall.model.domain.OmsOrderReturnApply;
 import com.dmd.mall.model.dto.OrderReturnApplyDto;
 import com.dmd.mall.model.vo.CourseOrderDetailVo;
-import com.dmd.mall.model.vo.OrderReturnApplyVo;
 import com.dmd.mall.service.OmsOrderReturnApplyService;
 import com.dmd.mall.service.OmsOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,12 +79,7 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
     }
 
     @Override
-    public OrderReturnApplyVo findOrderReturnApplyMessage(LoginAuthDto loginAuthDto, String orderSn) {
-        CourseOrderDetailVo userOrderDetail = omsOrderService.getUserOrderDetail(loginAuthDto, orderSn);
-        OrderReturnApplyVo orderReturnApplyVo = new OrderReturnApplyVo();
-        if(userOrderDetail != null){
-            BeanUtils.copyProperties(userOrderDetail, orderReturnApplyVo);
-        }
+    public OrderReturnApplyDto findOrderReturnApplyMessage(LoginAuthDto loginAuthDto, String orderSn) {
         OmsOrderReturnApply omsOrderReturnApply = omsOrderReturnApplyMapper.selectByOrderSn(orderSn);
         OrderReturnApplyDto orderReturnApplyDto = new OrderReturnApplyDto();
         if(omsOrderReturnApply != null){
@@ -94,7 +88,11 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
                 orderReturnApplyDto.setPicList(Arrays.asList(omsOrderReturnApply.getProofPics().split(",")));
             }
         }
-        orderReturnApplyVo.setReturnApplyDto(orderReturnApplyDto);
-        return orderReturnApplyVo;
+        return orderReturnApplyDto;
+    }
+
+    @Override
+    public OmsOrderReturnApply findReturnApplyMessageByOrderSn(String orderSn){
+        return omsOrderReturnApplyMapper.selectByOrderSn(orderSn);
     }
 }

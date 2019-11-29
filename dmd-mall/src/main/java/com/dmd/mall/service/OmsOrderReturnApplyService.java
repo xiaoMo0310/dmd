@@ -4,7 +4,6 @@ import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.OmsOrderReturnApply;
 import com.dmd.mall.model.dto.OrderReturnApplyDto;
-import com.dmd.mall.model.vo.OrderReturnApplyVo;
 
 /**
  * <p>
@@ -28,5 +27,12 @@ public interface OmsOrderReturnApplyService extends IService<OmsOrderReturnApply
      * @param orderSn
      * @return
      */
-    OrderReturnApplyVo findOrderReturnApplyMessage(LoginAuthDto loginAuthDto, String orderSn);
+    OrderReturnApplyDto findOrderReturnApplyMessage(LoginAuthDto loginAuthDto, String orderSn);
+
+    /**
+     * 根据订单号查询退款详情
+     * @param orderSn
+     * @return
+     */
+    OmsOrderReturnApply findReturnApplyMessageByOrderSn(String orderSn);
 }

@@ -27,6 +27,7 @@ import javax.persistence.Table;
 public class OmsShipping extends BaseEntity {
 
     private static final long serialVersionUID = -3416567894360995961L;
+
     @Column(name = "user_id")
     @ApiModelProperty("用户id")
     private Long userId;

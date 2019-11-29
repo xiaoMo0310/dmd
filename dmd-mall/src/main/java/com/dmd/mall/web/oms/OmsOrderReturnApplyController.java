@@ -3,7 +3,6 @@ package com.dmd.mall.web.oms;
 
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.dto.OrderReturnApplyDto;
-import com.dmd.mall.model.vo.OrderReturnApplyVo;
 import com.dmd.mall.service.OmsOrderReturnApplyService;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
@@ -38,12 +37,14 @@ public class OmsOrderReturnApplyController extends BaseController {
         return handleResult(result);
     }
 
+
+
     @GetMapping("/returnApplyDetail/find")
     @ApiOperation(httpMethod = "GET", value = "查询退款详情")
     @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "String", paramType = "query")
     public Wrapper findOrderReturnApplyMessage(@RequestParam String orderSn) {
-        OrderReturnApplyVo orderReturnApplyVo = omsOrderReturnApplyService.findOrderReturnApplyMessage(getLoginAuthDto(), orderSn);
-        return WrapMapper.ok(orderReturnApplyVo);
+        OrderReturnApplyDto orderReturnApplyDto = omsOrderReturnApplyService.findOrderReturnApplyMessage(getLoginAuthDto(), orderSn);
+        return WrapMapper.ok(orderReturnApplyDto);
     }
 
 }

@@ -58,28 +58,21 @@ public class OmsShippingController extends BaseController {
      *
      * @return the wrapper
      */
-    @PostMapping("/deleteShipping/{shippingId}")
-    @ApiOperation(httpMethod = "POST", value = "删除收货人地址")
+    @GetMapping("/deleteShipping")
+    @ApiOperation(httpMethod = "GET", value = "删除收货人地址")
     @ApiParam(name = "shippingId", value = "收货人地址id")
-    @ApiImplicitParam(name ="shippingId", value = "收货人地址id", dataType = "long", paramType = "path")
-    public Wrapper deleteShipping(@PathVariable Long shippingId) {
+    @ApiImplicitParam(name ="shippingId", value = "收货人地址id", dataType = "long", paramType = "query")
+    public Wrapper deleteShipping(@RequestParam("shippingId") Long shippingId) {
         int result = omsShippingService.deleteShipping(getLoginAuthDto(), shippingId);
         return handleResult(result);
     }
 
-    /**
-     * 编辑收货人地址.
-     *
-     * @param shipping the shipping
-     *
-     * @return the wrapper
-     */
     @PostMapping("/updateShipping")
     @ApiOperation(httpMethod = "POST", value = "编辑收货人地址")
-    @ApiImplicitParam(name ="shipping", value = "收货人地址信息", dataType = "OmsShippingDto")
-    public Wrapper updateShipping(@RequestBody OmsShippingDto shipping) {
-        logger.info("updateShipping - 编辑收货人地址. shipping={}", shipping);
-        int result = omsShippingService.saveShipping(getLoginAuthDto(), shipping);
+    @ApiImplicitParam(name ="omsShippingDto", value = "收货人地址信息", dataType = "OmsShippingDto")
+    public Wrapper updateShipping(@RequestBody OmsShippingDto omsShippingDto) {
+        logger.info("updateShipping - 编辑收货人地址. shipping={}", omsShippingDto);
+        int result = omsShippingService.saveShipping(getLoginAuthDto(), omsShippingDto);
         return handleResult(result);
     }
 
@@ -90,17 +83,17 @@ public class OmsShippingController extends BaseController {
      *
      * @return the default address
      */
-    @PostMapping("/setDefaultAddress/{shippingId}")
-    @ApiOperation(httpMethod = "POST", value = "设置默认收货地址")
-    @ApiImplicitParam(name ="shippingId", value = "收货人地址id", dataType = "long", paramType = "path")
-    public Wrapper setDefaultAddress(@PathVariable Long shippingId) {
+    @GetMapping("/setDefaultAddress")
+    @ApiOperation(httpMethod = "GET", value = "设置默认收货地址")
+    @ApiImplicitParam(name ="shippingId", value = "收货人地址id", dataType = "long", paramType = "query")
+    public Wrapper setDefaultAddress(@RequestParam("shippingId") Long shippingId) {
         logger.info("updateShipping - 设置默认地址. addressId={}", shippingId);
         int result = omsShippingService.setDefaultAddress(getLoginAuthDto(), shippingId);
         return handleResult(result);
     }
 
     @PostMapping("/selectShippingById")
-    @ApiOperation(httpMethod = "POST", value = "根据Id查询收货人地址")
+    @ApiOperation(httpMethod = "POST", value = "查询用户默认的收货地址")
     public Wrapper<OmsShipping> selectShippingById() {
         OmsShipping omsShipping = omsShippingService.selectByShippingIdUserId(getLoginAuthDto());
         if(omsShipping == null){
