@@ -24,7 +24,7 @@ public interface UmsNoticeMarkService extends IService<UmsNoticeMark> {
      * @param userType
      * @param loginAuthDto
      */
-    void insertNoticeMarkMessage(Long noticeId, Long id, Integer userType, LoginAuthDto loginAuthDto);
+    void insertNoticeMarkMessage(Long noticeId, Long id, String userType, LoginAuthDto loginAuthDto);
 
     /**
      * 根据通知id查询所有的通知标记信息
@@ -32,5 +32,5 @@ public interface UmsNoticeMarkService extends IService<UmsNoticeMark> {
      * @param userType
      * @return
      */
-    List<NoticeMarkVo> selectByNoticeId(Long noticeId, Integer userType);
+    List<NoticeMarkVo> selectByNoticeId(Long noticeId, String userType);
 }

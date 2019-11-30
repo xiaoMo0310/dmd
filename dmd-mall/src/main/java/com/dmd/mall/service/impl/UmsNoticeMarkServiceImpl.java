@@ -30,12 +30,12 @@ public class UmsNoticeMarkServiceImpl extends BaseService<UmsNoticeMark> impleme
     private UmsNoticeService umsNoticeService;
 
     @Override
-    public List<UmsNoticeMark> selectByUserId(Long userId, Integer userType) {
+    public List<UmsNoticeMark> selectByUserId(Long userId, String userType) {
         return umsNoticeMarkMapper.selectByUserId(userId, userType);
     }
 
     @Override
-    public int updateIsRead(LoginAuthDto loginAuthDto, List<Long> noticeIds, Integer userType) {
-        return umsNoticeMarkMapper.updateIsRead(loginAuthDto.getUserId(), loginAuthDto.getUserName(), noticeIds, userType, 1);
+    public int updateIsRead(LoginAuthDto loginAuthDto, List<Long> noticeIds) {
+        return umsNoticeMarkMapper.updateIsRead(loginAuthDto.getUserId(), loginAuthDto.getUserName(), noticeIds, loginAuthDto.getUserType(), 1);
     }
 }

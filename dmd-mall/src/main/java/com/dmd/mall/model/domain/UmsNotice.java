@@ -50,8 +50,8 @@ private static final long serialVersionUID = 1L;
     private Integer messageType;
 
     @Column(name = "user_type")
-    @ApiModelProperty("用户类型(1:普通用户 2:教练)")
-    private Integer userType;
+    @ApiModelProperty("用户类型(member:普通用户 coach:教练)")
+    private String userType;
 
 
 }

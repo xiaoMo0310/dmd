@@ -23,5 +23,5 @@ public interface UmsNoticeService extends IService<UmsNotice> {
      * @param loginAuthDto
      * @return
      */
-    Map<Integer, List<UmsNoticeVo>> findLoginUserMessage(LoginAuthDto loginAuthDto, Integer userType);
+    Map<Integer, List<UmsNoticeVo>> findLoginUserMessage(LoginAuthDto loginAuthDto);
 }

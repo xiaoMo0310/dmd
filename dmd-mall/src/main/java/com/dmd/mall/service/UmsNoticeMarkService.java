@@ -21,7 +21,7 @@ public interface UmsNoticeMarkService extends IService<UmsNoticeMark> {
      * @param userId
      * @return
      */
-    List<UmsNoticeMark> selectByUserId(Long userId, Integer userType);
+    List<UmsNoticeMark> selectByUserId(Long userId, String userType);
 
     /**
      * 修改当前登录人的通知标记未已读
@@ -29,5 +29,5 @@ public interface UmsNoticeMarkService extends IService<UmsNoticeMark> {
      * @param noticeIds
      * @return
      */
-    int updateIsRead(LoginAuthDto loginAuthDto, List<Long> noticeIds, Integer userType);
+    int updateIsRead(LoginAuthDto loginAuthDto, List<Long> noticeIds);
 }

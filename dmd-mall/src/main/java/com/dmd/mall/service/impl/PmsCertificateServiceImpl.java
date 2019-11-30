@@ -42,7 +42,9 @@ public class PmsCertificateServiceImpl extends BaseService<PmsCertificate> imple
     public PmsCertificateVo selectCertificateById(Long certificateId) {
         PmsCertificate pmsCertificate = pmsCertificateMapper.selectByPrimaryKey(certificateId);
         PmsCertificateVo pmsCertificateVo = new PmsCertificateVo();
-        BeanUtils.copyProperties(pmsCertificate, pmsCertificateVo);
+        if(pmsCertificateVo != null){
+            BeanUtils.copyProperties(pmsCertificate, pmsCertificateVo);
+        }
         return pmsCertificateVo;
     }
 }

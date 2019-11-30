@@ -40,14 +40,14 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
     private UmsNoticeMarkService noticeMarkService;
 
     @Override
-    public void addMessage(LoginAuthDto loginAuthDto, Long id, Integer userType, MessageDto messageDto) {
+    public void addMessage(LoginAuthDto loginAuthDto, Long id, String userType, MessageDto messageDto) {
         UmsNotice umsNotice = saveUmsNotice(loginAuthDto, userType, 1, messageDto);
         //添加用户通知标志信息
         noticeMarkService.insertNoticeMarkMessage(umsNotice.getId(), id, userType, loginAuthDto);
     }
 
     @Override
-    public void batchAddMessage(LoginAuthDto loginAuthDto, List<Long> ids, Integer userType, MessageDto messageDto) {
+    public void batchAddMessage(LoginAuthDto loginAuthDto, List<Long> ids, String userType, MessageDto messageDto) {
         UmsNotice umsNotice;
         if(ids.size() == 1){
             umsNotice = saveUmsNotice(loginAuthDto, userType, 1, messageDto);
@@ -60,7 +60,7 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
     }
 
     @Override
-    public void addAllMessage(LoginAuthDto loginAuthDto, Integer userType, MessageDto messageDto) {
+    public void addAllMessage(LoginAuthDto loginAuthDto, String userType, MessageDto messageDto) {
         UmsNotice umsNotice = saveUmsNotice(loginAuthDto, userType, 3, messageDto);
     }
 
@@ -79,7 +79,7 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
             if (notice.getType() != 3) {
                 //todo 查询普通用户的信息, 教练待做
                 List<NoticeMarkVo> umsNoticeMarks = null;
-                if (notice.getUserType() == 1) {
+                if (notice.getUserType().equals("member")) {
                     umsNoticeMarks = noticeMarkService.selectByNoticeId(notice.getId(), notice.getUserType());
                 }
                 noticeListVo.setNoticeMarkVos(umsNoticeMarks);
@@ -110,7 +110,7 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
         return umsNoticeMapper.updateByPrimaryKeySelective(umsNotice);
     }
 
-    public UmsNotice saveUmsNotice(LoginAuthDto loginAuthDto, Integer userType, Integer type, MessageDto messageDto) {
+    public UmsNotice saveUmsNotice(LoginAuthDto loginAuthDto, String userType, Integer type, MessageDto messageDto) {
         UmsNotice umsNotice = new UmsNotice();
         BeanUtils.copyProperties(messageDto, umsNotice);
         umsNotice.setIsCancel(1);

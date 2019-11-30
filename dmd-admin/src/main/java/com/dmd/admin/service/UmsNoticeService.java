@@ -25,7 +25,7 @@ public interface UmsNoticeService extends IService<UmsNotice> {
      * @param id
      * @param messageDto
      */
-    void addMessage(LoginAuthDto loginAuthDto, Long id, Integer userType, MessageDto messageDto);
+    void addMessage(LoginAuthDto loginAuthDto, Long id, String userType, MessageDto messageDto);
 
     /**
      * 批量保存通知信息
@@ -34,7 +34,7 @@ public interface UmsNoticeService extends IService<UmsNotice> {
      * @param userType
      * @param messageDto
      */
-    void batchAddMessage(LoginAuthDto loginAuthDto, List<Long> ids, Integer userType, MessageDto messageDto);
+    void batchAddMessage(LoginAuthDto loginAuthDto, List<Long> ids, String userType, MessageDto messageDto);
 
     /**
      * 保存所有用户通知信息
@@ -42,7 +42,7 @@ public interface UmsNoticeService extends IService<UmsNotice> {
      * @param userType
      * @param messageDto
      */
-    void addAllMessage(LoginAuthDto loginAuthDto, Integer userType, MessageDto messageDto);
+    void addAllMessage(LoginAuthDto loginAuthDto, String userType, MessageDto messageDto);
 
     /**
      * 分页查询通知消息

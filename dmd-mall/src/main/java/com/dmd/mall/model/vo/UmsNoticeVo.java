@@ -17,7 +17,7 @@ public class UmsNoticeVo {
     /**
      * 用户类型
      */
-    private Integer userType;
+    private String userType;
 
     /**
      * 是否阅读

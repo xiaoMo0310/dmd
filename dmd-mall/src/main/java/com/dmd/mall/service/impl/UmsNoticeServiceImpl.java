@@ -39,8 +39,8 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
     UmsNoticeMarkService noticeMarkService;
 
     @Override
-    public Map<Integer, List<UmsNoticeVo>> findLoginUserMessage(LoginAuthDto loginAuthDto, Integer userType) {
-        List<UmsNoticeMark> umsNoticeMarks = noticeMarkService.selectByUserId(loginAuthDto.getUserId(), userType);
+    public Map<Integer, List<UmsNoticeVo>> findLoginUserMessage(LoginAuthDto loginAuthDto) {
+        List<UmsNoticeMark> umsNoticeMarks = noticeMarkService.selectByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
         if(CollectionUtils.isEmpty(umsNoticeMarks)){
             throw new UmsBizException("没有当前用户的通知");
         }

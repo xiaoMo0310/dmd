@@ -37,8 +37,8 @@ private static final long serialVersionUID = 1L;
     private Long userId;
 
     @Column(name = "user_type")
-    @ApiModelProperty("用户类型(1:普通用户)")
-    private Integer userType;
+    @ApiModelProperty("用户类型(member:普通用户 coach:教练)")
+    private String userType;
 
     @Column(name = "is_read")
     @ApiModelProperty("是否阅读(0:未阅读 1:阅读)")

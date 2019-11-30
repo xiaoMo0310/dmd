@@ -6,7 +6,6 @@ import com.dmd.mall.service.UmsNoticeMarkService;
 import com.dmd.wrapper.Wrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,12 +29,11 @@ public class UmsNoticeMarkController extends BaseController {
     @Autowired
     private UmsNoticeMarkService umsNoticeMarkService;
 
-    @PostMapping("/noticeMark/updateIsRead/{userType}")
+    @PostMapping("/noticeMark/updateIsRead")
     @ApiOperation(httpMethod = "POST", value = "修改当前登录人的通知标记未已读")
-    @ApiImplicitParams({ @ApiImplicitParam(name ="noticeIds", value = "通告id集合", paramType = "query", dataType = "Long", allowMultiple = true),
-                        @ApiImplicitParam(name ="userType", value = "用户类型(1:普通用户 2:教练)", paramType = "path", dataType = "int")})
-    public Wrapper findLoginUserMessage(@RequestParam List<Long> noticeIds, @PathVariable Integer userType) {
-        int result = umsNoticeMarkService.updateIsRead(getLoginAuthDto(), noticeIds, userType);
+    @ApiImplicitParam(name ="noticeIds", value = "通告id集合", paramType = "query", dataType = "Long", allowMultiple = true)
+    public Wrapper findLoginUserMessage(@RequestParam List<Long> noticeIds) {
+        int result = umsNoticeMarkService.updateIsRead(getLoginAuthDto(), noticeIds);
         return handleResult(result);
     }
 }

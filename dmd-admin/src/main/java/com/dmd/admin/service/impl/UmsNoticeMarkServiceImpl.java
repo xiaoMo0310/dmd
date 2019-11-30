@@ -28,7 +28,7 @@ public class UmsNoticeMarkServiceImpl extends BaseService<UmsNoticeMark> impleme
     private UmsNoticeMarkMapper umsNoticeMarkMapper;
 
     @Override
-    public void insertNoticeMarkMessage(Long noticeId, Long id, Integer userType, LoginAuthDto loginAuthDto) {
+    public void insertNoticeMarkMessage(Long noticeId, Long id, String userType, LoginAuthDto loginAuthDto) {
         UmsNoticeMark umsNoticeMark = new UmsNoticeMark();
         umsNoticeMark.setIsRead(0);
         umsNoticeMark.setNoticeId(noticeId);
@@ -40,7 +40,7 @@ public class UmsNoticeMarkServiceImpl extends BaseService<UmsNoticeMark> impleme
     }
 
     @Override
-    public List<NoticeMarkVo> selectByNoticeId(Long noticeId, Integer userType) {
+    public List<NoticeMarkVo> selectByNoticeId(Long noticeId, String userType) {
         return umsNoticeMarkMapper.selectByNoticeId(noticeId, userType);
     }
 }

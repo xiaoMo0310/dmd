@@ -21,5 +21,5 @@ import java.util.List;
 @Component
 public interface UmsNoticeMarkMapper extends MyMapper<UmsNoticeMark> {
 
-    List<NoticeMarkVo> selectByNoticeId(@Param("noticeId") Long noticeId, @Param("userType") Integer userType);
+    List<NoticeMarkVo> selectByNoticeId(@Param("noticeId") Long noticeId, @Param("userType") String userType);
 }

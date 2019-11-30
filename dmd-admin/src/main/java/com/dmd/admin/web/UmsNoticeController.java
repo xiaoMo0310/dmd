@@ -37,18 +37,18 @@ public class UmsNoticeController extends BaseController {
     @PostMapping("/message/send/{id}/{userType}")
     @ApiOperation(httpMethod = "POST", value = "保存通知信息")
     @ApiImplicitParams({@ApiImplicitParam(name ="id", value = "用户id", paramType = "path", dataType = "Long"),
-                    @ApiImplicitParam(name ="userType", value = "用户类型(1:普通用户)", paramType = "path", dataType = "int"),
+                    @ApiImplicitParam(name ="userType", value = "用户类型(member:普通用户)", paramType = "path", dataType = "string"),
                     @ApiImplicitParam(name ="messageDto", value = "要保存的信息", paramType = "body", dataType = "MessageDto")})
-    public Wrapper saveMessage(@PathVariable("id") Long id, @PathVariable Integer userType, @RequestBody MessageDto messageDto) {
+    public Wrapper saveMessage(@PathVariable("id") Long id, @PathVariable String userType, @RequestBody MessageDto messageDto) {
         umsNoticeService.addMessage(getLoginAuthDto(),id, userType, messageDto);
         return WrapMapper.ok();
     }
 
     @PostMapping("/message/sendAll/{userType}")
     @ApiOperation(httpMethod = "POST", value = "保存所有用户通知信息")
-    @ApiImplicitParams({@ApiImplicitParam(name ="userType", value = "用户类型(1:普通用户)", paramType = "path", dataType = "int"),
+    @ApiImplicitParams({@ApiImplicitParam(name ="userType", value = "用户类型(member:普通用户)", paramType = "path", dataType = "string"),
                         @ApiImplicitParam(name ="messageDto", value = "要保存的信息", paramType = "body", dataType = "MessageDto")})
-    public Wrapper saveAllMessage(@PathVariable Integer userType, @RequestBody MessageDto messageDto) {
+    public Wrapper saveAllMessage(@PathVariable String userType, @RequestBody MessageDto messageDto) {
         umsNoticeService.addAllMessage(getLoginAuthDto(), userType, messageDto);
         return WrapMapper.ok();
     }
@@ -56,9 +56,9 @@ public class UmsNoticeController extends BaseController {
     @PostMapping("/message/batchSend/{userType}")
     @ApiOperation(httpMethod = "POST", value = "保存通知信息")
     @ApiImplicitParams({@ApiImplicitParam(name ="ids", value = "用户id集合", paramType = "body", dataType = "List"),
-                    @ApiImplicitParam(name ="userType", value = "用户类型(1:普通用户)", paramType = "path", dataType = "int"),
+                    @ApiImplicitParam(name ="userType", value = "用户类型(1:普通用户)", paramType = "path", dataType = "string"),
                     @ApiImplicitParam(name ="messageDto", value = "要保存的信息", paramType = "body", dataType = "MessageDto")})
-    public Wrapper batchSaveMessage(@PathVariable Integer userType, @RequestParam("ids") List<Long> ids, @RequestBody MessageDto messageDto) {
+    public Wrapper batchSaveMessage(@PathVariable String userType, @RequestParam("ids") List<Long> ids, @RequestBody MessageDto messageDto) {
         umsNoticeService.batchAddMessage(getLoginAuthDto(),ids, userType, messageDto);
         return WrapMapper.ok();
     }
