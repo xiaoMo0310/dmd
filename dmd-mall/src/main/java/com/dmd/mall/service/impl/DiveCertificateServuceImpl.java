@@ -59,6 +59,9 @@ public class DiveCertificateServuceImpl implements DiveCertificateServuce{
         if(status == null){
             status = 0;
         }
+        if(stauts2 == null){
+            stauts2 = 0;
+        }
         if(certificateAppBean.getCertificateId() == 1){
             certificateAppBean.setCreateTime(new Date());
             certificateAppBean.setStatus(0);
