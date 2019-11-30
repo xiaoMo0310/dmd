@@ -106,13 +106,13 @@
     <select id="selectCertificateStatus" parameterType="map" resultType="java.lang.Integer">
         SELECT status FROM dmd_dive_certificate_app WHERE user_id = #{userId} AND certificate_id = #{identifier} - 1
     </select>
-    <select id="selectCertificateByStatus" parameterType="map" resultType="java.lang.Integer">
-        SELECT status FROM dmd_dive_certificate_app WHERE user_id = #{userId} AND certificate_id = #{certificateId}
+    <select id="selectCertificateByStatus"  parameterType="map" resultMap="CertificateMap" >
+        SELECT status,id FROM dmd_dive_certificate_app WHERE user_id = #{userId} AND certificate_id = #{certificateId}
     </select>
 
     <update id="updateCertificate" parameterType="com.dmd.mall.model.domain.CertificateAppBean">
         UPDATE dmd_dive_certificate_app SET
-        user_id = #{userId}
+        user_id = #{userId},
         pictures = #{pictures},
         status = 0,
         certificate_id = #{certificateId},
@@ -120,6 +120,6 @@
         operator = '',
         reason = ''
         where
-        user_id = #{userId} AND certificate_id = #{certificateId}
+        id = #{id}
     </update>
 </mapper>

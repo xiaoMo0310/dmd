@@ -28,7 +28,7 @@ public interface DiveCertificateMapper {
 
     Integer selectCertificateStatus(@Param("userId") Long userId,@Param("identifier") Integer identifier);
 
-    Integer selectCertificateByStatus(@Param("userId")Long userId,@Param("certificateId") Integer certificateId);
+    CertificateAppBean selectCertificateByStatus(@Param("userId")Long userId,@Param("certificateId") Integer certificateId);
 
     int updateCertificate(CertificateAppBean certificateAppBean);
 }
