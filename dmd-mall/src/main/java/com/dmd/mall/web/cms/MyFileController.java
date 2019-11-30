@@ -40,52 +40,6 @@ public class MyFileController {
     @ResponseBody
     public CommonResult uploadFile(@RequestParam("fileName") MultipartFile file) throws IOException {
         FileResult fileResult = fileUploadUtil.saveFile(file, "video", false);
-        /*Map<String,Object> map=new HashMap<>();
-        System.out.print("上传文件==="+"\n");
-        //判断文件是否为空
-        if (file.isEmpty()) {
-            map.put("error","文件已经存在");
-            return CommonResult.success(map);
-        }
-
-
-        // 获取文件名
-        String fileName = file.getOriginalFilename();
-//        System.out.print("上传的文件名为: "+fileName+"\n");
-
-        fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
-        System.out.print("（加个时间戳，尽量避免文件名称重复）保存的文件名为: "+fileName+"\n");
-
-        //加个时间戳，尽量避免文件名称重复
-        //String path = "/project/tomcat/webapps/afileUpload/video" +fileName;
-        String relativePath="http://192.168.0.246/dmd/" +fileName;
-        String path = "D:/home/dmd/"+ fileName;
-        //文件绝对路径
-        System.out.print("保存文件绝对路径"+path+"\n");
-
-        //创建文件路径
-        File dest = new File(path);
-
-        //判断文件是否已经存在
-        if (dest.exists()) {
-            map.put("error","文件已经存在");
-            return CommonResult.success(map);
-        }
-
-        //判断文件父目录是否存在
-        if (!dest.getParentFile().exists()) {
-            dest.getParentFile().mkdir();
-        }
-
-        try {
-            //上传文件
-            file.transferTo(dest); //保存文件
-
-        } catch (IOException e) {
-            map.put("error","上传失败");
-            return CommonResult.success(map);
-        }
-        map.put("path",relativePath);*/
         return CommonResult.success(fileResult.getServerPath());
     }
 

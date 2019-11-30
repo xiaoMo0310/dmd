@@ -22,10 +22,38 @@
         <result column="operator" property="operator" />
         <result column="status" property="status" />
     </resultMap>
+    <!--通用查询映射结果-->
+    <resultMap id="CertificateMap" type="com.dmd.admin.model.domain.CertificateAppBean">
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="pictures" property="pictures" />
+        <result column="status" property="status" />
+        <result column="certificate_id" property="certificateId" />
+        <result column="create_time" property="createTime" />
+        <result column="adop_time" property="adopTime" />
+        <result column="operator" property="operator" />
+        <result column="reason" property="reason" />
+    </resultMap>
 
-    <select id="queryDiveCertificate" resultMap="diveCertificateMap" parameterType="java.lang.Long">
-        SELECT id,userid,owd,aowd,efa,rd,sc,msd,dm,owsi,msdt,idcsi,mi,cd,createTime,status,operator
-        FROM dmd_dive_certificate
+    <update id="updateCertificateStatusNoPass" parameterType="com.dmd.admin.model.domain.CertificateAppBean">
+        UPDATE dmd_dive_certificate_app SET
+        user_id = #{userId},
+        pictures = #{pictures},
+        status = #{status},
+        certificate_id = #{certificateId},
+        create_time = #{createTime},
+        adop_time = #{adopTime},
+        operator = #{operator},
+        reason = #{reason}
+        where id = #{id}
+    </update>
+
+
+    <select id="queryDiveCertificate" resultMap="CertificateMap" parameterType="com.dmd.admin.model.domain.CertificateAppBean">
+        SELECT da.id,da.user_id,da.pictures,da.status,da.certificate_id,da.create_time,da.adop_time,da.operator,da.reason ,pc.english_shorthand AS certificateName
+        FROM dmd_dive_certificate_app da
+        LEFT JOIN
+        pms_certificate pc ON da.certificate_id = pc.id
         <include refid="diveCertificateWhere"></include>
     </select>
     <!-- 公用标签 -->
@@ -33,24 +61,24 @@
         <where>
             <!-- 日期区间查询 -->
             <if test="stratTime != null">
-                and createTime &gt;= #{stratTime}
+                and da.create_time &gt;= #{stratTime}
             </if>
             <if test="endTime != null">
-                and createTime &lt;= #{endTime}
+                and da.create_time &lt;= #{endTime}
             </if>
             <!-- 按照用户id查找 -->
             <if test="userId !=null">
-                and userid = #{userId}
+                and da.user_id = #{userId}
             </if>
             <!-- 按照状态查找 -->
             <if test="status !=null">
-                and status = #{status}
+                and da.status = #{status}
             </if>
         </where>
     </sql>
 
     <update id="updateDiveCertificateStatus" parameterType="java.lang.Long" >
-        UPDATE dmd_dive_certificate SET status = 1 WHERE id IN
+        UPDATE dmd_dive_certificate_app SET status = 1,reason = '' ,adop_time = now() WHERE id IN
         <foreach collection="list" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -62,4 +90,6 @@
             #{id}
         </foreach>
     </update>
+
+
 </mapper>

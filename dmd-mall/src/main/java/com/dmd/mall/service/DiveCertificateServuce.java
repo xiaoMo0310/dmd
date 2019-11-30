@@ -1,5 +1,6 @@
 package com.dmd.mall.service;
 
+import com.dmd.mall.model.domain.CertificateAppBean;
 import com.dmd.mall.model.domain.DiveCertificateBean;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * @date 2019/11/413:30
  */
 public interface DiveCertificateServuce {
-    DiveCertificateBean queryDiveCertificate(Long userId);
+    List<CertificateAppBean> queryDiveCertificate(Long userId);
 
-    int addDiveCertificate(Long userId, DiveCertificateBean diveCertificateBean,Integer identifier);
+    int addDiveCertificate(CertificateAppBean certificateAppBean);
 }

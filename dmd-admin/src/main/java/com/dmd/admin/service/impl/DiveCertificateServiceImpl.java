@@ -1,6 +1,7 @@
 package com.dmd.admin.service.impl;
 
 import com.dmd.admin.mapper.DiveCertificateAdminMapper;
+import com.dmd.admin.model.domain.CertificateAppBean;
 import com.dmd.admin.model.domain.DiveCertificateBean;
 import com.dmd.admin.service.DiveCertificateService;
 import com.github.pagehelper.PageHelper;
@@ -23,9 +24,9 @@ public class DiveCertificateServiceImpl implements DiveCertificateService{
     private DiveCertificateAdminMapper diveCertificateMapper;
 
     @Override
-    public List<DiveCertificateBean> queryDiveCertificate(Integer pageNum, Integer pageSize, DiveCertificateBean diveCertificateBean) {
+    public List<CertificateAppBean > queryDiveCertificate(Integer pageNum, Integer pageSize, CertificateAppBean certificateAppBean) {
         PageHelper.startPage(pageNum, pageSize);
-        return diveCertificateMapper.queryDiveCertificate(diveCertificateBean);
+        return diveCertificateMapper.queryDiveCertificate(certificateAppBean);
     }
 
     @Override
@@ -36,5 +37,10 @@ public class DiveCertificateServiceImpl implements DiveCertificateService{
     @Override
     public int updateDiveCertificateStatusNoPass(List<Long> ids) {
         return diveCertificateMapper.updateDiveCertificateStatusNoPass(ids);
+    }
+
+    @Override
+    public int updateCertificateStatusNoPass(CertificateAppBean certificateAppBean) {
+        return diveCertificateMapper.updateCertificateStatusNoPass(certificateAppBean);
     }
 }

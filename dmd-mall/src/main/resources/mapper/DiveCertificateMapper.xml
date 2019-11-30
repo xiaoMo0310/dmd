@@ -23,51 +23,55 @@
         <result column="identifier" property="identifier" />
     </resultMap>
 
-    <select id="queryDiveCertificate" resultMap="diveCertificateMap" parameterType="java.lang.Long">
-        SELECT id,userid,owd,aowd,efa,rd,sc,msd,dm,owsi,msdt,idcsi,mi,cd,createTime,status FROM dmd_dive_certificate WHERE userid = #{userId} AND status = 1
+    <!--通用查询映射结果-->
+    <resultMap id="CertificateMap" type="com.dmd.mall.model.domain.CertificateAppBean">
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="pictures" property="pictures" />
+        <result column="status" property="status" />
+        <result column="certificate_id" property="certificateId" />
+        <result column="create_time" property="createTime" />
+        <result column="adop_time" property="adopTime" />
+        <result column="operator" property="operator" />
+        <result column="reason" property="reason" />
+    </resultMap>
+
+
+
+    <select id="queryDiveCertificate" resultMap="CertificateMap" parameterType="java.lang.Long">
+        SELECT da.id,da.pictures,da.status,da.reason,pc.english_shorthand AS certificateName,da.certificate_id
+        FROM dmd_dive_certificate_app da
+        LEFT JOIN
+        pms_certificate pc ON da.certificate_id = pc.id
+        WHERE da.user_id = #{userId}
     </select>
 
     <select id="queryUserId" resultType="java.lang.Integer" parameterType="java.lang.Long">
         select count(*) from dmd_dive_certificate where userid = #{userId} ;
     </select>
 
-    <insert id="addDiveCertificate" parameterType="com.dmd.mall.model.domain.DiveCertificateBean" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO dmd_dive_certificate
+    <insert id="addDiveCertificate" parameterType="com.dmd.mall.model.domain.CertificateAppBean" >
+        INSERT INTO dmd_dive_certificate_app
         (
-        userid,
-        owd,
-        aowd,
-        efa,
-        rd,
-        sc,
-        msd,
-        dm,
-        owsi,
-        msdt,
-        idcsi,
-        mi,
-        cd,
-        createTime,
+        pictures,
         status,
-        identifier
+        user_id,
+        certificate_id,
+        create_time,
+        adop_time,
+        operator,
+        reason
         )
         VALUES (
-        #{userId,jdbcType=BIGINT},
-        #{owd,jdbcType=VARCHAR},
-        #{aowd,jdbcType=VARCHAR},
-        #{efa,jdbcType=VARCHAR},
-        #{rd,jdbcType=VARCHAR},
-        #{sc,jdbcType=VARCHAR},
-        #{msd,jdbcType=VARCHAR},
-        #{dm,jdbcType=VARCHAR},
-        #{owsi,jdbcType=VARCHAR},
-        #{msdt,jdbcType=VARCHAR},
-        #{idcsi,jdbcType=VARCHAR},
-        #{mi,jdbcType=VARCHAR},
-        #{cd,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP},
+
+        #{pictures,jdbcType=VARCHAR},
         #{status,jdbcType=INTEGER},
-        #{identifier,jdbcType=INTEGER}
+        #{userId,jdbcType=BIGINT},
+        #{certificateId,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{adopTime,jdbcType=TIMESTAMP},
+        #{operator,jdbcType=VARCHAR},
+        #{reason,jdbcType=VARCHAR}
         )
     </insert>
 
@@ -94,4 +98,28 @@
     <select id="selectIdentifier" parameterType="java.lang.Long" resultType="java.lang.Integer">
         SELECT identifier FROM dmd_dive_certificate WHERE userid = #{userId}
     </select>
+
+    <select id="selectCertificateId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT max(certificate_id) FROM dmd_dive_certificate_app WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectCertificateStatus" parameterType="map" resultType="java.lang.Integer">
+        SELECT status FROM dmd_dive_certificate_app WHERE user_id = #{userId} AND certificate_id = #{identifier} - 1
+    </select>
+    <select id="selectCertificateByStatus" parameterType="map" resultType="java.lang.Integer">
+        SELECT status FROM dmd_dive_certificate_app WHERE user_id = #{userId} AND certificate_id = #{certificateId}
+    </select>
+
+    <update id="updateCertificate" parameterType="com.dmd.mall.model.domain.CertificateAppBean">
+        UPDATE dmd_dive_certificate_app SET
+        user_id = #{userId}
+        pictures = #{pictures},
+        status = 0,
+        certificate_id = #{certificateId},
+        create_time = now(),
+        operator = '',
+        reason = ''
+        where
+        user_id = #{userId} AND certificate_id = #{certificateId}
+    </update>
 </mapper>

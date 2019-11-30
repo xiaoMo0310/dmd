@@ -1,6 +1,7 @@
 package com.dmd.mall.web.cms;
 
 import com.dmd.base.result.CommonResult;
+import com.dmd.mall.model.domain.CertificateAppBean;
 import com.dmd.mall.model.domain.DiveCertificateBean;
 import com.dmd.mall.service.DiveCertificateServuce;
 import io.swagger.annotations.Api;
@@ -29,25 +30,34 @@ public class DiveCertificateController {
     /**
      * 查询我的证书
      * @return
-     */
+     *//*
     @ApiOperation("查询我的证书")
     @RequestMapping(value = "/selectDiveCertificate",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<DiveCertificateBean> queryDiveCertificate(Long userId) {
         DiveCertificateBean list = diveCertificateServuce.queryDiveCertificate(userId);
         return CommonResult.success(list);
-    }
+    }*/
 
     @ApiOperation("上传我的证书")
     @RequestMapping(value = "/addDiveCertificate",method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult addDiveCertificate(@RequestParam Long userId,
-                                           @RequestBody DiveCertificateBean diveCertificateBean,
-                                           @RequestParam Integer identifier) {
-        int count = diveCertificateServuce.addDiveCertificate(userId,diveCertificateBean,identifier);
+    public CommonResult addDiveCertificate(@RequestBody CertificateAppBean certificateAppBean) {
+        int count = diveCertificateServuce.addDiveCertificate(certificateAppBean);
         if (count > 0) {
             return CommonResult.success(count,"上传成功,请等待审核!");
         }
-        return CommonResult.failed("上传失败,请先上传上一等级证书!");
+        return CommonResult.failed("请先上传上一等级证书或等待上一等级证书审核通过!");
+    }
+
+    /**
+     * 查询我的证书
+     */
+    @ApiOperation("查询我的证书")
+    @RequestMapping(value = "/selectDiveCertificate",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<CertificateAppBean>> queryDiveCertificate(Long userId) {
+        List<CertificateAppBean> list = diveCertificateServuce.queryDiveCertificate(userId);
+        return CommonResult.success(list);
     }
 }
