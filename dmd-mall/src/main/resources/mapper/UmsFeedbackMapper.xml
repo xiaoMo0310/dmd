@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.UmsFeedbackMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.UmsProblemFeedbackBean">
+        <result column="id" property="id" />
+        <result column="question_name" property="questionName" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="operator" property="operator" />
+    </resultMap>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap2" type="com.dmd.mall.model.domain.UmsUserFeedbackBean">
+        <result column="id" property="id" />
+        <result column="problem_description" property="problemDescription" />
+        <result column="user_id" property="userId" />
+        <result column="picture" property="picture" />
+        <result column="create_time" property="createTime" />
+        <result column="problem_id" property="problemId" />
+    </resultMap>
+
+    <select id="queryProblemFeedback" resultMap="BaseResultMap">
+        SELECT id,question_name FROM dmd_problem_feedback WHERE status = 0
+    </select>
+
+    <insert id="addFeedback" parameterType="com.dmd.mall.model.domain.UmsUserFeedbackBean">
+        INSERT INTO dmd_user_feedback(
+        problem_description,
+        user_id,
+        picture,
+        create_time,
+        problem_id
+        )
+        VALUES (
+        #{problemDescription,jdbcType=VARCHAR},
+        #{userId,jdbcType=BIGINT},
+        #{picture,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{problemId,jdbcType=BIGINT}
+        )
+    </insert>
+</mapper>
