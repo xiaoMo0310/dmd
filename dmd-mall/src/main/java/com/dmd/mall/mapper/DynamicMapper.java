@@ -60,4 +60,6 @@ public interface DynamicMapper {
     Integer selectUserIdBypraise(@Param("id")Long id,@Param("userId")Long userId);
 
     void updateUserPraiseLike(@Param("id")Long id,@Param("userId") Long userId);
+
+    DynamicBean selectDynamicById(Long id);
 }

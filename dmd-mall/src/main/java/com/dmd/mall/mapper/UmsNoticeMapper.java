@@ -3,6 +3,7 @@ package com.dmd.mall.mapper;
 import com.dmd.mall.model.domain.UmsNotice;
 import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 @Component
 public interface UmsNoticeMapper extends MyMapper<UmsNotice> {
 
-    UmsNotice selectById(Long noticeId);
+    UmsNotice selectById(@Param("noticeId") Long noticeId, @Param("messageType") Integer messageType);
 
-    List<UmsNotice> selectByType(Integer type);
+    List<UmsNotice> selectByType(@Param("type") Integer type, @Param("messageType") Integer messageType);
 }

@@ -88,7 +88,6 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         if(pmsCourseProduct == null){
             throw new PmsBizException(ErrorCodeEnum.PMS10021004, pmsCourseProduct.getId());
         }
-        pmsCourseProduct.setImage(pmsCourseProduct.getImage().split(",")[0]);
         DivingProductVo divingProductVo = new DivingProductVo();
         BeanUtils.copyProperties(pmsCourseProduct, divingProductVo);
         //查询教练信息

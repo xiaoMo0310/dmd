@@ -1,14 +1,17 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.WordFilter;
+import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DynamicMapper;
 import com.dmd.mall.mapper.TopicMapper;
 import com.dmd.mall.model.domain.DynamicBean;
+import com.dmd.mall.model.dto.MessageDto;
 import com.dmd.mall.service.DynamicService;
+import com.dmd.mall.service.UmsMemberService;
+import com.dmd.mall.service.UmsNoticeService;
 import com.github.pagehelper.PageHelper;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +36,10 @@ public class DynamicServiceImpl implements DynamicService{
 
     @Autowired
     private TopicMapper topicMapper;
+    @Autowired
+    private UmsNoticeService noticeService;
+    @Autowired
+    private UmsMemberService memberService;
 
     @Override
     public List<DynamicBean> queryDynamic(Long userId) {
@@ -89,7 +96,8 @@ public class DynamicServiceImpl implements DynamicService{
     @Override
     public int updateLikePraise(Long id) {
         //用戶ID
-        Long userId = RequestUtil.getLoginUser().getUserId();
+        LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
+        Long userId = loginAuthDto.getUserId();
         //判断用户是否点过赞
         Integer or = dynamicMapper.selectUserIdBypraise(id,userId);
         if(or == 0){
@@ -98,7 +106,16 @@ public class DynamicServiceImpl implements DynamicService{
         if(or != 0){
             dynamicMapper.updateUserPraiseLike(id,userId);
         }
-        return dynamicMapper.updateLikePraise(id);
+        int result = dynamicMapper.updateLikePraise(id);
+        if(result > 0){
+            DynamicBean dynamicBean = dynamicMapper.selectDynamicById(id);
+            MessageDto messageDto = new MessageDto();
+            messageDto.setTitle("动态点赞消息");
+            messageDto.setContent(dynamicBean.getDynamicContent());
+            //发送消息
+            noticeService.saveNoticeMessage(loginAuthDto, dynamicBean.getUserId(), "member", messageDto);
+        }
+        return result;
     }
 
     @Override

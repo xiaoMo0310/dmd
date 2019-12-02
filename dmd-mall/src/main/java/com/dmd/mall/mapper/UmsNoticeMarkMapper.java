@@ -22,5 +22,9 @@ public interface UmsNoticeMarkMapper extends MyMapper<UmsNoticeMark> {
 
     List<UmsNoticeMark> selectByUserId(@Param("userId") Long userId, @Param("userType") String userType);
 
-    int updateIsRead(@Param("userId") Long userId, @Param("userName") String userName, @Param("noticeIds") List<Long> noticeIds, @Param("userType") String userType, int isRead);
+    int updateIsRead(@Param("userId") Long userId, @Param("userName") String userName, @Param("noticeId") Long noticeId, @Param("userType") String userType, int isRead);
+
+    UmsNoticeMark selectNoticeMarkMessageByNoticeId(@Param("noticeId") Long noticeId, @Param("userId") Long userId, @Param("userType") String userType);
+
+    List<UmsNoticeMark> selectNoReadNotice(@Param("userId") Long userId, @Param("userType") String userType, @Param("isRead") Integer isRead);
 }

@@ -46,5 +46,15 @@ public class PmsCertificateController extends BaseController {
         int result = pmsCertificateService.updateCertificateStatus(getLoginAuthDto(), pmsCertificate);
         return handleResult(result);
     }
+
+
+
+    @GetMapping("/certificate/findById/{id}")
+    @ApiOperation(httpMethod = "GET", value = "查询所有的证书信息")
+    @ApiImplicitParam(name ="id", value = "主键id", dataType = "long", paramType = "path")
+    public Wrapper findCertificateById(@PathVariable Long id) {
+        PmsCertificate pmsCertificate = pmsCertificateService.findCertificateById(id);
+        return WrapMapper.ok(pmsCertificate);
+    }
 }
 

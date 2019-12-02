@@ -36,15 +36,22 @@
         last_operator_id = #{userId},
         update_time = now()
         WHERE user_type = #{userType} and user_id = #{userId}
-        and notice_id in
-        <foreach close=")" collection="noticeIds" item="noticeId" open="(" separator=",">
-            #{noticeId}
-        </foreach>
+        and notice_id = #{noticeId}
     </update>
     <select id="selectByUserId" resultType="com.dmd.mall.model.domain.UmsNoticeMark">
         select <include refid="Base_Column_List"/>
         from ums_notice_mark
         where user_id = #{userId} and user_type = #{userType}
+    </select>
+    <select id="selectNoticeMarkMessageByNoticeId" resultType="com.dmd.mall.model.domain.UmsNoticeMark">
+        select <include refid="Base_Column_List"/>
+        from ums_notice_mark
+        where user_id = #{userId} and user_type = #{userType} and notice_id = #{noticeId}
+    </select>
+    <select id="selectNoReadNotice" resultType="com.dmd.mall.model.domain.UmsNoticeMark">
+        select <include refid="Base_Column_List"/>
+        from ums_notice_mark
+        where user_id = #{userId} and user_type = #{userType} and is_read = #{isRead}
     </select>
 
 </mapper>

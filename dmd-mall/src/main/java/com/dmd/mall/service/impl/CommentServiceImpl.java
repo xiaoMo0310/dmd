@@ -1,10 +1,14 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.WordFilter;
+import com.dmd.base.dto.LoginAuthDto;
+import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DynamicMapper;
 import com.dmd.mall.model.domain.CommentBean;
+import com.dmd.mall.model.dto.MessageDto;
 import com.dmd.mall.service.CommentService;
+import com.dmd.mall.service.UmsNoticeService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +33,8 @@ public class CommentServiceImpl implements CommentService{
 
     @Autowired
     private DynamicMapper dynamicMapper;
+    @Autowired
+    private UmsNoticeService noticeService;
 
     @Override
     public List<CommentBean> queryCommentAll(Long forDynamicId,Integer pageNum,Integer pageSize) {
@@ -95,8 +101,19 @@ public class CommentServiceImpl implements CommentService{
         System.out.println(content);
         commentBean.setContent(content);
         commentMapper.addComment(commentBean);
+        int result = dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
         //发布评论，动态评论数加1
-        return dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
+        //添加发送消息
+        if(result >0 ){
+            //回复发送消息
+            LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
+            MessageDto messageDto = new MessageDto();
+            messageDto.setTitle("动态评论消息");
+            messageDto.setContent(content);
+            //发送消息
+            noticeService.saveNoticeMessage(loginAuthDto, commentBean.getUserId(), "member", messageDto);
+        }
+        return result;
     }
 
     @Override
@@ -127,11 +144,20 @@ public class CommentServiceImpl implements CommentService{
         commentBean.setDelflag(0);
         //敏感词过滤*****
         String content = WordFilter.doFilter(commentBean.getContent());
-        System.out.println(content);
         commentBean.setContent(content);
         commentMapper.addComment(commentBean);
         //发布回复，动态评论数加1
-        return dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
+        int result = dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
+        if(result >0 ){
+            //回复发送消息
+            LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
+            MessageDto messageDto = new MessageDto();
+            messageDto.setTitle("动态回复消息");
+            messageDto.setContent(content);
+            //发送消息
+            noticeService.saveNoticeMessage(loginAuthDto, forUid, "member", messageDto);
+        }
+        return result;
     }
 
     @Override

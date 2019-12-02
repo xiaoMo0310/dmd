@@ -15,11 +15,6 @@ import java.util.Date;
 public class UmsNoticeVo {
 
     /**
-     * 用户类型
-     */
-    private String userType;
-
-    /**
      * 是否阅读
      */
     private Integer isRead;
@@ -35,15 +30,25 @@ public class UmsNoticeVo {
     private String content;
 
     /**
-     *消息类型
-     */
-    private Integer messageType;
-
-    /**
      * 发送日期
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createdTime;
+
+    /**
+     * 来源用户id
+     */
+    private Long userId;
+
+    /**
+     * 头像
+     */
+    private String icon;
+
+    /**
+     * 用户名称
+     */
+    private String userName;
 
 
 }

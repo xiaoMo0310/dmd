@@ -23,7 +23,8 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class PmsCertificateServiceImpl extends BaseService<PmsCertificate> implements PmsCertificateService {
+public class
+PmsCertificateServiceImpl extends BaseService<PmsCertificate> implements PmsCertificateService {
 
     @Autowired
     private PmsCertificateMapper pmsCertificateMapper;
@@ -47,4 +48,5 @@ public class PmsCertificateServiceImpl extends BaseService<PmsCertificate> imple
         }
         return pmsCertificateVo;
     }
+
 }

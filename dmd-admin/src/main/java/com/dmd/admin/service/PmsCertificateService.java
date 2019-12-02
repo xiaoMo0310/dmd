@@ -30,4 +30,11 @@ public interface PmsCertificateService extends IService<PmsCertificate> {
      * @return
      */
     int updateCertificateStatus(LoginAuthDto loginAuthDto, PmsCertificate pmsCertificate);
+
+    /**
+     * 根据id查询证书信息
+     * @param id
+     * @return
+     */
+    PmsCertificate findCertificateById(Long id);
 }

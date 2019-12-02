@@ -18,6 +18,7 @@
         <result column="type" property="type" />
         <result column="message_type" property="messageType" />
         <result column="user_type" property="userType" />
+        <result column="source_user_id" property="sourceUserId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -29,17 +30,17 @@
         last_operator,
         last_operator_id,
         update_time,
-        title, content, is_cancel, is_delete, type, message_type, user_type
+        title, content, is_cancel, is_delete, type, message_type, user_type, source_user_id
     </sql>
     <select id="selectById" resultType="com.dmd.mall.model.domain.UmsNotice">
         select <include refid="Base_Column_List"/>
         from ums_notice
-        where id = #{noticeId} and is_delete = 1 and is_cancel = 1
+        where id = #{noticeId} and message_type = #{messageType} and is_delete = 1 and is_cancel = 1
     </select>
     <select id="selectByType" resultType="com.dmd.mall.model.domain.UmsNotice">
         select <include refid="Base_Column_List"/>
         from ums_notice
-        where type = #{type} and is_delete = 1 and is_cancel = 1
+        where type = #{type}  and message_type = #{messageType} and is_delete = 1 and is_cancel = 1
     </select>
 
 </mapper>

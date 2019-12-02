@@ -34,7 +34,6 @@ public class TopicServiceImpl implements TopicService{
     public List<TopicBean> queryTopicById(Integer id) {
         //当前登录人ID
         Long userId = RequestUtil.getLoginUser().getUserId();
-        System.out.println(userId);
         //当前发布动态用户ID
         List<TopicBean> topicBeans = topicMapper.queryTopicById(id);
         Integer topicId = topicBeans.get(0).getId();

@@ -18,6 +18,7 @@
         <result column="type" property="type" />
         <result column="message_type" property="messageType" />
         <result column="user_type" property="userType" />
+        <result column="source_user_id" property="sourceUserId" />
     </resultMap>
     <resultMap id="NoticeVoResultMap" type="com.dmd.admin.model.vo.NoticeListVo">
     </resultMap>
@@ -31,7 +32,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        title, content, is_cancel, is_delete, type, message_type, user_type
+        title, content, is_cancel, is_delete, type, message_type, user_type, source_user_id
     </sql>
     <select id="findNoticeMessage" resultType="com.dmd.admin.model.vo.NoticeListVo">
 

@@ -53,5 +53,8 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("用户类型(1:普通用户 2:教练)")
     private String userType;
 
+    @Column(name = "source_user_id")
+    @ApiModelProperty("来源用户id")
+    private Long sourceUserId;
 
 }

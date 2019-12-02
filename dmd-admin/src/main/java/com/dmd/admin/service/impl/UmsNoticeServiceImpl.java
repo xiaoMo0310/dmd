@@ -116,6 +116,7 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
         umsNotice.setIsCancel(1);
         umsNotice.setIsDelete(1);
         umsNotice.setType(type);
+        umsNotice.setSourceUserId(0L);
         umsNotice.setMessageType(1);
         umsNotice.setUserType(userType);
         umsNotice.setUpdateInfo(loginAuthDto);

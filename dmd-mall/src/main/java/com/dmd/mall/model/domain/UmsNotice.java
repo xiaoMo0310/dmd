@@ -46,12 +46,15 @@ private static final long serialVersionUID = 1L;
     private Integer type;
 
     @Column(name = "message_type")
-    @ApiModelProperty("消息类型(1:系统消息)")
+    @ApiModelProperty("消息类型(1:系统消息 2:点赞消息 3:评论消息)")
     private Integer messageType;
 
     @Column(name = "user_type")
     @ApiModelProperty("用户类型(member:普通用户 coach:教练)")
     private String userType;
 
+    @Column(name = "source_user_id")
+    @ApiModelProperty("来源用户id")
+    private Long sourceUserId;
 
 }
