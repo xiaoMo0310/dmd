@@ -11,10 +11,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,8 +31,8 @@ public class UmsNoticeMarkController extends BaseController {
     @Autowired
     private UmsNoticeMarkService umsNoticeMarkService;
 
-    @PostMapping("/noticeMark/updateIsRead")
-    @ApiOperation(httpMethod = "POST", value = "修改当前登录人的通知标记为已读")
+    @GetMapping("/noticeMark/updateIsRead")
+    @ApiOperation(httpMethod = "GET", value = "修改当前登录人的通知标记为已读")
     @ApiImplicitParam(name ="noticeId", value = "通告id", paramType = "query", dataType = "Long")
     public Wrapper findLoginUserMessage(@RequestParam Long noticeId) {
         int result = umsNoticeMarkService.updateIsRead(getLoginAuthDto(), noticeId);

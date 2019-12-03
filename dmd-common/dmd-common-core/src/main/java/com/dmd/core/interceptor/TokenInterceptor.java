@@ -84,7 +84,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 		for(Enumeration<String> e = paraNames; e.hasMoreElements();){
 			String thisName=e.nextElement().toString();
 			String thisValue=request.getParameter(thisName);
-			System.out.println("param的key:"+thisName+"--------------param的value:"+thisValue);
 		}
 		Enumeration<String> headerNames=request.getHeaderNames();
 		for(Enumeration<String> e=headerNames;e.hasMoreElements();){

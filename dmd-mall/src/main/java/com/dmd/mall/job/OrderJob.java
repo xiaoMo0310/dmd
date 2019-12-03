@@ -42,16 +42,9 @@ public class OrderJob {
                 String key = (String) map.get("key");
                 if(key.equals("开始时间")){
                     Date date = DateUtil.parse((String) map.get("value"), "yyyy-MM-dd HH:mm:ss");
-                    if(omsOrder.getOrderSn().equals("201911210100000011")){
-                        System.out.println(System.currentTimeMillis());
-                        System.out.println(date.getTime());
-                        System.out.println(System.currentTimeMillis() >= date.getTime());
-                    }
                     if(System.currentTimeMillis() >= date.getTime()){
                         //修改订单状态为进行中
                         LoginAuthDto loginAuthDto = new LoginAuthDto();
-                        System.out.println(omsOrder.getUserName());
-                        System.out.println(omsOrder.getUserId());
                         loginAuthDto.setUserId(omsOrder.getUserId());
                         loginAuthDto.setUserType("member");
                         loginAuthDto.setUserName("定时修改");

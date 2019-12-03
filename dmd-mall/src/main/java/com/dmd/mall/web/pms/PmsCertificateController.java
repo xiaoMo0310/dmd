@@ -38,6 +38,5 @@ public class PmsCertificateController extends BaseController {
         List<PmsCertificateVo> pmsCertificates = pmsCertificateService.selectCertificateList();
         return WrapMapper.ok(pmsCertificates);
     }
-
 }
 

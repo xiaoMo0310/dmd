@@ -29,7 +29,6 @@ public class GetUserSigController {
         //identifier:帐号管理员ID
         TLSSigAPIv2 tlsSigAPIv2 = new TLSSigAPIv2(1400282640,"9bbe80d39f42495d19889c66fb8f178dd4cae0bff1765ea5ac2df2b9868bd56f");
         String s = tlsSigAPIv2.genSig("administrator",1400282640);
-        System.out.println(s);
         return  s;
     }
 }

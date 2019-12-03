@@ -2,7 +2,6 @@ package com.dmd.admin.mapper;
 
 import com.dmd.admin.model.domain.UmsNotice;
 import com.dmd.admin.model.dto.MessageListDto;
-import com.dmd.admin.model.vo.NoticeListVo;
 import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -20,8 +19,6 @@ import java.util.List;
 @Mapper
 @Component
 public interface UmsNoticeMapper extends MyMapper<UmsNotice> {
-
-    List<NoticeListVo> findNoticeMessage(MessageListDto messageListDto);
 
     List<UmsNotice> selectByMessage(MessageListDto messageListDto);
 }

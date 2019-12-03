@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * <p>
  * 证书数据表 前端控制器
@@ -47,14 +50,27 @@ public class PmsCertificateController extends BaseController {
         return handleResult(result);
     }
 
-
-
     @GetMapping("/certificate/findById/{id}")
     @ApiOperation(httpMethod = "GET", value = "查询所有的证书信息")
     @ApiImplicitParam(name ="id", value = "主键id", dataType = "long", paramType = "path")
     public Wrapper findCertificateById(@PathVariable Long id) {
         PmsCertificate pmsCertificate = pmsCertificateService.findCertificateById(id);
         return WrapMapper.ok(pmsCertificate);
+    }
+
+    @ApiOperation("删除证书信息")
+    @RequestMapping(value = "/certificate/delete", method = RequestMethod.POST)
+    public Wrapper deletePmsCertificate(@RequestParam("ids") List<Long> ids) {
+        int count = pmsCertificateService.selectCertificateCount();
+        List<PmsCertificate> pmsCertificates = ids.stream().map(id -> {
+            PmsCertificate certificate = pmsCertificateService.selectByKey(id);
+            if(count != Integer.valueOf(certificate.getCertificateLevel())) {
+                throw new RuntimeException("存在下级证书不能删除");
+            }
+            return certificate;
+        }).collect(Collectors.toList());
+        int result = pmsCertificateService.batchDelete(pmsCertificates);
+        return handleResult(result);
     }
 }
 

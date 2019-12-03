@@ -2,6 +2,7 @@ package com.dmd.mall.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.BigDecimalUtil;
+import com.dmd.IdWorker;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
@@ -19,14 +20,12 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,8 +70,8 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     private OmsOrderReturnApplyService orderReturnApplyService;
     @Autowired
     private RedisTemplate redisTemplate;
-    @Value("${redis.key.prefix.orderId}")
-    private String REDIS_KEY_PREFIX_ORDER_ID;
+    @Autowired
+    private IdWorker idWorker;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -473,7 +472,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             order.setOrderType(2);
         }
         order.setRemark(remark);
-        order.setOrderSn(generateOrderSn(order));
+        order.setOrderSn(idWorker.nextId() + "");
         order.setUpdateInfo(loginAuthDto);
         int rowCount = omsOrderMapper.insertSelective(order);
         if (rowCount > 0) {
@@ -492,27 +491,6 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             omsCartMapper.updateByPrimaryKeySelective(cart);
         });
     }
-
-    /**
-     * 生成18位订单编号:8位日期+2位平台号码+2位支付方式+6位以上自增id
-     */
-    private String generateOrderSn(OmsOrder order) {
-        StringBuilder sb = new StringBuilder();
-        String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
-        String key = REDIS_KEY_PREFIX_ORDER_ID + date;
-        Long increment = redisTemplate.opsForValue().increment(key, 1);
-        sb.append(date);
-        sb.append(String.format("%02d", order.getSourceType()));
-        sb.append(String.format("%02d", order.getPayType()));
-        String incrementStr = increment.toString();
-        if (incrementStr.length() <= 6) {
-            sb.append(String.format("%06d", increment));
-        } else {
-            sb.append(incrementStr);
-        }
-        return sb.toString();
-    }
-
 
     /**
      * 锁定下单商品的所有库存

@@ -75,7 +75,6 @@ public class DiveLogServiceImpl implements DiveLogService{
                 diveLogAirbottleList.get(i).setResidue(diveLogAirbottleList.get(i).getStart() - diveLogAirbottleList.get(i).getEnd());
             }
 
-            System.out.println(diveLogAirbottleList);
             //新增气瓶消耗表
             diveLogMapper.addDiveLogAirbottle(diveLogAirbottleList);
         }

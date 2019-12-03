@@ -121,6 +121,8 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         if (!CollectionUtils.isEmpty(memberLevelList)) {
             umsMember.setMemberLevelId(memberLevelList.get(0).getId());
         }*/
+        //设置默认昵称
+        //umsMember.setNickName(new ChineseNickNameUtil().generateName());
         memberMapper.insert(umsMember);
         if (invitationCode!=null){
             //在邀请码不等于null的时候自动加入邀请码对应的教练的群

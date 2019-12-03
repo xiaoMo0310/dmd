@@ -18,4 +18,7 @@ public class MessageDto {
     @ApiModelProperty(value = "内容", required = true)
     private String content;
 
+    @ApiModelProperty(value = "跳转地址", required = true)
+    private String jumpAddress;
+
 }

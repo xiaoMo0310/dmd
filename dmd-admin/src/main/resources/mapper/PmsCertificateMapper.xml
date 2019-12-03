@@ -36,5 +36,8 @@
         from pms_certificate
         order by #{orderBy}
     </select>
+    <select id="selectCertificateCount" resultType="java.lang.Integer">
+        select count(1) from pms_certificate
+    </select>
 
 </mapper>

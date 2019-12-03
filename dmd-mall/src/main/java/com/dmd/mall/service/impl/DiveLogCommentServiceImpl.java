@@ -41,10 +41,8 @@ public class DiveLogCommentServiceImpl implements DiveLogCommentService{
 
     private List<CommentBean> getNode(Long forPid,Long forDiveLogId) {
         List<CommentBean> findCommentListByPId = diveLogCommentMapper.findCommentListById(forPid,forDiveLogId);
-        System.out.println(findCommentListByPId);
         for (CommentBean commentBean : findCommentListByPId) {
             Long id2 = commentBean.getCommentId();
-            System.out.println(id2);
             List<CommentBean> nodes = getNode(id2,forDiveLogId);
             commentBean.setChildren(nodes) ;
         }
@@ -81,7 +79,6 @@ public class DiveLogCommentServiceImpl implements DiveLogCommentService{
         commentBean.setDelflag(0);
         //敏感词过滤*****
         String content = WordFilter.doFilter(commentBean.getContent());
-        System.out.println(content);
         commentBean.setContent(content);
         diveLogCommentMapper.addComment(commentBean);
         //发布评论，日志评论数加1
@@ -116,7 +113,6 @@ public class DiveLogCommentServiceImpl implements DiveLogCommentService{
         commentBean.setDelflag(0);
         //敏感词过滤*****
         String content = WordFilter.doFilter(commentBean.getContent());
-        System.out.println(content);
         commentBean.setContent(content);
         diveLogCommentMapper.addComment(commentBean);
         //发布回复，日志评论数加1

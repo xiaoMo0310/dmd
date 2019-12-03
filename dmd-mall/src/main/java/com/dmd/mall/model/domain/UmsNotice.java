@@ -57,4 +57,8 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("来源用户id")
     private Long sourceUserId;
 
+    @Column(name = "jump_address")
+    @ApiModelProperty("跳转地址")
+    private String jumpAddress;
+
 }

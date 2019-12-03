@@ -12,6 +12,7 @@ import com.dmd.mall.service.UmsNoticeService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -59,10 +60,8 @@ public class CommentServiceImpl implements CommentService{
 
     private List<CommentBean> getNode(Long forPid,Long forDynamicId) {
         List<CommentBean> findCommentListByPId = commentMapper.findCommentListById(forPid,forDynamicId);
-        System.out.println(findCommentListByPId);
         for (CommentBean commentBean : findCommentListByPId) {
             Long id2 = commentBean.getCommentId();
-            System.out.println(id2);
             List<CommentBean> nodes = getNode(id2,forDynamicId);
             commentBean.setChildren(nodes) ;
         }
@@ -70,6 +69,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int addComment(CommentBean commentBean) {
         //所有评论留言父 PID默认为0
         commentBean.setForPid(Long.valueOf(0));
@@ -98,7 +98,6 @@ public class CommentServiceImpl implements CommentService{
         commentBean.setDelflag(0);
         //敏感词过滤*****
         String content = WordFilter.doFilter(commentBean.getContent());
-        System.out.println(content);
         commentBean.setContent(content);
         commentMapper.addComment(commentBean);
         int result = dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
@@ -110,13 +109,15 @@ public class CommentServiceImpl implements CommentService{
             MessageDto messageDto = new MessageDto();
             messageDto.setTitle("动态评论消息");
             messageDto.setContent(content);
+            messageDto.setJumpAddress(commentBean.getForDynamicId() + "");
             //发送消息
-            noticeService.saveNoticeMessage(loginAuthDto, commentBean.getUserId(), "member", messageDto);
+            noticeService.saveNoticeMessage(loginAuthDto, commentBean.getUserId(), "member", 3, messageDto);
         }
         return result;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int addCommentReply(CommentBean commentBean,Long commentId, Long forUid) {
         //回复的PId为当前评论id
         commentBean.setForPid(commentId);
@@ -154,8 +155,9 @@ public class CommentServiceImpl implements CommentService{
             MessageDto messageDto = new MessageDto();
             messageDto.setTitle("动态回复消息");
             messageDto.setContent(content);
+            messageDto.setJumpAddress(commentBean.getForDynamicId() + "");
             //发送消息
-            noticeService.saveNoticeMessage(loginAuthDto, forUid, "member", messageDto);
+            noticeService.saveNoticeMessage(loginAuthDto, forUid, "member", 3, messageDto);
         }
         return result;
     }

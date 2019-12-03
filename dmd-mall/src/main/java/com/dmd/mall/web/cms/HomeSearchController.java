@@ -68,7 +68,6 @@ public class HomeSearchController {
                 }
             }
             List valuesList = new ArrayList<>(map.values());
-            System.out.println(map);
             list= valuesList;
         }
         if(searchType == 3){
@@ -114,7 +113,6 @@ public class HomeSearchController {
                 }
             }
             List valuesList = new ArrayList<>(map.values());
-            System.out.println(map);
             list= valuesList;
         }
         if(searchType == 3){

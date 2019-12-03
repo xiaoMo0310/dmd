@@ -97,10 +97,5 @@ public class FilterSet{
 			size += Long.bitCount(element);
 		return size;
 	}
-	
-	public static void main(String[] args) {
-		FilterSet oi = new FilterSet();
-		System.out.println(oi.elements.length);
-	}
 
 }

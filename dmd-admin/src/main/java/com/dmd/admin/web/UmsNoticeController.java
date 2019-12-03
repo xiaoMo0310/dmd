@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dmd.admin.model.dto.MessageDto;
 import com.dmd.admin.model.dto.MessageListDto;
 import com.dmd.admin.service.UmsNoticeService;
+import com.dmd.core.annotation.LogAnnotation;
 import com.dmd.core.support.BaseController;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
@@ -34,6 +35,7 @@ public class UmsNoticeController extends BaseController {
     @Autowired
     private UmsNoticeService umsNoticeService;
 
+    @LogAnnotation
     @PostMapping("/message/send/{id}/{userType}")
     @ApiOperation(httpMethod = "POST", value = "保存通知信息")
     @ApiImplicitParams({@ApiImplicitParam(name ="id", value = "用户id", paramType = "path", dataType = "Long"),

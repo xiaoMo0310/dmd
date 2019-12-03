@@ -19,6 +19,7 @@
         <result column="message_type" property="messageType" />
         <result column="user_type" property="userType" />
         <result column="source_user_id" property="sourceUserId" />
+        <result column="jump_address" property="jumpAddress" />
     </resultMap>
     <resultMap id="NoticeVoResultMap" type="com.dmd.admin.model.vo.NoticeListVo">
     </resultMap>
@@ -32,11 +33,8 @@
         last_operator,
         last_operator_id,
         update_time,
-        title, content, is_cancel, is_delete, type, message_type, user_type, source_user_id
+        title, content, is_cancel, is_delete, type, message_type, user_type, source_user_id, jump_address
     </sql>
-    <select id="findNoticeMessage" resultType="com.dmd.admin.model.vo.NoticeListVo">
-
-    </select>
     <select id="selectByMessage" resultType="com.dmd.admin.model.domain.UmsNotice">
         select
         <include refid="Base_Column_List"/>

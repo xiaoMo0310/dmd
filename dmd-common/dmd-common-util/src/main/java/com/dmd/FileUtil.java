@@ -41,8 +41,7 @@ public class FileUtil {
 		//	  2.通过时间戳现文件名称唯一  （时间戳是毫秒级时间 时间会一直往上加，生成13位数字）注意只有java生成13位 其他则是10位比如oracle、mysql、php
 		//  获取时间戳
 		//long currentTimeMillis = System.currentTimeMillis();
-		//System.out.println(currentTimeMillis);
-		
+
 		String newFileName = UUID.randomUUID().toString().replace("-", "") + suffixName;
 		
 		//检测目标目录是否存在

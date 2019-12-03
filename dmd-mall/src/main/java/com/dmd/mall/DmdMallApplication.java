@@ -2,6 +2,7 @@ package com.dmd.mall;
 
 
 import com.dmd.FileUploadUtil;
+import com.dmd.IdWorker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -38,5 +39,9 @@ public class DmdMallApplication {
     @Bean
     public FileUploadUtil createFileUploadUtil(){
         return new FileUploadUtil();
+    }
+    @Bean
+    public IdWorker createIdWorker(){
+        return new IdWorker();
     }
 }

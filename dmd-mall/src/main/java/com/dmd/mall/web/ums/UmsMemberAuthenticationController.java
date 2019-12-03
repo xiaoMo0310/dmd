@@ -1,7 +1,9 @@
 package com.dmd.mall.web.ums;
 
 import com.dmd.FileUtil;
+import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.result.CommonResult;
+import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.dto.FindPasswordDto;
 import com.dmd.mall.service.UmsMemberService;
@@ -40,7 +42,7 @@ public class UmsMemberAuthenticationController {
         }
     }
 
-    @ApiOperation("修改个人信心")
+    @ApiOperation("修改个人信息")
     @RequestMapping(value = "/updatePersonalData", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult updatePersonalData(@RequestBody UmsMember umsMember,HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
@@ -71,5 +73,14 @@ public class UmsMemberAuthenticationController {
                                     @RequestParam String authCode,
                                     HttpServletRequest request) {
         return memberService.updatePhone(telephone,authCode,request);
+    }
+
+    @ApiOperation("获取用户信息")
+    @RequestMapping(value = "memberMessage/find", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updatePhone() {
+        LoginAuthDto loginUser = RequestUtil.getLoginUser();
+        UmsMember umsMember = memberService.getById(loginUser.getUserId());
+        return CommonResult.success(umsMember);
     }
 }

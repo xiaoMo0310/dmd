@@ -39,7 +39,6 @@ redis:
   key:
     prefix:
       authCode: "portal:authCode:"
-      orderId: "portal:orderId:"
     expire:
       authCode: 90000 # 验证码超期时间
 

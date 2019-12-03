@@ -169,9 +169,9 @@
     <select id="selectUserIdBypraise" parameterType="java.lang.Long" resultType="java.lang.Integer">
         SELECT count(1) from dmd_dynamic_praise_status WHERE user_id = #{userId} AND dynamic_id = #{id}
     </select>
-    <select id="selectDynamicById" resultType="com.dmd.mall.model.domain.DynamicBean">
-        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
-         FROM dmd_dynamic where r_id = #{id}
+    <select id="selectDynamicById" resultMap="dynamicMap">
+        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid
+         FROM dmd_dynamic dy where dy.r_id = #{id}
     </select>
 
     <update id="updateUserPraiseLike" parameterType="map" >

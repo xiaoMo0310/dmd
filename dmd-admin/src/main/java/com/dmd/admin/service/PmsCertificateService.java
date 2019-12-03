@@ -37,4 +37,10 @@ public interface PmsCertificateService extends IService<PmsCertificate> {
      * @return
      */
     PmsCertificate findCertificateById(Long id);
+
+    /**
+     * 查询证书总的数量
+     * @return
+     */
+    int selectCertificateCount();
 }

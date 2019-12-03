@@ -21,4 +21,6 @@ import java.util.List;
 public interface PmsCertificateMapper extends MyMapper<PmsCertificate> {
 
     List<PmsCertificate> selectCertificateList(BaseQuery baseQuery);
+
+    int selectCertificateCount();
 }

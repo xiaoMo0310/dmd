@@ -242,7 +242,6 @@ public class DynamicController {
     @ResponseBody
     public CommonResult<Integer> queryDynamicCount(@RequestParam Long userId) {
         Integer count = dynamicService.queryDynamicCount(userId);
-        System.out.println(count);
         return CommonResult.success(count);
     }
 }

@@ -53,4 +53,10 @@ public class PmsCertificateServiceImpl extends BaseService<PmsCertificate> imple
     public PmsCertificate findCertificateById(Long id) {
         return pmsCertificateMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int selectCertificateCount() {
+        return pmsCertificateMapper.selectCertificateCount();
+    }
+
 }

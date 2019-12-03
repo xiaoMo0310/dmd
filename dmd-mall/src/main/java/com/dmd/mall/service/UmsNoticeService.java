@@ -49,7 +49,7 @@ public interface UmsNoticeService extends IService<UmsNotice> {
      * @param userType
      * @param messageDto
      */
-    void saveNoticeMessage(LoginAuthDto loginAuthDto, Long userId, String userType, MessageDto messageDto);
+    void saveNoticeMessage(LoginAuthDto loginAuthDto, Long userId, String userType, Integer messageType, MessageDto messageDto);
 
     PageInfo<UmsNoticeVo> findLoginUserMessageByPage(LoginAuthDto loginAuthDto, Integer messageType, Integer pageNum, Integer pageSize);
 }

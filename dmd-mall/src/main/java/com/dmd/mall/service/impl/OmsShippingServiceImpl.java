@@ -87,7 +87,6 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
         Preconditions.checkArgument(loginAuthDto.getUserId() != null, ErrorCodeEnum.UMS10011001.msg());
         PageHelper.startPage(pageNum, pageSize);
         List<OmsShipping> omsShippingList = omsShippingMapper.selectByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
-        System.out.println(omsShippingList);
         return new PageInfo<>(omsShippingList);
     }
 

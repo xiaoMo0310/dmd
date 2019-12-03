@@ -15,6 +15,11 @@ import java.util.Date;
 public class UmsNoticeVo {
 
     /**
+     * 消息id
+     */
+    private Long noticeId;
+
+    /**
      * 是否阅读
      */
     private Integer isRead;
@@ -49,6 +54,16 @@ public class UmsNoticeVo {
      * 用户名称
      */
     private String userName;
+
+    /**
+     * 昵称
+     */
+    private String nickName;
+
+    /**
+     * 跳转地址
+     */
+    private String jumpAddress;
 
 
 }

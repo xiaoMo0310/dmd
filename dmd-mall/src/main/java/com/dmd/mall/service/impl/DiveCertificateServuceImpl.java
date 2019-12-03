@@ -3,14 +3,11 @@ package com.dmd.mall.service.impl;
 import com.dmd.mall.mapper.DiveCertificateMapper;
 import com.dmd.mall.mapper.PmsCertificateMapper;
 import com.dmd.mall.model.domain.CertificateAppBean;
-import com.dmd.mall.model.domain.DiveCertificateBean;
 import com.dmd.mall.model.domain.PmsCertificate;
 import com.dmd.mall.service.DiveCertificateServuce;
-import com.dmd.mall.service.PmsCertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,8 +36,6 @@ public class DiveCertificateServuceImpl implements DiveCertificateServuce{
             certificateAppBean.setCertificateName(pmsCertificates.get(i).getEnglishShorthand());
             certificateAppBeans.add(certificateAppBean);
         }
-
-        System.out.println(certificateAppBeans);
         return certificateAppBeans;
     }
 

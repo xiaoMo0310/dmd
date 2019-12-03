@@ -69,8 +69,10 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
                         umsNoticeVo.setUserId(umsMember.getId());
                         umsNoticeVo.setUserName(umsMember.getUsername());
                         umsNoticeVo.setIcon(umsMember.getIcon());
+                        umsNoticeVo.setNickName(umsMember.getNickname());
                     }
                 }
+                umsNoticeVo.setNoticeId(umsNotice.getId());
             }
             return umsNoticeVo;
         }).filter(umsNoticeVo -> umsNoticeVo != null).collect(Collectors.toList());
@@ -100,6 +102,15 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
             }else {
                 umsNoticeVo.setIsRead(umsNoticeMark.getIsRead());
             }
+            umsNoticeVo.setNoticeId(umsNotice.getId());
+            //查询用户信息
+            UmsMember umsMember = umsMemberService.getById(umsNotice.getSourceUserId());
+            if(umsMember != null){
+                umsNoticeVo.setUserId(umsMember.getId());
+                umsNoticeVo.setUserName(umsMember.getUsername());
+                umsNoticeVo.setIcon(umsMember.getIcon());
+                umsNoticeVo.setNickName(umsMember.getNickname());
+            }
             return umsNoticeVo;
         }).collect(Collectors.toList());
     }
@@ -112,20 +123,20 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
     }
 
     @Override
-    public void saveNoticeMessage(LoginAuthDto loginAuthDto, Long userId, String userType, MessageDto messageDto) {
-        UmsNotice umsNotice = saveUmsNotice(loginAuthDto, userType, 1, messageDto);
+    public void saveNoticeMessage(LoginAuthDto loginAuthDto, Long userId, String userType, Integer messageType, MessageDto messageDto) {
+        UmsNotice umsNotice = saveUmsNotice(loginAuthDto, userType, 1, messageType, messageDto);
         //添加用户通知标志信息
         noticeMarkService.insertNoticeMarkMessage(umsNotice.getId(), userId, userType, loginAuthDto);
     }
 
-    public UmsNotice saveUmsNotice(LoginAuthDto loginAuthDto, String userType, Integer type, MessageDto messageDto) {
+    public UmsNotice saveUmsNotice(LoginAuthDto loginAuthDto, String userType, Integer type, Integer messageType, MessageDto messageDto) {
         UmsNotice umsNotice = new UmsNotice();
         BeanUtils.copyProperties(messageDto, umsNotice);
         umsNotice.setIsCancel(1);
         umsNotice.setIsDelete(1);
         umsNotice.setSourceUserId(loginAuthDto.getUserId());
         umsNotice.setType(type);
-        umsNotice.setMessageType(1);
+        umsNotice.setMessageType(messageType);
         umsNotice.setUserType(userType);
         umsNotice.setUpdateInfo(loginAuthDto);
         umsNoticeMapper.insertSelective(umsNotice);

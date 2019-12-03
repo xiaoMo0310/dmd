@@ -18,7 +18,8 @@
         <result column="type" property="type" />
         <result column="message_type" property="messageType" />
         <result column="user_type" property="userType" />
-        <result column="source_user_id" property="sourceUserId" />
+        <result column="source_user_id" property="sourceUserId"/>
+        <result column="jump_address" property="jumpAddress"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -30,7 +31,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        title, content, is_cancel, is_delete, type, message_type, user_type, source_user_id
+        title, content, is_cancel, is_delete, type, message_type, user_type, source_user_id, jump_address
     </sql>
     <select id="selectById" resultType="com.dmd.mall.model.domain.UmsNotice">
         select <include refid="Base_Column_List"/>
