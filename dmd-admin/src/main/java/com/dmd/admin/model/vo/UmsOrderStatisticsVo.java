@@ -13,7 +13,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: UmsOrderStatisticsVo
  * @projectName dmd
- * @description: TODO 客户端--订单明细信息统计Vo类
+ * @description: TODO 订单明细信息统计Vo类
  * @date 2019/11/2515:30
  */
 public class UmsOrderStatisticsVo {

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.admin.mapper.AnalysisReportMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="dynamicMap" type="com.dmd.admin.model.vo.AnalysisReportVo">
+        <result column="created_time" property="createTime" />
+        <result column="orderNum" property="orderNum" />
+        <result column="paidNum" property="paidNum" />
+        <result column="pay_amount" property="payAmount" />
+        <result column="completed" property="completed" />
+        <result column="completed_money" property="completedMoney" />
+        <result column="over" property="over" />
+        <result column="over_money" property="overMoney" />
+    </resultMap>
+
+    <select id="queryAnalysisReport" parameterType="com.dmd.admin.model.vo.AnalysisReportVo" resultType="com.dmd.admin.model.vo.AnalysisReportVo">
+    SELECT
+        a1.created_time AS createTime,
+        a1.orderNum AS orderNum,
+        a2.paidNum AS paidNum,
+        a3.pay_amount AS payAmount ,
+        a4.completed AS completed,
+        a5.completed_money AS completedMoney,
+        a6.over AS over,
+        a7.over_money AS overMoney
+    FROM
+        (
+        SELECT
+            date_format( o1.created_time, '%Y-%m-%d' ) AS created_time,
+            count(*) AS orderNum
+        FROM
+            oms_order o1
+        <include refid="orderStatisticsWhere"></include>
+        GROUP BY
+            date_format( o1.created_time, '%Y-%m-%d' )
+        ORDER BY
+            o1.created_time DESC
+        ) a1
+        LEFT JOIN (
+        SELECT
+            date_format( o2.created_time, '%Y-%m-%d' ) AS created_time,
+            count(*) AS paidNum
+        FROM
+            oms_order o2
+        WHERE
+            STATUS = 2 or STATUS = 1
+        GROUP BY
+            date_format( o2.created_time, '%Y-%m-%d' )
+        ORDER BY
+            created_time DESC
+        ) a2 ON a1.created_time = a2.created_time
+        LEFT JOIN (
+        SELECT
+            date_format( o3.created_time, '%Y-%m-%d' ) AS created_time,
+            SUM( o3.pay_amount ) AS pay_amount
+        FROM
+            oms_order o3
+        WHERE
+            STATUS = 1 or STATUS = 2
+        GROUP BY
+            date_format( o3.created_time, '%Y-%m-%d' )
+        ORDER BY
+            created_time DESC
+        ) a3 ON a1.created_time = a3.created_time
+    LEFT JOIN (
+    SELECT
+            date_format( o4.created_time, '%Y-%m-%d' ) AS created_time,
+            count(*) AS completed
+        FROM
+            oms_order o4
+        WHERE
+            STATUS = 2
+        GROUP BY
+            date_format( o4.created_time, '%Y-%m-%d' )
+        ORDER BY
+            created_time DESC
+    )a4 ON a1.created_time = a4.created_time
+    LEFT JOIN (
+    SELECT
+            date_format( o5.created_time, '%Y-%m-%d' ) AS created_time,
+            SUM( o5.pay_amount ) AS completed_money
+            FROM
+            oms_order o5
+        WHERE
+            STATUS = 2
+        GROUP BY
+            date_format( o5.created_time, '%Y-%m-%d' )
+        ORDER BY
+            created_time DESC
+    )a5 ON a1.created_time = a5.created_time
+    LEFT JOIN (
+    SELECT
+            date_format( o6.created_time, '%Y-%m-%d' ) AS created_time,
+            count(*) AS over
+        FROM
+            oms_order o6
+        WHERE
+            STATUS = 3
+        GROUP BY
+            date_format( o6.created_time, '%Y-%m-%d' )
+        ORDER BY
+            created_time DESC
+    )a6 ON a1.created_time = a6.created_time
+    LEFT JOIN (
+    SELECT
+            date_format( o7.created_time, '%Y-%m-%d' ) AS created_time,
+            SUM( o7.pay_amount ) AS over_money
+            FROM
+            oms_order o7
+        WHERE
+            STATUS = 3
+        GROUP BY
+            date_format( o7.created_time, '%Y-%m-%d' )
+        ORDER BY
+            created_time DESC
+    )a7 ON a1.created_time = a7.created_time
+    ORDER BY a1.created_time DESC
+    </select>
+
+    <sql id="orderStatisticsWhere">
+        <where>
+            <!-- 用户ID -->
+            <if test="orderType !=null">
+                and o1.order_type = #{orderType}
+            </if>
+            <!-- 注册日期区间查询 -->
+            <if test="startTime != null">
+                and o1.created_time >= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and o1.created_time &lt;= #{endTime}
+            </if>
+            <!-- 当日数据 -->
+            <if test="identifier != null and identifier == 1">
+                and to_days( o1.created_time ) = to_days(now())
+            </if>
+            <!-- 一周数据 -->
+            <if test="identifier != null and identifier == 2">
+                and DATE_SUB( CURDATE(), INTERVAL 7 DAY ) &lt;= date( o1.created_time )
+            </if>
+            <!-- 近三十天数据 -->
+            <if test="identifier != null and identifier == 3">
+                and  DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;=date(o1.created_time)
+            </if>
+            <!-- 本月数据 -->
+            <if test="identifier != null and identifier == 4">
+                and  DATE_FORMAT( o1.created_time, '%Y%m' ) =DATE_FORMAT( CURDATE() , '%Y%m' )
+            </if>
+            <!-- 季度数据 -->
+            <if test="identifier != null and identifier == 5">
+                and  QUARTER(o1.created_time)=QUARTER(now())
+            </if>
+            <!-- 本年数据 -->
+            <if test="identifier != null and identifier == 6">
+                and  YEAR(o1.created_time)=YEAR(NOW())
+            </if>
+        </where>
+    </sql>
+</mapper>
+
