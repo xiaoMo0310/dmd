@@ -47,7 +47,9 @@ public class DiveCertificateController {
         if (count > 0) {
             return CommonResult.success(count,"上传成功,请等待审核!");
         }
-        return CommonResult.failed("请先上传上一等级证书或等待上一等级证书审核通过!");
+       // return CommonResult.failed("请先上传上一等级证书或等待上一等级证书审核通过!");
+        return CommonResult.failed("上传失败！");
+
     }
 
     /**

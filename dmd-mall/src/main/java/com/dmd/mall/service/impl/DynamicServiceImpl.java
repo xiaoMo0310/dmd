@@ -231,6 +231,10 @@ public class DynamicServiceImpl implements DynamicService{
         dynamicBean.setDynamicCommentnum(0);
         //逻辑删除默认为0不删除
         dynamicBean.setDelflag(0);
+        //设置图片随机宽度
+        dynamicBean.setWidth((int)Math.random()*100+101);
+        //设置图片随机高度
+        dynamicBean.setHeight((int)Math.random()*100+101);
         //敏感词过滤*****
         String content = WordFilter.doFilter(dynamicBean.getDynamicContent());
         dynamicBean.setDynamicContent(content);

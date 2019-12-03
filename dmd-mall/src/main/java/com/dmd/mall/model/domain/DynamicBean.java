@@ -50,6 +50,32 @@ public class DynamicBean {
     //登录人是否点赞动态发布者的动态(0==已点赞)(1==未点赞)
     private Integer identificationPraise;
 
+    /**
+     * 图片宽
+     */
+    private Integer width;
+
+    /**
+     * 图片高
+     */
+    private Integer height;
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
     public Integer getIdentificationPraise() {
         return identificationPraise;
     }
@@ -197,6 +223,8 @@ public class DynamicBean {
                 ", delflag=" + delflag +
                 ", Identification=" + Identification +
                 ", identificationPraise=" + identificationPraise +
+                ", width=" + width +
+                ", height=" + height +
                 '}';
     }
 }

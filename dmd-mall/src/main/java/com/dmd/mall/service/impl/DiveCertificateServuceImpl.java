@@ -41,7 +41,7 @@ public class DiveCertificateServuceImpl implements DiveCertificateServuce{
 
     @Override
     public int addDiveCertificate(CertificateAppBean certificateAppBean) {
-        //查询用户目前的最高证书等级
+        /*//查询用户目前的最高证书等级
         Integer identifierNum = diveCertificateMapper.selectCertificateId(certificateAppBean.getUserId());
         Integer status = diveCertificateMapper.selectCertificateStatus(certificateAppBean.getUserId(),certificateAppBean.getCertificateId());
         CertificateAppBean certificateAppBean2 = diveCertificateMapper.selectCertificateByStatus(certificateAppBean.getUserId(),certificateAppBean.getCertificateId());
@@ -75,8 +75,9 @@ public class DiveCertificateServuceImpl implements DiveCertificateServuce{
                 int count3 = diveCertificateMapper.updateCertificate(certificateAppBean);
                 count = count3;
             }
-        }
-
-        return count;
+        }*/
+        certificateAppBean.setCreateTime(new Date());
+        certificateAppBean.setStatus(0);
+        return diveCertificateMapper.addDiveCertificate(certificateAppBean);
     }
 }
