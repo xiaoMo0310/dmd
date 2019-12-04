@@ -102,9 +102,10 @@
         #{dynamicCommentnum,jdbcType=INTEGER},
         #{userId,jdbcType=BIGINT},
         #{topicId,jdbcType=INTEGER},
-        #{delflag,jdbcType=INTEGER},
         #{width,jdbcType=INTEGER},
-        #{height,jdbcType=INTEGER}
+        #{height,jdbcType=INTEGER},
+        #{delflag,jdbcType=INTEGER}
+
         )
     </insert>
 
