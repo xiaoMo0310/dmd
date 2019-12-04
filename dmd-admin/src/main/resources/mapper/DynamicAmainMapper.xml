@@ -25,6 +25,7 @@
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
         <include refid="dynamicWhere"></include>
+        ORDER BY dy.r_createtime DESC
     </select>
 
     <!-- 公用标签 -->

@@ -87,6 +87,8 @@
         r_comment_num,
         r_userid,
         r_topicid,
+        width,
+        height,
         delflag)
         VALUES (
         #{dynamicAuthor,jdbcType=VARCHAR},
@@ -100,7 +102,10 @@
         #{dynamicCommentnum,jdbcType=INTEGER},
         #{userId,jdbcType=BIGINT},
         #{topicId,jdbcType=INTEGER},
-        #{delflag,jdbcType=INTEGER})
+        #{delflag,jdbcType=INTEGER},
+        #{width,jdbcType=INTEGER},
+        #{height,jdbcType=INTEGER}
+        )
     </insert>
 
     <update id="addrCommentNum" parameterType="java.lang.Long">
