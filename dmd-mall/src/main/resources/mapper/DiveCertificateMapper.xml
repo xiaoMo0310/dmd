@@ -117,6 +117,7 @@
         status = 0,
         certificate_id = #{certificateId},
         create_time = now(),
+        adop_time = null,
         operator = '',
         reason = ''
         where

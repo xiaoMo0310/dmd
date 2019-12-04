@@ -19,4 +19,6 @@ public interface DynamicService {
     List<TopicBean> queryTopic();
 
     int updateDynamicDelflagById(List<Long> ids);
+
+    DynamicBean selectDynamicById(Long id);
 }

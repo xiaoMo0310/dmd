@@ -115,4 +115,17 @@ public class DynamicController {
         }
         return CommonResult.failed("删除失败");
     }
+
+    /**
+     * 根据动态id查询动态详情
+     * @param id
+     * @return
+     */
+    @ApiOperation("根据动态id查询动态详情")
+    @RequestMapping(value = "/selectDynamicById",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<DynamicBean> queryDynamicById(@RequestParam Long id) {
+        DynamicBean dynamicList = dynamicService.selectDynamicById(id);
+        return CommonResult.success(dynamicList);
+    }
 }

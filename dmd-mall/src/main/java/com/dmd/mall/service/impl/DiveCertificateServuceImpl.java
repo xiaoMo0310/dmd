@@ -41,13 +41,13 @@ public class DiveCertificateServuceImpl implements DiveCertificateServuce{
 
     @Override
     public int addDiveCertificate(CertificateAppBean certificateAppBean) {
-        /*//查询用户目前的最高证书等级
-        Integer identifierNum = diveCertificateMapper.selectCertificateId(certificateAppBean.getUserId());
-        Integer status = diveCertificateMapper.selectCertificateStatus(certificateAppBean.getUserId(),certificateAppBean.getCertificateId());
+        //查询用户目前的最高证书等级
+        //Integer identifierNum = diveCertificateMapper.selectCertificateId(certificateAppBean.getUserId());
+        //Integer status = diveCertificateMapper.selectCertificateStatus(certificateAppBean.getUserId(),certificateAppBean.getCertificateId());
         CertificateAppBean certificateAppBean2 = diveCertificateMapper.selectCertificateByStatus(certificateAppBean.getUserId(),certificateAppBean.getCertificateId());
-
-        //第一次上传
         Integer count = 0;
+        /*//第一次上传
+
 
         if (identifierNum == null){
             identifierNum = 0;
@@ -67,17 +67,21 @@ public class DiveCertificateServuceImpl implements DiveCertificateServuce{
             certificateAppBean.setStatus(0);
             int count2 = diveCertificateMapper.addDiveCertificate(certificateAppBean);
             count = count2;
-        }
-        else{
-            //用户重新上传去修改
-            if (certificateAppBean2!=null&&certificateAppBean2.getStatus()==2){
-                certificateAppBean.setId(certificateAppBean2.getId());
-                int count3 = diveCertificateMapper.updateCertificate(certificateAppBean);
-                count = count3;
-            }
         }*/
-        certificateAppBean.setCreateTime(new Date());
-        certificateAppBean.setStatus(0);
-        return diveCertificateMapper.addDiveCertificate(certificateAppBean);
+        //else{
+            //用户重新上传去修改
+        if (certificateAppBean2!=null){
+            certificateAppBean.setId(certificateAppBean2.getId());
+            int count3 = diveCertificateMapper.updateCertificate(certificateAppBean);
+            count = count3;
+        }else{
+            certificateAppBean.setCreateTime(new Date());
+            certificateAppBean.setStatus(0);
+            int count2 = diveCertificateMapper.addDiveCertificate(certificateAppBean);
+            count = count2;
+        }
+        /*}*/
+
+        return count;
     }
 }

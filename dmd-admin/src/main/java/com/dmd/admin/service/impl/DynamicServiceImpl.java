@@ -54,4 +54,9 @@ public class DynamicServiceImpl implements DynamicService {
         }
         return dynamicAmdinMappper.updateDynamicDelflag(ids);
     }
+
+    @Override
+    public DynamicBean selectDynamicById(Long id) {
+        return dynamicAmdinMappper.selectDynamicById(id);
+    }
 }

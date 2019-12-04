@@ -19,5 +19,7 @@ public interface DynamicAmdinMappper {
 
     int updateDynamicDelflag(List<Long> ids);
 
+    DynamicBean selectDynamicById(Long id);
+
     //List<DynamicBean> queryDynamicById(String[] ids);
 }
