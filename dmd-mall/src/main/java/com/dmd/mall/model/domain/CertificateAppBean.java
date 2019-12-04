@@ -60,6 +60,19 @@ public class CertificateAppBean {
      */
     private String certificateName;
 
+    /**
+     * 证书等级
+     */
+    private String certificateLevel;
+
+    public String getCertificateLevel() {
+        return certificateLevel;
+    }
+
+    public void setCertificateLevel(String certificateLevel) {
+        this.certificateLevel = certificateLevel;
+    }
+
     public String getCertificateName() {
         return certificateName;
     }
@@ -153,6 +166,7 @@ public class CertificateAppBean {
                 ", operator='" + operator + '\'' +
                 ", reason='" + reason + '\'' +
                 ", certificateName='" + certificateName + '\'' +
+                ", certificateLevel='" + certificateLevel + '\'' +
                 '}';
     }
 }

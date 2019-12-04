@@ -39,7 +39,7 @@
 
 
     <select id="queryDiveCertificate" resultMap="CertificateMap" parameterType="java.lang.Long">
-        SELECT da.id,da.pictures,da.status,da.reason,pc.english_shorthand AS certificateName,da.certificate_id
+        SELECT da.id,da.pictures,da.status,da.reason,pc.english_shorthand AS certificateName,da.certificate_id,pc.certificate_level AS certificateLevel
         FROM dmd_dive_certificate_app da
         LEFT JOIN
         pms_certificate pc ON da.certificate_id = pc.id

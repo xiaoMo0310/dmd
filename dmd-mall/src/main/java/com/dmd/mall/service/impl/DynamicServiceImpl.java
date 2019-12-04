@@ -90,7 +90,6 @@ public class DynamicServiceImpl implements DynamicService{
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public int updateLikePraise(Long id) {
         //用戶ID
         LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();

@@ -2,6 +2,7 @@ package com.dmd.admin.service.impl;
 
 import com.dmd.admin.mapper.AnalysisReportMapper;
 import com.dmd.admin.model.vo.AnalysisReportVo;
+import com.dmd.admin.model.vo.SalesStatisticsVo;
 import com.dmd.admin.service.AnalysisReportSerrvice;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,11 @@ public class AnalysisReportSerrviceImpl implements AnalysisReportSerrvice{
     @Override
     public List<AnalysisReportVo> queryAnalysisReports(AnalysisReportVo analysisReportVo) {
         return analysisReportMapper.queryAnalysisReport(analysisReportVo);
+    }
+
+    @Override
+    public List<SalesStatisticsVo> querySalesStatistics(Integer pageNum, Integer pageSize, SalesStatisticsVo salesStatisticsVo) {
+        PageHelper.startPage(pageNum, pageSize);
+        return analysisReportMapper.querySalesStatistics(salesStatisticsVo);
     }
 }

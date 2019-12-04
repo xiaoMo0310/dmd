@@ -34,6 +34,7 @@ public class DiveCertificateServuceImpl implements DiveCertificateServuce{
             CertificateAppBean certificateAppBean = new CertificateAppBean();
             certificateAppBean.setCertificateId(pmsCertificates.get(i).getId().intValue());
             certificateAppBean.setCertificateName(pmsCertificates.get(i).getEnglishShorthand());
+            certificateAppBean.setCertificateLevel(pmsCertificates.get(i).getCertificateLevel());
             certificateAppBeans.add(certificateAppBean);
         }
         return certificateAppBeans;

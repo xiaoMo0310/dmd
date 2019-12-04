@@ -1,6 +1,7 @@
 package com.dmd.admin.mapper;
 
 import com.dmd.admin.model.vo.AnalysisReportVo;
+import com.dmd.admin.model.vo.SalesStatisticsVo;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ import java.util.List;
  */
 public interface AnalysisReportMapper {
     List<AnalysisReportVo> queryAnalysisReport(AnalysisReportVo analysisReportVo);
+
+    List<SalesStatisticsVo> querySalesStatistics(SalesStatisticsVo salesStatisticsVo);
 }
