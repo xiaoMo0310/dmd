@@ -21,7 +21,7 @@
     </sql>
 
     <select id="queryIntegralGifts" resultMap="BaseResultMap">
-        SELECT id,name,picture,integral,introduce,createtime,updatetime,status FROM dmd_integral_gift WHERE status = 0
+        SELECT id,name,picture,integral,introduce,createtime,updatetime,status FROM dmd_integral_gift WHERE status = 0 ORDER BY createtime DESC
     </select>
 
     <select id="queryIntegralGiftsById" parameterType="java.lang.Long" resultMap="BaseResultMap">
