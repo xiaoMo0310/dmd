@@ -70,6 +70,12 @@ public class UmsOrderStatisticsVo {
     private Date orderCreatedTime;
 
     /**
+     * 邀请码
+     */
+    @Excel(name = "订单类型", orderNum = "6",replace = {"普通订单_0", "潜水学证订单_1","积分商品订单_2"})
+    private Integer orderType;
+
+    /**
      * 下单查询开始时间
      */
     @ApiModelProperty(value = "下单查询开始时间")
@@ -87,7 +93,7 @@ public class UmsOrderStatisticsVo {
     /**
      * 付款时间
      */
-    @Excel(name = "付款时间", exportFormat = "yyyy-MM-dd HH:mm:ss", orderNum = "6", width = 20)
+    @Excel(name = "付款时间", exportFormat = "yyyy-MM-dd HH:mm:ss", orderNum = "7", width = 20)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone="GMT+8")
     private Date orderPaymentTime;
@@ -110,7 +116,7 @@ public class UmsOrderStatisticsVo {
     /**
      * 完成时间
      */
-    @Excel(name = "完成时间", exportFormat = "yyyy-MM-dd HH:mm:ss", orderNum = "7", width = 20)
+    @Excel(name = "完成时间", exportFormat = "yyyy-MM-dd HH:mm:ss", orderNum = "8", width = 20)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone="GMT+8")
     private Date orderEndTime;
@@ -133,12 +139,12 @@ public class UmsOrderStatisticsVo {
     /**
      * 商品名称
      */
-    @Excel(name = "商品名称", orderNum = "8", width = 20)
+    @Excel(name = "商品名称", orderNum = "9", width = 20)
     private String productName;
     /**
      * 订单金额
      */
-    @Excel(name = "订单金额(单位/RMN)", orderNum = "9",isStatistics = true, width = 20)
+    @Excel(name = "订单金额(单位/RMN)", orderNum = "10",isStatistics = true, width = 20)
     private BigDecimal total_amount;
 
     /**
@@ -152,7 +158,7 @@ public class UmsOrderStatisticsVo {
     /**
      * 付款金额
      */
-    @Excel(name = "付款金额(单位/RMN)", orderNum = "10",isStatistics = true, width = 20)
+    @Excel(name = "付款金额(单位/RMN)", orderNum = "11",isStatistics = true, width = 20)
     private BigDecimal payAmount;
 
     /**
@@ -166,12 +172,12 @@ public class UmsOrderStatisticsVo {
     /**
      * 积分抵扣金额
      */
-    @Excel(name = "积分抵扣金额(单位/RMN)", orderNum = "11",isStatistics = true, width = 30)
+    @Excel(name = "积分抵扣金额(单位/RMN)", orderNum = "12",isStatistics = true, width = 30)
     private BigDecimal integrationAmount;
     /**
      * 用户积分奖励
      */
-    @Excel(name = "用户积分奖励", orderNum = "12",isStatistics = true)
+    @Excel(name = "用户积分奖励", orderNum = "13",isStatistics = true)
     private Integer integration;
 
     /**
@@ -182,9 +188,17 @@ public class UmsOrderStatisticsVo {
     /**
      * 订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->售后; 6->取消
      */
-    @Excel(name = "订单状态", orderNum = "13",replace = {"待付款_0", "待发货_1","已发货_2","已完成_3","已关闭_4","售后_5","取消_6"})
+    @Excel(name = "订单状态", orderNum = "14",replace = {"待付款_0", "待发货_1","已发货_2","已完成_3","已关闭_4","售后_5","取消_6"})
     private Integer status;
 
+
+    public Integer getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
+    }
 
     public Long getMemberId() {
         return memberId;
@@ -413,6 +427,7 @@ public class UmsOrderStatisticsVo {
                 ", endUserCreateTime=" + endUserCreateTime +
                 ", invitationCode='" + invitationCode + '\'' +
                 ", orderCreatedTime=" + orderCreatedTime +
+                ", orderType=" + orderType +
                 ", startOrderCreatedTime=" + startOrderCreatedTime +
                 ", endOrderCreatedTime=" + endOrderCreatedTime +
                 ", orderPaymentTime=" + orderPaymentTime +

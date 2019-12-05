@@ -39,4 +39,9 @@ public class AnalysisReportSerrviceImpl implements AnalysisReportSerrvice{
         PageHelper.startPage(pageNum, pageSize);
         return analysisReportMapper.querySalesStatistics(salesStatisticsVo);
     }
+
+    @Override
+    public List<SalesStatisticsVo> querySalesStatisticsAll(SalesStatisticsVo salesStatisticsVo) {
+        return analysisReportMapper.querySalesStatistics(salesStatisticsVo);
+    }
 }

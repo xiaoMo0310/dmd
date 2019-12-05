@@ -18,4 +18,6 @@ public interface AnalysisReportSerrvice {
     List<AnalysisReportVo> queryAnalysisReports(AnalysisReportVo analysisReportVo);
 
     List<SalesStatisticsVo> querySalesStatistics(Integer pageNum, Integer pageSize, SalesStatisticsVo salesStatisticsVo);
+
+    List<SalesStatisticsVo> querySalesStatisticsAll(SalesStatisticsVo salesStatisticsVo);
 }

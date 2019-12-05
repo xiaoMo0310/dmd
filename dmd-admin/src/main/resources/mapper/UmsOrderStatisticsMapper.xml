@@ -18,6 +18,8 @@
         <result column="integration_amount" property="integrationAmount" />
         <result column="integration" property="integration" />
         <result column="status" property="status" />
+        <result column="order_type" property="orderType" />
+
 
     </resultMap>
 
@@ -36,7 +38,8 @@
         oo.pay_amount ,
         oo.integration_amount ,
         oo.integration,
-        oo.status
+        oo.status,
+        oo.order_type
     FROM
 	oms_order oo
 	LEFT JOIN ums_member um ON oo.member_id = um.id
@@ -50,6 +53,10 @@
             <!-- 用户ID -->
             <if test="memberId !=null">
                 and oo.member_id = #{memberId}
+            </if>
+            <!-- 订单类型 -->
+            <if test="orderType !=null">
+                and oo.order_type = #{orderType}
             </if>
             <!-- 用户名 -->
             <if test="userName !=null and userName != ''">
