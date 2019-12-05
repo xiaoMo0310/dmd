@@ -48,5 +48,9 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("阅读时间(分钟)")
     private String readTime;
 
+    @Column(name = "message_type")
+    @ApiModelProperty("消息类型(1:系统消息 2:点赞消息 3:评论消息)")
+    private Integer messageType;
+
 
 }

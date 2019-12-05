@@ -69,7 +69,7 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
      * @param coachId
      * @return
      */
-    PmsCourseProduct findCourseProductByCoachId(Long coachId, Long addressId);
+    PmsCourseProduct findCourseProductByCoachId(Long coachId, Long certificateId, Long addressId);
 
     List<PmsCourseProduct> queryPowerNotesPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct);
 
@@ -88,4 +88,12 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
      * @return
      */
     PmsCourseListVo settlementCourseProduct(LoginAuthDto loginAuthDto, Long productId);
+
+    /**
+     * 统计该证书商品的数量
+     * @param productType
+     * @param certificateId
+     * @return
+     */
+    long findCertificateProductNum(Integer productType, Long certificateId);
 }

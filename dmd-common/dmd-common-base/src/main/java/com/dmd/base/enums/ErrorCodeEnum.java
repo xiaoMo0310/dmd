@@ -546,6 +546,10 @@ public enum ErrorCodeEnum {
 	 */
 	OMS10031027(10031027, "积分商品不能售后"),
 	/**
+	 * OMS 10031028 error code enum.
+	 */
+	OMS10031028(10031028, "没有上级证书暂不购买该商品"),
+	/**
 	 * Opc 10040001 error code enum.
 	 */
 // 1004 对接中心

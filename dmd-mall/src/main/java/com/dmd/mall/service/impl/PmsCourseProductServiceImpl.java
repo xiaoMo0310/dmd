@@ -115,12 +115,19 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     @Override
     public CertificateProductVo findCertificateProduct(LoginAuthDto loginAuthDto, Long certificateId, Long addressId) {
         if(addressId == null){
+            //统计地址下的所有的证书商品
+            List<Map> maps = pmsCourseProductMapper.countCertificateProductNumByAddrrss(1, certificateId);
+            if(CollectionUtils.isEmpty(maps)){
+                throw new PmsBizException(ErrorCodeEnum.PMS10021030);
+            }
             //查询默认地址
             PmsPlayAddress pmsPlayAddress = playAddressService.selectDefaultAddress();
-            if(pmsPlayAddress == null){
-                addressId = 1L;
-            }else {
+            long defaultAddressCount = maps.stream().filter(map -> map.get("addressId") == pmsPlayAddress.getId() && (long) map.get("num") >0).count();
+            if(defaultAddressCount > 0){
                 addressId = pmsPlayAddress.getId();
+            }else {
+                Map maxMap = maps.stream().max(Comparator.comparingLong(map -> (long) map.get("num"))).orElse(new HashMap(0));
+                addressId = (Long) maxMap.get("addressId");
             }
         }
         CertificateProductVo certificateProductVo = new CertificateProductVo();
@@ -130,7 +137,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
             throw new PmsBizException(ErrorCodeEnum.PMS10021025, certificateId);
         }
         certificateProductVo.setPmsCertificateVo(certificateVo);
-        //查询发布改证书的所有的教练id
+        //查询发布该证书的所有的教练id
         List<Long> coachIds = pmsCourseProductMapper.selectCoachIdByCertificateId(certificateId, addressId, 1);
 
         //查询当前登录人的信息
@@ -141,7 +148,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
             return umsCoachVo;
         }).collect(Collectors.toList());
         if(CollectionUtils.isEmpty(coachVos)){
-            throw new PmsBizException(ErrorCodeEnum.PMS10021003);
+            throw new PmsBizException(ErrorCodeEnum.PMS10021030);
         }
         certificateProductVo.setUmsCoachVos(coachVos);
         //判断当前登录人和卖家的关系
@@ -152,7 +159,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
             if(coachVo.getInvitationCode().equals(umsMember.getInvitationCode())){
                 //查询该教练的商品信息
                 try {
-                    pmsCourseProduct = this.findCourseProductByCoachId(coachVo.getId(), addressId);
+                    pmsCourseProduct = this.findCourseProductByCoachId(coachVo.getId(), certificateId, addressId);
                     //将该教练的信息放到首位
                     coachVoA = coachVo;
                 } catch (Exception e) {
@@ -166,7 +173,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
             //查询等级高的教练的商品信息
             UmsCoachVo maxCoach = coachVos.stream().filter(Objects::nonNull).max(Comparator.comparingInt(umsCoachVo -> Integer.valueOf(umsCoachVo.getCoachGrade()))).orElse(new UmsCoachVo());
             try {
-                pmsCourseProduct = this.findCourseProductByCoachId(maxCoach.getId(), addressId);
+                pmsCourseProduct = this.findCourseProductByCoachId(maxCoach.getId(), certificateId, addressId);
                 coachVoA = maxCoach;
             } catch (Exception e) {
                 throw new PmsBizException(ErrorCodeEnum.PMS10021004, maxCoach.getId());
@@ -187,10 +194,10 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         //获取证书信息
         PmsCertificate pmsCertificate = certificateService.selectByKey(certificateProductDto.getAddressId());
         PmsCertificateVo pmsCertificateVo = new PmsCertificateVo();
-        BeanUtils.copyProperties(pmsCertificate, pmsCertificateVo);
         if(pmsCourseProduct == null || pmsCertificate == null){
             throw new PmsBizException(ErrorCodeEnum.PMS10021003);
         }
+        BeanUtils.copyProperties(pmsCertificate, pmsCertificateVo);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("pmsCourseProduct", pmsCourseProduct);
         jsonObject.put("pmsCertificate", pmsCertificateVo);
@@ -198,8 +205,8 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     }
 
     @Override
-    public PmsCourseProduct findCourseProductByCoachId(Long coachId, Long addressId){
-        return pmsCourseProductMapper.selectByCoachId(coachId, addressId);
+    public PmsCourseProduct findCourseProductByCoachId(Long coachId, Long certificateId, Long addressId){
+        return pmsCourseProductMapper.selectByCoachId(coachId, certificateId, addressId);
     }
 
     @Override
@@ -276,6 +283,11 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         UmsMember umsMember = umsMemberService.selectByLoginAuthDto(loginAuthDto);
         pmsCourseListVo.setAvailableIntegral(umsMember.getIntegration());
         return pmsCourseListVo;
+    }
+
+    @Override
+    public long findCertificateProductNum(Integer productType, Long certificateId) {
+        return pmsCourseProductMapper.countCertificateProductNum(productType, certificateId);
     }
 
     @Override

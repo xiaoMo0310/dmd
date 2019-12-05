@@ -18,7 +18,6 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableSwagger2
 @EnableTransactionManagement
 @MapperScan("com.dmd.mall.mapper")
-
 public class DmdMallApplication {
     public static void main(String[] args) {
         SpringApplication.run(DmdMallApplication.class, args);

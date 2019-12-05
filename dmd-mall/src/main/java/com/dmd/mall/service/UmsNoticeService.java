@@ -47,6 +47,7 @@ public interface UmsNoticeService extends IService<UmsNotice> {
      * @param loginAuthDto
      * @param userId
      * @param userType
+     * @param messageType
      * @param messageDto
      */
     void saveNoticeMessage(LoginAuthDto loginAuthDto, Long userId, String userType, Integer messageType, MessageDto messageDto);

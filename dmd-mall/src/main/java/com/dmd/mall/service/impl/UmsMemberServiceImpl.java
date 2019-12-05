@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.ChineseNickNameUtil;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.base.result.CommonResult;
@@ -18,12 +19,12 @@ import com.dmd.mall.util.CodeValidateUtil;
 import com.dmd.mall.util.JwtUtil;
 import com.dmd.mall.util.MailUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,17 +50,18 @@ import java.util.Set;
 public class UmsMemberServiceImpl implements UmsMemberService {
     private Logger logger= LoggerFactory.getLogger(getClass());
     @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
     private UmsMemberMapper memberMapper;
     @Autowired
     private ValidateCodeRepository validateCodeRepository;
-    /*@Autowired
-    private UmsMemberLevelMapper memberLevelMapper;*/
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
+    private RedisTemplate redisTemplate;
+    @Autowired
     private RedisService redisService;
+    /*@Autowired
+    @Qualifier("consumerTokenServices")
+    private ConsumerTokenServices consumerTokenServices;*/
     @Autowired
     private UmsIntegrationChangeLogService integrationChangeLogService;
     @Value("${redis.key.prefix.authCode}")
@@ -122,7 +124,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
             umsMember.setMemberLevelId(memberLevelList.get(0).getId());
         }*/
         //设置默认昵称
-        //umsMember.setNickName(new ChineseNickNameUtil().generateName());
+        umsMember.setNickname(ChineseNickNameUtil.generateName());
         memberMapper.insert(umsMember);
         if (invitationCode!=null){
             //在邀请码不等于null的时候自动加入邀请码对应的教练的群
@@ -311,5 +313,12 @@ public class UmsMemberServiceImpl implements UmsMemberService {
             return CommonResult.failed(e.getMessage());
         }
         return CommonResult.success(memberMapper.updatePhone(telephone,username));
+    }
+
+    @Override
+    public Boolean deleteRedisToken(String accessToken) {
+        //Boolean delete = redisTemplate.delete(RedisKeyUtil.getAccessTokenKey(accessToken));
+        //boolean delete = consumerTokenServices.revokeToken(accessToken);
+        return null;
     }
 }

@@ -36,8 +36,6 @@
         <result column="reason" property="reason" />
     </resultMap>
 
-
-
     <select id="queryDiveCertificate" resultMap="CertificateMap" parameterType="java.lang.Long">
         SELECT da.id,da.pictures,da.status,da.reason,pc.english_shorthand AS certificateName,da.certificate_id,pc.certificate_level AS certificateLevel
         FROM dmd_dive_certificate_app da
@@ -109,6 +107,13 @@
     </select>
     <select id="selectCertificateByStatus"  parameterType="map" resultMap="CertificateMap" >
         SELECT status,id FROM dmd_dive_certificate_app WHERE user_id = #{userId} AND certificate_id = #{certificateId}
+    </select>
+    <select id="queryUserCertificateList" resultType="com.dmd.mall.model.domain.CertificateAppBean">
+        SELECT da.id,da.pictures,da.status,da.reason,pc.english_shorthand AS certificateName,da.certificate_id,pc.certificate_level AS certificateLevel
+        FROM dmd_dive_certificate_app da
+        LEFT JOIN
+        pms_certificate pc ON da.certificate_id = pc.id
+        WHERE da.user_id = #{userId} and status = 1
     </select>
 
     <update id="updateCertificate" parameterType="com.dmd.mall.model.domain.CertificateAppBean">

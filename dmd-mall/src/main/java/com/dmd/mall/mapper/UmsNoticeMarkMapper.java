@@ -1,7 +1,7 @@
 package com.dmd.mall.mapper;
 
-import com.dmd.mall.model.domain.UmsNoticeMark;
 import com.dmd.core.mybatis.MyMapper;
+import com.dmd.mall.model.domain.UmsNoticeMark;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ import java.util.List;
 @Component
 public interface UmsNoticeMarkMapper extends MyMapper<UmsNoticeMark> {
 
-    List<UmsNoticeMark> selectByUserId(@Param("userId") Long userId, @Param("userType") String userType);
+    List<UmsNoticeMark> selectByUserId(@Param("userId") Long userId, @Param("userType") String userType, @Param("messageType") Integer messageType);
 
     int updateIsRead(@Param("userId") Long userId, @Param("userName") String userName, @Param("noticeId") Long noticeId, @Param("userType") String userType, int isRead);
 

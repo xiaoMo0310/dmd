@@ -2,7 +2,6 @@ package com.dmd.mall.mapper;
 
 import com.dmd.core.mybatis.MyMapper;
 import com.dmd.mall.model.domain.PmsCourseProduct;
-import com.dmd.mall.model.domain.PmsProduct;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.vo.PmsCourseListVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -43,7 +43,7 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
      * @param coachId
      * @return
      */
-    PmsCourseProduct selectByCoachId(@Param("coachId") Long coachId, @Param("addressId") Long addressId);
+    PmsCourseProduct selectByCoachId(@Param("coachId") Long coachId, @Param("certificateId") Long certificateId, @Param("addressId") Long addressId);
 
     PmsCourseProduct selectCourseProductByIds(CertificateProductDto certificateProductDto);
 
@@ -60,4 +60,8 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     int selectByUserId(Long userId);
 
     List<PmsCourseProduct> queryPmsCourseProductByType(@Param("content")String content);
+
+    long countCertificateProductNum(@Param("productType") Integer productType, @Param("certificateId") Long certificateId);
+
+    List<Map> countCertificateProductNumByAddrrss(@Param("productType") Integer productType, @Param("certificateId") Long certificateId);
 }

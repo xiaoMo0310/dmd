@@ -70,7 +70,11 @@
     <select id="selectByCoachId" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
         select <include refid="Base_Column_List"/>
         from pms_course_product
-        where user_id = #{coachId} and status = 1 and approval_status = 2 and product_type = 1
+        where user_id = #{coachId}
+        and certificate_id = #{certificateId}
+        and status = 1
+        and approval_status = 2
+        and product_type = 1
         <if test="addressId != null">
             and address_id = #{addressId}
         </if>
@@ -203,5 +207,20 @@
             AND pc.product_type = 1
         </where>
         ORDER BY pc.sales DESC
+    </select>
+    <select id="countCertificateProductNum" resultType="java.lang.Long">
+        select count(1) from pms_course_product
+        where product_type = #{productType}
+        and certificate_id = #{certificateId}
+        and approval_status = 2
+        and status = 1
+    </select>
+    <select id="countCertificateProductNumByAddrrss" resultType="java.util.Map">
+        select address_id addressId, count(1) num from pms_course_product
+        where product_type = #{productType}
+        and certificate_id = #{certificateId}
+        and approval_status = 2
+        and status = 1
+        group by address_id
     </select>
 </mapper>

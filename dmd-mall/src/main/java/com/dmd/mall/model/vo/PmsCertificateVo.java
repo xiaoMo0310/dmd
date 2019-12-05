@@ -39,4 +39,9 @@ public class PmsCertificateVo {
      * 简介
      */
     private String introduction;
+
+    /**
+     * 证书下商品数量
+     */
+    private Long productNum;
 }

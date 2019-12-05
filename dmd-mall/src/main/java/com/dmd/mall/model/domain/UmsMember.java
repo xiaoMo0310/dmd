@@ -78,7 +78,6 @@ public class UmsMember implements Serializable {
     @ApiModelProperty(value = "角色")
     private String role;
 
-
     @Column(name = "open_id")
     @ApiModelProperty("微信")
     private String openId;

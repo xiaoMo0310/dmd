@@ -79,7 +79,14 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
 
     @Override
     public OmsShipping selectByShippingIdUserId(LoginAuthDto loginAuthDto) {
-        return omsShippingMapper.selectDefaultAddressByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
+        OmsShipping omsShipping = omsShippingMapper.selectDefaultAddressByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
+        if(omsShipping == null){
+            List<OmsShipping> omsShippings = omsShippingMapper.selectByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
+            if(!CollectionUtils.isEmpty(omsShippings)){
+                omsShipping = omsShippings.get(0);
+            }
+        }
+        return omsShipping;
     }
 
     @Override
@@ -107,7 +114,7 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
         if (omsShipping == null) {
             setDefault(loginAuthDto, shippingId, OmsApiConstant.Shipping.DEFAULT);
         }else {
-            if(shippingId != omsShipping.getId()){
+            if(!shippingId.equals(omsShipping.getId())){
                 setDefault(loginAuthDto, omsShipping.getId(), OmsApiConstant.Shipping.NOT_DEFAULT);
             }
             setDefault(loginAuthDto, shippingId, OmsApiConstant.Shipping.DEFAULT);
@@ -116,12 +123,11 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
     }
 
     private void setDefault(LoginAuthDto loginAuthDto, Long shippingId, int isDefault) {
-        int result;
         OmsShipping updateNotDefault = new OmsShipping();
         updateNotDefault.setDefaultAddress(isDefault);
         updateNotDefault.setUpdateInfo(loginAuthDto);
         updateNotDefault.setId(shippingId);
-        result = omsShippingMapper.updateByPrimaryKeySelective(updateNotDefault);
+        int result = omsShippingMapper.updateByPrimaryKeySelective(updateNotDefault);
         if (result < 1) {
             throw new OmsBizException(ErrorCodeEnum.OMS10031008, shippingId);
         }

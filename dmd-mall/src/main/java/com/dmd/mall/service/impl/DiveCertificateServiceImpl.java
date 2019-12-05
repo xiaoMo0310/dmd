@@ -21,7 +21,7 @@ import java.util.List;
  * @date 2019/11/413:30
  */
 @Service
-public class DiveCertificateServuceImpl implements DiveCertificateServuce{
+public class DiveCertificateServiceImpl implements DiveCertificateServuce{
 
     @Autowired
     private DiveCertificateMapper diveCertificateMapper;
@@ -115,5 +115,11 @@ public class DiveCertificateServuceImpl implements DiveCertificateServuce{
         /*}*/
 
         return count;
+    }
+
+    @Override
+    public List<CertificateAppBean> queryUserCertificateList(Long userId) {
+        List<CertificateAppBean> certificateAppBeans = diveCertificateMapper.queryUserCertificateList(userId);
+        return certificateAppBeans;
     }
 }

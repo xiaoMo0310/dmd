@@ -32,5 +32,4 @@ public class TokenJwtEnhancer implements TokenEnhancer {
 		((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation(info);
 		return accessToken;
 	}
-
 }

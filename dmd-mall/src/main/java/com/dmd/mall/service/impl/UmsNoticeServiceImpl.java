@@ -45,7 +45,7 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
 
     @Override
     public List<UmsNoticeVo> findLoginUserMessage(LoginAuthDto loginAuthDto, Integer messageType) {
-        List<UmsNoticeMark> umsNoticeMarks = noticeMarkService.selectByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType());
+        List<UmsNoticeMark> umsNoticeMarks = noticeMarkService.selectByUserId(loginAuthDto.getUserId(), loginAuthDto.getUserType(), messageType);
         if(CollectionUtils.isEmpty(umsNoticeMarks)){
             //查询全部通知消息是否存在
             List<UmsNoticeVo> umsNoticeVos = getAllUmsNoticeVos(loginAuthDto, messageType);
@@ -80,7 +80,7 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
         List<UmsNoticeVo> umsNoticeVos = getAllUmsNoticeVos(loginAuthDto, messageType);
         umsNotices.addAll(umsNoticeVos);
         //排序
-        Collections.sort(umsNotices, Comparator.comparing(UmsNoticeVo::getCreatedTime));
+        Collections.sort(umsNotices, Comparator.comparing(UmsNoticeVo::getCreatedTime).reversed());
         return umsNotices;
     }
 
@@ -126,7 +126,7 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
     public void saveNoticeMessage(LoginAuthDto loginAuthDto, Long userId, String userType, Integer messageType, MessageDto messageDto) {
         UmsNotice umsNotice = saveUmsNotice(loginAuthDto, userType, 1, messageType, messageDto);
         //添加用户通知标志信息
-        noticeMarkService.insertNoticeMarkMessage(umsNotice.getId(), userId, userType, loginAuthDto);
+        noticeMarkService.insertNoticeMarkMessage(umsNotice.getId(), userId, userType, messageType, loginAuthDto);
     }
 
     public UmsNotice saveUmsNotice(LoginAuthDto loginAuthDto, String userType, Integer type, Integer messageType, MessageDto messageDto) {
