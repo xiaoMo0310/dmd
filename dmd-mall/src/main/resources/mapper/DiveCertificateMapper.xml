@@ -158,4 +158,9 @@
         #{certificateLevel,jdbcType=INTEGER}
         )
     </insert>
+
+    <select id="selectCertificateBydUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT COUNT(1) FROM dmd_dive_certificate_app WHERE user_id = #{userId}
+    </select>
+
 </mapper>

@@ -29,6 +29,18 @@ public class DiveCertificateServiceImpl implements DiveCertificateServuce{
     public List<CertificateAppBean> queryDiveCertificate(Long userId) {
         //我上传的证书数量
         List<CertificateAppBean> certificateAppBeans = diveCertificateMapper.queryDiveCertificate(userId);
+        //查询用户是否上传过证书
+        Long num = diveCertificateMapper.selectCertificateBydUserId(userId);
+        if (num == 0 ){//用户无任何上传
+            List<PmsCertificate> pmsCertificates = pmsCertificateMapper.selectCertificateList();
+            for (int i = 0; i <pmsCertificates.size() ; i++) {
+                CertificateAppBean certificateAppBean = new CertificateAppBean();
+                certificateAppBean.setCertificateName(pmsCertificates.get(i).getEnglishShorthand());
+                certificateAppBean.setCertificateLevel(pmsCertificates.get(i).getCertificateLevel());
+                certificateAppBean.setCertificateId(Integer.valueOf(pmsCertificates.get(i).getCertificateLevel()));
+                certificateAppBeans.add(certificateAppBean);
+            }
+        }
        /* //证书的数量
         List<PmsCertificate> pmsCertificates = pmsCertificateMapper.selectCertificateList();*/
 

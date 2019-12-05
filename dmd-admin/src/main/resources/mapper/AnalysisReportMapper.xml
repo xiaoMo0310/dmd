@@ -172,22 +172,17 @@
     </sql>
 
 
-
-
-
-
-
     <select id="querySalesStatistics" parameterType="com.dmd.admin.model.vo.SalesStatisticsVo" resultType="com.dmd.admin.model.vo.SalesStatisticsVo">
         SELECT
-        a0.created_time AS 时间,
-        a0.memberNum AS 注册人数,
-        a1.orderNum AS 订单量,
-        a2.paidNum AS 已付款订单量,
-        a3.pay_amount AS 订单付款金额 ,
-        a4.completed AS 待完成订单数量,
-        a5.completed_money AS 待完成订单金额,
-        a6.over AS 已完成订单数量,
-        a7.over_money AS 已完成订单金额
+        a0.created_time AS createTime,
+        a0.memberNum AS memberNum,
+        a1.orderNum AS orderNum,
+        a2.paidNum AS paidNum,
+        a3.pay_amount AS payAmount ,
+        a4.completed AS completed,
+        a5.completed_money AS completedMoney,
+        a6.over AS over,
+        a7.over_money AS overMoney
         FROM
         (
         SELECT
@@ -195,6 +190,7 @@
         count(*) AS memberNum
         FROM
         ums_member um
+        <include refid="saleStatisticsWhere"></include>
         GROUP BY
         date_format( um.create_time, '%Y-%m-%d' )
         ORDER BY
@@ -296,40 +292,36 @@
 
     <sql id="saleStatisticsWhere">
         <where>
-            <!-- 用户ID -->
-            <if test="orderType !=null">
-                and o1.order_type = #{orderType}
-            </if>
             <!-- 注册日期区间查询 -->
             <if test="startTime != null">
-                and o1.created_time >= #{startTime}
+                and um.create_time >= #{startTime}
             </if>
             <if test="endTime != null">
-                and o1.created_time &lt;= #{endTime}
+                and um.create_time &lt;= #{endTime}
             </if>
             <!-- 当日数据 -->
             <if test="identifier != null and identifier == 1">
-                and to_days( o1.created_time ) = to_days(now())
+                and to_days( um.create_time ) = to_days(now())
             </if>
             <!-- 一周数据 -->
             <if test="identifier != null and identifier == 2">
-                and DATE_SUB( CURDATE(), INTERVAL 7 DAY ) &lt;= date( o1.created_time )
+                and DATE_SUB( CURDATE(), INTERVAL 7 DAY ) &lt;= date( um.create_time )
             </if>
             <!-- 近三十天数据 -->
             <if test="identifier != null and identifier == 3">
-                and  DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;=date(o1.created_time)
+                and  DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;=date(um.create_time)
             </if>
             <!-- 本月数据 -->
             <if test="identifier != null and identifier == 4">
-                and  DATE_FORMAT( o1.created_time, '%Y%m' ) =DATE_FORMAT( CURDATE() , '%Y%m' )
+                and  DATE_FORMAT( um.create_time, '%Y%m' ) =DATE_FORMAT( CURDATE() , '%Y%m' )
             </if>
             <!-- 季度数据 -->
             <if test="identifier != null and identifier == 5">
-                and  QUARTER(o1.created_time)=QUARTER(now())
+                and  QUARTER(um.create_time)=QUARTER(now())
             </if>
             <!-- 本年数据 -->
             <if test="identifier != null and identifier == 6">
-                and  YEAR(o1.created_time)=YEAR(NOW())
+                and  YEAR(um.create_time)=YEAR(NOW())
             </if>
         </where>
     </sql>

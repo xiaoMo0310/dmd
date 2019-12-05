@@ -54,8 +54,8 @@
         FROM dmd_dive_certificate_app da
         LEFT JOIN
         pms_certificate pc ON da.certificate_id = pc.id
-        ORDER by da.status
         <include refid="diveCertificateWhere"></include>
+        ORDER by da.status
     </select>
     <!-- 公用标签 -->
     <sql id="diveCertificateWhere">

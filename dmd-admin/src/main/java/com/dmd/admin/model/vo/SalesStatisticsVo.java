@@ -89,6 +89,13 @@ public class SalesStatisticsVo {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endTime;
 
+    public Integer getMemberNum() {
+        return memberNum;
+    }
+
+    public void setMemberNum(Integer memberNum) {
+        this.memberNum = memberNum;
+    }
 
     public Date getStartTime() {
         return startTime;
@@ -188,8 +195,9 @@ public class SalesStatisticsVo {
 
     @Override
     public String toString() {
-        return "AnalysisReportVo{" +
+        return "SalesStatisticsVo{" +
                 "createTime=" + createTime +
+                ", memberNum=" + memberNum +
                 ", orderNum=" + orderNum +
                 ", paidNum=" + paidNum +
                 ", payAmount=" + payAmount +
