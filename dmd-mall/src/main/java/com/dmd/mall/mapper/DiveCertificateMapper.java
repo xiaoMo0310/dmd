@@ -37,4 +37,6 @@ public interface DiveCertificateMapper {
     Integer queryCertificateMax(Long userId);
 
     Integer queryCertificateMin(Long userId);
+
+    void addDiveCertificateAll(@Param("certificateLevel")String certificateLevel,@Param("userId")Long userId);
 }

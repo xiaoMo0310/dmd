@@ -51,4 +51,11 @@
         </where>
         ORDER BY certificate_level
     </select>
+
+
+    <select id="queryCertificateList" resultType="com.dmd.mall.model.domain.PmsCertificate">
+        select <include refid="Base_Column_List"/>
+        from pms_certificate
+        where status = 1 AND certificate_level &lt;&gt; #{certificateId}
+    </select>
 </mapper>

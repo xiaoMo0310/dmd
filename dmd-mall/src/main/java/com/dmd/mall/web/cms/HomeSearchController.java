@@ -2,6 +2,7 @@ package com.dmd.mall.web.cms;
 
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.*;
+import com.dmd.mall.model.vo.PmsCertificateVo;
 import com.dmd.mall.service.HomeSearchService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -73,7 +74,7 @@ public class HomeSearchController {
         }
         if(searchType == 3){
             //查寻学证产品
-            List<PmsCertificate> pmsProductList = homeSearchService.queryPmsCertificate(userId,content,searchType,pageNum,pageSize);
+            List<PmsCertificateVo> pmsProductList = homeSearchService.queryPmsCertificate(userId,content,searchType,pageNum,pageSize);
             list= pmsProductList;
         }
         if(searchType == 4){
@@ -106,8 +107,8 @@ public class HomeSearchController {
         }
         if(searchType == 2){
             //List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType,pageNum,pageSize);
-            List<PmsCourseProduct> pmsProductList = homeSearchService.queryPmsCourseProductContent(userId,content,searchType,pageNum,pageSize);
-            Map<Integer, List<PmsCourseProduct>> map = new HashMap<>();
+            List<PmsCourseProduct> pmsProductList = homeSearchService.queryPmsCourseProduct(userId,content,searchType,pageNum,pageSize);
+            /*Map<Integer, List<PmsCourseProduct>> map = new HashMap<>();
             for (PmsCourseProduct pmsProduct : pmsProductList) {
                 List<PmsCourseProduct> tmpList = map.get(pmsProduct.getProductType());
                 if (tmpList == null) {
@@ -118,10 +119,15 @@ public class HomeSearchController {
                     tmpList.add(pmsProduct);
                 }
             }
-            List valuesList = new ArrayList<>(map.values());
-            list= valuesList;
+            List valuesList = new ArrayList<>(map.values());*/
+            list= pmsProductList;
         }
         if(searchType == 3){
+            //查寻学证产品
+            List<PmsCertificateVo> pmsProductList = homeSearchService.queryPmsCertificateCount(userId,content,searchType,pageNum,pageSize);
+            list= pmsProductList;
+        }
+        if(searchType == 4){
             List<TopicBean> TopicList = homeSearchService.queryTopicContent(userId,content,searchType,pageNum,pageSize);
             list=TopicList;
         }

@@ -2,13 +2,18 @@ package com.dmd.mall.service.impl;
 
 import com.dmd.mall.mapper.*;
 import com.dmd.mall.model.domain.*;
+import com.dmd.mall.model.vo.PmsCertificateVo;
 import com.dmd.mall.service.HomeSearchService;
+import com.dmd.mall.service.PmsCourseProductService;
 import com.github.pagehelper.PageHelper;
 import org.checkerframework.checker.units.qual.A;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author ChenYanbing
@@ -37,6 +42,10 @@ public class HomeSearchServiceImpl implements HomeSearchService{
 
     @Autowired
     private PmsCourseProductMapper pmsCourseProductMapper;
+
+    @Autowired
+    private PmsCourseProductService courseProductService;
+
     @Override
     public List<DynamicBean> queryDynamic(Long userId, String content, Integer searchType,Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -91,10 +100,31 @@ public class HomeSearchServiceImpl implements HomeSearchService{
     }
 
     @Override
-    public List<PmsCertificate> queryPmsCertificate(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+    public List<PmsCertificateVo> queryPmsCertificate(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+        List<PmsCertificate> pmsCertificates = pmsCertificateMapper.queryPmsCertificate(content);
         PageHelper.startPage(pageNum, pageSize);
         homeSearchMapper.addHomeSearchRecord(userId,content,searchType);
-        return pmsCertificateMapper.queryPmsCertificate(content);
+        return pmsCertificates.stream().map(pmsCertificate -> {
+            PmsCertificateVo pmsCertificateVo = new PmsCertificateVo();
+            BeanUtils.copyProperties(pmsCertificate, pmsCertificateVo);
+            //查询是否有商品信息
+            long count = courseProductService.findCertificateProductNum(1, pmsCertificate.getId());
+            pmsCertificateVo.setProductNum(count);
+            return pmsCertificateVo;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PmsCertificateVo> queryPmsCertificateCount(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+        List<PmsCertificate> pmsCertificates = pmsCertificateMapper.queryPmsCertificate(content);
+        return pmsCertificates.stream().map(pmsCertificate -> {
+            PmsCertificateVo pmsCertificateVo = new PmsCertificateVo();
+            BeanUtils.copyProperties(pmsCertificate, pmsCertificateVo);
+            //查询是否有商品信息
+            long count = courseProductService.findCertificateProductNum(1, pmsCertificate.getId());
+            pmsCertificateVo.setProductNum(count);
+            return pmsCertificateVo;
+        }).collect(Collectors.toList());
     }
 
     /*@Override

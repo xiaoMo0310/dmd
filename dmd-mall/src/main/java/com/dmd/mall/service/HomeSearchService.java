@@ -1,6 +1,7 @@
 package com.dmd.mall.service;
 
 import com.dmd.mall.model.domain.*;
+import com.dmd.mall.model.vo.PmsCertificateVo;
 
 import java.util.List;
 
@@ -30,7 +31,9 @@ public interface HomeSearchService {
 
     List<TopicBean> queryTopicContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
 
-    List<PmsCertificate> queryPmsCertificate(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
+    List<PmsCertificateVo> queryPmsCertificate(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
+
+    List<PmsCertificateVo> queryPmsCertificateCount(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
 
     /*List<PmsProduct> queryPmsCourseProductByType(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
 

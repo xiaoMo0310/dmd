@@ -8,10 +8,7 @@ import com.dmd.mall.service.DiveCertificateServuce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author ChenYanbing
@@ -32,32 +29,8 @@ public class DiveCertificateServiceImpl implements DiveCertificateServuce{
     public List<CertificateAppBean> queryDiveCertificate(Long userId) {
         //我上传的证书数量
         List<CertificateAppBean> certificateAppBeans = diveCertificateMapper.queryDiveCertificate(userId);
-        //最大证书等级
-        Integer max = diveCertificateMapper.queryCertificateMax(userId);
-        //最小证书等级
-        Integer min = diveCertificateMapper.queryCertificateMin(userId);
-        //证书的数量
-        List<PmsCertificate> pmsCertificates = pmsCertificateMapper.selectCertificateList();
-
-        for (int i = 0 ; i < min; i++) {
-            CertificateAppBean certificateAppBean = new CertificateAppBean();
-            certificateAppBean.setCertificateId(pmsCertificates.get(i).getId().intValue());
-            certificateAppBean.setCertificateName(pmsCertificates.get(i).getEnglishShorthand());
-            certificateAppBean.setCertificateLevel(pmsCertificates.get(i).getCertificateLevel());
-            certificateAppBeans.add(certificateAppBean);
-        }
-
-
-
-        for (int i = max ; i < pmsCertificates.size(); i++) {
-            CertificateAppBean certificateAppBean = new CertificateAppBean();
-            certificateAppBean.setCertificateId(pmsCertificates.get(i).getId().intValue());
-            certificateAppBean.setCertificateName(pmsCertificates.get(i).getEnglishShorthand());
-            certificateAppBean.setCertificateLevel(pmsCertificates.get(i).getCertificateLevel());
-            certificateAppBeans.add(certificateAppBean);
-        }
-
-
+       /* //证书的数量
+        List<PmsCertificate> pmsCertificates = pmsCertificateMapper.selectCertificateList();*/
 
         /*for (int i = certificateAppBeans.size(); i < pmsCertificates.size(); i++) {
             CertificateAppBean certificateAppBean = new CertificateAppBean();
@@ -102,6 +75,7 @@ public class DiveCertificateServiceImpl implements DiveCertificateServuce{
         }*/
         //else{
             //用户重新上传去修改
+        //证书的数量
         if (certificateAppBean2!=null){
             certificateAppBean.setId(certificateAppBean2.getId());
             int count3 = diveCertificateMapper.updateCertificate(certificateAppBean);
@@ -110,6 +84,10 @@ public class DiveCertificateServiceImpl implements DiveCertificateServuce{
             certificateAppBean.setCreateTime(new Date());
             certificateAppBean.setStatus(0);
             int count2 = diveCertificateMapper.addDiveCertificate(certificateAppBean);
+            List<PmsCertificate> pmsCertificates = pmsCertificateMapper.queryCertificateList(certificateAppBean.getCertificateId());
+            for (int i = 0; i < pmsCertificates.size(); i++) {
+                diveCertificateMapper.addDiveCertificateAll(pmsCertificates.get(i).getCertificateLevel(),certificateAppBean.getUserId());
+            }
             count = count2;
         }
         /*}*/

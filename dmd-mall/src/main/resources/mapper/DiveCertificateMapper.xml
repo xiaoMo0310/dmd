@@ -42,7 +42,7 @@
         LEFT JOIN
         pms_certificate pc ON da.certificate_id = pc.id
         WHERE da.user_id = #{userId}
-        ORDER BY pc.certificate_level
+        ORDER BY da.certificate_id
     </select>
 
     <select id="queryUserId" resultType="java.lang.Integer" parameterType="java.lang.Long">
@@ -146,4 +146,16 @@
         WHERE da.user_id = #{userId}
 
     </select>
+
+    <insert id="addDiveCertificateAll" parameterType="map">
+        INSERT INTO dmd_dive_certificate_app
+        (
+        user_id,
+        certificate_id
+        )
+        VALUES (
+        #{userId,jdbcType=BIGINT},
+        #{certificateLevel,jdbcType=INTEGER}
+        )
+    </insert>
 </mapper>

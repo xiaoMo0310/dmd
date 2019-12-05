@@ -23,4 +23,6 @@ public interface PmsCertificateMapper extends MyMapper<PmsCertificate> {
     List<PmsCertificate> selectCertificateList();
 
     List<PmsCertificate> queryPmsCertificate(@Param("content")String content);
+
+    List<PmsCertificate> queryCertificateList(Integer certificateId);
 }
