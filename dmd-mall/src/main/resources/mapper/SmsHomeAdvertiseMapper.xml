@@ -27,7 +27,7 @@
 <select id="selectAdvertisePicList" resultType="com.dmd.mall.model.domain.SmsHomeAdvertise">
     select <include refid="Base_Column_List"/>
     from sms_home_advertise
-    where type = 1 and status = 1 and now() BETWEEN start_time and end_time order by sort desc
+    where type = #{type} and status = 1 and now() BETWEEN start_time and end_time order by sort desc
 </select>
 
 </mapper>

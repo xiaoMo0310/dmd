@@ -5,6 +5,7 @@ import com.dmd.mall.mapper.PmsCertificateMapper;
 import com.dmd.mall.model.domain.PmsCertificate;
 import com.dmd.mall.model.vo.PmsCertificateVo;
 import com.dmd.mall.service.PmsCertificateService;
+import com.dmd.mall.service.PmsCourseProductService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,8 @@ PmsCertificateServiceImpl extends BaseService<PmsCertificate> implements PmsCert
 
     @Autowired
     private PmsCertificateMapper pmsCertificateMapper;
+    @Autowired
+    private PmsCourseProductService courseProductService;
 
     @Override
     public List<PmsCertificateVo> selectCertificateList() {
@@ -35,6 +38,9 @@ PmsCertificateServiceImpl extends BaseService<PmsCertificate> implements PmsCert
         return pmsCertificates.stream().map(pmsCertificate -> {
             PmsCertificateVo pmsCertificateVo = new PmsCertificateVo();
             BeanUtils.copyProperties(pmsCertificate, pmsCertificateVo);
+            //查询是否有商品信息
+            long count = courseProductService.findCertificateProductNum(1, pmsCertificate.getId());
+            pmsCertificateVo.setProductNum(count);
             return pmsCertificateVo;
         }).collect(Collectors.toList());
     }

@@ -3,6 +3,7 @@ package com.dmd.mall.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.BigDecimalUtil;
 import com.dmd.IdWorker;
+import com.dmd.PublicUtil;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
@@ -20,15 +21,12 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -69,7 +67,9 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     @Autowired
     private OmsOrderReturnApplyService orderReturnApplyService;
     @Autowired
-    private RedisTemplate redisTemplate;
+    private DiveCertificateServuce diveCertificateServuce;
+    @Autowired
+    private PmsCertificateService pmsCertificateService;
     @Autowired
     private IdWorker idWorker;
 
@@ -223,16 +223,28 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     @Override
     @Transactional(rollbackFor = Exception.class)
     public JSONObject createCourseProductOrder(LoginAuthDto loginAuthDto, PmsCourseOrderDto orderParamDto) {
-        //查询用户的信息
-        UmsMember umsMember = umsMemberService.getById(loginAuthDto.getUserId());
         //查询潜水学证商品信息
         PmsCourseProduct pmsProduct = courseProductService.selectByKey(orderParamDto.getProductId());
         if(pmsProduct == null){
             throw new PmsBizException(ErrorCodeEnum.PMS10021004);
         }
-        //判断商品的信息
         //产品类型(1:学证 2:潜水)
         Integer productType = pmsProduct.getProductType();
+        if(productType == 1){
+            //查询证书的信息
+            PmsCertificateVo pmsCertificateVo = pmsCertificateService.selectCertificateById(pmsProduct.getCertificateId());
+            //判断用户证书信息
+            List<CertificateAppBean> certificateAppBeans = diveCertificateServuce.queryUserCertificateList(loginAuthDto.getUserId());
+            CertificateAppBean appBean = certificateAppBeans.stream().max(Comparator.comparingInt(certificateAppBean -> Integer.valueOf(certificateAppBean.getCertificateLevel()))).orElse(new CertificateAppBean());
+            if(PublicUtil.isEmpty(appBean) && !pmsCertificateVo.getCertificateLevel().equals("1")){
+                throw new OmsBizException(ErrorCodeEnum.OMS10031028);
+            }
+            if(!PublicUtil.isEmpty(appBean) && Integer.valueOf(pmsCertificateVo.getCertificateLevel()) > (Integer.valueOf(appBean.getCertificateLevel()) + 1)){
+                throw new OmsBizException(ErrorCodeEnum.OMS10031028);
+            }
+        }
+        //查询用户的信息
+        UmsMember umsMember = umsMemberService.getById(loginAuthDto.getUserId());
         //封装商品订单详情数据
         OmsOrderItem orderItem = courseProductService.createOrderItem(pmsProduct);
         //订单积分抵扣的钱数
@@ -373,6 +385,16 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             }
             order.setEndTime(new Date());
             order.setConfirmStatus(1);
+            //完成的订单商品下架
+            if(order.getOrderType() == 1){
+                List<OmsOrderItem> omsOrderItems = omsOrderItemService.getListByOrderNoUserId(order.getOrderSn());
+                omsOrderItems.forEach(omsOrderItem -> {
+                    PmsCourseProduct pmsCourseProduct = new PmsCourseProduct();
+                    pmsCourseProduct.setId(omsOrderItem.getProductId());
+                    pmsCourseProduct.setStatus(2);
+                    courseProductService.update(pmsCourseProduct);
+                });
+            }
         }else if(status  == 4){
             order.setCloseTime(new Date());
         }
@@ -427,7 +449,8 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
      */
     private OmsOrder assembleOrder(UmsMember umsMember, String userType, Long shopId, OrderCreateVo orderCreateVo, BigDecimal payment, BigDecimal postage, BigDecimal integrationAmount, BigDecimal promotionAmount, LoginAuthDto loginAuthDto, String remark,Boolean isIntegralProduct, Boolean isCourseProduct) {
         OmsOrder order = new OmsOrder();
-        //order.setStatus(OmsApiConstant.OrderStatusEnum.NO_PAY.getCode());
+        /*order.setStatus(OmsApiConstant.OrderStatusEnum.NO_PAY.getCode());
+        order.setPayType(0);*/
         //todo 假数据
         order.setStatus(OmsApiConstant.OrderStatusEnum.PAID.getCode());
         order.setPayType(1);
@@ -445,7 +468,6 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         order.setTotalAmount(payment);
         //实际需要支付的金额
         order.setPayAmount(payment.add(postage).subtract(integrationAmount).subtract(promotionAmount));
-        order.setPayType(0);
         order.setOrderType(0);
         order.setApprovalStatus(2);
         order.setShippingId(orderCreateVo.getShippingId());

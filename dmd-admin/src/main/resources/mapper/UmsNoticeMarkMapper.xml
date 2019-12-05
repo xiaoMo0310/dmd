@@ -16,6 +16,7 @@
         <result column="user_type" property="userType" />
         <result column="is_read" property="isRead" />
         <result column="read_time" property="readTime" />
+        <result column="message_type" property="messageType" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -27,7 +28,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        notice_id, user_id, user_type, is_read, read_time
+        notice_id, user_id, user_type, is_read, read_time, message_type
     </sql>
     <select id="selectByNoticeId" resultType="com.dmd.admin.model.vo.NoticeMarkVo">
         select

@@ -8,13 +8,17 @@ import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.dto.FindPasswordDto;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.JwtUtil;
+import com.dmd.wrapper.WrapMapper;
+import com.dmd.wrapper.Wrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -82,5 +86,16 @@ public class UmsMemberAuthenticationController {
         LoginAuthDto loginUser = RequestUtil.getLoginUser();
         UmsMember umsMember = memberService.getById(loginUser.getUserId());
         return CommonResult.success(umsMember);
+    }
+
+    @PostMapping(value = "/user/logout")
+    @ApiOperation(httpMethod = "POST", value = "登出")
+    public Wrapper loginAfter(HttpServletRequest request) {
+        String token = StringUtils.substringAfter(request.getHeader(HttpHeaders.AUTHORIZATION), "Bearer ");
+        System.out.println(token);
+        if (!StringUtils.isEmpty(token)) {
+            Boolean result = memberService.deleteRedisToken(token);
+        }
+        return WrapMapper.ok();
     }
 }

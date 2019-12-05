@@ -85,4 +85,10 @@ public interface UmsMemberService {
     UmsMember selectByLoginAuthDto(LoginAuthDto loginAuthDto);
     @Transactional
     CommonResult updatePhone(String telephone,String authCode,HttpServletRequest request);
+
+    /**
+     * 退出登录删除redis token
+     * @param accessToken
+     */
+    Boolean deleteRedisToken(String accessToken);
 }

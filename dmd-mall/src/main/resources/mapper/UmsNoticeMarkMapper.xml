@@ -16,6 +16,7 @@
         <result column="user_type" property="userType" />
         <result column="is_read" property="isRead" />
         <result column="read_time" property="readTime" />
+        <result column="message_type" property="messageType" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -27,7 +28,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        notice_id, user_id, user_type, is_read, read_time
+        notice_id, user_id, user_type, is_read, read_time, message_type
     </sql>
     <update id="updateIsRead">
         UPDATE ums_notice_mark SET
@@ -41,7 +42,8 @@
     <select id="selectByUserId" resultType="com.dmd.mall.model.domain.UmsNoticeMark">
         select <include refid="Base_Column_List"/>
         from ums_notice_mark
-        where user_id = #{userId} and user_type = #{userType}
+        where user_id = #{userId} and user_type = #{userType} and message_type = #{messageType}
+        order by created_time desc
     </select>
     <select id="selectNoticeMarkMessageByNoticeId" resultType="com.dmd.mall.model.domain.UmsNoticeMark">
         select <include refid="Base_Column_List"/>

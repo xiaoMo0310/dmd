@@ -34,17 +34,25 @@ public class UmsNoticeMarkServiceImpl extends BaseService<UmsNoticeMark> impleme
     private UmsNoticeService umsNoticeService;
 
     @Override
-    public List<UmsNoticeMark> selectByUserId(Long userId, String userType) {
-        return umsNoticeMarkMapper.selectByUserId(userId, userType);
+    public List<UmsNoticeMark> selectByUserId(Long userId, String userType, Integer messageType) {
+        return umsNoticeMarkMapper.selectByUserId(userId, userType, messageType);
     }
 
     @Override
     public int updateIsRead(LoginAuthDto loginAuthDto, Long noticeId) {
         //查询消息
         UmsNotice umsNotice = umsNoticeService.selectByKey(noticeId);
-        int result;
+        int result = 0;
         if(umsNotice.getType() == 3){
-            result = insertNoticeMarkMessage(noticeId, loginAuthDto.getUserId(), loginAuthDto.getUserType(), loginAuthDto);
+            //查询用户标记i信息是否存在
+            UmsNoticeMark umsNoticeMark = umsNoticeMarkMapper.selectNoticeMarkMessageByNoticeId(umsNotice.getId(), loginAuthDto.getUserId(), loginAuthDto.getUserType());
+            if(umsNoticeMark == null){
+                result = insertNoticeMarkMessage(noticeId, loginAuthDto.getUserId(), loginAuthDto.getUserType(), umsNotice.getMessageType(), loginAuthDto);
+            }else {
+                umsNoticeMark.setIsRead(1);
+                umsNoticeMark.setUpdateInfo(loginAuthDto);
+                result = umsNoticeMarkMapper.updateByPrimaryKeySelective(umsNoticeMark);
+            }
         }else {
             result = umsNoticeMarkMapper.updateIsRead(loginAuthDto.getUserId(), loginAuthDto.getUserName(), noticeId, loginAuthDto.getUserType(), 1);
         }
@@ -57,12 +65,13 @@ public class UmsNoticeMarkServiceImpl extends BaseService<UmsNoticeMark> impleme
     }
 
     @Override
-    public int insertNoticeMarkMessage(Long noticeId, Long userId, String userType, LoginAuthDto loginAuthDto) {
+    public int insertNoticeMarkMessage(Long noticeId, Long userId, String userType, Integer messageType, LoginAuthDto loginAuthDto) {
         UmsNoticeMark umsNoticeMark = new UmsNoticeMark();
         umsNoticeMark.setIsRead(0);
         umsNoticeMark.setNoticeId(noticeId);
         umsNoticeMark.setUserId(userId);
         umsNoticeMark.setUserType(userType);
+        umsNoticeMark.setMessageType(messageType);
         umsNoticeMark.setReadTime("0");
         umsNoticeMark.setUpdateInfo(loginAuthDto);
         return umsNoticeMarkMapper.insertSelective(umsNoticeMark);

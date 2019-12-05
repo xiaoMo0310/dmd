@@ -28,6 +28,7 @@ public class SmsHomeAdvertiseServiceImpl extends BaseService<SmsHomeAdvertise> i
 
     @Override
     public List<SmsHomeAdvertise> selectAdvertisePicList(Integer type) {
-        return smsHomeAdvertiseMapper.selectAdvertisePicList(type);
+        List<SmsHomeAdvertise> homeAdvertises = smsHomeAdvertiseMapper.selectAdvertisePicList(type);
+        return homeAdvertises;
     }
 }
