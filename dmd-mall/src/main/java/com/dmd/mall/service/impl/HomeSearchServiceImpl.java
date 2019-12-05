@@ -4,6 +4,7 @@ import com.dmd.mall.mapper.*;
 import com.dmd.mall.model.domain.*;
 import com.dmd.mall.service.HomeSearchService;
 import com.github.pagehelper.PageHelper;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,9 @@ public class HomeSearchServiceImpl implements HomeSearchService{
 
     @Autowired
     private TopicMapper topicMapper;
+
+    @Autowired
+    private PmsCertificateMapper pmsCertificateMapper;
 
     @Autowired
     private PmsCourseProductMapper pmsCourseProductMapper;
@@ -84,6 +88,13 @@ public class HomeSearchServiceImpl implements HomeSearchService{
     @Override
     public List<TopicBean> queryTopicContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
         return topicMapper.queryTopicByContent(content);
+    }
+
+    @Override
+    public List<PmsCertificate> queryPmsCertificate(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        homeSearchMapper.addHomeSearchRecord(userId,content,searchType);
+        return pmsCertificateMapper.queryPmsCertificate(content);
     }
 
     /*@Override

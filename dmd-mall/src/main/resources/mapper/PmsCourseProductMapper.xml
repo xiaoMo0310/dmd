@@ -171,6 +171,7 @@
             </if>
             AND pc.approval_status = 2
             AND pc.status = 1
+            AND pc.product_type = 2
         </where>
         ORDER BY pc.sales DESC
     </select>

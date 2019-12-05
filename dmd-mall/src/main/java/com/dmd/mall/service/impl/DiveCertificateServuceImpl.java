@@ -8,6 +8,8 @@ import com.dmd.mall.service.DiveCertificateServuce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -28,15 +30,44 @@ public class DiveCertificateServuceImpl implements DiveCertificateServuce{
 
     @Override
     public List<CertificateAppBean> queryDiveCertificate(Long userId) {
+        //我上传的证书数量
         List<CertificateAppBean> certificateAppBeans = diveCertificateMapper.queryDiveCertificate(userId);
+        //最大证书等级
+        Integer max = diveCertificateMapper.queryCertificateMax(userId);
+        //最小证书等级
+        Integer min = diveCertificateMapper.queryCertificateMin(userId);
+        //证书的数量
         List<PmsCertificate> pmsCertificates = pmsCertificateMapper.selectCertificateList();
-        for (int i = certificateAppBeans.size(); i < pmsCertificates.size(); i++) {
+
+        for (int i = 0 ; i < min; i++) {
             CertificateAppBean certificateAppBean = new CertificateAppBean();
             certificateAppBean.setCertificateId(pmsCertificates.get(i).getId().intValue());
             certificateAppBean.setCertificateName(pmsCertificates.get(i).getEnglishShorthand());
             certificateAppBean.setCertificateLevel(pmsCertificates.get(i).getCertificateLevel());
             certificateAppBeans.add(certificateAppBean);
         }
+
+
+
+        for (int i = max ; i < pmsCertificates.size(); i++) {
+            CertificateAppBean certificateAppBean = new CertificateAppBean();
+            certificateAppBean.setCertificateId(pmsCertificates.get(i).getId().intValue());
+            certificateAppBean.setCertificateName(pmsCertificates.get(i).getEnglishShorthand());
+            certificateAppBean.setCertificateLevel(pmsCertificates.get(i).getCertificateLevel());
+            certificateAppBeans.add(certificateAppBean);
+        }
+
+
+
+        /*for (int i = certificateAppBeans.size(); i < pmsCertificates.size(); i++) {
+            CertificateAppBean certificateAppBean = new CertificateAppBean();
+            certificateAppBean.setCertificateId(pmsCertificates.get(i).getId().intValue());
+            certificateAppBean.setCertificateName(pmsCertificates.get(i).getEnglishShorthand());
+            certificateAppBean.setCertificateLevel(pmsCertificates.get(i).getCertificateLevel());
+            certificateAppBeans.add(certificateAppBean);
+        }
+
+        Collections.sort(certificateAppBeans, Comparator.comparing(CertificateAppBean::getCertificateLevel));*/
         return certificateAppBeans;
     }
 

@@ -31,4 +31,8 @@ public interface DiveCertificateMapper {
     CertificateAppBean selectCertificateByStatus(@Param("userId")Long userId,@Param("certificateId") Integer certificateId);
 
     int updateCertificate(CertificateAppBean certificateAppBean);
+
+    Integer queryCertificateMax(Long userId);
+
+    Integer queryCertificateMin(Long userId);
 }

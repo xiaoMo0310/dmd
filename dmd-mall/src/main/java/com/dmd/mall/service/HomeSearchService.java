@@ -30,6 +30,8 @@ public interface HomeSearchService {
 
     List<TopicBean> queryTopicContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
 
+    List<PmsCertificate> queryPmsCertificate(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
+
     /*List<PmsProduct> queryPmsCourseProductByType(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);
 
     List<PmsProduct> queryPmsCourseProductByTypeContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize);*/

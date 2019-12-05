@@ -37,4 +37,18 @@
         where status = 1
     </select>
 
+    <select id="queryPmsCertificate" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        pms_certificate
+        <where>
+            <if test="content != null and content != ''">
+                AND (chinese_name LIKE CONCAT(CONCAT('%',#{content}),'%') or english_name LIKE CONCAT(CONCAT('%',#{content}),'%')
+                or english_shorthand LIKE CONCAT(CONCAT('%',#{content}),'%') )
+            </if>
+            AND status = 1
+        </where>
+        ORDER BY certificate_level
+    </select>
 </mapper>

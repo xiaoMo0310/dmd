@@ -44,6 +44,7 @@
         LEFT JOIN
         pms_certificate pc ON da.certificate_id = pc.id
         WHERE da.user_id = #{userId}
+        ORDER BY pc.certificate_level
     </select>
 
     <select id="queryUserId" resultType="java.lang.Integer" parameterType="java.lang.Long">
@@ -123,4 +124,21 @@
         where
         id = #{id}
     </update>
+
+    <select id="queryCertificateMax" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT MAX(pc.certificate_level)
+        FROM dmd_dive_certificate_app da
+        LEFT JOIN
+        pms_certificate pc ON da.certificate_id = pc.id
+        WHERE da.user_id = #{userId}
+    </select>
+
+    <select id="queryCertificateMin" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT MIN(pc.certificate_level)
+        FROM dmd_dive_certificate_app da
+        LEFT JOIN
+        pms_certificate pc ON da.certificate_id = pc.id
+        WHERE da.user_id = #{userId}
+
+    </select>
 </mapper>

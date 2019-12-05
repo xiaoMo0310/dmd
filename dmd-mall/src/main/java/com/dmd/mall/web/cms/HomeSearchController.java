@@ -32,6 +32,7 @@ public class HomeSearchController {
     @Autowired
     private HomeSearchService homeSearchService;
 
+
     /**
      * 首页--搜索动态/商品/话题添加历史搜索记录
      * @param content
@@ -53,10 +54,10 @@ public class HomeSearchController {
             list=dynamicList;
         }
         if(searchType == 2){
-            //查寻产品
+            //查寻潜水产品产品
             //List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType,pageNum,pageSize);
             List<PmsCourseProduct> pmsProductList = homeSearchService.queryPmsCourseProduct(userId,content,searchType,pageNum,pageSize);
-            Map<Integer, List<PmsCourseProduct>> map = new HashMap<>();
+            /*Map<Integer, List<PmsCourseProduct>> map = new HashMap<>();
             for (PmsCourseProduct pmsProduct : pmsProductList) {
                 List<PmsCourseProduct> tmpList = map.get(pmsProduct.getProductType());
                 if (tmpList == null) {
@@ -67,10 +68,15 @@ public class HomeSearchController {
                     tmpList.add(pmsProduct);
                 }
             }
-            List valuesList = new ArrayList<>(map.values());
-            list= valuesList;
+            List valuesList = new ArrayList<>(map.values());*/
+            list= pmsProductList;
         }
         if(searchType == 3){
+            //查寻学证产品
+            List<PmsCertificate> pmsProductList = homeSearchService.queryPmsCertificate(userId,content,searchType,pageNum,pageSize);
+            list= pmsProductList;
+        }
+        if(searchType == 4){
             List<TopicBean> TopicList = homeSearchService.queryTopic(userId,content,searchType,pageNum,pageSize);
             list=TopicList;
         }

@@ -3,6 +3,7 @@ package com.dmd.mall.mapper;
 import com.dmd.mall.model.domain.PmsCertificate;
 import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,4 +21,6 @@ import java.util.List;
 public interface PmsCertificateMapper extends MyMapper<PmsCertificate> {
 
     List<PmsCertificate> selectCertificateList();
+
+    List<PmsCertificate> queryPmsCertificate(@Param("content")String content);
 }
