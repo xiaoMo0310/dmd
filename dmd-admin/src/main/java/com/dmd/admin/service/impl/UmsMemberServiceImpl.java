@@ -1,12 +1,14 @@
 package com.dmd.admin.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dmd.BeanUtils;
 import com.dmd.DateUtil;
 import com.dmd.admin.mapper.UmsMemberLoginLogMapper;
 import com.dmd.admin.mapper.UmsMemberMapper;
 import com.dmd.admin.model.domain.UmsMember;
 import com.dmd.admin.model.domain.UmsMemberExample;
 import com.dmd.admin.model.dto.UmsUserQueryParam;
+import com.dmd.admin.model.vo.UmsUserVo;
 import com.dmd.admin.service.UmsMemberService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -112,6 +114,14 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         thirty = Double.valueOf(new BigDecimal(thirty).setScale(2, RoundingMode.DOWN).multiply(new BigDecimal("100")).toString());
         jsonObject.put("thirty", thirty);
         return jsonObject;
+    }
+
+    @Override
+    public UmsUserVo selectUserById(Long id) {
+        UmsMember umsMember = umsMemberMapper.selectByPrimaryKey(id);
+        UmsUserVo umsUserVo = new UmsUserVo();
+        BeanUtils.copyProperties(umsMember, umsUserVo);
+        return umsUserVo;
     }
 
     @Override

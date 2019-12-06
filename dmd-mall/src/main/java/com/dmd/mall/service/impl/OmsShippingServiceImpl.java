@@ -116,8 +116,8 @@ public class OmsShippingServiceImpl extends BaseService<OmsShipping> implements 
         }else {
             if(!shippingId.equals(omsShipping.getId())){
                 setDefault(loginAuthDto, omsShipping.getId(), OmsApiConstant.Shipping.NOT_DEFAULT);
+                setDefault(loginAuthDto, shippingId, OmsApiConstant.Shipping.DEFAULT);
             }
-            setDefault(loginAuthDto, shippingId, OmsApiConstant.Shipping.DEFAULT);
         }
         return 1;
     }

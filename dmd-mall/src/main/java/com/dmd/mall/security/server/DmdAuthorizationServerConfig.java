@@ -41,7 +41,7 @@ public class DmdAuthorizationServerConfig extends AuthorizationServerConfigurerA
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory().withClient("dmd").secret("$2a$10$z6SpAlsdHhTRswyFa/R3mucOk8Dgp76TxdjITmR7pPUDAFeVx.4wm")
-                .accessTokenValiditySeconds(90000)
+                .accessTokenValiditySeconds(999999999)
                 .refreshTokenValiditySeconds(999999999)
                 .authorizedGrantTypes("refresh_token","password","authorization_code")
                 .scopes("all");

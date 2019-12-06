@@ -1,26 +1,24 @@
-package com.dmd.admin.model.domain;
+package com.dmd.admin.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
-
 /**
  * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/12/5 19:03
+ * @Description 用户信息 vo类
  */
 @Data
-public class UmsMember implements Serializable {
+public class UmsUserVo {
     private Long id;
 
     private Long memberLevelId;
 
     @ApiModelProperty(value = "用户名")
     private String username;
-
-    @ApiModelProperty(value = "密码")
-    private String password;
 
     @ApiModelProperty(value = "昵称")
     private String nickname;
@@ -53,21 +51,6 @@ public class UmsMember implements Serializable {
     @ApiModelProperty(value = "个性签名")
     private String personalizedSignature;
 
-    @ApiModelProperty(value = "用户来源")
-    private Integer sourceType;
-
-    @ApiModelProperty(value = "积分")
-    private Integer integration;
-
-    @ApiModelProperty(value = "成长值")
-    private Integer growth;
-
-    @ApiModelProperty(value = "剩余抽奖次数")
-    private Integer luckeyCount;
-
-    @ApiModelProperty(value = "历史积分数量")
-    private Integer historyIntegration;
-
     @ApiModelProperty(value = "身份证")
     private String identityCard;
 
@@ -77,15 +60,10 @@ public class UmsMember implements Serializable {
     @ApiModelProperty(value = "体重")
     private String weight;
 
-    @ApiModelProperty(value = "角色")
-    private String role;
-
     @ApiModelProperty(value = "邀请码")
     private String invitationCode;
 
     @ApiModelProperty(value = "个人图集")
     private String pics;
-
-    private static final long serialVersionUID = 1L;
 
 }

@@ -94,7 +94,11 @@
         left join ums_coach uc on oo.shop_id = uc.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
-        where oo.member_id = #{userId} and oo.status = #{status} and oo.user_type = #{userType} order by oo.update_time desc
+        where oo.member_id = #{userId}
+        and oo.status = #{status}
+        and oo.user_type = #{userType}
+        and oo.order_type = 1
+        order by oo.update_time desc
     </select>
     <select id="selectSellerOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
         SELECT <include refid="Course_Product_Order_List"/>
@@ -102,7 +106,11 @@
         left join ums_member um on oo.member_id = um.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
-        where oo.shop_id = #{coachId} and oo.status = #{status} and oo.user_type = #{userType} order by oo.update_time desc
+        where oo.shop_id = #{coachId}
+        and oo.status = #{status}
+        and oo.user_type = #{userType}
+        and oo.order_type = 1
+        order by oo.update_time desc
     </select>
     <select id="selectUserOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
         SELECT <include refid="Course_Product_Order_List"/>
@@ -139,5 +147,9 @@
         left join oms_order_item ooi
         on oo.id = ooi.order_id
         where status = #{status} and order_type = #{orderType}
+    </select>
+    <select id="countOrderNum" resultType="java.util.Map">
+        select #{status} status, count(1) count from oms_order
+        where member_id = #{userId} and user_type = #{userType} and status = #{status}
     </select>
 </mapper>

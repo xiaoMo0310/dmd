@@ -5,6 +5,8 @@ import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.OmsOrderReturnApply;
 import com.dmd.mall.model.dto.OrderReturnApplyDto;
 
+import java.util.Map;
+
 /**
  * <p>
  * 订单退货申请 服务类
@@ -35,4 +37,13 @@ public interface OmsOrderReturnApplyService extends IService<OmsOrderReturnApply
      * @return
      */
     OmsOrderReturnApply findReturnApplyMessageByOrderSn(String orderSn);
+
+    /**
+     * 统计退款订单数量
+     * @param userId
+     * @param userType
+     * @param status
+     * @return
+     */
+    Map countReturnOrderNum(Long userId, String userType, Integer status);
 }

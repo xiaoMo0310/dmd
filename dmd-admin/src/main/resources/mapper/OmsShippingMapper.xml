@@ -18,7 +18,7 @@
         <result column="province_id" property="provinceId" />
         <result column="province_name" property="provinceName" />
         <result column="city_id" property="cityId" />
-        <result column="city_name" property="cityName" />
+        <result column="city_name" jdbcType="VARCHAR" property="cityName" />
         <result column="district_id" property="districtId" />
         <result column="district_name" property="districtName" />
         <result column="detail_address" property="detailAddress" />

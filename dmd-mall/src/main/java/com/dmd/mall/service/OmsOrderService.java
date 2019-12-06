@@ -12,6 +12,7 @@ import com.dmd.mall.model.vo.OrderCreateVo;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -113,4 +114,11 @@ public interface OmsOrderService extends IService<OmsOrder> {
     OmsOrder getOmsOrderByOrderId(LoginAuthDto loginAuthDto, Long orderId);
 
     List<CourseOrderDetailVo> queryOrderListByStatus(Integer orderType, Integer status);
+
+    /**
+     * 统计各个状态下订单的数量
+     * @param loginAuthDto
+     * @return
+     */
+    List<Map> countOrderNum(LoginAuthDto loginAuthDto);
 }

@@ -98,17 +98,12 @@ public class UmsMember implements Serializable {
     @ApiModelProperty("邀请码")
     private String invitationCode;
 
-    @Column(name = "total_invitation")
-    @ApiModelProperty("邀请总的人数")
-    private Integer totalInvitation;
-
-    @Column(name = "personal_album")
-    @ApiModelProperty("个人影集")
-    private String personalAlbum;
-
     @Column(name = "personal_profile")
     @ApiModelProperty("个人简介")
     private String personalProfile;
+
+    @ApiModelProperty("个人图集")
+    private String pics;
 
     /**
      * 用户类型
@@ -149,8 +144,6 @@ public class UmsMember implements Serializable {
                 ", nickName='" + nickName + '\'' +
                 ", coachGrade='" + coachGrade + '\'' +
                 ", invitationCode='" + invitationCode + '\'' +
-                ", totalInvitation=" + totalInvitation +
-                ", personalAlbum='" + personalAlbum + '\'' +
                 ", personalProfile='" + personalProfile + '\'' +
                 ", loginType='" + loginType + '\'' +
                 '}';

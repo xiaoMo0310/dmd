@@ -3,6 +3,7 @@ package com.dmd.admin.web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.admin.model.dto.UmsUserQueryParam;
+import com.dmd.admin.model.vo.UmsUserVo;
 import com.dmd.admin.service.UmsMemberService;
 import com.dmd.core.support.BaseController;
 import com.dmd.wrapper.WrapMapper;
@@ -83,6 +84,14 @@ public class UmsMemberController extends BaseController {
     public Wrapper selectUserList(@RequestParam("id") Long id, @RequestParam("status") Integer status) {
         int result = umsMemberService.updateUserStatus(id, status);
         return handleResult(result);
+    }
+
+    @GetMapping("/user/findById/{id}")
+    @ApiOperation(httpMethod = "GET", value = "根据id查询用户信息")
+    @ApiImplicitParam(name ="id", value = "用户id", paramType = "path", dataType = "Long")
+    public Wrapper selectUserById(@PathVariable Long id) {
+        UmsUserVo umsUserVo = umsMemberService.selectUserById(id);
+        return WrapMapper.ok(umsUserVo);
     }
 
     @ApiOperation("批量修改用户的状态")

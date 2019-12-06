@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -52,4 +53,6 @@ public interface OmsOrderMapper extends MyMapper<OmsOrder> {
     OmsOrder selectByUserIdAndOrderId(@Param("userId") Long userId,@Param("userType") String userType, @Param("orderId") Long orderId);
 
     List<CourseOrderDetailVo> selectByStatus(@Param("orderType")Integer orderType, @Param("status") Integer status);
+
+    Map countOrderNum(@Param("userId") Long userId,@Param("userType") String userType, @Param("status") Integer status);
 }

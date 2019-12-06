@@ -2,6 +2,7 @@ package com.dmd.admin.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.admin.model.dto.UmsUserQueryParam;
+import com.dmd.admin.model.vo.UmsUserVo;
 import com.github.pagehelper.PageInfo;
 
 import java.text.ParseException;
@@ -72,4 +73,11 @@ public interface UmsMemberService{
      * @return
      */
     JSONObject countThirtyDayRetentionRate(Integer day);
+
+    /**
+     * 根据用户id查询用户信息
+     * @param id
+     * @return
+     */
+    UmsUserVo selectUserById(Long id);
 }

@@ -57,5 +57,13 @@
         from oms_order_return_apply
         where order_sn = #{orderSn}
     </select>
-
+    <select id="countReturnOrderNum" resultType="java.util.Map">
+        select 5 status, count(*) count
+        from oms_order_return_apply oora
+        left join oms_order oo
+        on oora.order_id = oo.id
+        where oo.member_id = #{userId}
+        and oo.user_type = #{userType}
+        and oora.status = #{status}
+    </select>
 </mapper>

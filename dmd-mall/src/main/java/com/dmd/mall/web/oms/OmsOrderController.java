@@ -22,6 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 订单表 前端控制器
@@ -121,6 +124,13 @@ public class OmsOrderController extends BaseController {
                                               @RequestParam("pageSize") Integer pageSize) {
         PageInfo pageInfo = omsOrderService.querySellerOrderListWithPage(getLoginAuthDto(), pageNum, pageSize, status);
         return WrapMapper.ok(pageInfo);
+    }
+
+    @PostMapping("/orderNum/count")
+    @ApiOperation(httpMethod = "POST", value = "统计各个状态下订单的数量")
+    public Wrapper countOrderNum() {
+        List<Map> maps = omsOrderService.countOrderNum(getLoginAuthDto());
+        return WrapMapper.ok(maps);
     }
 }
 

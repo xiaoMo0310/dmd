@@ -71,6 +71,8 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     @Autowired
     private PmsCertificateService pmsCertificateService;
     @Autowired
+    private OmsOrderReturnApplyService omsOrderReturnApplyService;
+    @Autowired
     private IdWorker idWorker;
 
     @Override
@@ -429,6 +431,20 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     @Override
     public List<CourseOrderDetailVo> queryOrderListByStatus(Integer orderType, Integer status) {
         return omsOrderMapper.selectByStatus(orderType, status);
+    }
+
+    @Override
+    public List<Map> countOrderNum(LoginAuthDto loginAuthDto) {
+        List list = new ArrayList<>();
+        Map mapA = omsOrderMapper.countOrderNum(loginAuthDto.getUserId(), loginAuthDto.getUserType(), 0);
+        Map mapB = omsOrderMapper.countOrderNum(loginAuthDto.getUserId(), loginAuthDto.getUserType(), 1);
+        Map mapC = omsOrderMapper.countOrderNum(loginAuthDto.getUserId(), loginAuthDto.getUserType(), 2);
+        Map mapD = omsOrderReturnApplyService.countReturnOrderNum(loginAuthDto.getUserId(), loginAuthDto.getUserType(), 0);
+        list.add(mapA);
+        list.add(mapB);
+        list.add(mapC);
+        list.add(mapD);
+        return list;
     }
 
     /**
