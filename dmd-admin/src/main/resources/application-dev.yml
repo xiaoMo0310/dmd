@@ -30,3 +30,5 @@ dmd:
     extension: txt,gif,jpg,png,zip,rar,jpeg #使用逗号隔开的字符串，精确匹配例如：txt,jpg,png,zip
     prefix: http://192.168.0.246
     attachmentPath: D:\home\ #要保存文件的父路径 D:\
+  swagger:
+    enable: true
