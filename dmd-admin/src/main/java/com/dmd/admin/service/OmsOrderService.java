@@ -4,6 +4,7 @@ import com.dmd.admin.model.domain.OmsOrder;
 import com.dmd.admin.model.dto.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -62,4 +63,24 @@ public interface OmsOrderService {
      * @return
      */
     OmsOrder selectByOrderSn(String orderSn);
+
+    Integer queryOrderNumtoDay();
+
+    BigDecimal queryOrderMoneyToDay();
+
+    BigDecimal queryOrderMoneyToYesterday();
+
+    BigDecimal queryOrderMoneyToSeven();
+
+    Integer querySubstitutePayment();
+
+    Integer queryCompleted();
+
+    Integer queryReceiptConfirmed();
+
+    Integer queryShipped();
+
+    Integer queryAfterSale();
+
+    Integer queryConfirmReceipt();
 }

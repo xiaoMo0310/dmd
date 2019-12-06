@@ -5,6 +5,7 @@ import com.dmd.admin.model.domain.PmsCourseProduct;
 import com.dmd.admin.model.dto.PmsCourseProductDto;
 import com.dmd.admin.model.dto.PmsCourseProductListDto;
 import com.dmd.admin.service.PmsCourseProductService;
+import com.dmd.base.result.CommonResult;
 import com.dmd.core.support.BaseController;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
@@ -54,6 +55,51 @@ public class PmsCourseProductController extends BaseController {
     public Wrapper updateProductApprovalStatus(@RequestBody PmsCourseProductDto courseProduct) {
         int result = pmsCourseProductService.updateProductApprovalStatus(getLoginAuthDto(), courseProduct);
         return handleResult(result);
+    }
+
+
+    /**
+     * 待审核商品
+     * @return
+     */
+    @ApiOperation("待审核商品")
+    @RequestMapping(value = "/queryAudited", method = RequestMethod.GET)
+    public CommonResult<Integer> queryAudited() {
+        Integer commodity = pmsCourseProductService.queryAudited();
+        return CommonResult.success(commodity);
+    }
+    /**
+     * 审核通过商品
+     * @return
+     */
+    @ApiOperation("审核通过商品")
+    @RequestMapping(value = "/queryAuditPass", method = RequestMethod.GET)
+    public CommonResult<Integer> queryAuditPass() {
+        Integer commodity = pmsCourseProductService.queryAuditPass();
+        return CommonResult.success(commodity);
+    }
+
+    /**
+     * 审核未通过商品
+     * @return
+     */
+    @ApiOperation("审核未通过商品")
+    @RequestMapping(value = "/queryAuditFailed", method = RequestMethod.GET)
+    public CommonResult<Integer> queryAuditFailed() {
+        Integer commodity = pmsCourseProductService.queryAuditFailed();
+        return CommonResult.success(commodity);
+    }
+
+
+    /**
+     * 全部商品
+     * @return
+     */
+    @ApiOperation("全部商品")
+    @RequestMapping(value = "/queryAllMerchandise", method = RequestMethod.GET)
+    public CommonResult<Integer> queryAllMerchandise() {
+        Integer commodity = pmsCourseProductService.queryAllMerchandise();
+        return CommonResult.success(commodity);
     }
 }
 

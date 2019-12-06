@@ -71,4 +71,37 @@
 
     </select>
 
+    <select id="queryAudited" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        pms_course_product
+        WHERE
+        approval_status = 1
+    </select>
+
+    <select id="queryAuditPass" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        pms_course_product
+        WHERE
+        approval_status = 2
+    </select>
+
+    <select id="queryAuditFailed" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        pms_course_product
+        WHERE
+        approval_status = 3
+    </select>
+
+    <select id="queryAllMerchandise" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        pms_course_product
+    </select>
 </mapper>
