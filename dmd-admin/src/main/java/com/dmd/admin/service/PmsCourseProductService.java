@@ -31,4 +31,12 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
      * @return
      */
     int updateProductApprovalStatus(LoginAuthDto loginAuthDto, PmsCourseProductDto courseProduct);
+
+    Integer queryAudited();
+
+    Integer queryAuditPass();
+
+    Integer queryAuditFailed();
+
+    Integer queryAllMerchandise();
 }

@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.admin.model.domain.IntegralRuleBean;
 import com.dmd.admin.model.domain.OmsOrder;
 import com.dmd.admin.model.dto.*;
 import com.dmd.admin.service.OmsOrderService;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -103,4 +105,109 @@ public class OmsOrderController {
         return CommonResult.failed();
     }
 
+
+    /**
+     * 查询今日订单总数
+     * @return
+     */
+    @ApiOperation("查询今日订单总数")
+    @RequestMapping(value = "/queryOrderNumtoDay", method = RequestMethod.GET)
+    public CommonResult<Integer> queryOrderNumtoDay() {
+        Integer orderNumtoDay = orderService.queryOrderNumtoDay();
+        return CommonResult.success(orderNumtoDay);
+    }
+
+    /**
+     * 查询今日销售总额
+     * @return
+     */
+    @ApiOperation("查询今日销售总额")
+    @RequestMapping(value = "/queryOrderMoneyToDay", method = RequestMethod.GET)
+    public CommonResult<BigDecimal> queryOrderMoneyToDay() {
+        BigDecimal orderMoneyToDay = orderService.queryOrderMoneyToDay();
+        return CommonResult.success(orderMoneyToDay);
+    }
+
+    /**
+     * 查询昨日销售总额
+     * @return
+     */
+    @ApiOperation("查询昨日销售总额")
+    @RequestMapping(value = "/queryOrderMoneyToYesterday", method = RequestMethod.GET)
+    public CommonResult<BigDecimal> queryOrderMoneyToYesterday() {
+        BigDecimal orderMoneyToDay = orderService.queryOrderMoneyToYesterday();
+        return CommonResult.success(orderMoneyToDay);
+    }
+    /**
+     * 查询昨日销售总额
+     * @return
+     */
+    @ApiOperation("近7天销售总额")
+    @RequestMapping(value = "/queryOrderMoneyToSeven", method = RequestMethod.GET)
+    public CommonResult<BigDecimal> queryOrderMoneyToSeven() {
+        BigDecimal orderMoneyToDay = orderService.queryOrderMoneyToSeven();
+        return CommonResult.success(orderMoneyToDay);
+    }
+
+    /**
+     * 查询待付款订单
+     * @return
+     */
+    @ApiOperation("查询待付款订单")
+    @RequestMapping(value = "/querySubstitutePayment", method = RequestMethod.GET)
+    public CommonResult<Integer> querySubstitutePayment() {
+        Integer orderMoneyToDay = orderService.querySubstitutePayment();
+        return CommonResult.success(orderMoneyToDay);
+    }
+    /**
+     * 查询已完成订单
+     * @return
+     */
+    @ApiOperation("查询已完成订单")
+    @RequestMapping(value = "/queryCompleted", method = RequestMethod.GET)
+    public CommonResult<Integer> queryCompleted() {
+        Integer orderMoneyToDay = orderService.queryCompleted();
+        return CommonResult.success(orderMoneyToDay);
+    }
+    /**
+     * 待确认收货订单
+     * @return
+     */
+    @ApiOperation("待确认收货订单")
+    @RequestMapping(value = "/queryReceiptConfirmed", method = RequestMethod.GET)
+    public CommonResult<Integer> queryReceiptConfirmed() {
+        Integer orderMoneyToDay = orderService.queryReceiptConfirmed();
+        return CommonResult.success(orderMoneyToDay);
+    }
+    /**
+     * 待发货订单
+     * @return
+     */
+    @ApiOperation("待发货订单")
+    @RequestMapping(value = "/queryShipped", method = RequestMethod.GET)
+    public CommonResult<Integer> queryShipped() {
+        Integer orderMoneyToDay = orderService.queryShipped();
+        return CommonResult.success(orderMoneyToDay);
+    }
+    /**
+     * 售后申请
+     * @return
+     */
+    @ApiOperation("售后申请")
+    @RequestMapping(value = "/queryAfterSale", method = RequestMethod.GET)
+    public CommonResult<Integer> queryAfterSale() {
+        Integer orderMoneyToDay = orderService.queryAfterSale();
+        return CommonResult.success(orderMoneyToDay);
+    }
+
+    /**
+     * 已确认收货订单
+     * @return
+     */
+    @ApiOperation("已确认收货订单")
+    @RequestMapping(value = "/queryConfirmReceipt", method = RequestMethod.GET)
+    public CommonResult<Integer> queryConfirmReceipt() {
+        Integer orderMoneyToDay = orderService.queryConfirmReceipt();
+        return CommonResult.success(orderMoneyToDay);
+    }
 }

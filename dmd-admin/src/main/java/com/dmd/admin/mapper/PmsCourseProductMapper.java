@@ -24,4 +24,12 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     List<PmsCourseProduct> selectCourseProductList(PmsCourseProductListDto courseProductListDto);
 
     int updateProductApprovalStatus(@Param("userId") Long userId,@Param("userName") String userName,@Param("courseProduct") PmsCourseProductDto courseProduct);
+
+    Integer queryAudited();
+
+    Integer queryAuditPass();
+
+    Integer queryAuditFailed();
+
+    Integer queryAllMerchandise();
 }

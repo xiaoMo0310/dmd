@@ -41,4 +41,24 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     public int updateProductApprovalStatus(LoginAuthDto loginAuthDto, PmsCourseProductDto courseProduct) {
         return pmsCourseProductMapper.updateProductApprovalStatus(loginAuthDto.getUserId(), loginAuthDto.getUserName(), courseProduct);
     }
+
+    @Override
+    public Integer queryAudited() {
+        return pmsCourseProductMapper.queryAudited();
+    }
+
+    @Override
+    public Integer queryAuditPass() {
+        return pmsCourseProductMapper.queryAuditPass();
+    }
+
+    @Override
+    public Integer queryAuditFailed() {
+        return pmsCourseProductMapper.queryAuditFailed();
+    }
+
+    @Override
+    public Integer queryAllMerchandise() {
+        return pmsCourseProductMapper.queryAllMerchandise();
+    }
 }

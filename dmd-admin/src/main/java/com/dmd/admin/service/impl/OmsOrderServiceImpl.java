@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -150,4 +151,56 @@ public class OmsOrderServiceImpl implements OmsOrderService {
     public OmsOrder selectByOrderSn(String orderSn) {
         return orderMapper.selectByOrderSn(orderSn);
     }
+
+    @Override
+    public Integer queryOrderNumtoDay() {
+        return orderMapper.queryOrderNumtoDay();
+    }
+
+    @Override
+    public BigDecimal queryOrderMoneyToDay() {
+        return orderMapper.queryOrderMoneyToDay();
+    }
+
+    @Override
+    public BigDecimal queryOrderMoneyToYesterday() {
+        return orderMapper.queryOrderMoneyToYesterday();
+    }
+
+    @Override
+    public BigDecimal queryOrderMoneyToSeven() {
+        return orderMapper.queryOrderMoneyToSeven();
+    }
+
+    @Override
+    public Integer querySubstitutePayment() {
+        return orderMapper.querySubstitutePayment();
+    }
+
+    @Override
+    public Integer queryCompleted() {
+        return orderMapper.queryCompleted();
+    }
+
+    @Override
+    public Integer queryReceiptConfirmed() {
+        return orderMapper.queryReceiptConfirmed();
+    }
+
+    @Override
+    public Integer queryShipped() {
+        return orderMapper.queryShipped();
+    }
+
+    @Override
+    public Integer queryAfterSale() {
+        return orderMapper.queryAfterSale();
+    }
+
+    @Override
+    public Integer queryConfirmReceipt() {
+        return orderMapper.queryConfirmReceipt();
+    }
+
+
 }

@@ -9,6 +9,7 @@ import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Component
@@ -34,4 +35,24 @@ public interface OmsOrderMapper  extends MyMapper<OmsOrder> {
      * @return
      */
     OmsOrder selectByOrderSn(String orderSn);
+
+    Integer queryOrderNumtoDay();
+
+    BigDecimal queryOrderMoneyToDay();
+
+    BigDecimal queryOrderMoneyToYesterday();
+
+    BigDecimal queryOrderMoneyToSeven();
+
+    Integer querySubstitutePayment();
+
+    Integer queryCompleted();
+
+    Integer queryReceiptConfirmed();
+
+    Integer queryShipped();
+
+    Integer queryAfterSale();
+
+    Integer queryConfirmReceipt();
 }
