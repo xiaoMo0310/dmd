@@ -125,6 +125,8 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         }*/
         //设置默认昵称
         umsMember.setNickname(ChineseNickNameUtil.generateName());
+        //设置默认的头像
+        umsMember.setIcon("http://47.107.50.253:8080/webapps/uploadFile/compent/20191208145645.png");
         memberMapper.insert(umsMember);
         if (invitationCode!=null){
             //在邀请码不等于null的时候自动加入邀请码对应的教练的群

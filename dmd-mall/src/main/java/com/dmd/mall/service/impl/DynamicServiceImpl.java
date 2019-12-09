@@ -7,6 +7,7 @@ import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DynamicMapper;
 import com.dmd.mall.mapper.TopicMapper;
 import com.dmd.mall.model.domain.DynamicBean;
+import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.dto.MessageDto;
 import com.dmd.mall.service.DynamicService;
 import com.dmd.mall.service.UmsMemberService;
@@ -14,7 +15,6 @@ import com.dmd.mall.service.UmsNoticeService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -195,13 +195,14 @@ public class DynamicServiceImpl implements DynamicService{
         Long userId = RequestUtil.getLoginUser().getUserId();
         //当前发布动态用户ID
         List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamicById(id);
-            Long userId1 = dynamicBeanList.get(0).getUserId();
-            Integer biaoshifu =  dynamicMapper.selectFavorites(userId,userId1);
-            if (biaoshifu == 0){
-                dynamicBeanList.get(0).setIdentification(0);
-            }if(biaoshifu !=0 ){
-                dynamicBeanList.get(0).setIdentification(1);
-            }
+        //todo 索引越界
+        Long userId1 = dynamicBeanList.get(0).getUserId();
+        Integer biaoshifu =  dynamicMapper.selectFavorites(userId,userId1);
+        if (biaoshifu == 0){
+            dynamicBeanList.get(0).setIdentification(0);
+        }if(biaoshifu !=0 ){
+            dynamicBeanList.get(0).setIdentification(1);
+        }
 
         for (int i = 0; i < dynamicBeanList.size(); i++) {
             //动态id
@@ -221,6 +222,10 @@ public class DynamicServiceImpl implements DynamicService{
         if (dynamicBean.getTopicId() != null){
             topicMapper.addTopicNum(dynamicBean.getTopicId());
         }
+        LoginAuthDto loginUser = RequestUtil.getLoginUser();
+        //查询用户信息
+        UmsMember member = memberService.getById(loginUser.getUserId());
+        dynamicBean.setDynamicHeadPortrait(member.getIcon());
         //发布时间为当前时间
         dynamicBean.setCreateTime(new Date());
         //点赞数默认为0

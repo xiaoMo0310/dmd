@@ -215,9 +215,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         orderItem.setUpdateInfo(loginAuthDto);
         omsOrderItemService.save(orderItem);
         //扣减积分
-        if(orderParamDto.getIsUserIntegration() == 1){
-            umsMemberService.updateIntegration(umsMember, orderParamDto.getUseIntegration(), "积分兑换商品扣减积分", 1);
-        }
+        umsMemberService.updateIntegration(umsMember, orderParamDto.getUseIntegration(), "积分兑换商品扣减积分", 1);
         //减库存
         reduceIntegralProductInventory(loginAuthDto,orderItem.getProductSkuId(), orderItem.getProductQuantity());
     }

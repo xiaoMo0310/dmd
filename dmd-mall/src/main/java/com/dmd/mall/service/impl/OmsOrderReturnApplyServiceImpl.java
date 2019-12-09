@@ -60,9 +60,9 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
             BeanUtils.copyProperties(returnApplyDto, omsOrderReturnApply);
             BeanUtils.copyProperties(userOrderDetail, omsOrderReturnApply);
         }
-        omsOrderReturnApply.setMemberUsername(userOrderDetail.getUserName());
+        omsOrderReturnApply.setMemberUsername(loginAuthDto.getUserName());
         omsOrderReturnApply.setReturnAmount(userOrderDetail.getPayAmount());
-        omsOrderReturnApply.setReturnName(userOrderDetail.getUserName());
+        omsOrderReturnApply.setReturnName(loginAuthDto.getUserName());
         omsOrderReturnApply.setReturnPhone(userOrderDetail.getPhone());
         omsOrderReturnApply.setStatus(0);
         omsOrderReturnApply.setProductCount(userOrderDetail.getProductQuantity());

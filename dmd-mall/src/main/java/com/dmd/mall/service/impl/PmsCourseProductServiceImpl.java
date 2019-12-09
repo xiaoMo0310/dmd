@@ -122,7 +122,10 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
             }
             //查询默认地址
             PmsPlayAddress pmsPlayAddress = playAddressService.selectDefaultAddress();
-            long defaultAddressCount = maps.stream().filter(map -> map.get("addressId") == pmsPlayAddress.getId() && (long) map.get("num") >0).count();
+            long defaultAddressCount = 0;
+            if(pmsPlayAddress !=  null){
+                defaultAddressCount = maps.stream().filter(map -> map.get("addressId") == pmsPlayAddress.getId() && (long) map.get("num") >0).count();
+            }
             if(defaultAddressCount > 0){
                 addressId = pmsPlayAddress.getId();
             }else {

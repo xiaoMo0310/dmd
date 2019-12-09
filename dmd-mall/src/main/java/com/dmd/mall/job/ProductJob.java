@@ -6,4 +6,6 @@ package com.dmd.mall.job;
  * @Description 商品任务类
  */
 public class ProductJob {
+
+    //todo 订单清理商品下架的功能
 }

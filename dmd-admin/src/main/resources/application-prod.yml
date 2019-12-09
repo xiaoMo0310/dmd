@@ -20,7 +20,7 @@ logging:
 dmd:
   uploadfile:
     extension: txt,gif,jpg,png,zip,rar,jpeg,mp4 #使用逗号隔开的字符串，精确匹配例如：txt,jpg,png,zip
-    prefix: http://47.107.50.253/project/tomcat/uploadImages
-    attachmentPath: /project/tomcat/uploadImages #要保存文件的父路径 D:\
+    prefix: http://47.107.50.253:8080/webapps/uploadFile
+    attachmentPath: /project/tomcat/webapps/uploadFile #要保存文件的父路径 D:\ss
   swagger:
     enable: true
