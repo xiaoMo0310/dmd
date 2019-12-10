@@ -21,9 +21,10 @@
     </resultMap>
 
     <select id="queryDynamicPage" resultMap="dynamicMap" parameterType="com.dmd.admin.model.domain.DynamicBean">
-        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
+        LEFT JOIN ums_member um on dy.r_userid = um.id
         <include refid="dynamicWhere"></include>
         ORDER BY dy.r_createtime DESC
     </select>
@@ -69,8 +70,9 @@
     </update>
 
     <select id="selectDynamicById" parameterType="java.lang.Long" resultMap="dynamicMap">
-        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
-        ON dy.r_topicid  = dt.id WHERE  dy.r_id = #{value} AND delflag = 0
+        ON dy.r_topicid  = dt.id
+        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_id = #{value} AND delflag = 0
     </select>
 </mapper>
