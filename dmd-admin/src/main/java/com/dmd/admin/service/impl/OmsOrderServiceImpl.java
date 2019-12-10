@@ -5,6 +5,7 @@ import com.dmd.admin.mapper.OmsOrderOperateHistoryMapper;
 import com.dmd.admin.model.domain.OmsOrder;
 import com.dmd.admin.model.domain.OmsOrderOperateHistory;
 import com.dmd.admin.model.dto.*;
+import com.dmd.admin.model.vo.SetTimeoutVo;
 import com.dmd.admin.service.OmsOrderService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -202,5 +203,58 @@ public class OmsOrderServiceImpl implements OmsOrderService {
         return orderMapper.queryConfirmReceipt();
     }
 
+    @Override
+    public Integer queryOrderMonthNum() {
+        return orderMapper.queryOrderMonthNum();
+    }
 
+    @Override
+    public Integer queryOrderPercentage() {
+        //上月订单量
+        return orderMapper.queryOrderLastMonthNum();
+    }
+
+    @Override
+    public Integer queryOrderWeek() {
+        return orderMapper.queryOrderWeek();
+    }
+
+    @Override
+    public Integer queryOrderWeekPercentage() {
+        //上周订单量
+        return orderMapper.queryOrderLastWeek();
+    }
+
+    @Override
+    public BigDecimal querySalesMonth() {
+        return orderMapper.querySalesMonth();
+    }
+
+    @Override
+    public BigDecimal querySalesLastMonth() {
+        return orderMapper.querySalesLastMonth();
+    }
+
+    @Override
+    public BigDecimal querySalesWeek() {
+        return orderMapper.querySalesWeek();
+    }
+
+    @Override
+    public BigDecimal querySalesLastWeek() {
+        return orderMapper.querySalesLastWeek();
+    }
+
+    @Override
+    public List<SetTimeoutVo> setTimeout(SetTimeoutVo setTimeoutVo) {
+        List<SetTimeoutVo> setTimeoutVos = orderMapper.setTimeout(setTimeoutVo);
+        /*for (int i = 0; i < setTimeoutVos.size(); i++) {
+            String date = setTimeoutVos.get(i).getDate();
+            String dates = "";
+            dates = date + " 00:00:00";
+            setTimeoutVos.get(i).setDate(dates);
+        }*/
+        System.out.println(setTimeoutVos);
+        return setTimeoutVos;
+    }
 }

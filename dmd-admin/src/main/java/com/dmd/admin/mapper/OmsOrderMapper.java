@@ -5,6 +5,7 @@ import com.dmd.admin.model.domain.OmsOrder;
 import com.dmd.admin.model.dto.OmsOrderDeliveryParam;
 import com.dmd.admin.model.dto.OmsOrderDetail;
 import com.dmd.admin.model.dto.OmsOrderQueryParam;
+import com.dmd.admin.model.vo.SetTimeoutVo;
 import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -55,4 +56,22 @@ public interface OmsOrderMapper  extends MyMapper<OmsOrder> {
     Integer queryAfterSale();
 
     Integer queryConfirmReceipt();
+
+    Integer queryOrderMonthNum();
+
+    Integer queryOrderLastMonthNum();
+
+    Integer queryOrderWeek();
+
+    Integer queryOrderLastWeek();
+
+    BigDecimal querySalesMonth();
+
+    BigDecimal querySalesLastMonth();
+
+    BigDecimal querySalesWeek();
+
+    BigDecimal querySalesLastWeek();
+
+    List<SetTimeoutVo> setTimeout(SetTimeoutVo setTimeoutVo);
 }

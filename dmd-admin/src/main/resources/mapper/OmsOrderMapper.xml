@@ -51,6 +51,13 @@
       <result column="user_type" property="userType" />
   </resultMap>
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="orderMap" type="com.dmd.admin.model.vo.SetTimeoutVo">
+        <result column="date" property="date" />
+        <result column="orderCount" property="orderCount" />
+        <result column="orderAmount" property="orderAmount" />
+    </resultMap>
+
   <!-- 通用查询结果列 -->
   <sql id="Base_Column_List">
         id,
@@ -245,5 +252,91 @@
         FROM
         oms_order
         WHERE confirm_status = 1 AND approval_status = 2
+    </select>
+
+    <select id="queryOrderMonthNum" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        oms_order
+        WHERE
+        date_format( created_time, '%Y-%m' ) = date_format( now(), '%Y-%m' )
+        AND approval_status = 2
+    </select>
+
+    <select id="queryOrderLastMonthNum" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        oms_order
+        WHERE
+        date_format( created_time, '%Y-%m' ) = date_format( DATE_SUB( curdate(), INTERVAL 1 MONTH ), '%Y-%m' )
+        AND approval_status = 2
+    </select>
+
+    <select id="queryOrderWeek" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        oms_order
+        WHERE
+        YEARWEEK(
+        date_format( created_time, '%Y-%m-%d' )) = YEARWEEK(
+        now())
+        AND approval_status = 2
+    </select>
+
+    <select id="queryOrderLastWeek" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        oms_order
+        WHERE
+        YEARWEEK(
+        date_format( created_time, '%Y-%m-%d' )) = YEARWEEK(
+        now())- 1
+        AND approval_status = 2
+    </select>
+
+    <select id="querySalesMonth" resultType="java.math.BigDecimal">
+        SELECT sum( pay_amount ) FROM oms_order WHERE DATE_FORMAT(payment_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+        AND STATUS  not in (0,5,6) AND approval_status = 2;
+    </select>
+
+    <select id="querySalesLastMonth" resultType="java.math.BigDecimal">
+        SELECT sum( pay_amount ) FROM oms_order WHERE date_format(payment_time,'%Y-%m') = date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH), '%Y-%m')
+        AND STATUS  not in (0,5,6) AND approval_status = 2;
+    </select>
+
+    <select id="querySalesWeek" resultType="java.math.BigDecimal">
+        SELECT sum( pay_amount ) FROM oms_order WHERE YEARWEEK(date_format(payment_time,'%Y-%m-%d')) = YEARWEEK(now())
+        AND STATUS  not in (0,5,6) AND approval_status = 2;
+    </select>
+    <select id="querySalesLastWeek" resultType="java.math.BigDecimal">
+        SELECT sum( pay_amount ) FROM oms_order WHERE YEARWEEK(date_format(payment_time,'%Y-%m-%d')) = YEARWEEK(now())-1
+        AND STATUS  not in (0,5,6) AND approval_status = 2;
+    </select>
+
+    <select id="setTimeout" resultType="com.dmd.admin.model.vo.SetTimeoutVo" parameterType="com.dmd.admin.model.vo.SetTimeoutVo">
+        SELECT
+        date_format( payment_time, '%Y-%m-%d' ) AS date,
+        count(*) AS orderCount,
+        sum( pay_amount ) AS orderAmount
+        FROM
+        oms_order
+        WHERE
+        STATUS NOT IN ( 0, 5, 6 )
+        AND approval_status = 2
+        <!-- 日期区间查询 -->
+        <if test="startTime != null">
+            and payment_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and payment_time &lt;= #{endTime}
+        </if>
+        GROUP BY
+        date_format( payment_time, '%Y-%m-%d' )
+        ORDER BY
+        payment_time
     </select>
 </mapper>

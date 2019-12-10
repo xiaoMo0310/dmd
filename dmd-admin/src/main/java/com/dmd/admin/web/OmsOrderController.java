@@ -3,6 +3,7 @@ package com.dmd.admin.web;
 import com.dmd.admin.model.domain.IntegralRuleBean;
 import com.dmd.admin.model.domain.OmsOrder;
 import com.dmd.admin.model.dto.*;
+import com.dmd.admin.model.vo.SetTimeoutVo;
 import com.dmd.admin.service.OmsOrderService;
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
@@ -210,4 +211,107 @@ public class OmsOrderController {
         Integer orderMoneyToDay = orderService.queryConfirmReceipt();
         return CommonResult.success(orderMoneyToDay);
     }
+
+    /**
+     * 本月订单总数
+     * @return
+     */
+    @ApiOperation("本月订单总数")
+    @RequestMapping(value = "/queryOrderMonthNum", method = RequestMethod.GET)
+    public CommonResult<Integer> queryOrderMonthNum() {
+        Integer orderMoneyToDay = orderService.queryOrderMonthNum();
+        return CommonResult.success(orderMoneyToDay);
+    }
+
+
+    /**
+     * 上月订单总数
+     * @return
+     */
+    @ApiOperation("上月订单总数")
+    @RequestMapping(value = "/queryOrderPercentage", method = RequestMethod.GET)
+    public CommonResult<Integer> queryOrderPercentage() {
+        Integer orderMoneyToDay = orderService.queryOrderPercentage();
+        return CommonResult.success(orderMoneyToDay);
+    }
+
+    /**
+     * 本周订单总数
+     * @return
+     */
+    @ApiOperation("本周订单总数")
+    @RequestMapping(value = "/queryOrderWeek", method = RequestMethod.GET)
+    public CommonResult<Integer> queryOrderWeek() {
+        Integer orderMoneyToDay = orderService.queryOrderWeek();
+        return CommonResult.success(orderMoneyToDay);
+    }
+
+
+    /**
+     * 上周订单量
+     * @return
+     */
+    @ApiOperation("上周订单总数")
+    @RequestMapping(value = "/queryOrderWeekPercentage", method = RequestMethod.GET)
+    public CommonResult<Integer> queryOrderWeekPercentage() {
+        Integer orderMoneyToDay = orderService.queryOrderWeekPercentage();
+        return CommonResult.success(orderMoneyToDay);
+    }
+
+
+    /**
+     * 本月销售总额
+     * @return
+     */
+    @ApiOperation("本月销售总额")
+    @RequestMapping(value = "/querySalesMonth", method = RequestMethod.GET)
+    public CommonResult<BigDecimal> querySalesMonth() {
+        BigDecimal orderMoneyToDay = orderService.querySalesMonth();
+        return CommonResult.success(orderMoneyToDay);
+    }
+
+
+    /**
+     * 上月销售总额
+     * @return
+     */
+    @ApiOperation("上月销售总额")
+    @RequestMapping(value = "/querySalesLastMonth", method = RequestMethod.GET)
+    public CommonResult<BigDecimal> querySalesLastMonth() {
+        BigDecimal orderMoneyToDay = orderService.querySalesLastMonth();
+        return CommonResult.success(orderMoneyToDay);
+    }
+    /**
+     * 本周销售总额
+     * @return
+     */
+    @ApiOperation("本周销售总额")
+    @RequestMapping(value = "/querySalesWeek", method = RequestMethod.GET)
+    public CommonResult<BigDecimal> querySalesWeek() {
+        BigDecimal orderMoneyToDay = orderService.querySalesWeek();
+        return CommonResult.success(orderMoneyToDay);
+    }
+
+    /**
+     * 上周销售总额
+     * @return
+     */
+    @ApiOperation("上周销售总额")
+    @RequestMapping(value = "/querySalesLastWeek", method = RequestMethod.GET)
+    public CommonResult<BigDecimal> querySalesLastWeek() {
+        BigDecimal orderMoneyToDay = orderService.querySalesLastWeek();
+        return CommonResult.success(orderMoneyToDay);
+    }
+
+    /**
+     * 首页订单线型图
+     * @return
+     */
+    @ApiOperation("首页订单线型图")
+    @RequestMapping(value = "/setTimeout", method = RequestMethod.GET)
+    public CommonResult<List<SetTimeoutVo>> setTimeout(SetTimeoutVo setTimeoutVo) {
+        List<SetTimeoutVo> setTimeout = orderService.setTimeout(setTimeoutVo);
+        return CommonResult.success(setTimeout);
+    }
+
 }

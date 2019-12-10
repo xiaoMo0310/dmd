@@ -2,6 +2,7 @@ package com.dmd.admin.service;
 
 import com.dmd.admin.model.domain.OmsOrder;
 import com.dmd.admin.model.dto.*;
+import com.dmd.admin.model.vo.SetTimeoutVo;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -83,4 +84,22 @@ public interface OmsOrderService {
     Integer queryAfterSale();
 
     Integer queryConfirmReceipt();
+
+    Integer queryOrderMonthNum();
+
+    Integer queryOrderPercentage();
+
+    Integer queryOrderWeek();
+
+    Integer queryOrderWeekPercentage();
+
+    BigDecimal querySalesMonth();
+
+    BigDecimal querySalesLastMonth();
+
+    BigDecimal querySalesWeek();
+
+    BigDecimal querySalesLastWeek();
+
+    List<SetTimeoutVo> setTimeout(SetTimeoutVo setTimeoutVo);
 }
