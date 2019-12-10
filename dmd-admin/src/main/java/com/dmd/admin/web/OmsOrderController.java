@@ -1,6 +1,5 @@
 package com.dmd.admin.web;
 
-import com.dmd.admin.model.domain.IntegralRuleBean;
 import com.dmd.admin.model.domain.OmsOrder;
 import com.dmd.admin.model.dto.*;
 import com.dmd.admin.model.vo.SetTimeoutVo;
@@ -49,8 +48,8 @@ public class OmsOrderController {
 
     @ApiOperation("批量关闭订单")
     @RequestMapping(value = "/update/close", method = RequestMethod.POST)
-    public CommonResult close(@RequestParam("ids") List<Long> ids, @RequestParam String note) {
-        int count = orderService.close(ids, note);
+    public CommonResult close(@RequestParam("ids") List<Long> ids, @RequestParam String remark) {
+        int count = orderService.close(ids, remark);
         if (count > 0) {
             return CommonResult.success(count);
         }
@@ -97,9 +96,9 @@ public class OmsOrderController {
     @ApiOperation("备注订单")
     @RequestMapping(value = "/update/note", method = RequestMethod.POST)
     public CommonResult updateNote(@RequestParam("id") Long id,
-                                   @RequestParam("note") String note,
+                                   @RequestParam("remark") String remark,
                                    @RequestParam("status") Integer status) {
-        int count = orderService.updateNote(id, note, status);
+        int count = orderService.updateNote(id, remark, status);
         if (count > 0) {
             return CommonResult.success(count);
         }

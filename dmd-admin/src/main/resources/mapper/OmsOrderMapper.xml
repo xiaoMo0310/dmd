@@ -3,7 +3,6 @@
 <mapper namespace="com.dmd.admin.mapper.OmsOrderMapper">
 
   <resultMap id="orderDetailResultMap" type="com.dmd.admin.model.dto.OmsOrderDetail" extends="BaseResultMap">
-      <association property="omsShipping" resultMap="com.dmd.admin.mapper.OmsShippingMapper.BaseResultMap" columnPrefix="shipping_"/>
     <collection property="orderItemList" resultMap="com.dmd.admin.mapper.OmsOrderItemMapper.BaseResultMap" columnPrefix="item_"/>
     <collection property="historyList" resultMap="com.dmd.admin.mapper.OmsOrderOperateHistoryMapper.BaseResultMap" columnPrefix="history_"/>
   </resultMap>
@@ -36,7 +35,6 @@
     <result column="promotion_info" property="promotionInfo" />
     <result column="is_invoice" property="isInvoice" />
     <result column="invoice_id" property="invoiceId" />
-    <result column="shipping_id" property="shippingId" />
     <result column="remark" property="remark" />
     <result column="confirm_status" property="confirmStatus" />
     <result column="delete_status" property="deleteStatus" />
@@ -49,6 +47,13 @@
       <result column="approval_status" property="approvalStatus" />
       <result column="failure_reason" property="failureReason" />
       <result column="user_type" property="userType" />
+      <result column="receiver_name" property="receiverName" />
+      <result column="receiver_mobile_no" property="receiverMobileNo" />
+      <result column="province_name" property="provinceName" />
+      <result column="city_name" property="cityName" />
+      <result column="district_name" property="districtName" />
+      <result column="detail_address" property="detailAddress" />
+      <result column="receiver_zip_code" property="receiverZipCode" />
   </resultMap>
 
     <!-- 通用查询映射结果 -->
@@ -69,8 +74,9 @@
         update_time,
         order_sn, member_id, shop_id, member_username, total_amount, pay_amount, freight_amount, promotion_amount, integration_amount,
         discount_amount, pay_type, source_type, status, order_type, delivery_company, delivery_sn,integration,promotion_info,
-        is_invoice, invoice_id, shipping_id, remark, confirm_status, delete_status, use_integration, payment_time,delivery_time,
-        receive_time, end_time, close_time, approval_status, failure_reason, user_type
+        is_invoice, invoice_id, remark, confirm_status, delete_status, use_integration, payment_time,delivery_time,
+        receive_time, end_time, close_time, approval_status, failure_reason, user_type, receiver_name, receiver_mobile_no,
+        province_name, city_name, district_name, detail_address, receiver_zip_code
     </sql>
 
 
@@ -141,20 +147,11 @@
             oh.operate_man history_operate_man,
             oh.create_time history_create_time,
             oh.order_status history_order_status,
-            oh.note history_note,
-            os.id shipping_id,
-            os.receiver_name shipping_receiver_name,
-            os.receiver_mobile_no shipping_receiver_mobile_no,
-            os.receiver_zip_code shipping_receiver_zip_code,
-            os.province_name shipping_province_name,
-            os.city_name shipping_city_name,
-            os.district_name shipping_district_name,
-            os.detail_address shipping_detail_address
+            oh.note history_note
         FROM
             oms_order o
             LEFT JOIN oms_order_item oi ON o.id = oi.order_id
             LEFT JOIN oms_order_operate_history oh ON o.id = oh.order_id
-            LEFT JOIN oms_shipping os ON o.shipping_id = os.id
         WHERE
             o.id = #{id}
         ORDER BY oi.id ASC,oh.create_time DESC

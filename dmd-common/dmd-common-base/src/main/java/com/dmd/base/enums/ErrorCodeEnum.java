@@ -435,6 +435,10 @@ public enum ErrorCodeEnum {
 	 * PMS 10021031error code enum.
 	 */
 	PMS10021031(10021031, "查询不到商品规格库存信息, id=%s"),
+	/**
+	 * PMS 10021032error code enum.
+	 */
+	PMS10021032(10021032, "减库存失败"),
 // 1003 订单中心
 	/**
 	 * OMS 10031001 error code enum.

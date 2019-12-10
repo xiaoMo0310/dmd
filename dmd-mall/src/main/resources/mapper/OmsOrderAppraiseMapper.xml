@@ -34,12 +34,13 @@
         order_id, product_id, user_id, info, level, desc_star, logistics_star, attitude_star, pic
     </sql>
     <select id="selectAppraiseMessageByProductId" resultType="com.dmd.mall.model.vo.ProductAppraiseVo">
-        select um.id userId, um.icon userIcon, um.username userName, ooa.info ,ooa.pic,
+        select um.id userId, um.icon userIcon, um.username userName, um.nick_name nickName, ooa.info ,ooa.pic,
                 ooa.created_time, ooa.level, ooa.desc_star, ooa.logistics_star, ooa.attitude_star
         from oms_order_appraise ooa
         left join ums_member um
         on ooa.user_id = um.id
         where ooa.product_id = #{productId}
+        order by update_time
     </select>
 
 </mapper>

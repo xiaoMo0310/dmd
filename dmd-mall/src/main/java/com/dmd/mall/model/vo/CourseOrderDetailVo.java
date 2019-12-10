@@ -98,6 +98,11 @@ public class CourseOrderDetailVo {
     private String productPic;
 
     /**
+     * 商品名称
+     */
+    private String productName;
+
+    /**
      * 商品标题
      */
     private String productTitle;
@@ -134,6 +139,8 @@ public class CourseOrderDetailVo {
      * 规格信息
      */
     private String spec;
+
+    private String sizeSpec;
 
     /**
      * 商品数量

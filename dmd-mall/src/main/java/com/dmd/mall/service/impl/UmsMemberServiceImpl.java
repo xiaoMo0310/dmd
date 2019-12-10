@@ -1,6 +1,7 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.ChineseNickNameUtil;
+import com.dmd.RedisKeyUtil;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.base.result.CommonResult;
@@ -59,9 +60,6 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     private RedisTemplate redisTemplate;
     @Autowired
     private RedisService redisService;
-    /*@Autowired
-    @Qualifier("consumerTokenServices")
-    private ConsumerTokenServices consumerTokenServices;*/
     @Autowired
     private UmsIntegrationChangeLogService integrationChangeLogService;
     @Value("${redis.key.prefix.authCode}")
@@ -319,8 +317,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
 
     @Override
     public Boolean deleteRedisToken(String accessToken) {
-        //Boolean delete = redisTemplate.delete(RedisKeyUtil.getAccessTokenKey(accessToken));
-        //boolean delete = consumerTokenServices.revokeToken(accessToken);
-        return null;
+        Boolean delete = redisTemplate.delete(RedisKeyUtil.getAccessTokenKey(accessToken));
+        return delete;
     }
 }

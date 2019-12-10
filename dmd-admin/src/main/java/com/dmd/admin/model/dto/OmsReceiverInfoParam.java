@@ -1,22 +1,28 @@
 package com.dmd.admin.model.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 订单修改收货人信息参数
  * Created by macro on 2018/10/29.
  */
-@Getter
-@Setter
+@Data
 public class OmsReceiverInfoParam {
     private Long orderId;
+
     private String receiverName;
-    private String receiverPhone;
-    private String receiverPostCode;
-    private String receiverDetailAddress;
-    private String receiverProvince;
-    private String receiverCity;
-    private String receiverRegion;
+
+    private String receiverMobileNo;
+
+    private String provinceName;
+
+    private String cityName;
+
+    private String districtName;
+
+    private String detailAddress;
+
+    private String receiverZipCode;
+
     private Integer status;
 }

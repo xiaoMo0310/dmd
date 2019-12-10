@@ -1,14 +1,18 @@
 package com.dmd.admin.model.domain;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 
+@Data
 public class OmsOrderSetting implements Serializable {
     private Long id;
 
-    @ApiModelProperty(value = "秒杀订单超时关闭时间(分)")
-    private Integer flashOrderOvertime;
+    @Column(name = "return_order_overtime")
+    @ApiModelProperty("售后订单审核超时关闭时间(分)")
+    private Integer returnOrderOvertime;
 
     @ApiModelProperty(value = "正常订单超时时间(分)")
     private Integer normalOrderOvertime;
@@ -24,68 +28,4 @@ public class OmsOrderSetting implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getFlashOrderOvertime() {
-        return flashOrderOvertime;
-    }
-
-    public void setFlashOrderOvertime(Integer flashOrderOvertime) {
-        this.flashOrderOvertime = flashOrderOvertime;
-    }
-
-    public Integer getNormalOrderOvertime() {
-        return normalOrderOvertime;
-    }
-
-    public void setNormalOrderOvertime(Integer normalOrderOvertime) {
-        this.normalOrderOvertime = normalOrderOvertime;
-    }
-
-    public Integer getConfirmOvertime() {
-        return confirmOvertime;
-    }
-
-    public void setConfirmOvertime(Integer confirmOvertime) {
-        this.confirmOvertime = confirmOvertime;
-    }
-
-    public Integer getFinishOvertime() {
-        return finishOvertime;
-    }
-
-    public void setFinishOvertime(Integer finishOvertime) {
-        this.finishOvertime = finishOvertime;
-    }
-
-    public Integer getCommentOvertime() {
-        return commentOvertime;
-    }
-
-    public void setCommentOvertime(Integer commentOvertime) {
-        this.commentOvertime = commentOvertime;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", flashOrderOvertime=").append(flashOrderOvertime);
-        sb.append(", normalOrderOvertime=").append(normalOrderOvertime);
-        sb.append(", confirmOvertime=").append(confirmOvertime);
-        sb.append(", finishOvertime=").append(finishOvertime);
-        sb.append(", commentOvertime=").append(commentOvertime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

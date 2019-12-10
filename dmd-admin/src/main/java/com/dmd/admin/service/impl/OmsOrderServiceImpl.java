@@ -92,13 +92,13 @@ public class OmsOrderServiceImpl implements OmsOrderService {
     public int updateReceiverInfo(OmsReceiverInfoParam receiverInfoParam) {
         OmsOrder order = new OmsOrder();
         order.setId(receiverInfoParam.getOrderId());
-        /*order.setReceiverName(receiverInfoParam.getReceiverName());
-        order.setReceiverPhone(receiverInfoParam.getReceiverPhone());
-        order.setReceiverPostCode(receiverInfoParam.getReceiverPostCode());
-        order.setReceiverDetailAddress(receiverInfoParam.getReceiverDetailAddress());
-        order.setReceiverProvince(receiverInfoParam.getReceiverProvince());
-        order.setReceiverCity(receiverInfoParam.getReceiverCity());
-        order.setReceiverRegion(receiverInfoParam.getReceiverRegion());*/
+        order.setReceiverName(receiverInfoParam.getReceiverName());
+        order.setReceiverMobileNo(receiverInfoParam.getReceiverMobileNo());
+        order.setProvinceName(receiverInfoParam.getProvinceName());
+        order.setCityName(receiverInfoParam.getCityName());
+        order.setDistrictName(receiverInfoParam.getDistrictName());
+        order.setReceiverZipCode(receiverInfoParam.getReceiverZipCode());
+        order.setDetailAddress(receiverInfoParam.getDetailAddress());
         order.setUpdateTime(new Date());
         int count = orderMapper.updateByPrimaryKeySelective(order);
         //插入操作记录

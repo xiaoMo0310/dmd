@@ -3,12 +3,12 @@ package com.dmd.mall.web.ums;
 import com.dmd.FileUtil;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.result.CommonResult;
+import com.dmd.core.support.BaseController;
 import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.dto.FindPasswordDto;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.JwtUtil;
-import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.jsonwebtoken.Claims;
@@ -30,7 +30,7 @@ import java.io.UnsupportedEncodingException;
 @Controller
 @Api(tags = "UmsMemberAuthenticationController", description = "登陆后会员的操作接口")
 @RequestMapping("/authenticationed/member")
-public class UmsMemberAuthenticationController {
+public class UmsMemberAuthenticationController extends BaseController {
     private Logger logger= LoggerFactory.getLogger(getClass());
     @Autowired
     private UmsMemberService memberService;
@@ -90,12 +90,13 @@ public class UmsMemberAuthenticationController {
 
     @PostMapping(value = "/user/logout")
     @ApiOperation(httpMethod = "POST", value = "登出")
+    @ResponseBody
     public Wrapper loginAfter(HttpServletRequest request) {
         String token = StringUtils.substringAfter(request.getHeader(HttpHeaders.AUTHORIZATION), "Bearer ");
-        System.out.println(token);
+        Boolean result = true;
         if (!StringUtils.isEmpty(token)) {
-            Boolean result = memberService.deleteRedisToken(token);
+            result = memberService.deleteRedisToken(token);
         }
-        return WrapMapper.ok();
+        return handleResult(result);
     }
 }

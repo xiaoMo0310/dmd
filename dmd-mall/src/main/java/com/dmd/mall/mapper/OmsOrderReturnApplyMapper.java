@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,4 +24,6 @@ public interface OmsOrderReturnApplyMapper extends MyMapper<OmsOrderReturnApply>
     OmsOrderReturnApply selectByOrderSn(String orderSn);
 
     Map countReturnOrderNum(@Param("userId") Long userId, @Param("userType") String userType, @Param("status") Integer status);
+
+    List<OmsOrderReturnApply> selectReturnOrderByStatus(Integer status);
 }
