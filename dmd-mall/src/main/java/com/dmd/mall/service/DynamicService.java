@@ -1,6 +1,9 @@
 package com.dmd.mall.service;
 
+import com.dmd.mall.model.domain.DynamicAlbumTimeBean;
 import com.dmd.mall.model.domain.DynamicBean;
+import com.dmd.mall.model.domain.UmsMember;
+import com.dmd.mall.model.vo.UserDetailsVo;
 
 import java.util.List;
 
@@ -43,4 +46,8 @@ public interface DynamicService {
     List<DynamicBean> queryDynamicHeat(Integer pageNum,Integer pageSize);
 
     Integer queryDynamicCount(Long userId);
+
+    List<DynamicAlbumTimeBean> queryDynamicAlbumTimeBean(Long userId, Integer pageNum, Integer pageSize);
+
+    UserDetailsVo queryUserDetails(Long userId);
 }

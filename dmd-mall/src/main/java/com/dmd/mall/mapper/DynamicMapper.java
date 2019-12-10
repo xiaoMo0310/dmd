@@ -1,8 +1,11 @@
 package com.dmd.mall.mapper;
 
+import com.dmd.mall.model.domain.DynamicAlbumTimeBean;
 import com.dmd.mall.model.domain.DynamicBean;
+import com.dmd.mall.model.vo.UserDetailsVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,4 +65,10 @@ public interface DynamicMapper {
     void updateUserPraiseLike(@Param("id")Long id,@Param("userId") Long userId);
 
     DynamicBean selectDynamicById(Long id);
+
+    List<DynamicAlbumTimeBean> queryDynamicAlbumTimeBean(Long userId);
+
+    List<DynamicAlbumTimeBean> queryDynamicAlbumTimePicture(@Param("months")String months,@Param("userId") Long userId);
+
+    UserDetailsVo queryUserDetails(Long userId);
 }

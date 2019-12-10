@@ -22,6 +22,24 @@
         <result column="height" property="height" />
     </resultMap>
 
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="dynamicAlbumTimeMap" type="com.dmd.mall.model.domain.DynamicAlbumTimeBean">
+        <result column="userId" property="userId" />
+        <result column="months" property="months" />
+        <result column="picture" property="picture" />
+    </resultMap>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="userDetailsMap" type="com.dmd.mall.model.vo.UserDetailsVo">
+        <result column="id" property="id" />
+        <result column="member_level_id" property="memberLevelId" />
+        <result column="nick_name" property="nickname" />
+        <result column="icon" property="icon" />
+        <result column="pics" property="pics" />
+    </resultMap>
+
+
     <select id="queryDynamic" resultMap="dynamicMap" parameterType="java.lang.Long">
         SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
@@ -185,4 +203,31 @@
     <update id="updateUserPraiseLike" parameterType="map" >
         UPDATE dmd_dynamic_praise_status SET status = 0 WHERE user_id = #{userId} AND dynamic_id = #{id}
     </update>
+
+    <select id="queryDynamicAlbumTimeBean" parameterType="java.lang.Long" resultType="com.dmd.mall.model.domain.DynamicAlbumTimeBean">
+        SELECT
+        r_userid as userId,
+        DATE_FORMAT( r_createtime, '%Y%m' ) as months  ,
+        r_picture as picture
+        FROM
+        dmd_dynamic
+        WHERE
+        r_userid = #{userId}
+        AND ( r_picture &lt;&gt; NULL OR r_picture &lt;&gt; "" )
+        GROUP BY
+        months
+        ORDER BY
+        months DESC
+    </select>
+
+    <select id="queryDynamicAlbumTimePicture" parameterType="map" resultType="com.dmd.mall.model.domain.DynamicAlbumTimeBean">
+        SELECT r_picture AS picture
+        FROM dmd_dynamic
+        WHERE
+        date_format(r_createtime, '%Y%m') = #{months} and r_userid = #{userId}
+    </select>
+
+    <select id="queryUserDetails" resultType="com.dmd.mall.model.vo.UserDetailsVo">
+        SELECT id,member_level_id,nick_name,icon,pics FROM ums_member WHERE id = #{userId}
+    </select>
 </mapper>

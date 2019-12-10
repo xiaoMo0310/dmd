@@ -6,16 +6,23 @@ import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DynamicMapper;
 import com.dmd.mall.mapper.TopicMapper;
+import com.dmd.mall.model.domain.DynamicAlbumTimeBean;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.dto.MessageDto;
+import com.dmd.mall.model.vo.UserDetailsVo;
 import com.dmd.mall.service.DynamicService;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.service.UmsNoticeService;
 import com.github.pagehelper.PageHelper;
+import io.swagger.models.auth.In;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -193,7 +200,6 @@ public class DynamicServiceImpl implements DynamicService{
     public List<DynamicBean> queryDynamicById(Long id) {
         //当前登录人ID
         Long userId = RequestUtil.getLoginUser().getUserId();
-        //当前发布动态用户ID
         List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamicById(id);
         //todo 索引越界
         Long userId1 = dynamicBeanList.get(0).getUserId();
@@ -303,4 +309,44 @@ public class DynamicServiceImpl implements DynamicService{
 
         return dynamicMapper.queryDynamicCount(userId);
     }
+
+    @Override
+    public List<DynamicAlbumTimeBean> queryDynamicAlbumTimeBean(Long userId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        //查询用户每月的数据
+        List<DynamicAlbumTimeBean> dynamicAlbumTimeBeans = dynamicMapper.queryDynamicAlbumTimeBean(userId);
+        for (int i = 0; i < dynamicAlbumTimeBeans.size(); i++) {
+            String months = dynamicAlbumTimeBeans.get(i).getMonths();
+            //将用户在每个月发布的所有照片拼接
+            List<DynamicAlbumTimeBean> pictureList = dynamicMapper.queryDynamicAlbumTimePicture(months,userId);
+            String pictureAll = "";
+            for (int j = 0; j < pictureList.size(); j++) {
+                pictureAll += pictureList.get(j).getPicture()+",";
+            }
+            //用户在每个月发布的所有照片
+            dynamicAlbumTimeBeans.get(i).setPicture(pictureAll.substring(0,pictureAll.length()-1));
+            String substring = pictureAll.substring(0, pictureAll.length() - 1);
+            String[] split = substring.split(",");
+            //用户在每个月发布的照片数量
+            dynamicAlbumTimeBeans.get(i).setPictureNum(split.length);
+
+        }
+        return dynamicAlbumTimeBeans;
+    }
+
+    @Override
+    public UserDetailsVo queryUserDetails(Long userId) {
+        UserDetailsVo userDetailsVo = dynamicMapper.queryUserDetails(userId);
+        //当前登录人Id
+        Long memberId = RequestUtil.getLoginUser().getUserId();
+        //查询登录人是否关注着该用户
+        Integer biaoshifu =  dynamicMapper.selectFavorites(memberId,userId);
+        if (biaoshifu == 0){
+            userDetailsVo.setIdentification(0);
+        }if(biaoshifu !=0 ){
+            userDetailsVo.setIdentification(1);
+        }
+        return userDetailsVo;
+    }
+
 }

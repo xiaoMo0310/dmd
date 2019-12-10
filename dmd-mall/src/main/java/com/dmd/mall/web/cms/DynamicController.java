@@ -1,7 +1,10 @@
 package com.dmd.mall.web.cms;
 
 import com.dmd.base.result.CommonResult;
+import com.dmd.mall.model.domain.DynamicAlbumTimeBean;
 import com.dmd.mall.model.domain.DynamicBean;
+import com.dmd.mall.model.domain.UmsMember;
+import com.dmd.mall.model.vo.UserDetailsVo;
 import com.dmd.mall.service.DynamicService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -244,4 +247,34 @@ public class DynamicController {
         Integer count = dynamicService.queryDynamicCount(userId);
         return CommonResult.success(count);
     }
+
+    /**
+     * 分页查询用户影集时刻
+     * @param userId
+     * @return
+     */
+    @ApiOperation("分页查询用户影集时刻")
+    @RequestMapping(value = "/selectDynamicAlbumTimeBean",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<PageInfo<DynamicAlbumTimeBean>> queryDynamicAlbumTimeBean(@RequestParam Long userId,
+                                                                                  @RequestParam Integer pageNum,
+                                                                                  @RequestParam Integer pageSize) {
+        List<DynamicAlbumTimeBean> dynamicList = dynamicService.queryDynamicAlbumTimeBean(userId,pageNum,pageSize);
+        return CommonResult.success(new PageInfo<>(dynamicList));
+    }
+
+
+    /**
+     * 查询用户详情页资料
+     * @param userId
+     * @return
+     */
+    @ApiOperation("查询用户详情页资料")
+    @RequestMapping(value = "/queryUserDetails",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<UserDetailsVo> queryUserDetails(@RequestParam Long userId) {
+        UserDetailsVo umsMember = dynamicService.queryUserDetails(userId);
+        return CommonResult.success(umsMember);
+    }
+
 }
