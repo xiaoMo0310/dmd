@@ -80,4 +80,39 @@ public class DateUtil {
 		}
 		return parse;
 	}
+
+	public static Date minuteShit(String dateformat,Date date,int intnum) {
+		//格式工具
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateformat);
+		Date da = null;
+		try {
+			da = simpleDateFormat.parse(simpleDateFormat.format(date));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(da);
+		//日期偏移,正数向前,负数向后!
+		calendar.add(Calendar.MINUTE, intnum);
+		Date parse = null;
+		try {
+			parse = simpleDateFormat.parse(simpleDateFormat.format(calendar.getTime()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return parse;
+	}
+
+	public static Date resolverDate (String date){
+		try {
+			return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static String formartDate (Date date){
+		return new SimpleDateFormat("yyyy-MM-dd").format(date);
+	}
 }

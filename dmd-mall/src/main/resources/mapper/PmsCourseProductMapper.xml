@@ -223,4 +223,10 @@
         and status = 1
         group by address_id
     </select>
+    <select id="selectByStatus" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
+        select <include refid="Base_Column_List"/>
+        from pms_course_product
+        where status = #{status}
+        and approval_status = 2
+    </select>
 </mapper>

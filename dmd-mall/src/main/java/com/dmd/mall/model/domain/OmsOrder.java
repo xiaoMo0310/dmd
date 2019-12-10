@@ -110,10 +110,6 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("发票id")
     private Long invoiceId;
 
-    @Column(name = "shipping_id")
-    @ApiModelProperty("收货地址id")
-    private Long shippingId;
-
     @ApiModelProperty("订单备注")
     private String remark;
 
@@ -170,5 +166,33 @@ private static final long serialVersionUID = 1L;
     @Column(name = "user_type")
     @ApiModelProperty("用户类型")
     private String userType;
+
+    @Column(name = "receiver_name")
+    @ApiModelProperty("收货人名称")
+    private String receiverName;
+
+    @Column(name = "receiver_mobile_no")
+    @ApiModelProperty("收货电话")
+    private String receiverMobileNo;
+
+    @Column(name = "province_name")
+    @ApiModelProperty("省名称")
+    private String provinceName;
+
+    @Column(name = "city_name")
+    @ApiModelProperty("市名称")
+    private String cityName;
+
+    @Column(name = "district_name")
+    @ApiModelProperty("区/县名称")
+    private String districtName;
+
+    @Column(name = "detail_address")
+    @ApiModelProperty("详细地址")
+    private String detailAddress;
+
+    @Column(name = "receiver_zip_code")
+    @ApiModelProperty("邮编")
+    private String receiverZipCode;
 
 }

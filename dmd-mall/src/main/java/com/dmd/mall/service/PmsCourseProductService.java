@@ -96,4 +96,19 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
      * @return
      */
     long findCertificateProductNum(Integer productType, Long certificateId);
+
+    /**
+     * 根据商品状态查询商品信息
+     * @param status
+     * @return
+     */
+    List<PmsCourseProduct> findCourseProductByStatus(Integer status);
+
+    /**
+     * 修改商品的状态
+     * @param id
+     * @param i
+     * @return
+     */
+    int updateCourseProductStatus(Long id, Integer status);
 }

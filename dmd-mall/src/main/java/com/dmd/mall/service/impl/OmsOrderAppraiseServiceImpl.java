@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -58,7 +57,6 @@ public class OmsOrderAppraiseServiceImpl extends BaseService<OmsOrderAppraise> i
     public PageInfo findAppraiseMessage(String productId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ProductAppraiseVo> productAppraiseVos = omsOrderAppraiseMapper.selectAppraiseMessageByProductId(productId);
-        productAppraiseVos.forEach(productAppraiseVo -> productAppraiseVo.setPicList(Arrays.asList(productAppraiseVo.getPic().split(","))));
         return new PageInfo(productAppraiseVos);
     }
 }

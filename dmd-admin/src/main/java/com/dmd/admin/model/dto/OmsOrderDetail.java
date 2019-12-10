@@ -21,5 +21,4 @@ public class OmsOrderDetail extends OmsOrder {
 
     private List<OmsOrderOperateHistory> historyList;
 
-    private OmsShipping omsShipping;
 }

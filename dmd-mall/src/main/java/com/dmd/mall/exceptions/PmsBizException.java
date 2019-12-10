@@ -44,6 +44,11 @@ public class PmsBizException extends BusinessException {
         log.info("<== OmsRpcException, code:" + this.code + ", message:" + super.getMessage());
     }
 
+    public PmsBizException(String msg) {
+        super( msg);
+        log.info("<== OmsRpcException, message:" + super.getMessage());
+    }
+
     /**
      * Instantiates a new Oms rpc exception.
      *

@@ -32,6 +32,11 @@ public class ProductAppraiseVo {
     private String userIcon;
 
     /**
+     * 用户昵称
+     */
+    private String nickName;
+
+    /**
      * 评价时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -71,5 +76,4 @@ public class ProductAppraiseVo {
      * 评价图片
      */
     private List picList = new ArrayList<>(0);
-
 }

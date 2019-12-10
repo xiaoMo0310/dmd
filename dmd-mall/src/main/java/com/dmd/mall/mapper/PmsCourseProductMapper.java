@@ -64,4 +64,6 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     long countCertificateProductNum(@Param("productType") Integer productType, @Param("certificateId") Long certificateId);
 
     List<Map> countCertificateProductNumByAddrrss(@Param("productType") Integer productType, @Param("certificateId") Long certificateId);
+
+    List<PmsCourseProduct> selectByStatus(Integer status);
 }

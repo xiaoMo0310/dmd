@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -100,5 +101,18 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
     @Override
     public Map countReturnOrderNum(Long userId, String userType, Integer status) {
         return omsOrderReturnApplyMapper.countReturnOrderNum(userId, userType, status);
+    }
+
+    @Override
+    public List<OmsOrderReturnApply> selectReturnOrderByStatus(Integer status) {
+        return omsOrderReturnApplyMapper.selectReturnOrderByStatus(status);
+    }
+
+    @Override
+    public int updateOmsReturnStatus(LoginAuthDto loginAuthDto, Long returnOrderId, Integer status) {
+        OmsOrderReturnApply orderReturnApply = new OmsOrderReturnApply();
+        orderReturnApply.setId(returnOrderId);
+        orderReturnApply.setStatus(1);
+        return omsOrderReturnApplyMapper.updateByPrimaryKeySelective(orderReturnApply);
     }
 }

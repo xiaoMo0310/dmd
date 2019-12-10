@@ -23,12 +23,11 @@ import java.util.Map;
 public interface OmsOrderMapper extends MyMapper<OmsOrder> {
 
     /**
-     * 根据用户id和订单编号查询订单信息
-     * @param userId
+     * 根据订单编号查询订单信息
      * @param orderSn
      * @return
      */
-    OmsOrder selectByUserIdAndOrderNo(@Param("userId")Long userId, @Param("userType") String userType, @Param("orderSn") String orderSn);
+    OmsOrder selectByOrderNo(@Param("orderSn") String orderSn);
 
     /**
      * 根据用户id查询订单信息
@@ -42,7 +41,7 @@ public interface OmsOrderMapper extends MyMapper<OmsOrder> {
      * @param status
      * @return
      */
-    List<CourseOrderDetailVo> selectUserOrderByStatus(@Param("userId") Long userId,@Param("userType") String userType, @Param("status") Integer status);
+    List<CourseOrderDetailVo> selectUserOrderByStatus(@Param("userId") Long userId,@Param("userType") String userType, @Param("status") Integer status, @Param("orderType") Integer orderType);
 
     List<CourseOrderDetailVo> selectSellerOrderByStatus(@Param("coachId") Long coachId, @Param("userType") String userType, @Param("status") Integer status);
 
@@ -55,4 +54,8 @@ public interface OmsOrderMapper extends MyMapper<OmsOrder> {
     List<CourseOrderDetailVo> selectByStatus(@Param("orderType")Integer orderType, @Param("status") Integer status);
 
     Map countOrderNum(@Param("userId") Long userId,@Param("userType") String userType, @Param("status") Integer status);
+
+    List<CourseOrderDetailVo> selectIntegralOrderByStatus(@Param("userId") Long userId,@Param("userType") String userType, @Param("statusList") List<Integer> statusList, @Param("orderType") Integer orderType);
+
+    List<OmsOrder> selectOrderByStatus(Integer status);
 }

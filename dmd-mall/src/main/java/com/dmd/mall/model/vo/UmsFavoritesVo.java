@@ -12,6 +12,8 @@ import lombok.Data;
 @Data
 public class UmsFavoritesVo {
 
+    private Long userId;
+
     private String nickname;
 
     private String icon;

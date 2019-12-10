@@ -294,6 +294,19 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     }
 
     @Override
+    public List<PmsCourseProduct> findCourseProductByStatus(Integer status) {
+        return pmsCourseProductMapper.selectByStatus(status);
+    }
+
+    @Override
+    public int updateCourseProductStatus(Long id, Integer status) {
+        PmsCourseProduct courseProduct = new PmsCourseProduct();
+        courseProduct.setId(id);
+        courseProduct.setStatus(status);
+        return pmsCourseProductMapper.updateByPrimaryKeySelective(courseProduct);
+    }
+
+    @Override
     public Integer queryPeopleNum(Long id, Long userId) {
         return pmsCourseProductMapper.queryPepleNum(id,userId);
     }

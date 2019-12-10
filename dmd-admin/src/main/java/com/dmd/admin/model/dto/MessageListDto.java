@@ -16,7 +16,7 @@ import java.util.Date;
 public class MessageListDto extends BaseQuery {
 
     @ApiModelProperty("用户类型")
-    private Integer userType;
+    private String userType;
 
     @ApiModelProperty("发送时间")
     private Date sendTime;

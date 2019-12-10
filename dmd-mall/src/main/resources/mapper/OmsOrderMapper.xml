@@ -31,7 +31,6 @@
         <result column="promotion_info" property="promotionInfo" />
         <result column="is_invoice" property="isInvoice" />
         <result column="invoice_id" property="invoiceId" />
-        <result column="shipping_id" property="shippingId" />
         <result column="remark" property="remark" />
         <result column="confirm_status" property="confirmStatus" />
         <result column="delete_status" property="deleteStatus" />
@@ -44,6 +43,13 @@
         <result column="approval_status" property="approvalStatus" />
         <result column="failure_reason" property="failureReason" />
         <result column="user_type" property="userType" />
+        <result column="receiver_name" property="receiverName" />
+        <result column="receiver_mobile_no" property="receiverMobileNo" />
+        <result column="province_name" property="provinceName" />
+        <result column="city_name" property="cityName" />
+        <result column="district_name" property="districtName" />
+        <result column="detail_address" property="detailAddress" />
+        <result column="receiver_zip_code" property="receiverZipCode" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -58,26 +64,16 @@
         order_sn, member_id, shop_id, member_username, total_amount, pay_amount,
         freight_amount, promotion_amount, integration_amount, discount_amount, pay_type,
         source_type, status, order_type, delivery_company, delivery_sn,
-        integration, promotion_info, is_invoice, invoice_id, shipping_id, remark, confirm_status,
-         delete_status, use_integration, payment_time, delivery_time, receive_time, end_time, close_time, approval_status, failure_reason, user_type
+        integration, promotion_info, is_invoice, invoice_id, remark, confirm_status,
+         delete_status, use_integration, payment_time, delivery_time, receive_time, end_time, close_time, approval_status, failure_reason, user_type,
+         receiver_name, receiver_mobile_no, province_name, city_name, district_name, detail_address, receiver_zip_code
     </sql>
     <sql id="Course_Product_Order_List">
         uc.coach_name userName, uc.icon userIcon, uc.coach_Grade, uc.id userId, oo.order_sn, oo.total_amount, oo.id orderId,
         oo.pay_amount, oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
         oo.status, oo.order_type, ooi.id orderItmeId, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity,
-         ooi.product_attr spec, ooi.product_type, ooi.product_id, ooi.real_amount
+         ooi.product_attr spec, ooi.product_type, ooi.product_id, ooi.real_amount, ooi.product_name
     </sql>
-    <select id="selectByUserIdAndOrderNo" resultMap="BaseResultMap" parameterType="map">
-        SELECT
-        <include refid="Base_Column_List">
-            <property name="alias" value="oder"/>
-        </include>
-        from oms_order oder
-        where oder.order_sn = #{orderSn}
-        and oder.member_id = #{userId}
-        and oder.user_type = #{userType}
-    </select>
-
     <select id="selectByUserId" resultMap="BaseResultMap" parameterType="long">
         SELECT
         <include refid="Base_Column_List">
@@ -97,7 +93,7 @@
         where oo.member_id = #{userId}
         and oo.status = #{status}
         and oo.user_type = #{userType}
-        and oo.order_type = 1
+        and oo.order_type = #{orderType}
         order by oo.update_time desc
     </select>
     <select id="selectSellerOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
@@ -151,5 +147,33 @@
     <select id="countOrderNum" resultType="java.util.Map">
         select #{status} status, count(1) count from oms_order
         where member_id = #{userId} and user_type = #{userType} and status = #{status}
+    </select>
+    <select id="selectIntegralOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+        SELECT <include refid="Course_Product_Order_List"/>
+        FROM oms_order oo
+        left join ums_coach uc on oo.shop_id = uc.id
+        left join oms_order_item ooi
+        on oo.id = ooi.order_id
+        where oo.member_id = #{userId}
+        and oo.user_type = #{userType}
+        and oo.order_type = #{orderType}
+        and oo.status in
+        <foreach collection="statusList" item="status" open="(" close=")" separator=",">
+            #{status}
+        </foreach>
+        order by oo.update_time desc
+    </select>
+    <select id="selectOrderByStatus" resultType="com.dmd.mall.model.domain.OmsOrder">
+        select <include refid="Base_Column_List"/>
+        from oms_order
+        where status = #{status}
+    </select>
+    <select id="selectByOrderNo" resultType="com.dmd.mall.model.domain.OmsOrder">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="oder"/>
+        </include>
+        from oms_order oder
+        where oder.order_sn = #{orderSn}
     </select>
 </mapper>

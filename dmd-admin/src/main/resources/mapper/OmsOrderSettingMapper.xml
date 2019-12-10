@@ -3,7 +3,7 @@
 <mapper namespace="com.dmd.admin.mapper.OmsOrderSettingMapper">
   <resultMap id="BaseResultMap" type="com.dmd.admin.model.domain.OmsOrderSetting">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="flash_order_overtime" jdbcType="INTEGER" property="flashOrderOvertime" />
+    <result column="return_order_overtime" jdbcType="INTEGER" property="returnOrderOvertime" />
     <result column="normal_order_overtime" jdbcType="INTEGER" property="normalOrderOvertime" />
     <result column="confirm_overtime" jdbcType="INTEGER" property="confirmOvertime" />
     <result column="finish_overtime" jdbcType="INTEGER" property="finishOvertime" />
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, flash_order_overtime, normal_order_overtime, confirm_overtime, finish_overtime, 
+    id, return_order_overtime, normal_order_overtime, confirm_overtime, finish_overtime, 
     comment_overtime
   </sql>
   <select id="selectByExample" parameterType="com.dmd.admin.model.domain.OmsOrderSettingExample" resultMap="BaseResultMap">
@@ -105,10 +105,10 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into oms_order_setting (flash_order_overtime, normal_order_overtime, 
+    insert into oms_order_setting (return_order_overtime, normal_order_overtime, 
       confirm_overtime, finish_overtime, comment_overtime
       )
-    values (#{flashOrderOvertime,jdbcType=INTEGER}, #{normalOrderOvertime,jdbcType=INTEGER}, 
+    values (#{returnOrderOvertime,jdbcType=INTEGER}, #{normalOrderOvertime,jdbcType=INTEGER}, 
       #{confirmOvertime,jdbcType=INTEGER}, #{finishOvertime,jdbcType=INTEGER}, #{commentOvertime,jdbcType=INTEGER}
       )
   </insert>
@@ -118,8 +118,8 @@
     </selectKey>
     insert into oms_order_setting
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="flashOrderOvertime != null">
-        flash_order_overtime,
+      <if test="returnOrderOvertime != null">
+        return_order_overtime,
       </if>
       <if test="normalOrderOvertime != null">
         normal_order_overtime,
@@ -135,8 +135,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="flashOrderOvertime != null">
-        #{flashOrderOvertime,jdbcType=INTEGER},
+      <if test="returnOrderOvertime != null">
+        #{returnOrderOvertime,jdbcType=INTEGER},
       </if>
       <if test="normalOrderOvertime != null">
         #{normalOrderOvertime,jdbcType=INTEGER},
@@ -164,8 +164,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.flashOrderOvertime != null">
-        flash_order_overtime = #{record.flashOrderOvertime,jdbcType=INTEGER},
+      <if test="record.returnOrderOvertime != null">
+        return_order_overtime = #{record.returnOrderOvertime,jdbcType=INTEGER},
       </if>
       <if test="record.normalOrderOvertime != null">
         normal_order_overtime = #{record.normalOrderOvertime,jdbcType=INTEGER},
@@ -187,7 +187,7 @@
   <update id="updateByExample" parameterType="map">
     update oms_order_setting
     set id = #{record.id,jdbcType=BIGINT},
-      flash_order_overtime = #{record.flashOrderOvertime,jdbcType=INTEGER},
+      return_order_overtime = #{record.returnOrderOvertime,jdbcType=INTEGER},
       normal_order_overtime = #{record.normalOrderOvertime,jdbcType=INTEGER},
       confirm_overtime = #{record.confirmOvertime,jdbcType=INTEGER},
       finish_overtime = #{record.finishOvertime,jdbcType=INTEGER},
@@ -199,8 +199,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.dmd.admin.model.domain.OmsOrderSetting">
     update oms_order_setting
     <set>
-      <if test="flashOrderOvertime != null">
-        flash_order_overtime = #{flashOrderOvertime,jdbcType=INTEGER},
+      <if test="returnOrderOvertime != null">
+        return_order_overtime = #{returnOrderOvertime,jdbcType=INTEGER},
       </if>
       <if test="normalOrderOvertime != null">
         normal_order_overtime = #{normalOrderOvertime,jdbcType=INTEGER},
@@ -219,7 +219,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dmd.admin.model.domain.OmsOrderSetting">
     update oms_order_setting
-    set flash_order_overtime = #{flashOrderOvertime,jdbcType=INTEGER},
+    set return_order_overtime = #{returnOrderOvertime,jdbcType=INTEGER},
       normal_order_overtime = #{normalOrderOvertime,jdbcType=INTEGER},
       confirm_overtime = #{confirmOvertime,jdbcType=INTEGER},
       finish_overtime = #{finishOvertime,jdbcType=INTEGER},

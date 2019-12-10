@@ -5,6 +5,7 @@ import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.OmsOrderReturnApply;
 import com.dmd.mall.model.dto.OrderReturnApplyDto;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,4 +47,19 @@ public interface OmsOrderReturnApplyService extends IService<OmsOrderReturnApply
      * @return
      */
     Map countReturnOrderNum(Long userId, String userType, Integer status);
+
+    /**
+     * 根据状态查询售后订单信息
+     * @param i
+     * @return
+     */
+    List<OmsOrderReturnApply> selectReturnOrderByStatus(Integer status);
+
+    /**
+     * 修改状态
+     * @param loginAuthDto
+     * @param i
+     * @return
+     */
+    int updateOmsReturnStatus(LoginAuthDto loginAuthDto, Long returnOrderId, Integer status);
 }

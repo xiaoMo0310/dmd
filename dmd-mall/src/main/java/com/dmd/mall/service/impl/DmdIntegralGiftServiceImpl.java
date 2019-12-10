@@ -110,10 +110,11 @@ public class DmdIntegralGiftServiceImpl extends BaseService<DmdIntegralGift> imp
         //封装商品的信息
         orderDetail.setProductPrice(new BigDecimal(integralGift.getIntegral()));
         orderDetail.setTotalPrice(new BigDecimal(integralGift.getIntegral() * quantity));
-        orderDetail.setRealAmount(new BigDecimal(0.00));
+        orderDetail.setRealAmount(new BigDecimal(integralGift.getIntegral() * quantity));
         orderDetail.setProductId(integralGift.getId());
         orderDetail.setProductPic(integralGift.getPicture());
         orderDetail.setProductName(integralGift.getName());
+        orderDetail.setProductTitle(integralGift.getName());
         orderDetail.setProductType(4);
         orderDetail.setProductQuantity(quantity);
         //封装商品sku数据

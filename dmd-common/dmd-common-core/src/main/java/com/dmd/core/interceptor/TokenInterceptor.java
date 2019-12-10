@@ -111,6 +111,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 		LoginAuthDto loginUser = (LoginAuthDto) redisTemplate.opsForValue().get(RedisKeyUtil.getAccessTokenKey(token));
 		if (loginUser == null) {
 			log.error("获取用户信息失败, 不允许操作");
+			this.handleLoginException(response);
 			return false;
 		}
 		log.info("<== preHandle - 权限拦截器.  loginUser={}", loginUser);
@@ -129,12 +130,23 @@ public class TokenInterceptor implements HandlerInterceptor {
 		res.flushBuffer();
 	}
 
+	private void handleLoginException(HttpServletResponse res) throws IOException {
+		res.resetBuffer();
+		res.setHeader("Access-Control-Allow-Origin", "*");
+		res.setHeader("Access-Control-Allow-Credentials", "true");
+		res.setContentType("application/json");
+		res.setCharacterEncoding("UTF-8");
+		res.getWriter().write("{\"code\":401 ,\"message\" :\"请先登录\"}");
+		res.flushBuffer();
+	}
+
 	private boolean isHaveAccess(Object handler) {
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
 		Method method = handlerMethod.getMethod();
 		NoNeedAccessAuthentication responseBody = AnnotationUtils.findAnnotation(method, NoNeedAccessAuthentication.class);
 		return responseBody != null;
 	}
+
 	public static byte[] getRequestPostBytes(HttpServletRequest request)
 			throws IOException {
 		int contentLength = request.getContentLength();

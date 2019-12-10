@@ -66,4 +66,9 @@
         and oo.user_type = #{userType}
         and oora.status = #{status}
     </select>
+    <select id="selectReturnOrderByStatus" resultType="com.dmd.mall.model.domain.OmsOrderReturnApply">
+        select <include refid="Base_Column_List"/>
+        from oms_order_return_apply
+        where status = #{status}
+    </select>
 </mapper>

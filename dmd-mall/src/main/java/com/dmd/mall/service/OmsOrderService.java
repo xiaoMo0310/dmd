@@ -99,11 +99,10 @@ public interface OmsOrderService extends IService<OmsOrder> {
 
     /**
      * 根据订单编号查询当前登录人的订单信息
-     * @param loginAuthDto
      * @param orderSn
      * @return
      */
-    OmsOrder getOmsOrderByOrderSn(LoginAuthDto loginAuthDto, String orderSn);
+    OmsOrder getOmsOrderByOrderSn(String orderSn);
 
     /**
      * 根据订单号查询订单信息
@@ -121,4 +120,21 @@ public interface OmsOrderService extends IService<OmsOrder> {
      * @return
      */
     List<Map> countOrderNum(LoginAuthDto loginAuthDto);
+
+    /**
+     * 分页查询用户积分好礼订单列表
+     * @param loginAuthDto
+     * @param pageNum
+     * @param pageSize
+     * @param status
+     * @return
+     */
+    PageInfo queryIntegralOrderListWithPage(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer status);
+
+    /**
+     * 根据订单状态查询订单信息
+     * @param status
+     * @return
+     */
+    List<OmsOrder> selectOrderByStatus(Integer status);
 }

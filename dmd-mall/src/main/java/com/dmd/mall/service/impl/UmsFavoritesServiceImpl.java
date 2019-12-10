@@ -124,6 +124,7 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
                 UmsMember umsMember = umsMemberService.getById(favoritePageInfo.getTargetId());
                 BeanUtils.copyProperties(umsMember, umsFavoritesVo);
                 BeanUtils.copyProperties(favoritePageInfo, umsFavoritesVo);
+                umsFavoritesVo.setUserId(umsMember.getId());
             }
             if (favoritePageInfo.getFavoriteType() == 2) {
                 UmsCoach umsCoach = umsCoachService.selectByKey(favoritePageInfo.getTargetId());
