@@ -9,7 +9,8 @@
     <groupId>com.dmd.admin</groupId>
     <artifactId>dmd-admin</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+<!--    <packaging>jar</packaging>-->
+    <packaging>war</packaging>
 
     <name>dmd-admin</name>
     <description>dmd-admin project for mall</description>
@@ -67,12 +68,34 @@
             <artifactId>easypoi-annotation</artifactId>
             <version>3.0.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <warName>DmdAdmin</warName>
+                </configuration>
             </plugin>
             <!--<plugin>-->
                 <!--<groupId>com.spotify</groupId>-->

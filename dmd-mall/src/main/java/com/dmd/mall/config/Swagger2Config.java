@@ -2,6 +2,8 @@ package com.dmd.mall.config;
 
 import com.dmd.config.properties.DmdProperties;
 import com.dmd.config.properties.SwaggerProperties;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -22,8 +24,12 @@ import java.util.List;
  * @author Yang
  * @date 2018/4/26
  */
+@Data
 @Configuration
+@ConfigurationProperties(prefix = "dmd.swagger")
 public class Swagger2Config {
+
+    private Boolean enable;
 
     @Bean
     public Docket createUserApi() {
@@ -38,7 +44,7 @@ public class Swagger2Config {
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts())
 //				.globalOperationParameters(pars)
-                .enable(true);
+                .enable(enable);
     }
 
     @Bean
@@ -53,7 +59,7 @@ public class Swagger2Config {
                 //配置鉴权信息
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts())
-                .enable(true);
+                .enable(enable);
     }
 
     @Bean
@@ -68,7 +74,7 @@ public class Swagger2Config {
                 //配置鉴权信息
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts())
-                .enable(true);
+                .enable(enable);
     }
 
     @Bean
@@ -83,7 +89,7 @@ public class Swagger2Config {
                 //配置鉴权信息
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts())
-                .enable(true);
+                .enable(enable);
     }
 
     private ApiInfo apiInfo() {

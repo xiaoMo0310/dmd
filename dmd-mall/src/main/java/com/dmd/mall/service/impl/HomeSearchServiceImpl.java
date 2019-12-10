@@ -6,10 +6,8 @@ import com.dmd.mall.model.vo.PmsCertificateVo;
 import com.dmd.mall.service.HomeSearchService;
 import com.dmd.mall.service.PmsCourseProductService;
 import com.github.pagehelper.PageHelper;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -86,7 +84,23 @@ public class HomeSearchServiceImpl implements HomeSearchService{
 
     @Override
     public List<DynamicBean> queryDynamicContent(Long userId, String content, Integer searchType, Integer pageNum, Integer pageSize) {
-        return dynamicMapper.queryDynamicByContent(content);
+        List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamicByContent(content);
+        for (int i = 0; i < dynamicBeanList.size(); i++) {
+            Long userId1 = dynamicBeanList.get(i).getUserId();
+            Integer biaoshifu =  dynamicMapper.selectFavorites(userId,userId1);
+            for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                dynamicBeanList.get(i).setIdentification(biaoshifu);
+            }
+        }
+
+        for (int i = 0; i < dynamicBeanList.size(); i++) {
+            Long dynamicId = dynamicBeanList.get(i).getId();
+            Integer biaoshifuPraise =  dynamicMapper.selectFavoritespraiseTopic(userId,dynamicId);
+            for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                dynamicBeanList.get(i).setIdentificationPraise(biaoshifuPraise);
+            }
+        }
+        return dynamicBeanList;
     }
 
     @Override

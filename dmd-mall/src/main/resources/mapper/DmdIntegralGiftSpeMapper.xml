@@ -13,6 +13,7 @@
 
     <select id="queryIntegralGiftsSpeById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT
+            id,
           size,
           specStock,
           giftId,

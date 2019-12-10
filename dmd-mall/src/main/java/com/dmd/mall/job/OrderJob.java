@@ -55,4 +55,8 @@ public class OrderJob {
             });
         });
     }
+
+    //todo 定时清理未支付的订单
+
+    //todo 定时清理未确认审核的订单
 }
