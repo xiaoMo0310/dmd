@@ -41,9 +41,11 @@
 
 
     <select id="queryDynamic" resultMap="dynamicMap" parameterType="java.lang.Long">
-        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
-        ON dy.r_topicid  = dt.id WHERE  dy.r_userid = #{userId} AND delflag = 0 ORDER BY r_createtime DESC
+        ON dy.r_topicid  = dt.id
+        LEFT JOIN ums_member um on dy.r_userid = um.id
+        WHERE  dy.r_userid = #{userId} AND delflag = 0 ORDER BY r_createtime DESC
 
     </select>
 
@@ -74,22 +76,25 @@
     </update>
 
     <select id="queryTopicByDynamicTime" parameterType="int" resultMap="dynamicMap">
-        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
-        ON dy.r_topicid  = dt.id WHERE  dy.r_topicid = #{value} AND delflag = 0 ORDER BY r_createtime DESC
+        ON dy.r_topicid  = dt.id
+        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_topicid = #{value} AND delflag = 0 ORDER BY r_createtime DESC
     </select>
 
     <select id="selectTopicByDynamicHeat" parameterType="int" resultMap="dynamicMap">
-        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+       SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
-        ON dy.r_topicid  = dt.id WHERE  dy.r_topicid = #{value} AND delflag = 0 ORDER BY r_praise DESC , r_createtime DESC
+        ON dy.r_topicid  = dt.id
+        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_topicid = #{value} AND delflag = 0 ORDER BY r_praise DESC , r_createtime DESC
     </select>
 
 
     <select id="queryDynamicById" resultMap="dynamicMap" parameterType="java.lang.Long">
-        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
-        ON dy.r_topicid  = dt.id WHERE  dy.r_id = #{value} AND delflag = 0
+        ON dy.r_topicid  = dt.id
+        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_id = #{value} AND delflag = 0
     </select>
 
     <insert id="addDynamic" parameterType="com.dmd.mall.model.domain.DynamicBean">
@@ -135,7 +140,7 @@
          UPDATE dmd_dynamic SET  r_comment_num = r_comment_num - 1 where r_id = #{value} and r_comment_num > 0
     </update>
 
-    <select id="queryDynamicTime" resultMap="dynamicMap">
+   <select id="queryDynamicTime" resultMap="dynamicMap">
         SELECT dy.r_id,dy.r_picture,r_author,r_head_portrait,r_praise,r_userid,dy.height,dy.width
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id WHERE delflag = 0 AND dy.r_picture is not null ORDER BY r_createtime DESC
@@ -230,4 +235,5 @@
     <select id="queryUserDetails" resultType="com.dmd.mall.model.vo.UserDetailsVo">
         SELECT id,member_level_id,nick_name,icon,pics FROM ums_member WHERE id = #{userId}
     </select>
+
 </mapper>
