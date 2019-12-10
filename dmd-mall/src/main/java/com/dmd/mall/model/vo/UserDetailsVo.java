@@ -36,6 +36,18 @@ public class UserDetailsVo {
      */
     private Integer Identification;
 
+    /**
+     * 个人简介
+     */
+    private String personalizedSignature;
+
+    public String getPersonalizedSignature() {
+        return personalizedSignature;
+    }
+
+    public void setPersonalizedSignature(String personalizedSignature) {
+        this.personalizedSignature = personalizedSignature;
+    }
 
     public Long getId() {
         return id;
@@ -94,6 +106,7 @@ public class UserDetailsVo {
                 ", icon='" + icon + '\'' +
                 ", pics='" + pics + '\'' +
                 ", Identification=" + Identification +
+                ", personalizedSignature='" + personalizedSignature + '\'' +
                 '}';
     }
 }
