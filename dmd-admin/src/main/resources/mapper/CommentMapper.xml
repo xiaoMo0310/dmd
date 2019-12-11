@@ -22,21 +22,26 @@
 
     <select id="queryCommentAll" parameterType="com.dmd.admin.model.domain.CommentBean" resultMap="commentMap">
         SELECT
-        commentId,
-        lw_name,
-        lw_head_portrait,
-        lw_date,lw_content,
-        lw_comment_type,
-        ip_address,status
-        ,delflag,
-        lw_for_uid,
-        lw_for_dynamic_id,
-        lw_for_diveLog_id,
-        lw_userid,
-        lw_for_pid
-        FROM dmd_dynamic_comment
+        dc.commentId,
+        um.nick_name AS lw_name,
+        um.icon AS lw_head_portrait,
+        dc.lw_date,
+        dc.lw_content,
+        dc.lw_comment_type,
+        dc.ip_address,
+        dc.STATUS,
+        dc.delflag,
+        dc.lw_for_uid,
+        dc.lw_for_dynamic_id,
+        dc.lw_for_diveLog_id,
+        dc.lw_userid,
+        dc.lw_for_pid
+        FROM
+        dmd_dynamic_comment dc
+        LEFT JOIN ums_member um ON lw_userid = um.id
         <include refid="commentWhere"></include>
-        ORDER BY lw_date DESC
+        ORDER BY
+        dc.lw_date DESC
     </select>
 
     <!-- 公用标签 -->
