@@ -51,7 +51,7 @@
             <if test="topicId != null">
                 and dy.r_topicid = #{topicId}
             </if>
-                and delflag = 0
+                and dy.delflag = 0
         </where>
     </sql>
 

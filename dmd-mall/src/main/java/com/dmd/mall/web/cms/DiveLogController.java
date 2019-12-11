@@ -78,9 +78,12 @@ public class DiveLogController {
     @ApiOperation("查询日志气瓶消耗")
     @RequestMapping(value = "/selectDiveLogAirbottleByDiveLogId",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DiveLogAirbottleBean>> queryDiveLogAirbottleByDiveLogId(@RequestParam Long id){
-        List<DiveLogAirbottleBean> diveLogList = diveLogService.queryDiveLogAirbottleByDiveLogId(id);
-        return CommonResult.success(diveLogList);
+    public CommonResult<PageInfo<DiveLogAirbottleBean>> queryDiveLogAirbottleByDiveLogId(
+            @RequestParam Integer pageNum,
+            @RequestParam Integer pageSize,
+            @RequestParam Long id){
+        List<DiveLogAirbottleBean> diveLogList = diveLogService.queryDiveLogAirbottleByDiveLogId(pageNum,pageSize,id);
+        return CommonResult.success(new PageInfo<>(diveLogList));
     }
 
     /**

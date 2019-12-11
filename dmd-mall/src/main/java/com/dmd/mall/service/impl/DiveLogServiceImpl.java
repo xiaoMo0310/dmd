@@ -43,7 +43,8 @@ public class DiveLogServiceImpl implements DiveLogService{
     }
 
     @Override
-    public List<DiveLogAirbottleBean> queryDiveLogAirbottleByDiveLogId(Long id) {
+    public List<DiveLogAirbottleBean> queryDiveLogAirbottleByDiveLogId(Integer pageNum,Integer pageSize,Long id) {
+        PageHelper.startPage(pageNum, pageSize);
         return diveLogMapper.queryDiveLogAirbottleByDiveLogId(id);
     }
 

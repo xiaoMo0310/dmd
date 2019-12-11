@@ -18,7 +18,7 @@ public interface DiveLogService {
 
     List<DiveLogBean> queryDiveLogById(Long id);
 
-    List<DiveLogAirbottleBean> queryDiveLogAirbottleByDiveLogId(Long id);
+    List<DiveLogAirbottleBean> queryDiveLogAirbottleByDiveLogId(Integer pageNum,Integer pageSize,Long id);
 
     int addDiveLog(DiveLogAndAirbottle diveLogAndAirbottle);
 

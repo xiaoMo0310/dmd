@@ -70,10 +70,13 @@ public class DynamicServiceImpl implements DynamicService{
         PageHelper.startPage(pageNum, pageSize);
         //当前登录人ID
         List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamic(userId);
+        //当前登录人
+        LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
+        Long userId2 = loginAuthDto.getUserId();
         for (int i = 0; i < dynamicBeanList.size(); i++) {
             //动态id
             Long id = dynamicBeanList.get(i).getId();
-            Integer biaoshifu =  dynamicMapper.selectFavoritespraise(userId,id);
+            Integer biaoshifu =  dynamicMapper.selectFavoritespraise(userId2,id);
             for (int j = 0; j <dynamicBeanList.size() ; j++) {
                 dynamicBeanList.get(i).setIdentificationPraise(biaoshifu);
             }

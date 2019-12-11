@@ -59,44 +59,45 @@
 
     <select id="queryDiveLogPage" resultMap="diveLogMap" parameterType="com.dmd.admin.model.domain.DiveLogBean">
         SELECT
-        id,
-        diving_number,
-        maximum_depth,
-        average_depth,
-        depth_type,
-        minimum_temperature,
-        average_temperature,
-        temperature_type,
-        start_time,
-        end_time,
-        dive_sites,
-        diving_idea,
-        diving_pictures,
-        additional_weight,
-        water_way,
-        scenery,
-        weather,
-        flow,
-        visibility,
-        animal_photos,
-        clothing_brand,
-        airbottle_brand,
-        mask_brand,
-        watches_brand,
-        camera_brand,
-        fins_brand,
-        createtime,
-        edittime,
-        delflag,
-        author,
-        user_head_portrait,
-        user_id,
-        praise_num,
-        share_num,
-        comment_num,
-        dive_type
+        dl.id,
+        dl.diving_number,
+        dl.maximum_depth,
+        dl.average_depth,
+        dl.depth_type,
+        dl.minimum_temperature,
+        dl.average_temperature,
+        dl.temperature_type,
+        dl.start_time,
+        dl.end_time,
+        dl.dive_sites,
+        dl.diving_idea,
+        dl.diving_pictures,
+        dl.additional_weight,
+        dl.water_way,
+        dl.scenery,
+        dl.weather,
+        dl.flow,
+        dl.visibility,
+        dl.animal_photos,
+        dl.clothing_brand,
+        dl.airbottle_brand,
+        dl.mask_brand,
+        dl.watches_brand,
+        dl.camera_brand,
+        dl.fins_brand,
+        dl.createtime,
+        dl.edittime,
+        dl.delflag,
+        um.nick_name AS author,
+        dl.user_head_portrait,
+        dl.user_id,
+        dl.praise_num,
+        dl.share_num,
+        dl.comment_num,
+        dl.dive_type
         FROM
-        dmd_dive_log
+        dmd_dive_log dl
+        LEFT JOIN ums_member um ON dl.user_id = um.id
         <include refid="diveLogWhere"></include>
     </select>
 
@@ -105,20 +106,20 @@
         <where>
             <!-- 日期区间查询 -->
             <if test="startDate != null">
-                and createtime &gt;= #{startDate}
+                and dl.createtime &gt;= #{startDate}
             </if>
             <if test="endDate != null">
-                and createtime &lt;= #{endDate}
+                and dl.createtime &lt;= #{endDate}
             </if>
             <!-- 潜水类型查询 -->
             <if test="diveType !=null">
-                and dive_type = #{diveType}
+                and dl.dive_type = #{diveType}
             </if>
             <!-- 按照用户ID查询 -->
             <if test="userId !=null">
-                and user_id = #{userId}
+                and dl.user_id = #{userId}
             </if>
-                and delflag = 0
+                and dl.delflag = 0
         </where>
     </sql>
     <select id="queryDiveLogAirbottleByDiveLogId" resultMap="diveLogAirbottleMap" parameterType="java.lang.Long">

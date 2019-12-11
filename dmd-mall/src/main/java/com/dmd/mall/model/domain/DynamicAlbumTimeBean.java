@@ -23,7 +23,7 @@ public class DynamicAlbumTimeBean {
      */
     private Integer pictureNum;
     /**
-     * 封面图片
+     * 用户月份所发的所有图片
      */
     private String picture;
     /**

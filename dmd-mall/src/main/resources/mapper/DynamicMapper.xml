@@ -231,7 +231,7 @@
         SELECT r_picture AS picture
         FROM dmd_dynamic
         WHERE
-        date_format(r_createtime, '%Y%m') = #{months} and r_userid = #{userId}
+        date_format(r_createtime, '%Y%m') = #{months} and r_userid = #{userId} and r_picture is not null and r_picture &lt;&gt; ""
     </select>
 
     <select id="queryUserDetails" resultType="com.dmd.mall.model.vo.UserDetailsVo">
