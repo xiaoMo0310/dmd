@@ -100,7 +100,7 @@
         pc.title,
         pc.start_time,
         pc.image,
-        pc.location
+        pc.location,
         pc.id
     FROM
         oms_order om
