@@ -3,7 +3,6 @@ package com.dmd.mall.web.cms;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.DynamicAlbumTimeBean;
 import com.dmd.mall.model.domain.DynamicBean;
-import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.vo.UserDetailsVo;
 import com.dmd.mall.service.DynamicService;
 import com.github.pagehelper.PageInfo;
@@ -20,7 +19,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: DynamicController
  * @projectName dmd-master
- * @description: TODO 我的动态
+ * @description: 我的动态
  * @date 2019/9/239:18
  */
 @Controller

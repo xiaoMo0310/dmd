@@ -8,7 +8,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: MyIntegralService
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/2215:24
  */
 public interface MyIntegralService {

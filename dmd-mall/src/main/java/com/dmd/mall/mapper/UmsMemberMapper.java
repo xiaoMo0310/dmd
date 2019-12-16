@@ -1,6 +1,5 @@
 package com.dmd.mall.mapper;
 
-import com.dmd.mall.model.domain.UmsIntegrationChangeLog;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.domain.UmsMemberExample;
 import org.apache.ibatis.annotations.Mapper;
@@ -46,4 +45,9 @@ public interface UmsMemberMapper {
     int insertCoach(UmsMember umsMember);
     int updatePhone(@Param("phone") String phone,@Param("username") String username);
 
+    int verifiedInvitationCode(String invitationCode);
+
+    UmsMember selectById(Long userId);
+
+    UmsMember selectByUserName(String loginName);
 }

@@ -1,12 +1,12 @@
 package com.dmd;
 
 
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.servlet.MultipartConfigElement;
 
@@ -14,7 +14,7 @@ import javax.servlet.MultipartConfigElement;
  * @author ChenYanbing
  * @title: WebAppConfig
  * @projectName dmd-master
- * @description: TODO
+ * @description:
  * @date 2019/10/811:50
  */
 

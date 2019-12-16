@@ -1,9 +1,11 @@
 package com.dmd.admin.service.impl;
 
 import com.dmd.admin.mapper.*;
-import com.dmd.admin.model.domain.*;
+import com.dmd.admin.model.domain.IntegralGiftsBean;
+import com.dmd.admin.model.domain.IntegralGiftsSpeBean;
+import com.dmd.admin.model.domain.IntegralRuleBean;
+import com.dmd.admin.model.domain.UmsIntegrationChangeHistory;
 import com.dmd.admin.service.IntegralAdminService;
-import com.dmd.base.result.CommonResult;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: IntegralAdminServiceImpl
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/2214:20
  */
 @Service

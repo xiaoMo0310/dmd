@@ -9,7 +9,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: HomeSearchRecordBean
  * @projectName dmd-masters
- * @description: TODO 首页--搜索 历史记录表
+ * @description: 首页--搜索 历史记录表
  * @date 2019/10/1818:19
  */
 public class HomeSearchRecordBean {

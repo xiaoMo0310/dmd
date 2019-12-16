@@ -18,4 +18,6 @@ import org.springframework.stereotype.Component;
 public interface UmsCoachMapper extends MyMapper<UmsCoach> {
 
     UmsCoach selectCoachMessage(Long id);
+
+    UmsCoach selectById(Long userId);
 }

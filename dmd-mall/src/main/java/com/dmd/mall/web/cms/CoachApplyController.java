@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author ChenYanbing
  * @title: CoachApplyController
  * @projectName dmd-master
- * @description: TODO 用户教练申请
+ * @description: 用户教练申请
  * @date 2019/9/1914:41
  */
 @Controller

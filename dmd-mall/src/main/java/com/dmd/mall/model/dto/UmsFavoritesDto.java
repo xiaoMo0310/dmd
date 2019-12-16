@@ -7,7 +7,7 @@ import lombok.Data;
  * @author ChenYanbing
  * @title: UmsFavoritesDto
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/11/1315:51
  */
 @Data

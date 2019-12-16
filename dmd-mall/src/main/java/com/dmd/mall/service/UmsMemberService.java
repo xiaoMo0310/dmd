@@ -2,7 +2,9 @@ package com.dmd.mall.service;
 
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.result.CommonResult;
+import com.dmd.mall.model.domain.MemberDetails;
 import com.dmd.mall.model.domain.UmsMember;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -91,4 +93,19 @@ public interface UmsMemberService {
      * @param accessToken
      */
     Boolean deleteRedisToken(String accessToken);
+
+    /**
+     * 根据用户名查询用户信息
+     * @param loginName
+     * @return
+     */
+    UmsMember selectByUserName(String loginName);
+
+    /**
+     * 处理用户登录数据
+     * @param token
+     * @param principal
+     * @param request
+     */
+    void handlerLoginData(OAuth2AccessToken token, MemberDetails principal, HttpServletRequest request);
 }

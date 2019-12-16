@@ -1,23 +1,20 @@
 package com.dmd.mall.job;
 
-import com.alibaba.fastjson.JSONArray;
 import com.dmd.DateUtil;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.mall.constant.OmsApiConstant;
 import com.dmd.mall.exceptions.PmsBizException;
 import com.dmd.mall.model.domain.*;
-import com.dmd.mall.model.vo.CourseOrderDetailVo;
+import com.dmd.mall.model.dto.OrderAppraiseDto;
 import com.dmd.mall.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author YangAnsheng
@@ -26,6 +23,7 @@ import java.util.Map;
  * @Description 订单定时任务
  */
 @Component
+@Transactional(rollbackFor = Exception.class)
 public class OrderJob {
 
     @Autowired
@@ -38,28 +36,29 @@ public class OrderJob {
     private OmsOrderItemService omsOrderItemService;
     @Autowired
     private OmsOrderReturnApplyService omsOrderReturnApplyService;
+    @Autowired
+    private OmsOrderAppraiseService orderAppraiseService;
 
     /**
      * 自动修改订单为进行中
      */
-    @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "0 10 1 * * ?")
     public void updateOrderProcessing(){
         //查询已支付的学证潜水订单
-        List<CourseOrderDetailVo> omsOrders = omsOrderService.queryOrderListByStatus(1, OmsApiConstant.OrderStatusEnum.PAID.getCode());
+        List<OmsOrder> omsOrders = omsOrderService.selectOrderByStatus(1,OmsApiConstant.OrderStatusEnum.PAID.getCode());
         omsOrders.forEach(omsOrder -> {
-            List<Map> maps = (List<Map>) JSONArray.parse(omsOrder.getSpec());
-            maps.forEach(map -> {
-                String key = (String) map.get("key");
-                if(key.equals("开始时间")){
-                    Date date = DateUtil.resolverDate((String) map.get("value"));
-                    if(System.currentTimeMillis() >= date.getTime()){
-                        //修改订单状态为进行中
-                        LoginAuthDto loginAuthDto = new LoginAuthDto();
-                        loginAuthDto.setUserId(omsOrder.getUserId());
-                        loginAuthDto.setUserType("member");
-                        loginAuthDto.setUserName("定时修改");
-                        omsOrderService.updateOrderStatus(loginAuthDto, omsOrder.getOrderSn(), OmsApiConstant.OrderStatusEnum.SHIPPED.getCode());
-                    }
+            //查询订单详情数据
+            List<OmsOrderItem> omsOrderItems = omsOrderItemService.getListByOrderNoUserId(omsOrder.getOrderSn());
+            omsOrderItems.forEach(omsOrderItem -> {
+                PmsCourseProduct courseProduct = courseProductService.selectByKey(omsOrderItem.getProductId());
+                Date lastDate = DateUtil.resolverDate(DateUtil.formartDate(courseProduct.getStartTime()));
+                if(System.currentTimeMillis() >= lastDate.getTime()){
+                    //修改订单状态为进行中
+                    LoginAuthDto loginAuthDto = new LoginAuthDto();
+                    loginAuthDto.setUserId(0L);
+                    loginAuthDto.setUserType("system");
+                    loginAuthDto.setUserName("系统");
+                    omsOrderService.updateOrderStatus(loginAuthDto, omsOrder.getOrderSn(), OmsApiConstant.OrderStatusEnum.SHIPPED.getCode());
                 }
             });
         });
@@ -69,18 +68,18 @@ public class OrderJob {
      * 定时清理未支付的订单
      */
     @Scheduled(cron = "0 0/1 * * * ?")
-    @Transactional(rollbackFor = Exception.class)
     public void clearNoPayOrder(){
         OmsOrderSetting omsOrderSetting = findOmsOrderSettingMessage();
         Integer normalOrderOvertime = omsOrderSetting.getNormalOrderOvertime();
         //查询所有未支付的订单
-        List<OmsOrder> omsOrders = omsOrderService.selectOrderByStatus(0);
+        List<OmsOrder> omsOrders = omsOrderService.selectOrderByStatus(1,OmsApiConstant.OrderStatusEnum.NO_PAY.getCode());
         omsOrders.forEach(order -> {
             Date lastDate = DateUtil.minuteShit("yyyy-MM-dd HH:mm:ss", order.getCreatedTime(), normalOrderOvertime);
             if(System.currentTimeMillis() >= lastDate.getTime()){
                 LoginAuthDto loginAuthDto = new LoginAuthDto();
-                loginAuthDto.setUserName("系统");
                 loginAuthDto.setUserId(0L);
+                loginAuthDto.setUserType("system");
+                loginAuthDto.setUserName("系统");
                 //修改订单状态取消
                 omsOrderService.cancelOrderDoc(loginAuthDto, order.getOrderSn());
                 //查询订单详情数据
@@ -112,8 +111,9 @@ public class OrderJob {
             Date lastDate = DateUtil.dateshit("yyyy-MM-dd HH:mm:ss", omsOrderReturnApply.getCreatedTime(), returnOrderOvertime);
             if(System.currentTimeMillis() >= lastDate.getTime()){
                 LoginAuthDto loginAuthDto = new LoginAuthDto();
-                loginAuthDto.setUserName("系统");
                 loginAuthDto.setUserId(0L);
+                loginAuthDto.setUserType("system");
+                loginAuthDto.setUserName("系统");
                 //修改售后订单未审核通过
                 int result = omsOrderReturnApplyService.updateOmsReturnStatus(loginAuthDto, omsOrderReturnApply.getId(), 1);
                 if(result <= 0){
@@ -124,15 +124,85 @@ public class OrderJob {
     }
 
     /**
-     * 定时自动完成订单并好评(凌晨1:15执行)
-     *//*
+     * 定时自动完成订单如果完成时间和评价时间相同好评(凌晨1:15执行)
+     */
     @Scheduled(cron = "0 15 1 * * ?")
     public void AutomaticOrderFulfillment(){
         OmsOrderSetting omsOrderSetting = findOmsOrderSettingMessage();
+        //确认完成时间
+        Integer confirmOvertime = omsOrderSetting.getConfirmOvertime();
+        //完成好评时间
         Integer finishOvertime = omsOrderSetting.getFinishOvertime();
-
+        //查询进行中的潜水订单
+        List<OmsOrder> omsOrders = omsOrderService.selectOrderByStatus(1,OmsApiConstant.OrderStatusEnum.SHIPPED.getCode());
+        omsOrders.forEach(omsOrder -> {
+            //查询订单详情数据
+            List<OmsOrderItem> omsOrderItems = omsOrderItemService.getListByOrderNoUserId(omsOrder.getOrderSn());
+            omsOrderItems.forEach(omsOrderItem -> {
+                PmsCourseProduct courseProduct = courseProductService.selectByKey(omsOrderItem.getProductId());
+                Date endDate = DateUtil.resolverDate(DateUtil.formartDate(courseProduct.getEndTime()));
+                Date lastDate = DateUtil.dateshit("yyyy-MM-dd", endDate, confirmOvertime);
+                if(System.currentTimeMillis() >= lastDate.getTime()){
+                    //修改订单状态为已完成
+                    LoginAuthDto loginAuthDto = new LoginAuthDto();
+                    loginAuthDto.setUserId(0L);
+                    loginAuthDto.setUserType("system");
+                    loginAuthDto.setUserName("系统");
+                    omsOrderService.updateOrderStatus(loginAuthDto, omsOrder.getOrderSn(), OmsApiConstant.OrderStatusEnum.ORDER_SUCCESS.getCode());
+                    if(confirmOvertime.equals(finishOvertime)){
+                        //自动好评 并关闭订单
+                        praiseAndCloseOrder(omsOrder.getId(), courseProduct.getId(), omsOrder.getMemberId());
+                    }
+                }
+            });
+        });
     }
-*/
+
+    /**
+     * 自动好评订单并关闭订单
+     */
+    @Scheduled(cron = "0 20 1 * * ?")
+    public void automaticPraiseOrder(){
+        OmsOrderSetting omsOrderSetting = findOmsOrderSettingMessage();
+        //完成好评时间
+        Integer finishOvertime = omsOrderSetting.getFinishOvertime();
+        //查询已支付的学证潜水订单
+        List<OmsOrder> omsOrders = omsOrderService.selectOrderByStatus(1,OmsApiConstant.OrderStatusEnum.ORDER_SUCCESS.getCode());
+        omsOrders.forEach(omsOrder -> {
+            //查询订单详情数据
+            List<OmsOrderItem> omsOrderItems = omsOrderItemService.getListByOrderNoUserId(omsOrder.getOrderSn());
+            omsOrderItems.forEach(omsOrderItem -> {
+                Date finishDate = DateUtil.resolverDate(DateUtil.formartDate(omsOrder.getEndTime()));
+                Date lastDate = DateUtil.dateshit("yyyy-MM-dd", finishDate, finishOvertime);
+                if(System.currentTimeMillis() >= lastDate.getTime()){
+                    //自动好评,关闭订单
+                    praiseAndCloseOrder(omsOrder.getId(), omsOrderItem.getProductId(), omsOrder.getMemberId());
+                }
+            });
+        });
+    }
+
+    /**
+     * 默认好评并关闭订单
+     * @param orderId
+     * @param productId
+     * @param BuyerId
+     */
+    public void praiseAndCloseOrder(Long orderId, Long productId, Long BuyerId){
+        LoginAuthDto loginAuthDto = new LoginAuthDto();
+        loginAuthDto.setUserId(BuyerId);
+        loginAuthDto.setUserType("system");
+        loginAuthDto.setUserName("系统");
+        OrderAppraiseDto orderAppraiseDto = new OrderAppraiseDto();
+        orderAppraiseDto.setOrderId(orderId);
+        orderAppraiseDto.setProductId(productId);
+        orderAppraiseDto.setInfo("用户默认好评");
+        orderAppraiseDto.setLevel("1");
+        orderAppraiseDto.setDescStar(5);
+        orderAppraiseDto.setLogisticsStar(5);
+        orderAppraiseDto.setAttitudeStar(5);
+        int result = orderAppraiseService.insertAppraiseMessage(loginAuthDto, orderAppraiseDto);
+    }
     /**
      * 查询订单配置信息
      * @return
@@ -140,12 +210,5 @@ public class OrderJob {
     public OmsOrderSetting findOmsOrderSettingMessage(){
         OmsOrderSetting omsOrderSetting = orderSettingService.selectByKey(1);
         return omsOrderSetting;
-    }
-
-    public static void main(String[] args) {
-        Date date = new Date();
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
-        Date date1 = DateUtil.minuteShit("yyyy-MM-dd HH:mm:ss", date, -10);
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date1));
     }
 }

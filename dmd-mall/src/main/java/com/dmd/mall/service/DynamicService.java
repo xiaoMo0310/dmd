@@ -2,7 +2,6 @@ package com.dmd.mall.service;
 
 import com.dmd.mall.model.domain.DynamicAlbumTimeBean;
 import com.dmd.mall.model.domain.DynamicBean;
-import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.vo.UserDetailsVo;
 
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: DynamicService
  * @projectName dmd-master
- * @description: TODO
+ * @description:
  * @date 2019/9/239:43
  */
 public interface DynamicService {

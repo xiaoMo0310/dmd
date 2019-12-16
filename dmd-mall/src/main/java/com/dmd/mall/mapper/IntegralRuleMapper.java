@@ -8,7 +8,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: IntegralRuleMapper
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/2213:54
  */
 public interface IntegralRuleMapper {

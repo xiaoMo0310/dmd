@@ -71,6 +71,10 @@
             <artifactId>json</artifactId>
             <version>20170516</version>
         </dependency>
+        <dependency>
+            <groupId>com.arronlong.httpclientutil</groupId>
+            <artifactId>httpclientutil</artifactId>
+        </dependency>
     </dependencies>
 
 

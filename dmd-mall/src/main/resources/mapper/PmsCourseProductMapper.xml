@@ -60,7 +60,7 @@
         and psp.product_type = #{type}
         and psp.status = 1
         and psp.approval_status = 2
-        order by sort desc
+        order by sort,psp.update_time desc
     </select>
     <select id="selectCoachIdByCertificateId" resultType="java.lang.Long">
         select user_id
@@ -180,7 +180,7 @@
         ORDER BY pc.sales DESC
     </select>
     <select id="selectByUserId" resultType="java.lang.Integer">
-        select count(1) from pms_course_product where user_id = #{userId}
+        select count(1) from pms_course_product where user_id = #{userId} and certificate_id = #{certificateId} and address_id = #{addressId}
     </select>
 
     <select id="queryPmsCourseProductByType" parameterType="java.lang.String" resultMap="BaseResultMap">

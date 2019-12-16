@@ -10,7 +10,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: TopicBean
  * @projectName dmd-master
- * @description: TODO 话题实体类，内容由后台管理员编辑
+ * @description: 话题实体类，内容由后台管理员编辑
  * @date 2019/9/2316:10
  */
 public class TopicBean {

@@ -10,7 +10,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: DiveCertificateMapper
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/11/413:31
  */
 public interface DiveCertificateMapper {

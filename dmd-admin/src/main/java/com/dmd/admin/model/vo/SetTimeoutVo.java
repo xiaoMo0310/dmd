@@ -1,14 +1,12 @@
 package com.dmd.admin.model.vo;
 
-import io.swagger.models.auth.In;
-
 import java.math.BigDecimal;
 
 /**
  * @author ChenYanbing
  * @title: SetTimeoutVo
  * @projectName dmd
- * @description: TODO
+ * @description:
  * @date 2019/12/917:03
  */
 public class SetTimeoutVo {

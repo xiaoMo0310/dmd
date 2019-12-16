@@ -9,7 +9,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: DiveLogBean
  * @projectName dmd-masters
- * @description: TODO 潜水日志表
+ * @description: 潜水日志表
  * @date 2019/10/119:55
  */
 public class DiveLogBean {

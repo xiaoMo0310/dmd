@@ -12,7 +12,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: IntegralRuleServiceImpl
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/2213:53
  */
 @Service

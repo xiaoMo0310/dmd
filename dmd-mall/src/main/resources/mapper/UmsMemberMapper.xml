@@ -488,5 +488,19 @@
   <update id="updatePhone">
     update ums_member set username=#{phone} where username=#{username}
   </update>
+  <select id="verifiedInvitationCode" resultType="int">
+    select count(1) from ums_coach where invitation_code=#{invitationCode}
+  </select>
+    <select id="selectById" resultType="com.dmd.mall.model.domain.UmsMember">
+      select <include refid="Base_Column_List"/>
+      from ums_member
+      where status = 2
+      and id = #{userId}
+    </select>
+    <select id="selectByUserName" resultType="com.dmd.mall.model.domain.UmsMember">
+      select <include refid="Base_Column_List"/>
+      from ums_member
+      where username = #{loginName};
+    </select>
 
 </mapper>

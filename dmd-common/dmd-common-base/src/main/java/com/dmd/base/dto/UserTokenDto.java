@@ -19,10 +19,6 @@ public class UserTokenDto extends LoginAuthDto {
 	private Long id;
 
 	/**
-	 * 版本号
-	 */
-	private Integer version;
-	/**
 	 * 创建人
 	 */
 	private String creator;
@@ -55,10 +51,6 @@ public class UserTokenDto extends LoginAuthDto {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date updateTime;
-	/**
-	 * 父ID
-	 */
-	private Long pid;
 
 	/**
 	 * 登陆人Ip地址

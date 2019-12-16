@@ -8,7 +8,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: UmsProblemFeedbackBean
  * @projectName dmd
- * @description: TODO
+ * @description:
  * @date 2019/12/29:49
  */
 public class UmsProblemFeedbackBean {

@@ -9,7 +9,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: IntegralGiftsSpeMapper
  * @projectName dmd
- * @description: TODO
+ * @description:
  * @date 2019/11/1515:23
  */
 public interface IntegralGiftsSpeMapper {

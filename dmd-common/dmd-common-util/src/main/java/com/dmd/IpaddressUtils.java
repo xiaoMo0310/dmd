@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author ChenYanbing
  * @title: IpaddressUtils
  * @projectName dmd-master
- * @description: TODO 获取IP地址封装类
+ * @description: 获取IP地址封装类
  * @date 2019/9/2514:08
  */
 public class IpaddressUtils {

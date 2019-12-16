@@ -6,7 +6,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: IntegralRuleBean
  * @projectName dmd-masters
- * @description: TODO 积分规则说明实体类
+ * @description: 积分规则说明实体类
  * @date 2019/10/2213:56
  */
 public class IntegralRuleBean {

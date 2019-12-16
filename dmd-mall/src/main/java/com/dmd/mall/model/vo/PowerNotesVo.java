@@ -12,7 +12,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: PowerNotesVo
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/11/1414:04
  */
 @Data

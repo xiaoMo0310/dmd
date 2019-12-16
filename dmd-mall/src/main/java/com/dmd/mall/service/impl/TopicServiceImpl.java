@@ -2,7 +2,6 @@ package com.dmd.mall.service.impl;
 
 import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.mapper.TopicMapper;
-import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.TopicBean;
 import com.dmd.mall.service.TopicService;
 import com.github.pagehelper.PageHelper;
@@ -15,7 +14,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: TopicServiceImpl
  * @projectName dmd-master
- * @description: TODO
+ * @description:
  * @date 2019/9/2910:46
  */
 @Service

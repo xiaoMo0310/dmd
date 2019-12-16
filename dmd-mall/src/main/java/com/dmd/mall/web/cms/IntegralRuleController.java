@@ -1,7 +1,6 @@
 package com.dmd.mall.web.cms;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.IntegralRuleBean;
 import com.dmd.mall.service.IntegralRuleService;
 import io.swagger.annotations.Api;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -19,7 +17,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: IntegralRuleController
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/2213:51
  */
 @Controller

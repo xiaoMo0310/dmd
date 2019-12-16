@@ -8,7 +8,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: IntegralGiftsMapper
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/2916:35
  */
 public interface IntegralGiftsMapper {

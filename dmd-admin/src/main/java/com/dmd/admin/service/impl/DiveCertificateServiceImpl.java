@@ -2,7 +2,6 @@ package com.dmd.admin.service.impl;
 
 import com.dmd.admin.mapper.DiveCertificateAdminMapper;
 import com.dmd.admin.model.domain.CertificateAppBean;
-import com.dmd.admin.model.domain.DiveCertificateBean;
 import com.dmd.admin.service.DiveCertificateService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: DiveCertificateServiceImpl
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/11/415:01
  */
 @Service

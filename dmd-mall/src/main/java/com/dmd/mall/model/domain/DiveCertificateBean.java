@@ -8,7 +8,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: DiveCertificateBean
  * @projectName dmd-masters
- * @description: TODO 我的潜水证书申请实体类
+ * @description: 我的潜水证书申请实体类
  * @date 2019/11/411:05
  */
 public class DiveCertificateBean {

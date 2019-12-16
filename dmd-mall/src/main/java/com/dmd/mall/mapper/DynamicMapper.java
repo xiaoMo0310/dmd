@@ -5,14 +5,13 @@ import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.vo.UserDetailsVo;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.Date;
 import java.util.List;
 
 /**
  * @author ChenYanbing
  * @title: DynamicMapper
  * @projectName dmd-master
- * @description: TODO
+ * @description:
  * @date 2019/9/239:44
  */
 public interface DynamicMapper {

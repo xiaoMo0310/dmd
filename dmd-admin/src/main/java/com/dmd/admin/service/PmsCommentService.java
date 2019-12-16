@@ -8,7 +8,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: PmsCommentService
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/229:20
  */
 public interface PmsCommentService {

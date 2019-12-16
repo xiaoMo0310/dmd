@@ -9,7 +9,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: DynamicService
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/1716:38
  */
 public interface DynamicService {

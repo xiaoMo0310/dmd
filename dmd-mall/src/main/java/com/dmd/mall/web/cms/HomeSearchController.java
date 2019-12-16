@@ -1,13 +1,15 @@
 package com.dmd.mall.web.cms;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.domain.*;
+import com.dmd.mall.model.domain.DynamicBean;
+import com.dmd.mall.model.domain.HomeSearchRecordBean;
+import com.dmd.mall.model.domain.PmsCourseProduct;
+import com.dmd.mall.model.domain.TopicBean;
 import com.dmd.mall.model.vo.PmsCertificateVo;
 import com.dmd.mall.service.HomeSearchService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author ChenYanbing
  * @title: HomeSearchController
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/1818:12
  */
 @Controller

@@ -1,15 +1,10 @@
 package com.dmd.mall.model.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
-
 /**
  * @author ChenYanbing
  * @title: DynamicAlbumTimeBean
  * @projectName dmd
- * @description: TODO
+ * @description:
  * @date 2019/12/615:20
  */
 public class DynamicAlbumTimeBean {

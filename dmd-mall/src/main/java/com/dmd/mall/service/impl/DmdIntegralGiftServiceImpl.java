@@ -13,6 +13,7 @@ import com.dmd.mall.service.DmdIntegralGiftService;
 import com.dmd.mall.service.DmdIntegralGiftSpeService;
 import com.dmd.mall.service.UmsMemberService;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -150,13 +151,13 @@ public class DmdIntegralGiftServiceImpl extends BaseService<DmdIntegralGift> imp
 
     public List<Map> packageSpecMessage(DmdIntegralGiftSpe dmdIntegralGiftSpe) {
         List<Map> list = new ArrayList<>();
-        if(dmdIntegralGiftSpe.getSize() != null){
+        if(!StringUtils.isEmpty(dmdIntegralGiftSpe.getSize())){
             Map mapA = new HashMap(0);
             mapA.put("key","尺码");
             mapA.put("value", dmdIntegralGiftSpe.getSize());
             list.add(mapA);
         }
-        if(dmdIntegralGiftSpe.getColor() != null){
+        if(!StringUtils.isEmpty(dmdIntegralGiftSpe.getColor())){
             Map mapB = new HashMap(0);
             mapB.put("key","颜色");
             mapB.put("value", dmdIntegralGiftSpe.getColor());

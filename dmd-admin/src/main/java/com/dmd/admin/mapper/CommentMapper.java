@@ -8,7 +8,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: CommentMapper
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/2115:31
  */
 public interface CommentMapper {

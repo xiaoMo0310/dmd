@@ -13,8 +13,8 @@ import com.dmd.mall.model.domain.UmsMemberExample;
 import com.dmd.mall.security.redis.ValidateCodeRepository;
 import com.dmd.mall.security.sms.ValidateCode;
 import com.dmd.mall.security.sms.ValidateCodeException;
-import com.dmd.mall.service.RedisService;
 import com.dmd.mall.service.UmsIntegrationChangeLogService;
+import com.dmd.mall.service.UmsMemberLoginLogService;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.CodeValidateUtil;
 import com.dmd.mall.util.JwtUtil;
@@ -30,6 +30,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -59,7 +60,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     @Autowired
     private RedisTemplate redisTemplate;
     @Autowired
-    private RedisService redisService;
+    private UmsMemberLoginLogService memberLoginLogService;
     @Autowired
     private UmsIntegrationChangeLogService integrationChangeLogService;
     @Value("${redis.key.prefix.authCode}")
@@ -91,6 +92,11 @@ public class UmsMemberServiceImpl implements UmsMemberService {
 
     @Override
     public CommonResult register(String username, String password, String invitationCode, String authCode, HttpServletRequest request) {
+        //验证邀请码是否存在
+        int verifiedInvitationCode=memberMapper.verifiedInvitationCode(invitationCode);
+        if (verifiedInvitationCode != 1 && invitationCode!=null && !invitationCode.equals("")){
+            return CommonResult.failed("邀请码不存在");
+        }
         //验证验证码
         ValidateCode validateCode=validateCodeRepository.get(new ServletWebRequest(request));
         try {
@@ -290,7 +296,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     public UmsMember selectByLoginAuthDto(LoginAuthDto loginAuthDto) {
         UmsMember umsMember = null;
         if(loginAuthDto.getUserType().equals("member")){
-            umsMember = memberMapper.selectByPrimaryKey(loginAuthDto.getUserId());
+            umsMember = memberMapper.selectById(loginAuthDto.getUserId());
         }
         if(umsMember == null){
             throw new UmsBizException(ErrorCodeEnum.UMS10011003, loginAuthDto.getUserId());
@@ -320,4 +326,20 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         Boolean delete = redisTemplate.delete(RedisKeyUtil.getAccessTokenKey(accessToken));
         return delete;
     }
+
+    @Override
+    public UmsMember selectByUserName(String loginName) {
+        return memberMapper.selectByUserName(loginName);
+    }
+
+    @Override
+    public void handlerLoginData(OAuth2AccessToken token, MemberDetails principal, HttpServletRequest request) {
+        String accessToken = token.getValue();
+        String refreshToken = token.getRefreshToken().getValue();
+        UmsMember umsMember = principal.getUmsMember();
+        LoginAuthDto loginAuthDto = new LoginAuthDto(umsMember.getId(), umsMember.getUsername(), umsMember.getNickname(), umsMember.getLoginType(), umsMember.getPhone());
+        memberLoginLogService.saveLoginUserLog(accessToken, refreshToken, loginAuthDto, request);
+    }
+
+
 }

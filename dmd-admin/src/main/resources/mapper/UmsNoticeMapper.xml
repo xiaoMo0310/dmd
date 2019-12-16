@@ -55,7 +55,7 @@
         <if test="messageType != null">
             and message_type = #{messageType}
         </if>
-        order by #{orderBy}
+        order by created_time desc
     </select>
 
 

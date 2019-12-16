@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author ChenYanbing
  * @title: GetUserSigController
  * @projectName dmd-masters
- * @description: TODO
- * @date 2019/11/816:37
+ * @description:
  */
 @Controller
 @Api(tags = "GetUserSigController", description = "腾讯云通讯生成UserSig")

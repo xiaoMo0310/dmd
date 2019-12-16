@@ -5,6 +5,7 @@ import com.dmd.ThreadLocalMap;
 import com.dmd.annotation.NoNeedAccessAuthentication;
 import com.dmd.base.constant.GlobalConstant;
 import com.dmd.base.dto.LoginAuthDto;
+import com.dmd.base.dto.UserTokenDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -19,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.Enumeration;
 
 /**
  * token拦截器验证
@@ -45,7 +45,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 	 * @param response the response
 	 * @param arg2     the arg 2
 	 * @param ex       the ex
-	 *
 	 * @throws Exception the exception
 	 */
 	@Override
@@ -80,7 +79,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
 
-		Enumeration<String> paraNames=request.getParameterNames();
+		/*Enumeration<String> paraNames=request.getParameterNames();
 		for(Enumeration<String> e = paraNames; e.hasMoreElements();){
 			String thisName=e.nextElement().toString();
 			String thisValue=request.getParameter(thisName);
@@ -90,14 +89,14 @@ public class TokenInterceptor implements HandlerInterceptor {
 			String thisName=e.nextElement().toString();
 			String thisValue=request.getHeader(thisName);
 			System.out.println("header的key:"+thisName+"--------------header的value:"+thisValue);
-		}
+		}*/
 		String uri = request.getRequestURI();
 		log.info("<== preHandle - 权限拦截器.  url={}", uri);
 		if (uri.contains(AUTH_PATH1) || uri.contains(AUTH_PATH2) || uri.contains(AUTH_PATH3) || uri.contains(AUTH_PATH4)) {
 			log.info("<== preHandle - 配置URL不走认证.  url={}", uri);
 			return true;
 		}
-		//log.info("<== preHandle - 调试模式不走认证.  OPTIONS={}", request.getMethod().toUpperCase());
+		log.info("<== preHandle - 调试模式不走认证.  OPTIONS={}", request.getMethod().toUpperCase());
 		if (OPTIONS.equalsIgnoreCase(request.getMethod())) {
 			log.info("<== preHandle - 调试模式不走认证.  url={}", uri);
 			return true;
@@ -108,7 +107,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 		}
 		String token = StringUtils.substringAfter(request.getHeader(HttpHeaders.AUTHORIZATION), "Bearer ");
 		log.info("<== preHandle - 权限拦截器.  token={}", token);
-		LoginAuthDto loginUser = (LoginAuthDto) redisTemplate.opsForValue().get(RedisKeyUtil.getAccessTokenKey(token));
+		LoginAuthDto loginUser = (UserTokenDto) redisTemplate.opsForValue().get(RedisKeyUtil.getAccessTokenKey(token));
 		if (loginUser == null) {
 			log.error("获取用户信息失败, 不允许操作");
 			this.handleLoginException(response);
@@ -130,7 +129,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 		res.flushBuffer();
 	}
 
-	private void handleLoginException(HttpServletResponse res) throws IOException {
+	public void handleLoginException(HttpServletResponse res) throws IOException {
 		res.resetBuffer();
 		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.setHeader("Access-Control-Allow-Credentials", "true");

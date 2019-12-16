@@ -9,7 +9,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: CertificateAppBean
  * @projectName dmd
- * @description: TODO 用户上传证书实体类
+ * @description: 用户上传证书实体类
  * @date 2019/11/2918:36
  */
 public class CertificateAppBean {

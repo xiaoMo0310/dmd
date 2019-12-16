@@ -10,7 +10,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: IntegralGiftsBean
  * @projectName dmd-master
- * @description: TODO 积分好礼实体类
+ * @description: 积分好礼实体类
  * @date 2019/10/910:18
  */
 public class IntegralGiftsBean implements Serializable {
