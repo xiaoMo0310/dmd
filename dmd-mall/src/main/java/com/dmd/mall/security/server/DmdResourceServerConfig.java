@@ -1,6 +1,7 @@
 package com.dmd.mall.security.server;
 
 import com.dmd.mall.component.*;
+import com.dmd.mall.security.filter.LoginFilter;
 import com.dmd.mall.security.redis.ValidateCodeRepository;
 import com.dmd.mall.security.sms.SmsCodeFilter;
 import com.dmd.mall.security.sms.SmsCodeSecurityConfig;
@@ -24,7 +25,8 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
     private GoAuthenticationSuccessHandler goAuthenticationSuccessHandler;
     @Autowired
     private SmsCodeSecurityConfig smsCodeSecurityConfig;
-
+    @Autowired
+    private LoginFilter loginFilter;
     @Autowired
     private MyUsernamePasswordSecurityConfig myUsernamePasswordSecurityConfig;
     @Autowired
@@ -41,6 +43,7 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
         SmsCodeFilter smsCodeFilter=new SmsCodeFilter();
         smsCodeFilter.setValidateCodeRepository(validateCodeRepository);
         http.addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .successHandler(goAuthenticationSuccessHandler)//登陆成功处理器
                 .failureHandler(new GoAuthenticationFailureHandler())//登陆失败处理器

@@ -1,9 +1,7 @@
 package com.dmd.mall.web.cms;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.UmsIntegrationChangeLog;
-import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.service.MyIntegralService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -15,14 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
 import java.util.List;
 
 /**
  * @author ChenYanbing
  * @title: MyIntegralController
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/2215:22
  */
 @Controller

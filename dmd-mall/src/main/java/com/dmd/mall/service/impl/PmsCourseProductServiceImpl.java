@@ -58,7 +58,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         BeanUtils.copyProperties(courseProductDto, courseProduct);
         //判断是否有证书商品
         if(courseProductDto.getProductType() == 1){
-            int count = pmsCourseProductMapper.selectByUserId(loginAuthDto.getUserId());
+            int count = pmsCourseProductMapper.selectByUserId(loginAuthDto.getUserId(), courseProductDto.getCertificateId(), courseProduct.getAddressId());
             if(count > 0){
                 throw new PmsBizException(ErrorCodeEnum.PMS10021029);
             }
@@ -195,7 +195,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     public JSONObject findCourseProductByIds(CertificateProductDto certificateProductDto){
         PmsCourseProduct pmsCourseProduct = pmsCourseProductMapper.selectCourseProductByIds(certificateProductDto);
         //获取证书信息
-        PmsCertificate pmsCertificate = certificateService.selectByKey(certificateProductDto.getAddressId());
+        PmsCertificate pmsCertificate = certificateService.selectByKey(certificateProductDto.getCertificateId());
         PmsCertificateVo pmsCertificateVo = new PmsCertificateVo();
         if(pmsCourseProduct == null || pmsCertificate == null){
             throw new PmsBizException(ErrorCodeEnum.PMS10021003);

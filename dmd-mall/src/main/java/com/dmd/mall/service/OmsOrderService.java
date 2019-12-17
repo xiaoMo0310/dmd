@@ -136,5 +136,5 @@ public interface OmsOrderService extends IService<OmsOrder> {
      * @param status
      * @return
      */
-    List<OmsOrder> selectOrderByStatus(Integer status);
+    List<OmsOrder> selectOrderByStatus(Integer orderType, Integer status);
 }

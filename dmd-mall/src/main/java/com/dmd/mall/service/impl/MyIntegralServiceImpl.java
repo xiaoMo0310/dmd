@@ -15,7 +15,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: MyIntegralServiceImpl
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/2215:25
  */
 @Service

@@ -9,7 +9,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: dynamicBean
  * @projectName dmd-master
- * @description: TODO 我的动态/发布动态 实体类
+ * @description: 我的动态/发布动态 实体类
  * @date 2019/9/239:50
  */
 public class DynamicBean {

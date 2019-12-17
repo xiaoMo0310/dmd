@@ -9,7 +9,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: DynamicAmdinMappper
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/1716:40
  */
 public interface DynamicAmdinMappper {

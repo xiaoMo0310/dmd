@@ -9,7 +9,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: UmsFeedbackMapper
  * @projectName dmd
- * @description: TODO
+ * @description:
  * @date 2019/12/210:12
  */
 public interface UmsFeedbackMapper {

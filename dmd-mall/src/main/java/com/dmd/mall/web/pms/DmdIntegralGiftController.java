@@ -99,7 +99,6 @@ public class DmdIntegralGiftController extends BaseController {
                 return CommonResult.failed("修改失败");
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
             return CommonResult.failed();
         }

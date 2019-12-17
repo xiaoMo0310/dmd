@@ -57,7 +57,7 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
 
     List<PmsCourseProduct> queryPmsCourseProduct(@Param("content")String content);
 
-    int selectByUserId(Long userId);
+    int selectByUserId(@Param("userId") Long userId, @Param("certificateId") Long certificateId, @Param("addressId") Long addressId);
 
     List<PmsCourseProduct> queryPmsCourseProductByType(@Param("content")String content);
 

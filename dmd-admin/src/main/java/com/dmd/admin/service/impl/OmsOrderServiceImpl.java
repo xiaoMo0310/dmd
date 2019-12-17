@@ -254,7 +254,6 @@ public class OmsOrderServiceImpl implements OmsOrderService {
             dates = date + " 00:00:00";
             setTimeoutVos.get(i).setDate(dates);
         }*/
-        System.out.println(setTimeoutVos);
         return setTimeoutVos;
     }
 }

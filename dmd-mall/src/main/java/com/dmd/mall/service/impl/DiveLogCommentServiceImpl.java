@@ -18,7 +18,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: DiveLogCommentServiceImpl
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/1110:52
  */
 @Service

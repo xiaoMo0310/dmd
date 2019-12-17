@@ -1,11 +1,10 @@
 package com.dmd.admin.model.vo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.models.auth.In;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import cn.afterturn.easypoi.excel.annotation.Excel;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,7 +12,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: UmsOrderStatisticsVo
  * @projectName dmd
- * @description: TODO 订单明细信息统计Vo类
+ * @description: 订单明细信息统计Vo类
  * @date 2019/11/2515:30
  */
 public class UmsOrderStatisticsVo {

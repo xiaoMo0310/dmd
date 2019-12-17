@@ -6,13 +6,12 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author ChenYanbing
  * @title: WordsBean
  * @projectName dmd-master
- * @description: TODO 评论留言表实体
+ * @description: 评论留言表实体
  * @date 2019/9/2413:21
  */
 public class CommentBean {

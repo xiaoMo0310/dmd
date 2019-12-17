@@ -146,7 +146,7 @@
     </select>
     <select id="countOrderNum" resultType="java.util.Map">
         select #{status} status, count(1) count from oms_order
-        where member_id = #{userId} and user_type = #{userType} and status = #{status}
+        where member_id = #{userId} and user_type = #{userType} and status = #{status} and order_type != 2
     </select>
     <select id="selectIntegralOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
         SELECT <include refid="Course_Product_Order_List"/>
@@ -166,7 +166,7 @@
     <select id="selectOrderByStatus" resultType="com.dmd.mall.model.domain.OmsOrder">
         select <include refid="Base_Column_List"/>
         from oms_order
-        where status = #{status}
+        where status = #{status} and order_type = #{orderType}
     </select>
     <select id="selectByOrderNo" resultType="com.dmd.mall.model.domain.OmsOrder">
         SELECT

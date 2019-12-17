@@ -9,7 +9,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: HomeSearchMapper
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/1818:18
  */
 public interface HomeSearchMapper {

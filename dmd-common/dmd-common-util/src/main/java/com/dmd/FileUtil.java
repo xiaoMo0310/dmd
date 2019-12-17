@@ -55,10 +55,8 @@ public class FileUtil {
 			// 使用transferTo（dest）方法将上传文件写到服务器上指定的文件。
 			file.transferTo(targetFile);
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return newFileName;
@@ -87,7 +85,6 @@ public class FileUtil {
 		try {
 			entity = new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(sourceFile), headers, HttpStatus.CREATED);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

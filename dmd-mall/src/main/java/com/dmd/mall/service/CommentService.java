@@ -1,7 +1,6 @@
 package com.dmd.mall.service;
 
 import com.dmd.mall.model.domain.CommentBean;
-import io.swagger.models.auth.In;
 
 import java.util.List;
 
@@ -9,7 +8,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: CommentService
  * @projectName dmd-master
- * @description: TODO
+ * @description:
  * @date 2019/9/2413:35
  */
 public interface CommentService {

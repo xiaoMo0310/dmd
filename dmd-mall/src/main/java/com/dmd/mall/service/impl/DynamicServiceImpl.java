@@ -16,19 +16,20 @@ import com.dmd.mall.service.DynamicService;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.service.UmsNoticeService;
 import com.github.pagehelper.PageHelper;
-import io.swagger.models.auth.In;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 /**
  * @author ChenYanbing
  * @title: DynamicServiceImpl
  * @projectName dmd-master
- * @description: TODO
+ * @description:
  * @date 2019/9/239:43
  */
 @Service

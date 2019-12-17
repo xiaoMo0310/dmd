@@ -49,9 +49,6 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
         if(CollectionUtils.isEmpty(umsNoticeMarks)){
             //查询全部通知消息是否存在
             List<UmsNoticeVo> umsNoticeVos = getAllUmsNoticeVos(loginAuthDto, messageType);
-            /*if(CollectionUtils.isEmpty(umsNoticeVos)){
-                throw new UmsBizException("没有当前用户的通知");
-            }*/
             return umsNoticeVos;
         }
         List<UmsNoticeVo> umsNotices = umsNoticeMarks.stream().map(umsNoticeMark -> {

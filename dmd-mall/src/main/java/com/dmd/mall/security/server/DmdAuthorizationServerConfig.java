@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -41,9 +42,16 @@ public class DmdAuthorizationServerConfig extends AuthorizationServerConfigurerA
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory().withClient("dmd").secret("$2a$10$z6SpAlsdHhTRswyFa/R3mucOk8Dgp76TxdjITmR7pPUDAFeVx.4wm")
-                .accessTokenValiditySeconds(999999999)
+                .accessTokenValiditySeconds(999999999)//86400
+                //一个月
                 .refreshTokenValiditySeconds(999999999)
                 .authorizedGrantTypes("refresh_token","password","authorization_code")
                 .scopes("all");
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.tokenKeyAccess("permitAll()");
+        security.allowFormAuthenticationForClients();
     }
 }

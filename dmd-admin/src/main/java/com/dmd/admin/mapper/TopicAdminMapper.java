@@ -2,7 +2,6 @@ package com.dmd.admin.mapper;
 
 
 import com.dmd.admin.model.domain.TopicBean;
-import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: TopicAdminMapper
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/1710:22
  */
 public interface TopicAdminMapper {

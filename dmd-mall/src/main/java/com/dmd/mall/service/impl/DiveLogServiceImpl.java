@@ -1,7 +1,6 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.WordFilter;
-import com.dmd.base.result.CommonResult;
 import com.dmd.mall.mapper.DiveLogCommentMapper;
 import com.dmd.mall.mapper.DiveLogMapper;
 import com.dmd.mall.model.domain.DiveLogAirbottleBean;
@@ -19,7 +18,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: DiveLogServiceImpl
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/1113:49
  */
 @Service

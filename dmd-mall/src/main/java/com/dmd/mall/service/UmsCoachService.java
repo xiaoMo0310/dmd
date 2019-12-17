@@ -4,6 +4,9 @@ import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.UmsCoach;
 import com.dmd.mall.model.vo.UmsCoachVo;
+import com.dmd.wrapper.Wrapper;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -23,4 +26,25 @@ public interface UmsCoachService extends IService<UmsCoach> {
     UmsCoachVo selectCoachMessage(Long id);
 
     UmsCoach selectByLoginAuthDto(LoginAuthDto loginAuthDto);
+
+    /**
+     * 找回密码
+     * @param telephone
+     * @param password
+     * @param confirmPassword
+     * @param authCode
+     * @param request
+     * @return
+     */
+    Wrapper findPassword(String telephone, String password, String confirmPassword, String authCode, HttpServletRequest request);
+
+    /**
+     *修改密码
+     * @param telephone
+     * @param oldPassword
+     * @param newPassword
+     * @param confirmPassword
+     * @return
+     */
+    Wrapper updatePassword(String telephone, String oldPassword, String newPassword, String confirmPassword);
 }

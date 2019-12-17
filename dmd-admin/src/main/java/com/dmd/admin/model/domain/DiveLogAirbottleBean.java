@@ -4,7 +4,7 @@ package com.dmd.admin.model.domain;
  * @author ChenYanbing
  * @title: DiveLogAirbottleBean
  * @projectName dmd-masters
- * @description: TODO 潜水日志气瓶表
+ * @description:  潜水日志气瓶表
  * @date 2019/10/1210:42
  */
 public class DiveLogAirbottleBean {

@@ -4,7 +4,7 @@ package com.dmd.mall.model.vo;
  * @author ChenYanbing
  * @title: UserDetailsVo
  * @projectName dmd
- * @description: TODO
+ * @description:
  * @date 2019/12/99:58
  */
 public class UserDetailsVo {

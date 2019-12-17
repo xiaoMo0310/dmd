@@ -36,6 +36,7 @@ public class UmsNoticeMarkServiceImpl extends BaseService<UmsNoticeMark> impleme
         umsNoticeMark.setUserType(userType);
         umsNoticeMark.setReadTime("0");
         umsNoticeMark.setUpdateInfo(loginAuthDto);
+        umsNoticeMark.setMessageType(1);
         umsNoticeMarkMapper.insertSelective(umsNoticeMark);
     }
 

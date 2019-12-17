@@ -12,7 +12,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: CoachApplyServiceImpl
  * @projectName dmd-master
- * @description: TODO 教练申请
+ * @description: 教练申请
  * @date 2019/9/1915:08
  */
 @Service

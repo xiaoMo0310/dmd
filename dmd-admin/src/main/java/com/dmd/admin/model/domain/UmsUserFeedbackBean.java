@@ -11,7 +11,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: UmsUserFeedbackBean
  * @projectName dmd
- * @description: TODO
+ * @description:
  * @date 2019/12/210:38
  */
 public class UmsUserFeedbackBean {

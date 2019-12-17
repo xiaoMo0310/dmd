@@ -3,7 +3,6 @@ package com.dmd.admin.model.vo;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.models.auth.In;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -12,7 +11,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: SalesStatisticsVo
  * @projectName dmd
- * @description: TODO
+ * @description:
  * @date 2019/12/416:46
  */
 public class SalesStatisticsVo {

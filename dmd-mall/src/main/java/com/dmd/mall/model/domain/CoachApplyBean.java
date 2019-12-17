@@ -6,7 +6,7 @@ import java.util.Date;
  * @author ChenYanbing
  * @title: CoachApplyBean
  * @projectName dmd-master
- * @description: TODO 教练申请表
+ * @description: 教练申请表
  * @date 2019/9/1914:43
  */
 public class CoachApplyBean {

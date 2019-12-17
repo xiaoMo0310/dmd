@@ -8,7 +8,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: UmsOrderStatisticsMapper
  * @projectName dmd
- * @description: TODO
+ * @description:
  * @date 2019/11/2515:53
  */
 public interface UmsOrderStatisticsMapper {

@@ -144,7 +144,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             //todo 促销待做
             BigDecimal promotionAmount =  new BigDecimal("0.00");
             //生成订单
-            OmsOrder order = assembleOrder(umsMember, loginAuthDto.getUserType(), orderGroupByShop.getShopId(), orderCreateVo, payment, postage, integrationAmount,promotionAmount, loginAuthDto, orderGroupByShop.getRemark(), false, false);
+            OmsOrder order = assembleOrder(loginAuthDto.getUserType(), orderGroupByShop.getShopId(), orderCreateVo, payment, postage, integrationAmount,promotionAmount, loginAuthDto, orderGroupByShop.getRemark(), false, false);
             if (order == null) {
                 logger.error("生成订单失败, userId={}, shippingId={}, payment={}", userId, orderCreateVo.getShippingId(), payment);
                 throw new OmsBizException(ErrorCodeEnum.OMS10031002);
@@ -173,6 +173,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void createIntegralOrder(LoginAuthDto loginAuthDto, OrderParamDto orderParamDto) {
+        //todo 教练端待做
         //查询用户的信息
         UmsMember umsMember = umsMemberService.getById(loginAuthDto.getUserId());
         //查询积分商品信息
@@ -206,7 +207,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         BeanUtils.copyProperties(orderParamDto, orderCreateVo);
         orderCreateVo.setUseIntegration(useIntegration);
         //封装订单的信息
-        OmsOrder order = assembleOrder(umsMember, loginAuthDto.getUserType(), 0L, orderCreateVo, integrationAmount,
+        OmsOrder order = assembleOrder(loginAuthDto.getUserType(), 0L, orderCreateVo, integrationAmount,
                 postage, integrationAmount, promotionAmount, loginAuthDto, orderParamDto.getRemark(), true, false);
         if (order == null) {
             logger.error("生成订单失败, userId={}, shippingId={}, payment={}", umsMember.getId(), orderCreateVo.getShippingId(),  integrationAmount);
@@ -279,10 +280,10 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         //封装订单的信息
         OmsOrder order;
         if(productType == 1){
-            order = assembleOrder(umsMember, loginAuthDto.getUserType(), pmsProduct.getShopId(), orderCreateVo, orderItem.getTotalPrice(),
+            order = assembleOrder(loginAuthDto.getUserType(), pmsProduct.getShopId(), orderCreateVo, orderItem.getTotalPrice(),
                     postage, integrationAmount, promotionAmount, loginAuthDto, orderParamDto.getRemark(), false, true);
         }else {
-            order = assembleOrder(umsMember, loginAuthDto.getUserType(), pmsProduct.getShopId(), orderCreateVo, orderItem.getTotalPrice(),
+            order = assembleOrder(loginAuthDto.getUserType(), pmsProduct.getShopId(), orderCreateVo, orderItem.getTotalPrice(),
                     postage, integrationAmount, promotionAmount, loginAuthDto, orderParamDto.getRemark(), false, true);
         }
         if (order == null) {
@@ -383,7 +384,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         OmsOrder order = getOmsOrderByOrderSn(orderSn);
         order.setUpdateInfo(loginAuthDto);
         if(status  == 3){
-            if (order.getStatus() != OmsApiConstant.OrderStatusEnum.SHIPPED.getCode()) {
+            if (order.getStatus() != OmsApiConstant.OrderStatusEnum.SHIPPED.getCode() && order.getOrderType() != 2) {
                 throw new OmsBizException(ErrorCodeEnum.OMS10031022);
             }
             order.setEndTime(new Date());
@@ -465,8 +466,10 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
                 courseOrderDetailVo.setProductPic(courseOrderDetailVo.getProductPic().split(",")[0]);
                 updateReturnStatus(courseOrderDetailVo);
                 List<Map> maps = (List<Map>) JSONArray.parse(courseOrderDetailVo.getSpec());
-                Map sizeMap = maps.stream().filter(map -> map.get("key").equals("尺码")).collect(Collectors.toList()).get(0);
-                courseOrderDetailVo.setSizeSpec((String) sizeMap.get("value"));
+                List<Map> sizeList = maps.stream().filter(map -> map.get("key").equals("尺码")).collect(Collectors.toList());
+                if(!CollectionUtils.isEmpty(sizeList)){
+                    courseOrderDetailVo.setSizeSpec((String) sizeList.get(0).get("value"));
+                }
             });
         }
         PageInfo<CourseOrderDetailVo> orderDetailVoPageInfo = new PageInfo<>(courseOrderDetailVos);
@@ -474,8 +477,8 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     }
 
     @Override
-    public List<OmsOrder> selectOrderByStatus(Integer status) {
-        return omsOrderMapper.selectOrderByStatus(status);
+    public List<OmsOrder> selectOrderByStatus(Integer orderType, Integer status) {
+        return omsOrderMapper.selectOrderByStatus(orderType, status);
     }
 
     /**
@@ -494,7 +497,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     /**
      * 封装订单信息并保存
      */
-    private OmsOrder assembleOrder(UmsMember umsMember, String userType, Long shopId, OrderCreateVo orderCreateVo, BigDecimal payment, BigDecimal postage, BigDecimal integrationAmount, BigDecimal promotionAmount, LoginAuthDto loginAuthDto, String remark,Boolean isIntegralProduct, Boolean isCourseProduct) {
+    private OmsOrder assembleOrder(String userType, Long shopId, OrderCreateVo orderCreateVo, BigDecimal payment, BigDecimal postage, BigDecimal integrationAmount, BigDecimal promotionAmount, LoginAuthDto loginAuthDto, String remark,Boolean isIntegralProduct, Boolean isCourseProduct) {
         OmsOrder order = new OmsOrder();
         /*order.setStatus(OmsApiConstant.OrderStatusEnum.NO_PAY.getCode());
         order.setPayType(0);*/
@@ -518,9 +521,9 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         order.setOrderType(0);
         order.setApprovalStatus(2);
         order.setSourceType(1);
-        order.setMemberId(umsMember.getId());
+        order.setMemberId(loginAuthDto.getUserId());
         order.setShopId(shopId);
-        order.setMemberUsername(umsMember.getUsername());
+        order.setMemberUsername(loginAuthDto.getUserName());
         order.setIsInvoice(orderCreateVo.getIsInvoice());
         order.setConfirmStatus(0);
         if(orderCreateVo.getIsInvoice() == 1){

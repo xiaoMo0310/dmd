@@ -11,7 +11,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: IntegralAdminService
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/2214:20
  */
 public interface IntegralAdminService {

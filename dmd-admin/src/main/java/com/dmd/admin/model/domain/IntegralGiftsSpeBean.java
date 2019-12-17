@@ -4,7 +4,7 @@ package com.dmd.admin.model.domain;
  * @author ChenYanbing
  * @title: IntegralGiftsSpeBean
  * @projectName dmd
- * @description: TODO
+ * @description:
  * @date 2019/11/1515:19
  */
 public class IntegralGiftsSpeBean {

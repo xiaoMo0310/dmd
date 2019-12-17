@@ -23,6 +23,8 @@ public class LoginAuthDto implements Serializable {
 	private String userName;
 	@ApiModelProperty(value = "用户类型(member-普通用户 coach-教练)")
 	private String userType;
+	@ApiModelProperty(value = "手机号")
+	private String phone;
 
 	public LoginAuthDto() {
 	}
@@ -32,6 +34,14 @@ public class LoginAuthDto implements Serializable {
 		this.nickName = nickName;
 		this.userName = userName;
 		this.userType = userType;
+	}
+
+	public LoginAuthDto(Long userId, String userName, String nickName, String userType, String phone) {
+		this.userId = userId;
+		this.nickName = nickName;
+		this.userName = userName;
+		this.userType = userType;
+		this.phone = phone;
 	}
 
 	public LoginAuthDto(Long userId, String userName, String userType) {

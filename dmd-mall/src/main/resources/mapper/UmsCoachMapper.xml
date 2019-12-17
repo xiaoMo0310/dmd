@@ -44,5 +44,11 @@
         where id = #{id}
         and status = 2
     </select>
+    <select id="selectById" resultType="com.dmd.mall.model.domain.UmsCoach">
+        select <include refid="Base_Column_List"/>
+        from ums_coach
+        where status = 2
+        and id = #{userId}
+    </select>
 
 </mapper>

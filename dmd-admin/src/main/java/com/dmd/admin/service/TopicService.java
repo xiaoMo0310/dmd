@@ -8,7 +8,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: TopicService
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/179:57
  */
 public interface TopicService {

@@ -2,7 +2,6 @@ package com.dmd.mall.web.cms;
 
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.CommentBean;
-import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.service.CommentService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -17,7 +16,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: CommentController
  * @projectName dmd-master
- * @description: TODO
+ * @description:
  * @date 2019/9/2413:34
  */
 @Controller

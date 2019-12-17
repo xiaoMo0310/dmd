@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author ChenYanbing
  * @title: CoachUploadController
  * @projectName dmd-master
- * @description: TODO 教练申请图片上传
+ * @description: 教练申请图片上传
  * @date 2019/9/1914:28
  */
 @Controller

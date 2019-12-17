@@ -6,7 +6,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: DiveLogAndAirbottle
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/1214:12
  */
 public class DiveLogAndAirbottle {

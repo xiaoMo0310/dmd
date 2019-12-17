@@ -3,7 +3,6 @@ package com.dmd.admin.service.impl;
 import com.dmd.admin.mapper.CommentMapper;
 import com.dmd.admin.mapper.DynamicAmdinMappper;
 import com.dmd.admin.mapper.TopicAdminMapper;
-import com.dmd.admin.model.domain.CommentBean;
 import com.dmd.admin.model.domain.DynamicBean;
 import com.dmd.admin.model.domain.TopicBean;
 import com.dmd.admin.service.DynamicService;
@@ -17,7 +16,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: DynamicServiceImpl
  * @projectName dmd-masters
- * @description: TODO
+ * @description:
  * @date 2019/10/1716:39
  */
 @Service
