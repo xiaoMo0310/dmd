@@ -1,5 +1,6 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.mapper.TopicMapper;
 import com.dmd.mall.model.domain.DynamicBean;
@@ -9,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,16 +34,31 @@ public class TopicServiceImpl implements TopicService{
 
     @Override
     public List<TopicBean> queryTopicById(Integer id) {
-        //当前登录人ID
-        Long userId = RequestUtil.getLoginUser().getUserId();
-        //当前发布动态用户ID
+        //登陆信息
+        LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
+        //当前登录人
+        Long userId = loginAuthDto.getUserId();
+        //根据登陆类型查询动态详情1==普通用户 2==教练
+        String userTypes = loginAuthDto.getUserType();
+        //当前话题
         List<TopicBean> topicBeans = topicMapper.queryTopicById(id);
+        //当前话题Id
         Integer topicId = topicBeans.get(0).getId();
-        Integer biaoshifu =  topicMapper.selectFavorites(userId,topicId);
-        if (biaoshifu == 0){
-            topicBeans.get(0).setIdentification(0);
-        }if(biaoshifu !=0 ){
-            topicBeans.get(0).setIdentification(1);
+        //当前登录人角色是用户
+        if(userTypes.equals("member")){
+            Integer biaoshifu =  topicMapper.selectFavorites(userId,topicId);
+            if (biaoshifu == 0){
+                topicBeans.get(0).setIdentification(0);
+            }if(biaoshifu !=0 ){
+                topicBeans.get(0).setIdentification(1);
+            }
+        }else if(userTypes.equals("coach")){
+            Integer biaoshifu =  topicMapper.selectFavoritesByCoach(userId,topicId);
+            if (biaoshifu == 0){
+                topicBeans.get(0).setIdentification(0);
+            }if(biaoshifu !=0 ){
+                topicBeans.get(0).setIdentification(1);
+            }
         }
         return topicBeans;
     }

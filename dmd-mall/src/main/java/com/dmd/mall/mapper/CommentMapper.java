@@ -24,4 +24,8 @@ public interface CommentMapper {
     void updateCommentDelflag(@Param("commentId") Long commentId,@Param("userId")Long userId);
 
     void updateComment(Long id);
+
+    List<CommentBean> findCommentListByIdCoach(@Param("forPid")Long forPid,@Param("forDynamicId") Long forDynamicId);
+
+    void updateCommentDelflagByCoach(@Param("commentId") Long commentId,@Param("userId")Long userId);
 }

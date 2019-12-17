@@ -53,7 +53,10 @@
     </select>
 
     <select id="selectFavorites" parameterType="map" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM ums_favorites WHERE target_id = #{topicId} and user_id = #{userId} and status = 1 and (favorite_type = 6)
+        SELECT COUNT(*) FROM ums_favorites WHERE target_id = #{topicId} and user_id = #{userId} and status = 1 and (favorite_type = 6) AND user_type = 1
     </select>
 
+    <select id="selectFavoritesByCoach" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ums_favorites WHERE target_id = #{topicId} and user_id = #{userId} and status = 1 and (favorite_type = 6) AND user_type = 2
+    </select>
 </mapper>

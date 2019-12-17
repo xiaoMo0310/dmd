@@ -71,4 +71,67 @@ public interface DynamicMapper {
     List<DynamicAlbumTimeBean> queryDynamicAlbumTimePicture(@Param("months")String months,@Param("userId") Long userId);
 
     UserDetailsVo queryUserDetails(Long userId);
+
+    List<DynamicBean> queryDynamicCoach(Long userId2);
+
+    Integer selectFavoritespraiseCoach(@Param("userId")Long userId,@Param("id") Long id);
+
+    Integer selectFavoritesCoach(@Param("userId")Long userId,@Param("userId1")Long userId1);
+
+
+    List<DynamicBean> queryDynamicCoachById(Long id);
+
+    Integer selectFavoritesByCoach(@Param("userId")Long userId,@Param("userId1")Long userId1);
+
+    /**
+     * 用户发布教练登陆
+     * @param userId
+     * @param id
+     * @return
+     */
+    Integer selectFavoritespraiseByCoach(@Param("userId")Long userId,@Param("id") Long id);
+
+    Integer selectFavoritespraiseCoach2(@Param("userId")Long userId,@Param("id") Long id);
+
+    List<DynamicBean> queryDynamicByCoachById(Long id);
+
+    Integer selectFavoritesCoach2(@Param("userId")Long userId,@Param("userId1") Long userId1);
+
+    Integer queryDynamicCountByCoach(Long userId);
+
+    Integer selectUserIdBypraiseCoach(@Param("id")Long id,@Param("userId")Long userId);
+
+    void insertUserPraiseCoach(@Param("dynamicId")Long id,@Param("userId")Long userId);
+
+    void updateUserPraiseLikeCoach(@Param("id")Long id,@Param("userId") Long userId);
+
+    Integer selectUserIdBypraiseByCoach(@Param("id")Long id,@Param("userId")Long userId);
+
+    void insertUserPraiseByCoach(@Param("dynamicId")Long id,@Param("userId")Long userId);
+
+    void updateUserPraiseLikeByCoach(@Param("id")Long id,@Param("userId") Long userId);
+
+    Integer selectUserIdBypraiseCoach2(@Param("id")Long id,@Param("userId")Long userId);
+
+    void insertUserPraiseCoach2(@Param("dynamicId")Long id,@Param("userId")Long userId);
+
+    void updateUserPraiseLikeCoach2(@Param("id")Long id,@Param("userId") Long userId);
+
+    void updateUserPraiseCoach(@Param("dynamicId")Long id,@Param("userId") Long userId);
+
+    void updateUserPraise2(@Param("dynamicId")Long id,@Param("userId") Long userId);
+
+    void updateUserPraiseCoach2(@Param("dynamicId")Long id,@Param("userId") Long userId);
+
+    List<DynamicAlbumTimeBean> queryDynamicAlbumTimeByCoachBean(Long userId);
+
+    List<DynamicAlbumTimeBean> queryDynamicAlbumTimePictureByCoach(@Param("months")String months,@Param("userId") Long userId);
+
+    UserDetailsVo queryUserDetailsByCoach(Long userId);
+
+    List<DynamicBean> queryTopicByDynamicForCoachTime(Integer id);
+
+    List<DynamicBean> selectTopicByDynamicByCoachHeat(Integer id);
+
+    List<DynamicBean> queryDynamicByContentByCoach(@Param("content")String content);
 }

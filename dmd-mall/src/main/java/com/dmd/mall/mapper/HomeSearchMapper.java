@@ -18,4 +18,10 @@ public interface HomeSearchMapper {
     List<HomeSearchRecordBean> queryHistory(Long userId);
 
     int deleteHistoryByUserid(Long userid);
+
+    void addHomeSearchRecordByCoach(@Param("userId") Long userId , @Param("content") String content,@Param("searchType") Integer searchType);
+
+    List<HomeSearchRecordBean> queryHistoryByCoach(Long userId);
+
+    int deleteHistoryByUseridCoach(Long userid);
 }

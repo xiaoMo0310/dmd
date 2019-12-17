@@ -74,7 +74,7 @@ public class CommentController {
     }
 
     /**
-     * 我只能删我的回复和评论无法删除别人的回复
+     * 我只能删我的回复和评论无法删除别人的回复 改
      */
     @ApiOperation("逻辑删除动态评论与回复")
     @RequestMapping(value = "/updateCommentDelflag",method = RequestMethod.POST)

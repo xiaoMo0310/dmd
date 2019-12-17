@@ -16,4 +16,6 @@ public interface UmsFeedbackMapper {
     List<UmsProblemFeedbackBean> queryProblemFeedback();
 
     int addFeedback(UmsUserFeedbackBean umsUserFeedbackBean);
+
+    int addFeedbackCoach(UmsUserFeedbackBean umsUserFeedbackBean);
 }

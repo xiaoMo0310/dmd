@@ -17,7 +17,7 @@ import java.util.List;
 public interface DynamicService {
     List<DynamicBean> queryDynamic(Long userId);
 
-    List<DynamicBean> queryDynamicPage(Long userId, Integer pageNum, Integer pageSize);
+    List<DynamicBean> queryDynamicPage(Long userId, Integer pageNum, Integer pageSize,Integer userType);
 
     Integer queryPraise(Long id);
 
@@ -25,9 +25,9 @@ public interface DynamicService {
 
     Integer queryShare(Long id);
 
-    int updateLikePraise(Long id);
+    int updateLikePraise(Long id,Integer userType);
 
-    int updateCancelPraise(Long id);
+    int updateCancelPraise(Long id,Integer userType);
 
     int updateDynamicrShare(Long id);
 
@@ -37,7 +37,7 @@ public interface DynamicService {
 
     List<DynamicBean> selectTopicByDynamicHeat(Integer id,Integer pageNum,Integer pageSize);
 
-    List<DynamicBean> queryDynamicById(Long id);
+    List<DynamicBean> queryDynamicById(Long id,Integer userType);
 
     int addDynamic(DynamicBean dynamicBean);
 
@@ -47,7 +47,7 @@ public interface DynamicService {
 
     Integer queryDynamicCount(Long userId);
 
-    List<DynamicAlbumTimeBean> queryDynamicAlbumTimeBean(Long userId, Integer pageNum, Integer pageSize);
+    List<DynamicAlbumTimeBean> queryDynamicAlbumTimeBean(Long userId, Integer pageNum, Integer pageSize,Integer userType);
 
-    UserDetailsVo queryUserDetails(Long userId);
+    UserDetailsVo queryUserDetails(Long userId,Integer userType);
 }

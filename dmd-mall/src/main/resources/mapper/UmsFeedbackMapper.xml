@@ -31,14 +31,35 @@
         user_id,
         picture,
         create_time,
-        problem_id
+        problem_id,
+        user_type
         )
         VALUES (
         #{problemDescription,jdbcType=VARCHAR},
         #{userId,jdbcType=BIGINT},
         #{picture,jdbcType=VARCHAR},
         #{createTime,jdbcType=TIMESTAMP},
-        #{problemId,jdbcType=BIGINT}
+        #{problemId,jdbcType=BIGINT},
+        1
+        )
+    </insert>
+
+    <insert id="addFeedbackCoach" parameterType="com.dmd.mall.model.domain.UmsUserFeedbackBean">
+        INSERT INTO dmd_user_feedback(
+        problem_description,
+        user_id,
+        picture,
+        create_time,
+        problem_id,
+        user_type
+        )
+        VALUES (
+        #{problemDescription,jdbcType=VARCHAR},
+        #{userId,jdbcType=BIGINT},
+        #{picture,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{problemId,jdbcType=BIGINT},
+        2
         )
     </insert>
 </mapper>

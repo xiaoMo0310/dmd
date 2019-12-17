@@ -35,7 +35,7 @@ public class HomeSearchController {
 
 
     /**
-     * 首页--搜索动态/商品/话题添加历史搜索记录
+     * 首页--搜索动态/商品/话题添加历史搜索记录 改
      * @param content
      * @param userId
      * @param searchType
@@ -48,6 +48,7 @@ public class HomeSearchController {
     @ResponseBody
     public CommonResult<PageInfo> querycontent(@RequestParam String content ,@RequestParam Long userId,@RequestParam Integer searchType,@RequestParam Integer pageNum,
                                            @RequestParam Integer pageSize) {
+
 
         List list = new ArrayList<>();
         if(searchType == 1){
@@ -87,7 +88,7 @@ public class HomeSearchController {
 
 
     /**
-     * 首页--搜索动态/商品/话题
+     * 首页--搜索动态/商品/话题 改
      * @param content
      * @param userId
      * @param searchType
@@ -107,7 +108,7 @@ public class HomeSearchController {
         }
         if(searchType == 2){
             //List<PmsProduct> pmsProductList = homeSearchService.queryPmsProduct(userId,content,searchType,pageNum,pageSize);
-            List<PmsCourseProduct> pmsProductList = homeSearchService.queryPmsCourseProduct(userId,content,searchType,pageNum,pageSize);
+            List<PmsCourseProduct> pmsProductList = homeSearchService.queryPmsCourseProductContent(userId,content,searchType,pageNum,pageSize);
             /*Map<Integer, List<PmsCourseProduct>> map = new HashMap<>();
             for (PmsCourseProduct pmsProduct : pmsProductList) {
                 List<PmsCourseProduct> tmpList = map.get(pmsProduct.getProductType());
@@ -137,7 +138,7 @@ public class HomeSearchController {
 
 
     /**
-     * 查询历史搜索记录
+     * 查询历史搜索记录 改
      * @param userId
      * @return
      */
@@ -151,7 +152,7 @@ public class HomeSearchController {
 
 
     /**
-     * 删除历史记录
+     * 删除历史记录 改
      * @param userId
      * @return
      */

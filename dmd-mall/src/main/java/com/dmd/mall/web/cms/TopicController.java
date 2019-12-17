@@ -64,7 +64,7 @@ public class TopicController {
 
 
     /**
-     * 话题详情查询
+     * 话题详情查询 改
      * @param 话题id
      * @return
      */
@@ -78,7 +78,7 @@ public class TopicController {
 
 
     /**
-     * 话题下最新动态查询，按照发布时间排序
+     * 话题下最新动态查询，按照发布时间排序 改
      * @param 话题id
      * @return
      */
@@ -95,7 +95,7 @@ public class TopicController {
     }
 
     /**
-     * 话题下最新动态查询，按照点赞数排序,点赞数一样的按照时间先后排序
+     * 话题下最新动态查询，按照点赞数排序,点赞数一样的按照时间先后排序 改
      * @param 话题id
      * @return
      */

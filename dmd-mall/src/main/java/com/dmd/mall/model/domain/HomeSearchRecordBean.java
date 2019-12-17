@@ -37,6 +37,19 @@ public class HomeSearchRecordBean {
      */
     private Long userid;
 
+    /**
+     * 用户类型
+     */
+    private Integer userType;
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
     public Long getId() {
         return id;
     }
@@ -85,6 +98,7 @@ public class HomeSearchRecordBean {
                 ", createTime=" + createTime +
                 ", searchType=" + searchType +
                 ", userid=" + userid +
+                ", userType=" + userType +
                 '}';
     }
 }

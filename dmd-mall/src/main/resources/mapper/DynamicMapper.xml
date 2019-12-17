@@ -20,6 +20,7 @@
         <result column="delflag" property="delflag" />
         <result column="width" property="width" />
         <result column="height" property="height" />
+        <result column="user_type" property="userType"/>
     </resultMap>
 
 
@@ -43,11 +44,20 @@
 
 
     <select id="queryDynamic" resultMap="dynamicMap" parameterType="java.lang.Long">
-        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,dy.delflag,dy.user_type
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
         LEFT JOIN ums_member um on dy.r_userid = um.id
-        WHERE  dy.r_userid = #{userId} AND delflag = 0 ORDER BY r_createtime DESC
+        WHERE  dy.r_userid = #{userId} AND delflag = 0 AND user_type = 1 ORDER BY r_createtime DESC
+
+    </select>
+
+    <select id="queryDynamicCoach" resultMap="dynamicMap" parameterType="java.lang.Long">
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,dy.delflag,dy.user_type
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid  = dt.id
+        LEFT JOIN ums_coach um on dy.r_userid = um.id
+        WHERE  dy.r_userid = #{userId} AND delflag = 0 AND user_type = 2 ORDER BY r_createtime DESC
 
     </select>
 
@@ -78,25 +88,53 @@
     </update>
 
     <select id="queryTopicByDynamicTime" parameterType="int" resultMap="dynamicMap">
-        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
-        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_topicid = #{value} AND delflag = 0 ORDER BY r_createtime DESC
+        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_topicid = #{value} AND delflag = 0 AND user_type = 1 ORDER BY r_createtime DESC
+    </select>
+
+    <select id="queryTopicByDynamicForCoachTime" parameterType="int" resultMap="dynamicMap">
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid  = dt.id
+        LEFT JOIN ums_coach um on dy.r_userid = um.id WHERE  dy.r_topicid = #{value} AND delflag = 0 AND user_type = 2 ORDER BY r_createtime DESC
     </select>
 
     <select id="selectTopicByDynamicHeat" parameterType="int" resultMap="dynamicMap">
-       SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+       SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
-        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_topicid = #{value} AND delflag = 0 ORDER BY r_praise DESC , r_createtime DESC
+        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_topicid = #{value} AND delflag = 0 AND user_type = 1 ORDER BY r_praise DESC , r_createtime DESC
+    </select>
+
+    <select id="selectTopicByDynamicByCoachHeat" parameterType="int" resultMap="dynamicMap">
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid  = dt.id
+        LEFT JOIN ums_coach um on dy.r_userid = um.id WHERE  dy.r_topicid = #{value} AND delflag = 0 AND user_type = 2 ORDER BY r_praise DESC , r_createtime DESC
     </select>
 
 
     <select id="queryDynamicById" resultMap="dynamicMap" parameterType="java.lang.Long">
-        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
-        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_id = #{value} AND delflag = 0
+        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_id = #{value} AND delflag = 0 AND user_type = 1
+    </select>
+
+    <select id="queryDynamicByCoachById" resultMap="dynamicMap" parameterType="java.lang.Long">
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid  = dt.id
+        LEFT JOIN ums_coach um on dy.r_userid = um.id WHERE  dy.r_id = #{value} AND delflag = 0 AND user_type = 2
+    </select>
+
+    <select id="queryDynamicCoachById" resultMap="dynamicMap" parameterType="java.lang.Long">
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid  = dt.id
+        LEFT JOIN ums_coach um on dy.r_userid = um.id WHERE  dy.r_id = #{value} AND delflag = 0 AND user_type = 2
     </select>
 
     <insert id="addDynamic" parameterType="com.dmd.mall.model.domain.DynamicBean">
@@ -114,7 +152,9 @@
         r_topicid,
         width,
         height,
-        delflag)
+        delflag,
+        user_type
+        )
         VALUES (
         #{dynamicAuthor,jdbcType=VARCHAR},
         #{dynamicHeadPortrait,jdbcType=VARCHAR},
@@ -129,8 +169,8 @@
         #{topicId,jdbcType=INTEGER},
         #{width,jdbcType=INTEGER},
         #{height,jdbcType=INTEGER},
-        #{delflag,jdbcType=INTEGER}
-
+        #{delflag,jdbcType=INTEGER},
+        #{userType,jdbcType=INTEGER}
         )
     </insert>
 
@@ -143,72 +183,214 @@
     </update>
 
    <select id="queryDynamicTime" resultMap="dynamicMap">
-        SELECT dy.r_id,dy.r_picture,r_author,r_head_portrait,r_praise,r_userid,dy.height,dy.width
+        SELECT dy.r_id,dy.r_picture,r_author,r_head_portrait,r_praise,r_userid,dy.height,dy.width,dy.user_type
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id WHERE delflag = 0 AND dy.r_picture is not null ORDER BY r_createtime DESC
     </select>
 
     <select id="queryDynamicHeat" resultMap="dynamicMap">
-        SELECT dy.r_id,dy.r_picture,r_author,r_head_portrait,r_praise,dy.height,dy.width
+        SELECT dy.r_id,dy.r_picture,r_author,r_head_portrait,r_praise,dy.height,dy.width,dy.user_type
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id WHERE delflag = 0 AND dy.r_picture is not null ORDER BY r_praise DESC , r_createtime DESC
     </select>
 
-    <select id="queryDynamicByContent" parameterType="java.lang.String" resultMap="dynamicMap">
-        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag
+   <select id="queryDynamicByContent" parameterType="java.lang.String" resultMap="dynamicMap">
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid = dt.id
+        LEFT JOIN ums_member um on dy.r_userid = um.id
+        <where>
+            <if test="content != null and content != ''">
+                AND dy.r_content LIKE CONCAT(CONCAT('%',#{content}),'%')
+            </if>
+            AND dy.delflag = 0
+            AND dy.user_type = 1
+        </where>
+        ORDER BY dy.r_createtime DESC
+    </select>
+
+    <select id="queryDynamicByContentByCoach" parameterType="java.lang.String" resultMap="dynamicMap">
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
+        FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
+        ON dy.r_topicid = dt.id
+        LEFT JOIN ums_coach um on dy.r_userid = um.id
         <where>
             <if test="content != null and content != ''">
                 AND dy.r_content LIKE CONCAT(CONCAT('%',#{content}),'%')
             </if>
             AND delflag = 0
+            AND user_type = 2
         </where>
         ORDER BY r_createtime DESC
     </select>
 
     <select id="queryDynamicCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM dmd_dynamic WHERE r_userid = #{userId} and delflag = 0
+        SELECT COUNT(*) FROM dmd_dynamic WHERE r_userid = #{userId} and delflag = 0 AND user_type = 1
+    </select>
+
+    <select id="queryDynamicCountByCoach" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM dmd_dynamic WHERE r_userid = #{userId} and delflag = 0 AND user_type = 2
     </select>
 
     <select id="selectFavorites" parameterType="map" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM ums_favorites WHERE target_id = #{userId1} and user_id = #{userId} and status = 1 and (favorite_type = 1 or favorite_type = 2)
+        SELECT COUNT(*) FROM ums_favorites WHERE target_id = #{userId1} and user_id = #{userId} and status = 1 and favorite_type = 1 and user_type = 1
+    </select>
+
+    <!-- 教练登陆 -->
+    <select id="selectFavoritesByCoach" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ums_favorites WHERE target_id = #{userId1} and user_id = #{userId} and status = 1 and favorite_type = 1 and user_type = 2
+    </select>
+
+    <select id="selectFavoritesCoach2" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ums_favorites WHERE target_id = #{userId1} and user_id = #{userId} and status = 1 and favorite_type = 2 and user_type = 2
+    </select>
+
+    <select id="selectFavoritesCoach" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ums_favorites WHERE target_id = #{userId1} and user_id = #{userId} and status = 1 and favorite_type = 2 and user_type = 1
     </select>
 
     <select id="insertUserPraise" parameterType="map" >
         INSERT INTO dmd_dynamic_praise_status(
             user_id,
             dynamic_id,
-            status
+            status,
+            user_type,
+            dynamic_type
         )VALUES (
             #{userId},
             #{dynamicId},
-            0
+            0,
+            1,
+            1
+        )
+    </select>
+
+    <select id="insertUserPraiseCoach" parameterType="map" >
+        INSERT INTO dmd_dynamic_praise_status(
+        user_id,
+        dynamic_id,
+        status,
+        user_type,
+        dynamic_type
+        )VALUES (
+        #{userId},
+        #{dynamicId},
+        0,
+        2,
+        1
+        )
+    </select>
+
+    <select id="insertUserPraiseByCoach" parameterType="map" >
+        INSERT INTO dmd_dynamic_praise_status(
+        user_id,
+        dynamic_id,
+        status,
+        user_type,
+        dynamic_type
+        )VALUES (
+        #{userId},
+        #{dynamicId},
+        0,
+        1,
+        2
+        )
+    </select>
+
+    <select id="insertUserPraiseCoach2" parameterType="map" >
+        INSERT INTO dmd_dynamic_praise_status(
+        user_id,
+        dynamic_id,
+        status,
+        user_type,
+        dynamic_type
+        )VALUES (
+        #{userId},
+        #{dynamicId},
+        0,
+        2,
+        2
         )
     </select>
 
     <select id="updateUserPraise" parameterType="map">
-        UPDATE dmd_dynamic_praise_status SET status = 1 WHERE user_id = #{userId} AND dynamic_id = #{dynamicId}
+        UPDATE dmd_dynamic_praise_status SET status = 1 WHERE user_id = #{userId} AND dynamic_id = #{dynamicId} AND user_type = 1 AND dynamic_type = 1
+    </select>
+
+    <select id="updateUserPraiseCoach" parameterType="map">
+        UPDATE dmd_dynamic_praise_status SET status = 1 WHERE user_id = #{userId} AND dynamic_id = #{dynamicId} AND user_type = 2 AND dynamic_type = 1
+    </select>
+
+    <select id="updateUserPraiseCoach2" parameterType="map">
+        UPDATE dmd_dynamic_praise_status SET status = 1 WHERE user_id = #{userId} AND dynamic_id = #{dynamicId} AND user_type = 2 AND dynamic_type = 2
+    </select>
+
+    <select id="updateUserPraise2" parameterType="map">
+        UPDATE dmd_dynamic_praise_status SET status = 1 WHERE user_id = #{userId} AND dynamic_id = #{dynamicId} AND user_type = 1 AND dynamic_type = 2
     </select>
 
     <select id="selectFavoritespraise" parameterType="map" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM dmd_dynamic_praise_status WHERE user_id = #{userId} and dynamic_id = #{id} and status = 0
+        SELECT COUNT(*) FROM dmd_dynamic_praise_status WHERE user_id = #{userId} and dynamic_id = #{id} and status = 0 and user_type = 1 and dynamic_type = 1
     </select>
 
+    <!-- 用户发布教练登陆 -->
+    <select id="selectFavoritespraiseByCoach" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM dmd_dynamic_praise_status WHERE user_id = #{userId} and dynamic_id = #{id} and status = 0 and user_type = 2 and dynamic_type = 1
+    </select>
+
+    <select id="selectFavoritespraiseCoach2" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM dmd_dynamic_praise_status WHERE user_id = #{userId} and dynamic_id = #{id} and status = 0 and user_type = 1 and dynamic_type = 2
+    </select>
+
+
+    <select id="selectFavoritespraiseCoach" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM dmd_dynamic_praise_status WHERE user_id = #{userId} and dynamic_id = #{id} and status = 0 and user_type = 2 and dynamic_type = 2
+    </select>
+
+    <!-- 用户发布用户点赞 -->
     <select id="selectFavoritespraiseTopic" parameterType="map" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM dmd_dynamic_praise_status WHERE user_id = #{userId} and dynamic_id = #{dynamicId} and status = 0
+        SELECT COUNT(*) FROM dmd_dynamic_praise_status WHERE user_id = #{userId} and dynamic_id = #{dynamicId} and status = 0 and user_type = 1 and dynamic_type = 1
     </select>
 
+    <!-- 判断用户是否给用户所发动态进行点赞 -->
     <select id="selectUserIdBypraise" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT count(1) from dmd_dynamic_praise_status WHERE user_id = #{userId} AND dynamic_id = #{id}
+        SELECT count(1) from dmd_dynamic_praise_status WHERE user_id = #{userId} AND dynamic_id = #{id} AND user_type = 1 AND dynamic_type = 1
     </select>
+
+    <!-- 判断教练是否给用户所发动态进行点赞 -->
+    <select id="selectUserIdBypraiseCoach" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(1) from dmd_dynamic_praise_status WHERE user_id = #{userId} AND dynamic_id = #{id} AND user_type = 2 AND dynamic_type = 1
+    </select>
+
+    <!-- 判断用户是否给教练所发动态进行点赞 -->
+    <select id="selectUserIdBypraiseByCoach" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(1) from dmd_dynamic_praise_status WHERE user_id = #{userId} AND dynamic_id = #{id} AND user_type = 1 AND dynamic_type = 2
+    </select>
+
+    <!-- 判断教练是否给教练所发动态进行点赞 -->
+    <select id="selectUserIdBypraiseCoach2" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(1) from dmd_dynamic_praise_status WHERE user_id = #{userId} AND dynamic_id = #{id} AND user_type = 2 AND dynamic_type = 2
+    </select>
+
     <select id="selectDynamicById" resultMap="dynamicMap">
-        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid
+        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,,dy.user_type
          FROM dmd_dynamic dy where dy.r_id = #{id}
     </select>
 
     <update id="updateUserPraiseLike" parameterType="map" >
-        UPDATE dmd_dynamic_praise_status SET status = 0 WHERE user_id = #{userId} AND dynamic_id = #{id}
+        UPDATE dmd_dynamic_praise_status SET status = 0 WHERE user_id = #{userId} AND dynamic_id = #{id} AND user_type = 1 AND dynamic_type = 1
+    </update>
+
+    <update id="updateUserPraiseLikeByCoach" parameterType="map" >
+        UPDATE dmd_dynamic_praise_status SET status = 0 WHERE user_id = #{userId} AND dynamic_id = #{id} AND user_type = 1 AND dynamic_type = 2
+    </update>
+
+    <update id="updateUserPraiseLikeCoach" parameterType="map" >
+        UPDATE dmd_dynamic_praise_status SET status = 0 WHERE user_id = #{userId} AND dynamic_id = #{id} AND user_type = 2 AND dynamic_type = 1
+    </update>
+
+    <update id="updateUserPraiseLikeCoach2" parameterType="map" >
+        UPDATE dmd_dynamic_praise_status SET status = 0 WHERE user_id = #{userId} AND dynamic_id = #{id} AND user_type = 2 AND dynamic_type = 2
     </update>
 
     <select id="queryDynamicAlbumTimeBean" parameterType="java.lang.Long" resultType="com.dmd.mall.model.domain.DynamicAlbumTimeBean">
@@ -221,6 +403,24 @@
         WHERE
         r_userid = #{userId}
         AND ( r_picture &lt;&gt; NULL OR r_picture &lt;&gt; "" )
+        AND user_type = 1
+        GROUP BY
+        months
+        ORDER BY
+        months DESC
+    </select>
+
+    <select id="queryDynamicAlbumTimeByCoachBean" parameterType="java.lang.Long" resultType="com.dmd.mall.model.domain.DynamicAlbumTimeBean">
+        SELECT
+        r_userid as userId,
+        DATE_FORMAT( r_createtime, '%Y%m' ) as months  ,
+        r_picture as picture
+        FROM
+        dmd_dynamic
+        WHERE
+        r_userid = #{userId}
+        AND ( r_picture &lt;&gt; NULL OR r_picture &lt;&gt; "" )
+        AND user_type = 2
         GROUP BY
         months
         ORDER BY
@@ -231,11 +431,22 @@
         SELECT r_picture AS picture
         FROM dmd_dynamic
         WHERE
-        date_format(r_createtime, '%Y%m') = #{months} and r_userid = #{userId} and r_picture is not null and r_picture &lt;&gt; ""
+        date_format(r_createtime, '%Y%m') = #{months} and r_userid = #{userId} and r_picture is not null and r_picture &lt;&gt; "" and user_type = 1
+    </select>
+
+    <select id="queryDynamicAlbumTimePictureByCoach" parameterType="map" resultType="com.dmd.mall.model.domain.DynamicAlbumTimeBean">
+        SELECT r_picture AS picture
+        FROM dmd_dynamic
+        WHERE
+        date_format(r_createtime, '%Y%m') = #{months} and r_userid = #{userId} and r_picture is not null and r_picture &lt;&gt; "" and user_type = 2
     </select>
 
     <select id="queryUserDetails" resultType="com.dmd.mall.model.vo.UserDetailsVo">
         SELECT id,member_level_id,nick_name,icon,pics,personalized_signature FROM ums_member WHERE id = #{userId}
+    </select>
+
+    <select id="queryUserDetailsByCoach" resultType="com.dmd.mall.model.vo.UserDetailsVo">
+        SELECT id,nick_name,icon,personal_album as pics ,personal_profile as personalized_signature ,coach_grade AS  member_level_id FROM ums_coach WHERE id = #{userId}
     </select>
 
 </mapper>

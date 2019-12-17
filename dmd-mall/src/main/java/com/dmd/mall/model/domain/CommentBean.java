@@ -76,6 +76,18 @@ public class CommentBean {
      * 关联评论主键id
      */
     private Long forPid;
+    /**
+     * 用户类型
+     */
+    private Integer userType;
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
 
     private List<CommentBean> children;
 
@@ -216,6 +228,7 @@ public class CommentBean {
                 ", forDiveLogId=" + forDiveLogId +
                 ", userId=" + userId +
                 ", forPid=" + forPid +
+                ", userType=" + userType +
                 ", children=" + children +
                 '}';
     }

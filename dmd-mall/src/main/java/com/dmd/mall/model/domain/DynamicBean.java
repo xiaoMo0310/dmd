@@ -60,6 +60,19 @@ public class DynamicBean {
      */
     private Integer height;
 
+    /**
+     * 用户类型
+     */
+    private Integer userType;
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
     public Integer getWidth() {
         return width;
     }
@@ -225,6 +238,7 @@ public class DynamicBean {
                 ", identificationPraise=" + identificationPraise +
                 ", width=" + width +
                 ", height=" + height +
+                ", userType=" + userType +
                 '}';
     }
 }

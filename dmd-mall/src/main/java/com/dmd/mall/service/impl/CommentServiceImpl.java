@@ -47,9 +47,7 @@ public class CommentServiceImpl implements CommentService{
             List<CommentBean> node = getNode(idList.get(i));
             list.addAll(node);
         }
-
         return list;*/
-        //所有留言新增时父id为0.所有的回复对应的都是他儿子，两层分级
         Integer id = 0;
         List<CommentBean> node = getNode(Long.valueOf(id),forDynamicId);
         return node;
@@ -59,7 +57,15 @@ public class CommentServiceImpl implements CommentService{
 
 
     private List<CommentBean> getNode(Long forPid,Long forDynamicId) {
+        //用户所发
         List<CommentBean> findCommentListByPId = commentMapper.findCommentListById(forPid,forDynamicId);
+        //教练所发
+        List<CommentBean> findCommentListByPIdCoach = commentMapper.findCommentListByIdCoach(forPid,forDynamicId);
+        //数据合并
+        findCommentListByPId.addAll(findCommentListByPIdCoach);
+        //按照时间倒序排序
+        findCommentListByPId.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
+
         for (CommentBean commentBean : findCommentListByPId) {
             Long id2 = commentBean.getCommentId();
             List<CommentBean> nodes = getNode(id2,forDynamicId);
@@ -99,6 +105,17 @@ public class CommentServiceImpl implements CommentService{
         //敏感词过滤*****
         String content = WordFilter.doFilter(commentBean.getContent());
         commentBean.setContent(content);
+        //登陆信息
+        LoginAuthDto loginAuthDtos = RequestUtil.getLoginUser();
+        //登录角色
+        String userTypes = loginAuthDtos.getUserType();
+        //用户登录
+        if (userTypes.equals("member")){
+            commentBean.setUserType(1);
+        //教练登录
+        }else if(userTypes.equals("coach")){
+            commentBean.setUserType(2);
+        }
         commentMapper.addComment(commentBean);
         int result = dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
         //发布评论，动态评论数加1
@@ -146,6 +163,17 @@ public class CommentServiceImpl implements CommentService{
         //敏感词过滤*****
         String content = WordFilter.doFilter(commentBean.getContent());
         commentBean.setContent(content);
+        //登陆信息
+        LoginAuthDto loginAuthDtos = RequestUtil.getLoginUser();
+        //登录角色
+        String userTypes = loginAuthDtos.getUserType();
+        //用户登录
+        if (userTypes.equals("member")){
+            commentBean.setUserType(1);
+            //教练登录
+        }else if(userTypes.equals("coach")){
+            commentBean.setUserType(2);
+        }
         commentMapper.addComment(commentBean);
         //发布回复，动态评论数加1
         int result = dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
@@ -164,7 +192,17 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public int updateCommentDelflag(Long commentId,Long userId,Long DynamicId) {
-        commentMapper.updateCommentDelflag(commentId,userId);
+        //登陆信息
+        LoginAuthDto loginAuthDtos = RequestUtil.getLoginUser();
+        //登录角色
+        String userTypes = loginAuthDtos.getUserType();
+        //用户登录
+        if (userTypes.equals("member")){
+            commentMapper.updateCommentDelflag(commentId,userId);
+            //教练登录
+        }else if(userTypes.equals("coach")){
+            commentMapper.updateCommentDelflagByCoach(commentId,userId);
+        }
         //相应动态评论数量-1
         return dynamicMapper.reduceCommentNum(DynamicId);
     }

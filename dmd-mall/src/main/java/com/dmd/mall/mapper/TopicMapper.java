@@ -28,4 +28,6 @@ public interface TopicMapper {
     List<TopicBean> queryTopicByContent(@Param("content") String content);
 
     Integer selectFavorites(@Param("userId")Long userId,@Param("topicId") Integer topicId);
+
+    Integer selectFavoritesByCoach(@Param("userId")Long userId,@Param("topicId") Integer topicId);
 }

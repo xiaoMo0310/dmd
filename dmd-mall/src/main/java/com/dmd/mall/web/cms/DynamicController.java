@@ -45,7 +45,7 @@ public class DynamicController {
     }
 
     /**
-     * 分页查询我的动态
+     * 分页查询我的动态 改
      * @param userId
      * @return
      */
@@ -54,8 +54,9 @@ public class DynamicController {
     @ResponseBody
     public CommonResult<PageInfo<DynamicBean>> queryDynamicPage(@RequestParam Long userId,
                                                                 @RequestParam Integer pageNum,
-                                                                @RequestParam Integer pageSize) {
-        List<DynamicBean> dynamicList = dynamicService.queryDynamicPage(userId,pageNum,pageSize);
+                                                                @RequestParam Integer pageSize,
+                                                                Integer userType) {
+        List<DynamicBean> dynamicList = dynamicService.queryDynamicPage(userId,pageNum,pageSize,userType);
         return CommonResult.success(new PageInfo<>(dynamicList));
     }
 
@@ -105,15 +106,15 @@ public class DynamicController {
 
 
     /**
-     * 动态点赞
+     * 动态点赞 改
      * @param 动态id
      * @return
      */
     @ApiOperation("点赞动态")
     @RequestMapping(value = "/updateDynamicLikePraise",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult updateLikePraise(@RequestParam Long id){
-        int count = dynamicService.updateLikePraise(id);
+    public CommonResult updateLikePraise(@RequestParam Long id,@RequestParam Integer userType){
+        int count = dynamicService.updateLikePraise(id,userType);
         if (count > 0) {
             return CommonResult.success(count,"点赞成功");
         }
@@ -121,15 +122,15 @@ public class DynamicController {
     }
 
     /**
-     * 动态取消点赞
+     * 动态取消点赞 改
      * @param 动态id
      * @return
      */
     @ApiOperation("取消点赞动态")
     @RequestMapping(value = "/updateDynamicCancelPraise",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult updateCancelPraise(@RequestParam Long id){
-        int count = dynamicService.updateCancelPraise(id);
+    public CommonResult updateCancelPraise(@RequestParam Long id,@RequestParam Integer userType){
+        int count = dynamicService.updateCancelPraise(id,userType);
         if (count > 0) {
             return CommonResult.success(count,"取消点赞成功");
         }
@@ -154,7 +155,7 @@ public class DynamicController {
     }
 
     /**
-     * 动态删除(逻辑删除)
+     * 动态删除(逻辑删除) 改
      * @param 动态id
      * @return
      */
@@ -170,20 +171,20 @@ public class DynamicController {
     }
 
     /**
-     * 根据动态id查询动态详情
+     * 根据动态id查询动态详情 改
      * @param 话题id
      * @return
      */
     @ApiOperation("根据动态id查询动态详情")
     @RequestMapping(value = "/selectDynamicById",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<DynamicBean>> queryDynamicById(@RequestParam Long id) {
-        List<DynamicBean> dynamicList = dynamicService.queryDynamicById(id);
+    public CommonResult<List<DynamicBean>> queryDynamicById(@RequestParam Long id,@RequestParam Integer userType) {
+        List<DynamicBean> dynamicList = dynamicService.queryDynamicById(id,userType);
         return CommonResult.success(dynamicList);
     }
 
     /**
-     * 发布动态
+     * 发布动态 改
      * @param dynamicBean
      * @return
      */
@@ -210,7 +211,7 @@ public class DynamicController {
     }
 
     /**
-     * 首页--最新动态
+     * 首页--最新动态 改
      * @return
      */
     @ApiOperation("首页--最新动态分页查询")
@@ -223,7 +224,7 @@ public class DynamicController {
     }
 
     /**
-     * 首页--最热动态
+     * 首页--最热动态 改
      * @return
      */
     @ApiOperation("首页--最热动态分页查询")
@@ -236,7 +237,7 @@ public class DynamicController {
     }
 
     /**
-     * 查询我的总动态数
+     * 查询我的总动态数 改
      * @param userId
      * @return
      */
@@ -249,7 +250,7 @@ public class DynamicController {
     }
 
     /**
-     * 分页查询用户影集时刻
+     * 分页查询用户影集时刻 改
      * @param userId
      * @return
      */
@@ -258,22 +259,23 @@ public class DynamicController {
     @ResponseBody
     public CommonResult<PageInfo<DynamicAlbumTimeBean>> queryDynamicAlbumTimeBean(@RequestParam Long userId,
                                                                                   @RequestParam Integer pageNum,
-                                                                                  @RequestParam Integer pageSize) {
-        List<DynamicAlbumTimeBean> dynamicList = dynamicService.queryDynamicAlbumTimeBean(userId,pageNum,pageSize);
+                                                                                  @RequestParam Integer pageSize,
+                                                                                  @RequestParam Integer userType) {
+        List<DynamicAlbumTimeBean> dynamicList = dynamicService.queryDynamicAlbumTimeBean(userId,pageNum,pageSize,userType);
         return CommonResult.success(new PageInfo<>(dynamicList));
     }
 
 
     /**
-     * 查询用户详情页资料
+     * 查询用户详情页资料 改
      * @param userId
      * @return
      */
     @ApiOperation("查询用户详情页资料")
     @RequestMapping(value = "/queryUserDetails",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<UserDetailsVo> queryUserDetails(@RequestParam Long userId) {
-        UserDetailsVo umsMember = dynamicService.queryUserDetails(userId);
+    public CommonResult<UserDetailsVo> queryUserDetails(@RequestParam Long userId,@RequestParam Integer userType) {
+        UserDetailsVo umsMember = dynamicService.queryUserDetails(userId,userType);
         return CommonResult.success(umsMember);
     }
 

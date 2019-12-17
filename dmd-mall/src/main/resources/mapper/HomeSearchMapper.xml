@@ -9,6 +9,8 @@
         <result column="createTime" property="createTime" />
         <result column="searchType" property="searchType" />
         <result column="userid" property="userid" />
+        <result column="user_type" property="userType" />
+
     </resultMap>
 
 
@@ -18,23 +20,54 @@
         name,
         createTime,
         searchType,
-        userid
+        userid,
+        user_type
         ) VALUES (
         #{content,jdbcType=VARCHAR},
         sysdate(),
         #{searchType,jdbcType=INTEGER},
-        #{userId,jdbcType=BIGINT}
+        #{userId,jdbcType=BIGINT},
+        1
+        )
+    </insert>
+
+    <insert id="addHomeSearchRecordByCoach" parameterType="map">
+        INSERT INTO dmd_search_home_history
+        (
+        name,
+        createTime,
+        searchType,
+        userid,
+        user_type
+        ) VALUES (
+        #{content,jdbcType=VARCHAR},
+        sysdate(),
+        #{searchType,jdbcType=INTEGER},
+        #{userId,jdbcType=BIGINT},
+        2
         )
     </insert>
 
     <select id="queryHistory" parameterType="java.lang.Long" resultMap="dynamicMap">
-        SELECT  id,name,createTime,searchType,userid FROM dmd_search_home_history
-        WHERE userid = #{userId}
+        SELECT  id,name,createTime,searchType,userid,user_type FROM dmd_search_home_history
+        WHERE userid = #{userId} AND user_type = 1
         GROUP BY name
         ORDER BY createTime DESC LIMIT 5
     </select>
 
+    <select id="queryHistoryByCoach" parameterType="java.lang.Long" resultMap="dynamicMap">
+        SELECT  id,name,createTime,searchType,userid,user_type FROM dmd_search_home_history
+        WHERE userid = #{userId} AND user_type = 2
+        GROUP BY name
+        ORDER BY createTime DESC LIMIT 5
+    </select>
+
+
     <delete id="deleteHistoryByUserid" parameterType="java.lang.Long">
-        DELETE FROM dmd_search_home_history WHERE userid = #{userid}
+        DELETE FROM dmd_search_home_history WHERE userid = #{userid} AND user_type = 1
+    </delete>
+
+    <delete id="deleteHistoryByUseridCoach" parameterType="java.lang.Long">
+        DELETE FROM dmd_search_home_history WHERE userid = #{userid} AND user_type = 2
     </delete>
 </mapper>
