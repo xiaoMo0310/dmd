@@ -48,7 +48,11 @@
 
 
     <select id="queryFavoritesCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT count(*) FROM ums_favorites WHERE user_id = #{userId} AND (favorite_type = 1 OR favorite_type = 2 OR favorite_type = 6) and status = 1
+        SELECT count(*) FROM ums_favorites WHERE user_id = #{userId} AND (favorite_type = 1 OR favorite_type = 2 OR favorite_type = 6) and status = 1 AND user_type = 1
+    </select>
+
+    <select id="queryFavoritesCountByCoach" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(*) FROM ums_favorites WHERE user_id = #{userId} AND (favorite_type = 1 OR favorite_type = 2 OR favorite_type = 6) and status = 1 AND user_type = 2
     </select>
     <select id="queryAttentionTopic" resultType="com.dmd.mall.model.domain.UmsFavorites">
         SELECT <include refid="Base_Column_List"/> FROM ums_favorites WHERE user_id = #{userId} and favorite_type = 6 and status =1

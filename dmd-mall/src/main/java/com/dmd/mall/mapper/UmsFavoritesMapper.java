@@ -29,4 +29,6 @@ public interface UmsFavoritesMapper extends MyMapper<UmsFavorites> {
     Integer queryFavoritesCount(Long userId);
 
     List<UmsFavorites> queryAttentionTopic(Long userId);
+
+    Integer queryFavoritesCountByCoach(Long userId);
 }

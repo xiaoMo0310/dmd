@@ -3,6 +3,7 @@ package com.dmd.mall.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseService;
+import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.UmsFavoritesMapper;
 import com.dmd.mall.model.domain.TopicBean;
@@ -151,7 +152,19 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
 
     @Override
     public Integer queryFavoritesCount(Long userId) {
-        return umsFavoritesMapper.queryFavoritesCount(userId);
+        int num = 0;
+        //登陆信息
+        LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
+        //登陆角色
+        String userTypes = loginAuthDto.getUserType();
+        if(loginAuthDto.getUserType().equals("member")){
+            Integer count = umsFavoritesMapper.queryFavoritesCount(userId);
+            num = count;
+        }else if(loginAuthDto.getUserType().equals("coach")){
+            Integer count = umsFavoritesMapper.queryFavoritesCountByCoach(userId);
+            num = count;
+        }
+        return num;
     }
 
 
