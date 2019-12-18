@@ -1,5 +1,7 @@
 package com.dmd.mall.model.vo;
 
+import java.io.Serializable;
+
 /**
  * @author ChenYanbing
  * @title: UserDetailsVo
@@ -7,8 +9,9 @@ package com.dmd.mall.model.vo;
  * @description:
  * @date 2019/12/99:58
  */
-public class UserDetailsVo {
+public class UserDetailsVo implements Serializable {
 
+    private static final long serialVersionUID = -2415205063959255084L;
     /**
      * userId
      */

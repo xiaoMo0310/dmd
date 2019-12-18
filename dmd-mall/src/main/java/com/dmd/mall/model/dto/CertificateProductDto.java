@@ -2,6 +2,9 @@ package com.dmd.mall.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
+
 /**
  * @author YangAnsheng
  * @version 1.0
@@ -9,8 +12,9 @@ import lombok.Data;
  * @Description 证书产品 dto
  */
 @Data
-public class CertificateProductDto {
+public class CertificateProductDto implements Serializable {
 
+    private static final long serialVersionUID = 1670101163544508295L;
     @ApiModelProperty("证书id")
     private Long certificateId;
 

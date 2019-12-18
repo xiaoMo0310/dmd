@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,8 +20,9 @@ import java.util.List;
  */
 @Data
 @ApiModel
-public class OrderReturnApplyDto {
+public class OrderReturnApplyDto implements Serializable {
 
+    private static final long serialVersionUID = -8013189198872143385L;
     @ApiModelProperty("订单编号")
     private String orderSn;
 

@@ -1,6 +1,9 @@
 package com.dmd.mall.model.vo;
 
 import lombok.Data;
+
+import java.io.Serializable;
+
 /**
  * @author YangAnsheng
  * @version 1.0
@@ -8,8 +11,9 @@ import lombok.Data;
  * @Description 潜水学习地址 vo
  */
 @Data
-public class PmsPlayAddressVo {
+public class PmsPlayAddressVo implements Serializable {
 
+    private static final long serialVersionUID = 7173692708914584801L;
     /**
      * id
      */

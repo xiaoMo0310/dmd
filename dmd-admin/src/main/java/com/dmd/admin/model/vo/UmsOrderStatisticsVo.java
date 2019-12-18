@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -15,8 +16,9 @@ import java.util.Date;
  * @description: 订单明细信息统计Vo类
  * @date 2019/11/2515:30
  */
-public class UmsOrderStatisticsVo {
+public class UmsOrderStatisticsVo implements Serializable {
 
+    private static final long serialVersionUID = -1076238441856449252L;
     /**
      * 用户id
      */

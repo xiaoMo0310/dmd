@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dmd.admin.model.dto.UmsUserQueryParam;
 import com.dmd.admin.model.vo.UmsUserVo;
 import com.dmd.admin.service.UmsMemberService;
+import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
@@ -102,6 +103,15 @@ public class UmsMemberController extends BaseController {
                                        @RequestParam("status") Integer status) {
         int count = umsMemberService.batchUpdateUserStatus(ids, status);
         return handleResult(count);
+    }
+
+    @ApiOperation("根据邀请码查询用户信息")
+    @PostMapping(value = "/user/findByInvitationCode")
+    @ApiImplicitParams({@ApiImplicitParam(name ="baseQuery", value = "分页所需要的数据", dataType = "BaseQuery", paramType = "body"),
+                        @ApiImplicitParam(name ="invitationCode", value = "邀请码",  dataType = "String")})
+    public Wrapper findByInvitationCode(@RequestBody BaseQuery baseQuery, @RequestParam String invitationCode) {
+        PageInfo  pageInfo = umsMemberService.findByInvitationCode(invitationCode, baseQuery);
+        return WrapMapper.ok(pageInfo);
     }
 
 }

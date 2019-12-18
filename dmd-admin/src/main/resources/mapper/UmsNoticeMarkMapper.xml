@@ -39,5 +39,14 @@
         from ums_notice_mark unm, ums_member um
         where unm.user_id = um.id and unm.notice_id = #{noticeId} and unm.user_type = #{userType}
     </select>
+    <select id="selectCoachMessageByNoticeId" resultType="com.dmd.admin.model.vo.NoticeMarkVo">
+        select
+        uc.id userId,
+        uc.coach_name userName,
+        unm.is_read,
+        unm.read_time
+        from ums_notice_mark unm, ums_coach uc
+        where unm.user_id = uc.id and unm.notice_id = #{noticeId} and unm.user_type = #{userType}
+    </select>
 
 </mapper>

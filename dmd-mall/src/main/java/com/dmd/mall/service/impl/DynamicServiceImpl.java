@@ -243,7 +243,7 @@ public class DynamicServiceImpl implements DynamicService{
             messageDto.setTitle("动态点赞消息");
             messageDto.setContent(dynamicBean.getDynamicContent());
             messageDto.setJumpAddress(dynamicBean.getId() + "");
-            //发送消息
+            //发送消息 todo 教练待做
             noticeService.saveNoticeMessage(loginAuthDto, dynamicBean.getUserId(), "member", 2, messageDto);
         }
         return result;

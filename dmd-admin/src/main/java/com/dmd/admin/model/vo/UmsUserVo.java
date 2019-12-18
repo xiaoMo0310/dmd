@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 /**
  * @author YangAnsheng
@@ -12,7 +13,8 @@ import java.util.Date;
  * @Description 用户信息 vo类
  */
 @Data
-public class UmsUserVo {
+public class UmsUserVo implements Serializable {
+    private static final long serialVersionUID = -688664907356380119L;
     private Long id;
 
     private Long memberLevelId;

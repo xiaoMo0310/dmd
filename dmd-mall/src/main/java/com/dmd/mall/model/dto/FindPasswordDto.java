@@ -3,6 +3,8 @@ package com.dmd.mall.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author YangAnsheng
  * @version 1.0
@@ -10,8 +12,9 @@ import lombok.Data;
  * @Description 找回密码 dto
  */
 @Data
-public class FindPasswordDto {
+public class FindPasswordDto implements Serializable {
 
+    private static final long serialVersionUID = -8746685755424092968L;
     @ApiModelProperty("手机号")
     private String telephone;
 

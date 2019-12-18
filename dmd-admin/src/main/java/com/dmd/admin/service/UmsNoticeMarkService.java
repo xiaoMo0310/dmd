@@ -27,10 +27,18 @@ public interface UmsNoticeMarkService extends IService<UmsNoticeMark> {
     void insertNoticeMarkMessage(Long noticeId, Long id, String userType, LoginAuthDto loginAuthDto);
 
     /**
-     * 根据通知id查询所有的通知标记信息
+     * 查询用户的通知信息
      * @param noticeId
      * @param userType
      * @return
      */
     List<NoticeMarkVo> selectByNoticeId(Long noticeId, String userType);
+
+    /**
+     * 查询教练的通知信息
+     * @param id
+     * @param userType
+     * @return
+     */
+    List<NoticeMarkVo> selectCoachMessageByNoticeId(Long id, String userType);
 }

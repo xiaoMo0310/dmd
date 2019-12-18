@@ -492,4 +492,10 @@
   <select id="queryMemberNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
     SELECT integration FROM ums_member WHERE id = #{memberId}
   </select>
+    <select id="selectByInvitationCode" resultType="com.dmd.admin.model.vo.UmsUserVo">
+      select
+      id,username,nick_name, phone, status,personalized_signature, create_time
+      from ums_member
+      where invitation_code = #{invitationCode}
+    </select>
 </mapper>

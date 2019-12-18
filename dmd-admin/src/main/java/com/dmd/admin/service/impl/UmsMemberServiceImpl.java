@@ -10,6 +10,7 @@ import com.dmd.admin.model.domain.UmsMemberExample;
 import com.dmd.admin.model.dto.UmsUserQueryParam;
 import com.dmd.admin.model.vo.UmsUserVo;
 import com.dmd.admin.service.UmsMemberService;
+import com.dmd.base.dto.BaseQuery;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
@@ -122,6 +123,13 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         UmsUserVo umsUserVo = new UmsUserVo();
         BeanUtils.copyProperties(umsMember, umsUserVo);
         return umsUserVo;
+    }
+
+    @Override
+    public PageInfo findByInvitationCode(String invitationCode, BaseQuery baseQuery) {
+        PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
+        List<UmsUserVo> userVos = umsMemberMapper.selectByInvitationCode(invitationCode);
+        return new PageInfo(userVos);
     }
 
     @Override

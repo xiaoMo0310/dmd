@@ -21,7 +21,7 @@ public class UmsUserQueryParam extends BaseQuery {
     private String nickName;
 
     @ApiModelProperty(value = "用户手机号")
-    private Integer phone;
+    private String phone;
 
     @ApiModelProperty(value = "用户注册时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

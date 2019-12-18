@@ -1,8 +1,10 @@
-package com.dmd.mall.model.vo;
+package com.dmd.admin.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author YangAnsheng
@@ -60,8 +62,29 @@ public class UmsCoachVo implements Serializable {
     private String invitationCode;
 
     /**
+     * 注册时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createdTime;
+
+    /**
+     * 帐号启用状态:0->禁用；1->待审核; 2->正常
+     */
+    private Integer status;
+
+    /**
+     * 性别：0->未知；1->男；2->女
+     */
+    private Integer gender;
+
+    /**
      * 教练证书图片
      */
     private String certificatePic;
+
+    /**
+     * 审核未通过原因
+     */
+    private String failureReason;
 
 }

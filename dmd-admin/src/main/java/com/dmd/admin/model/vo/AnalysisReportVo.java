@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,8 +15,9 @@ import java.util.Date;
  * @description: 分析报表统计Vo类
  * @date 2019/12/39:09
  */
-public class AnalysisReportVo {
+public class AnalysisReportVo implements Serializable {
 
+    private static final long serialVersionUID = 3834112846066315735L;
     /**
      * 日期
      */

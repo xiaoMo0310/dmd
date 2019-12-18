@@ -14,6 +14,7 @@ import java.io.Serializable;
 @Data
 public class PmsPlayAddressDto implements Serializable {
 
+    private static final long serialVersionUID = -6122503998590743045L;
     private Long id;
 
     @ApiModelProperty("地址名称")

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dmd.mall.mapper.UmsCoachMapper">
+<mapper namespace="com.dmd.admin.mapper.UmsCoachMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.UmsCoach">
+    <resultMap id="BaseResultMap" type="com.dmd.admin.model.domain.UmsCoach">
     <result column="id" property="id" />
     <result column="creator" property="creator" />
     <result column="creator_id" property="creatorId" />
@@ -25,8 +25,8 @@
         <result column="personal_album" property="personalAlbum" />
         <result column="personal_profile" property="personalProfile" />
         <result column="growth" property="growth" />
-        <result column="certificate_pic" property="certificatePic"/>
-        <result column="failure_reason" property="failureReason"/>
+        <result column="certificate_pic" property="certificatePic" />
+        <result column="failure_reason" property="failureReason" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -40,17 +40,30 @@
         update_time,
         open_id, coach_name, nick_name, password, icon, phone, gender, coach_grade, invitation_code, total_invitation, status, personal_album, personal_profile, growth, certificate_pic, failure_reason
     </sql>
-    <select id="selectCoachMessage" resultType="com.dmd.mall.model.domain.UmsCoach">
-        select <include refid="Base_Column_List"/>
-        from ums_coach
-        where id = #{id}
-        and status = 2
+    <sql id="Base_List">
+        id,
+        created_time,
+        coach_name, nick_name, icon, phone, gender, coach_grade, invitation_code, status, personal_album, personal_profile, certificate_pic
+    </sql>
+    <select id="selectCoachList" resultType="com.dmd.admin.model.vo.UmsCoachVo">
+        select <include refid="Base_List"/>
+        from ums_coach where 1 = 1
+        <if test="username != null">
+            and coach_name like '%${username}%'
+        </if>
+        <if test="nickName != null">
+            and nick_name like '%${nickName}%'
+        </if>
+        <if test="createTime != null">
+            and to_days(created_time) = to_days(#{createTime})
+        </if>
+        order by created_time desc
     </select>
-    <select id="selectById" resultType="com.dmd.mall.model.domain.UmsCoach">
-        select <include refid="Base_Column_List"/>
+    <select id="selectCoachByStatus" resultType="com.dmd.admin.model.vo.UmsCoachVo">
+        select <include refid="Base_List"/>
         from ums_coach
-        where status = 2
-        and id = #{userId}
+        where status = 1
+        order by status
     </select>
 
 </mapper>

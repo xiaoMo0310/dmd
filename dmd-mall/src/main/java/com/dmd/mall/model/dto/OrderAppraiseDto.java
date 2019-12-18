@@ -3,6 +3,8 @@ package com.dmd.mall.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author YangAnsheng
  * @version 1.0
@@ -10,8 +12,9 @@ import lombok.Data;
  * @Description 订单评价 dto
  */
 @Data
-public class OrderAppraiseDto {
+public class OrderAppraiseDto implements Serializable {
 
+    private static final long serialVersionUID = -5138784463405177024L;
     @ApiModelProperty("订单id")
     private Long orderId;
 

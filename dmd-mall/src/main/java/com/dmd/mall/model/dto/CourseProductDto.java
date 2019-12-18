@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -15,8 +16,9 @@ import java.util.Date;
  * @Description 潜水商品dto类
  */
 @Data
-public class CourseProductDto {
+public class CourseProductDto implements Serializable {
 
+    private static final long serialVersionUID = -1130544620904518196L;
     private Long Id;
 
     @ApiModelProperty("商品名称")

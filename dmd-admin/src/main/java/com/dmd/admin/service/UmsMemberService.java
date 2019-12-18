@@ -3,6 +3,7 @@ package com.dmd.admin.service;
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.admin.model.dto.UmsUserQueryParam;
 import com.dmd.admin.model.vo.UmsUserVo;
+import com.dmd.base.dto.BaseQuery;
 import com.github.pagehelper.PageInfo;
 
 import java.text.ParseException;
@@ -80,4 +81,12 @@ public interface UmsMemberService{
      * @return
      */
     UmsUserVo selectUserById(Long id);
+
+    /**
+     * 根据邀请码查询用户信息
+     * @param invitationCode
+     * @param baseQuery
+     * @return
+     */
+    PageInfo findByInvitationCode(String invitationCode, BaseQuery baseQuery);
 }

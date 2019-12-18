@@ -1,4 +1,4 @@
-package com.dmd.mall.model.domain;
+package com.dmd.admin.model.domain;
 
 import com.dmd.core.mybatis.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
  * </p>
  *
  * @author YangAnsheng
- * @since 2019-11-07
+ * @since 2019-12-17
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -64,7 +64,7 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("邀请总的人数")
     private Integer totalInvitation;
 
-    @ApiModelProperty("帐号启用状态:0->禁用；1->待审核; 2->正常 3->审核未通过")
+    @ApiModelProperty("帐号启用状态:0->禁用；1->待审核; 2->正常 3-> 审核未通过")
     private Integer status;
 
     @Column(name = "personal_album")
@@ -78,13 +78,12 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("成长值")
     private Integer growth;
 
-    @ApiModelProperty("教练证书图片")
     @Column(name = "certificate_pic")
+    @ApiModelProperty("教练证书图片")
     private String certificatePic;
 
     @ApiModelProperty("审核未通过原因")
     @Column(name = "failure_reason")
     private String failureReason;
-
 
 }

@@ -2,6 +2,7 @@ package com.dmd.admin.model.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -12,8 +13,9 @@ import java.util.Date;
  * @Description 收支明细vo类
  */
 @Data
-public class BillingDetailsVo {
+public class BillingDetailsVo implements Serializable {
 
+    private static final long serialVersionUID = 7149266808123994734L;
     /**
      * 订单编号
      */

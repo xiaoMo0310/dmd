@@ -44,4 +44,9 @@ public class UmsNoticeMarkServiceImpl extends BaseService<UmsNoticeMark> impleme
     public List<NoticeMarkVo> selectByNoticeId(Long noticeId, String userType) {
         return umsNoticeMarkMapper.selectByNoticeId(noticeId, userType);
     }
+
+    @Override
+    public List<NoticeMarkVo> selectCoachMessageByNoticeId(Long noticeId, String userType) {
+        return umsNoticeMarkMapper.selectCoachMessageByNoticeId(noticeId, userType);
+    }
 }

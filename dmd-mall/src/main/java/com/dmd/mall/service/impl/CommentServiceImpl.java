@@ -127,7 +127,7 @@ public class CommentServiceImpl implements CommentService{
             messageDto.setTitle("动态评论消息");
             messageDto.setContent(content);
             messageDto.setJumpAddress(commentBean.getForDynamicId() + "");
-            //发送消息
+            //发送消息 todo 教练待做
             noticeService.saveNoticeMessage(loginAuthDto, commentBean.getUserId(), "member", 3, messageDto);
         }
         return result;
@@ -184,7 +184,7 @@ public class CommentServiceImpl implements CommentService{
             messageDto.setTitle("动态回复消息");
             messageDto.setContent(content);
             messageDto.setJumpAddress(commentBean.getForDynamicId() + "");
-            //发送消息
+            //发送消息 todo 教练待做
             noticeService.saveNoticeMessage(loginAuthDto, forUid, "member", 3, messageDto);
         }
         return result;

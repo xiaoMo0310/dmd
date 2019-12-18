@@ -2,6 +2,7 @@ package com.dmd.mall.model.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,9 @@ import java.util.List;
  * @Description 积分商品结算 vo
  */
 @Data
-public class IntegralProductVo {
+public class IntegralProductVo implements Serializable {
 
+    private static final long serialVersionUID = -1559348417426945826L;
     /**
      * 商品id
      */

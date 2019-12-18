@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -21,8 +22,9 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class GlobalExceptionLogDto {
+public class GlobalExceptionLogDto implements Serializable {
 
+    private static final long serialVersionUID = -5597786200443545572L;
     /**
      * 运行环境
      */
