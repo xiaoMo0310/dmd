@@ -162,4 +162,9 @@ private static final long serialVersionUID = 1L;
     @Transient
     private String coachGrade;
 
+    @ApiModelProperty("报名人数")
+    @Transient
+    private Integer peopleNum;
+
+
 }

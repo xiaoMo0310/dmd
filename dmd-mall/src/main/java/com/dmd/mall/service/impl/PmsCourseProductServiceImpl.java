@@ -315,6 +315,12 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     public List<PmsCourseProduct> queryPowerNotesCoachPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct) {
         PageHelper.startPage(pageNum, pageSize);
         pmsCourseProduct.setUserId(userId);
-        return pmsCourseProductMapper.queryPowerNotesCoachPage(pmsCourseProduct);
+        List<PmsCourseProduct> pmsCourseProducts = pmsCourseProductMapper.queryPowerNotesCoachPage(pmsCourseProduct);
+        //查询报名人数
+        for (int i = 0; i < pmsCourseProducts.size(); i++) {
+            Integer integer = pmsCourseProductMapper.queryPepleNum(pmsCourseProducts.get(i).getId(), pmsCourseProducts.get(i).getUserId(), pmsCourseProducts.get(i).getProductType());
+            pmsCourseProducts.get(i).setPeopleNum(integer);
+        }
+        return pmsCourseProducts;
     }
 }
