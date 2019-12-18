@@ -1,5 +1,6 @@
 package com.dmd.admin.model.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -9,8 +10,9 @@ import java.math.BigDecimal;
  * @description:
  * @date 2019/12/917:03
  */
-public class SetTimeoutVo {
+public class SetTimeoutVo implements Serializable {
 
+    private static final long serialVersionUID = -4857794223474076316L;
     /**
      * 时间
      */

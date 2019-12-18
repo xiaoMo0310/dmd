@@ -11,6 +11,7 @@ import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
 import com.google.common.base.Preconditions;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -58,6 +59,7 @@ public class UmsMemberController {
     }
 
     @ApiOperation("获取验证码")
+    @ApiImplicitParam(name ="deviceId", value = "deviceId", dataType = "String", paramType = "header")
     @RequestMapping(value = "/getAuthCode", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult getAuthCode(@RequestParam String mobile, HttpServletRequest request) {

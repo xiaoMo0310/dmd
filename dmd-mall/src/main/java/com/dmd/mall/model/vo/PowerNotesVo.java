@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,8 +17,9 @@ import java.util.Date;
  * @date 2019/11/1414:04
  */
 @Data
-public class PowerNotesVo {
+public class PowerNotesVo implements Serializable {
 
+    private static final long serialVersionUID = 2038548656132308005L;
     @Column(name = "product_name")
     @ApiModelProperty("商品名称")
     private String productName;

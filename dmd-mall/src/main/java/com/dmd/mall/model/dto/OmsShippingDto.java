@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.Column;
+import java.io.Serializable;
 
 /**
  * @author YangAnsheng
@@ -12,8 +13,9 @@ import javax.persistence.Column;
  * @Description 地址信息 dto
  */
 @Data
-public class OmsShippingDto {
+public class OmsShippingDto implements Serializable {
 
+    private static final long serialVersionUID = 1385007679112016466L;
     private Long id;
 
     @Column(name = "receiver_name")

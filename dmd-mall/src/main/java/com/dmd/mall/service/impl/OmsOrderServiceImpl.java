@@ -239,9 +239,12 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             PmsCertificateVo pmsCertificateVo = pmsCertificateService.selectCertificateById(pmsProduct.getCertificateId());
             //判断用户证书信息
             List<CertificateAppBean> certificateAppBeans = diveCertificateServuce.queryUserCertificateList(loginAuthDto.getUserId());
-            CertificateAppBean appBean = certificateAppBeans.stream().max(Comparator.comparingInt(certificateAppBean -> Integer.valueOf(certificateAppBean.getCertificateLevel()))).orElse(new CertificateAppBean());
-            if(PublicUtil.isEmpty(appBean) && !pmsCertificateVo.getCertificateLevel().equals("1")){
+            if(CollectionUtils.isEmpty(certificateAppBeans) && !pmsCertificateVo.getCertificateLevel().equals("1")){
                 throw new OmsBizException(ErrorCodeEnum.OMS10031028);
+            }
+            CertificateAppBean appBean = null;
+            if(!CollectionUtils.isEmpty(certificateAppBeans)){
+                appBean = certificateAppBeans.stream().filter(Objects::nonNull).max(Comparator.comparingInt(certificateAppBean -> Integer.valueOf(certificateAppBean.getCertificateLevel()))).orElse(new CertificateAppBean());
             }
             if(!PublicUtil.isEmpty(appBean) && Integer.valueOf(pmsCertificateVo.getCertificateLevel()) > (Integer.valueOf(appBean.getCertificateLevel()) + 1)){
                 throw new OmsBizException(ErrorCodeEnum.OMS10031028);

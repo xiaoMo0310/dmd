@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 /**
@@ -14,8 +15,9 @@ import java.util.Date;
  * @Description
  */
 @Data
-public class PmsCourseProductVo {
+public class PmsCourseProductVo implements Serializable {
 
+    private static final long serialVersionUID = -3408396945904034306L;
     /**
      * 商品id
      */

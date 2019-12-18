@@ -35,6 +35,7 @@
         select <include refid="Base_Column_List"/>
         from pms_certificate
         where status = 1
+        order by CAST(certificate_level AS UNSIGNED)
     </select>
 
     <select id="queryPmsCertificate" parameterType="java.lang.String" resultMap="BaseResultMap">

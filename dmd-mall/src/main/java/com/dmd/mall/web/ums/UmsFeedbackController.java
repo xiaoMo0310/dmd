@@ -1,8 +1,6 @@
 package com.dmd.mall.web.ums;
 
 import com.dmd.base.result.CommonResult;
-import com.dmd.mall.model.domain.CertificateAppBean;
-import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.UmsProblemFeedbackBean;
 import com.dmd.mall.model.domain.UmsUserFeedbackBean;
 import com.dmd.mall.service.UmsFeedbackService;
@@ -10,7 +8,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * @author ChenYanbing
  * @title: UmsFeedbackController
  * @projectName dmd
- * @description: TODO 用户意见反馈
+ * @description: 用户意见反馈
  * @date 2019/12/29:43
  */
 @Controller

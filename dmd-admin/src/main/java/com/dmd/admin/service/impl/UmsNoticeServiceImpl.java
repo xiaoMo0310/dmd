@@ -77,10 +77,11 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
             noticeListVo.setUmsNotice(notice);
             //查询通知标记信息
             if (notice.getType() != 3) {
-                //todo 查询普通用户的信息, 教练待做
                 List<NoticeMarkVo> umsNoticeMarks = null;
                 if (notice.getUserType().equals("member")) {
                     umsNoticeMarks = noticeMarkService.selectByNoticeId(notice.getId(), notice.getUserType());
+                }else if(notice.getUserType().equals("coach")){
+                    umsNoticeMarks = noticeMarkService.selectCoachMessageByNoticeId(notice.getId(), notice.getUserType());
                 }
                 noticeListVo.setNoticeMarkVos(umsNoticeMarks);
             }

@@ -1,6 +1,9 @@
 package com.dmd.mall.model.vo;
 
 import lombok.Data;
+
+import java.io.Serializable;
+
 /**
  * @author YangAnsheng
  * @version 1.0
@@ -8,8 +11,9 @@ import lombok.Data;
  * @Description 证书信息vo类
  */
 @Data
-public class PmsCertificateVo {
+public class PmsCertificateVo implements Serializable {
 
+    private static final long serialVersionUID = -7591416725045592185L;
     /**
      * 主键id
      */

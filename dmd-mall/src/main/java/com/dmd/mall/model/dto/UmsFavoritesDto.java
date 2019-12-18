@@ -3,6 +3,8 @@ package com.dmd.mall.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author ChenYanbing
  * @title: UmsFavoritesDto
@@ -11,8 +13,8 @@ import lombok.Data;
  * @date 2019/11/1315:51
  */
 @Data
-public class UmsFavoritesDto {
-
+public class UmsFavoritesDto implements Serializable {
+    private static final long serialVersionUID = 93047063106905535L;
 
     @ApiModelProperty("关注类型(1:普通用户 2:教练用户 3:普通商品 4:课程或潜水商品 5:商铺 6:话题)")
     private Integer favoriteType;

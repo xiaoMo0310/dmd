@@ -4,6 +4,7 @@ package com.dmd.admin.mapper;
 import com.dmd.admin.model.domain.UmsMember;
 import com.dmd.admin.model.domain.UmsMemberExample;
 import com.dmd.admin.model.dto.UmsUserQueryParam;
+import com.dmd.admin.model.vo.UmsUserVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -61,4 +62,6 @@ public interface UmsMemberMapper {
     int updateIntegrationForUserReduce(@Param("changeCount")Integer changeCount,@Param("memberId") Long memberId);
 
     Integer queryMemberNum(Long memberId);
+
+    List<UmsUserVo> selectByInvitationCode(String invitationCode);
 }

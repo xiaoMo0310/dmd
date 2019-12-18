@@ -3,6 +3,9 @@ package com.dmd.admin.model.vo;
 import com.dmd.admin.model.domain.OmsFashionable;
 import com.dmd.admin.model.domain.OmsOrder;
 import lombok.Data;
+
+import java.io.Serializable;
+
 /**
  * @author YangAnsheng
  * @version 1.0
@@ -10,8 +13,9 @@ import lombok.Data;
  * @Description 分账订单vo类
  */
 @Data
-public class FashionableAndOrderVo {
+public class FashionableAndOrderVo implements Serializable {
 
+    private static final long serialVersionUID = -3547345551586543537L;
     /**
      * 分账信息
      */

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -14,8 +15,9 @@ import java.util.Date;
  * @Description 学证商品订单详情vo类
  */
 @Data
-public class CourseOrderDetailVo {
+public class CourseOrderDetailVo implements Serializable {
 
+    private static final long serialVersionUID = 4412280747690786805L;
     /**
      * 订单id
      */

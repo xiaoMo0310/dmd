@@ -22,7 +22,7 @@ import java.util.Map;
 public class CodeGeneration {
 
     public static void main(String[] args) {
-        mybatisPlusCodeGeneratro(new String[]{"ums_member_login_log"}, "dmd-mall", "mall");
+        mybatisPlusCodeGeneratro(new String[]{"ums_coach"}, "dmd-admin", "admin");
     }
 
     /**

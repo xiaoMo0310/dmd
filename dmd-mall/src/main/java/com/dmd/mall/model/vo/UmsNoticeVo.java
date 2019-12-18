@@ -3,6 +3,7 @@ package com.dmd.mall.model.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,8 +13,9 @@ import java.util.Date;
  * @Description 用户通知 vo
  */
 @Data
-public class UmsNoticeVo {
+public class UmsNoticeVo implements Serializable {
 
+    private static final long serialVersionUID = -4103113849672381034L;
     /**
      * 消息id
      */

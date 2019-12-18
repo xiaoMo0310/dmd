@@ -3,6 +3,7 @@ package com.dmd.mall.model.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,8 +15,9 @@ import java.util.List;
  * @Description 商品评价 vo
  */
 @Data
-public class ProductAppraiseVo {
+public class ProductAppraiseVo implements Serializable {
 
+    private static final long serialVersionUID = -4447571778934965103L;
     /**
      *用户id
      */

@@ -3,6 +3,8 @@ package com.dmd.mall.service;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.UmsCoach;
+import com.dmd.mall.model.dto.UmsCoachDto;
+import com.dmd.mall.model.dto.UmsCoachRegisterDto;
 import com.dmd.mall.model.vo.UmsCoachVo;
 import com.dmd.wrapper.Wrapper;
 
@@ -47,4 +49,20 @@ public interface UmsCoachService extends IService<UmsCoach> {
      * @return
      */
     Wrapper updatePassword(String telephone, String oldPassword, String newPassword, String confirmPassword);
+
+    /**
+     * 修改教练信息
+     * @param umsCoachDto
+     * @param loginAuthDto
+     * @return
+     */
+    int updateCoachMessage(UmsCoachDto umsCoachDto, LoginAuthDto loginAuthDto);
+
+    /**
+     * 教练注册
+     * @param coachRegisterDto
+     * @param request
+     * @return
+     */
+    int register(UmsCoachRegisterDto coachRegisterDto, HttpServletRequest request);
 }

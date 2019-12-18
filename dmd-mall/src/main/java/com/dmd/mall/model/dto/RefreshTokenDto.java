@@ -2,6 +2,8 @@ package com.dmd.mall.model.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author YangAnsheng
  * @version 1.0
@@ -9,8 +11,9 @@ import lombok.Data;
  * @Description 刷新token dto
  */
 @Data
-public class RefreshTokenDto {
+public class RefreshTokenDto implements Serializable {
 
+    private static final long serialVersionUID = 3051868926440496208L;
     private String accessToken;
 
     private String refreshToken;

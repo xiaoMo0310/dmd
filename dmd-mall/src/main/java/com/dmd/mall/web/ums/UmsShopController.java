@@ -24,7 +24,5 @@ public class UmsShopController extends BaseController {
 
     @Autowired
     private UmsShopService umsShopService;
-
-
 }
 

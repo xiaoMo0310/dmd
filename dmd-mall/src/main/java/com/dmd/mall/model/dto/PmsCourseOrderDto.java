@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author YangAnsheng
  * @version 1.0
@@ -12,8 +14,9 @@ import lombok.Data;
  */
 @Data
 @ApiModel
-public class PmsCourseOrderDto {
+public class PmsCourseOrderDto implements Serializable {
 
+    private static final long serialVersionUID = -6304788989578155671L;
     @ApiModelProperty("商品id")
     private Long productId;
 
