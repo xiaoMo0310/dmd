@@ -78,6 +78,11 @@ public class CommentBean {
     private Long forPid;
 
     /**
+     * 用户类型
+     */
+    private Integer userType;
+
+    /**
      * 开始时间
      */
     @ApiModelProperty(value = "开始时间")
@@ -93,21 +98,16 @@ public class CommentBean {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endTime;
 
-    public Date getStratTime() {
-        return stratTime;
-    }
+    /**
+     * 被回复者用户类型(1==用户,2==教练 )一级评论为动态发布者类型
+     */
+    private Integer forUserType;
 
-    public void setStratTime(Date stratTime) {
-        this.stratTime = stratTime;
-    }
+    /**
+     * 被回复者用户昵称
+     */
+    private String forUserTypeName;
 
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
 
     public Long getCommentId() {
         return commentId;
@@ -221,6 +221,46 @@ public class CommentBean {
         this.forPid = forPid;
     }
 
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    public Date getStratTime() {
+        return stratTime;
+    }
+
+    public void setStratTime(Date stratTime) {
+        this.stratTime = stratTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getForUserType() {
+        return forUserType;
+    }
+
+    public void setForUserType(Integer forUserType) {
+        this.forUserType = forUserType;
+    }
+
+    public String getForUserTypeName() {
+        return forUserTypeName;
+    }
+
+    public void setForUserTypeName(String forUserTypeName) {
+        this.forUserTypeName = forUserTypeName;
+    }
+
     @Override
     public String toString() {
         return "CommentBean{" +
@@ -238,8 +278,11 @@ public class CommentBean {
                 ", forDiveLogId=" + forDiveLogId +
                 ", userId=" + userId +
                 ", forPid=" + forPid +
+                ", userType=" + userType +
                 ", stratTime=" + stratTime +
                 ", endTime=" + endTime +
+                ", forUserType=" + forUserType +
+                ", forUserTypeName='" + forUserTypeName + '\'' +
                 '}';
     }
 }

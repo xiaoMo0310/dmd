@@ -1,6 +1,8 @@
 package com.dmd.admin.web;
 
 import com.dmd.admin.model.domain.CommentBean;
+import com.dmd.admin.model.domain.DynamicBean;
+import com.dmd.admin.model.vo.CommentByDynamicIdVo;
 import com.dmd.admin.service.CommentService;
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
@@ -100,4 +102,39 @@ public class CommentController {
         return CommonResult.failed("删除失败");
     }
 
+
+    /**
+     * 查询评论详情以及对应的动态详情
+     * @param forDynamicId
+     * @param commentId
+     * @param userType
+     * @return
+     */
+    @ApiOperation("根据动态id查询动态详情")
+    @RequestMapping(value = "/selectDynamicById",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<CommentByDynamicIdVo> queryDynamicById(@RequestParam Long forDynamicId, @RequestParam Long commentId, @RequestParam Integer userType) {
+        CommentByDynamicIdVo dynamicList = commentService.selectCommentByDynamic(forDynamicId,commentId,userType);
+        return CommonResult.success(dynamicList);
+    }
+
+    /**
+     * 根据动态id查询对应评论
+     * @param pageNum
+     * @param pageSize
+     * @param commentBean
+     * @param forDynamicId
+     * @return
+     */
+    @ApiOperation("根据动态id查询对应评论")
+    @RequestMapping(value = "/selectDynamicByIdComment",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<CommonPage<CommentBean>> queryDynamicById(
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+            CommentBean commentBean,
+            @RequestParam Long forDynamicId) {
+        List<CommentBean> CommentList = commentService.queryCommentByDynamic(pageNum,pageSize,commentBean,forDynamicId);
+        return CommonResult.success(CommonPage.restPage(CommentList));
+    }
 }

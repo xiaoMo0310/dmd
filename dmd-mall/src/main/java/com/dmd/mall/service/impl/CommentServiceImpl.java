@@ -135,7 +135,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int addCommentReply(CommentBean commentBean,Long commentId, Long forUid) {
+    public int addCommentReply(CommentBean commentBean,Long commentId, Long forUid,Integer forUserType) {
         //回复的PId为当前评论id
         commentBean.setForPid(commentId);
         //被回复者id为评论人id
@@ -174,6 +174,8 @@ public class CommentServiceImpl implements CommentService{
         }else if(userTypes.equals("coach")){
             commentBean.setUserType(2);
         }
+        //被回复者用户类型(1==用户,2==教练 )一级评论为动态发布者类型
+        commentBean.setForUserType(forUserType);
         commentMapper.addComment(commentBean);
         //发布回复，动态评论数加1
         int result = dynamicMapper.addrCommentNum(commentBean.getForDynamicId());

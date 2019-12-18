@@ -19,6 +19,8 @@
         <result column="picture" property="picture" />
         <result column="create_time" property="createTime" />
         <result column="problem_id" property="problemId" />
+        <result column="user_type" property="userType" />
+
     </resultMap>
 
     <select id="queryProblemFeedback" resultMap="BaseResultMap">
@@ -47,8 +49,10 @@
     </insert>
 
     <select id="queryUserFeedback" parameterType="com.dmd.admin.model.domain.UmsUserFeedbackBean" resultMap="BaseResultMap2">
-        SELECT df.id,df.problem_description,df.user_id,df.picture,df.create_time,df.problem_id,dp.question_name as problemName FROM dmd_user_feedback df
+        SELECT df.id,df.problem_description,df.user_id,df.picture,df.create_time,df.problem_id,dp.question_name as problemName ,df.user_Type,um.nick_name AS nickName
+        FROM dmd_user_feedback df
         LEFT JOIN dmd_problem_feedback dp ON df.problem_id = dp.id
+        LEFT JOIN ums_member um on df.user_id = um.id
         <include refid="feedbackWhere"></include>
         ORDER BY df.create_time DESC
     </select>
@@ -75,6 +79,51 @@
             <if test="problemId != null">
                 and df.problem_id = #{problemId}
             </if>
+            <if test="nickName != null and nickName != ''">
+                and um.nick_name like '%${nickName}%'
+            </if>
+            and df.user_type = 1
+
+        </where>
+    </sql>
+
+    <select id="queryUserFeedbackCoach" parameterType="com.dmd.admin.model.domain.UmsUserFeedbackBean" resultMap="BaseResultMap2">
+        SELECT df.id,df.problem_description,df.user_id,df.picture,df.create_time,df.problem_id,dp.question_name as problemName ,df.user_Type,um.nick_name AS nickName
+        FROM dmd_user_feedback df
+        LEFT JOIN dmd_problem_feedback dp ON df.problem_id = dp.id
+        LEFT JOIN ums_coach um on df.user_id = um.id
+        <include refid="feedbackWhereCoach"></include>
+        ORDER BY df.create_time DESC
+    </select>
+
+
+    <!-- 公用标签 -->
+    <sql id="feedbackWhereCoach">
+        <where>
+            <!-- 问题描述模糊查询 -->
+            <if test="problemDescription !=null and problemDescription != ''">
+                and df.problem_description like '%${problemDescription}%'
+            </if>
+            <!-- 按照用户id -->
+            <if test="userId !=null">
+                and df.user_id = #{userId}
+            </if>
+            <!-- 日期区间查询 -->
+            <if test="startTime != null">
+                and df.create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and df.create_time &lt;= #{endTime}
+            </if>
+            <!-- 话题类型查询 -->
+            <if test="problemId != null">
+                and df.problem_id = #{problemId}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and um.nick_name like '%${nickName}%'
+            </if>
+            and df.user_type = 2
+
         </where>
     </sql>
 

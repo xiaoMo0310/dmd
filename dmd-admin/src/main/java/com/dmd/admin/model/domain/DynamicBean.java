@@ -55,6 +55,18 @@ public class DynamicBean {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endTime;
+    /**
+     * 用户类型
+     */
+    private Integer userType;
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
 
     public Date getStratTime() {
         return stratTime;
@@ -203,6 +215,7 @@ public class DynamicBean {
                 ", delflag=" + delflag +
                 ", stratTime=" + stratTime +
                 ", endTime=" + endTime +
+                ", userType=" + userType +
                 '}';
     }
 }

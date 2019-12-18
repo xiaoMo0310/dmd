@@ -18,6 +18,7 @@
         <result column="lw_userid" property="userId" />
         <result column="lw_for_pid" property="forPid" />
         <result column="user_type" property="userType" />
+        <result column="for_user_type" property="forUserType" />
     </resultMap>
 
     <select id="queryCommentById" parameterType="java.lang.Long" resultType="java.lang.Long">
@@ -39,7 +40,8 @@
         dc.lw_for_dynamic_id,
         dc.lw_userid,
         dc.lw_for_pid,
-        dc.user_type
+        dc.user_type,
+        dc.for_user_type
         FROM
         dmd_dynamic_comment dc
         LEFT JOIN ums_member um ON lw_userid = um.id
@@ -67,7 +69,8 @@
         dc.lw_for_dynamic_id,
         dc.lw_userid,
         dc.lw_for_pid,
-        dc.user_type
+        dc.user_type,
+        dc.for_user_type
         FROM
         dmd_dynamic_comment dc
         LEFT JOIN ums_coach um ON lw_userid = um.id
@@ -95,7 +98,8 @@
         lw_for_dynamic_id,
         lw_userid,
         lw_for_pid,
-        user_type
+        user_type,
+        for_user_type
         )
         VALUES
         (
@@ -111,8 +115,8 @@
         #{forDynamicId,jdbcType=BIGINT},
         #{userId,jdbcType=BIGINT},
         #{forPid,jdbcType=BIGINT},
-        #{userType,jdbcType=INTEGER}
-
+        #{userType,jdbcType=INTEGER},
+        #{forUserType,jdbcType=INTEGER}
         )
 
     </insert>

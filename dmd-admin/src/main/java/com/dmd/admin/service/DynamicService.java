@@ -20,5 +20,5 @@ public interface DynamicService {
 
     int updateDynamicDelflagById(List<Long> ids);
 
-    DynamicBean selectDynamicById(Long id);
+    DynamicBean selectDynamicById(Long id,Integer userType);
 }

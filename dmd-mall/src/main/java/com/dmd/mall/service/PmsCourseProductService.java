@@ -73,7 +73,7 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
 
     List<PmsCourseProduct> queryPowerNotesPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct);
 
-    Integer queryPeopleNum(Long id, Long userId);
+    Integer queryPeopleNum(Long id, Long userId,Integer productType);
 
     /**
      * 封装订单详情数据
@@ -111,4 +111,6 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
      * @return
      */
     int updateCourseProductStatus(Long id, Integer status);
+
+    List<PmsCourseProduct> queryPowerNotesCoachPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct);
 }

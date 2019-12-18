@@ -21,5 +21,11 @@ public interface DynamicAmdinMappper {
 
     DynamicBean selectDynamicById(Long id);
 
+    DynamicBean selectDynamicByIdComment(Long forDynamicId);
+
+    List<DynamicBean> queryDynamicPageByCoach(DynamicBean dynamicBean);
+
+    DynamicBean selectDynamicByIdByCoach(Long id);
+
     //List<DynamicBean> queryDynamicById(String[] ids);
 }

@@ -48,6 +48,15 @@ public class UmsUserFeedbackBean {
      */
     private String problemName;
 
+    /**
+     * 用户类型
+     */
+    private Integer userType;
+    /**
+     * 用户名称
+     */
+    private String nickName;
+
 
     @ApiModelProperty(value = "开始时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -58,6 +67,23 @@ public class UmsUserFeedbackBean {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endTime;
+
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public String getProblemName() {
         return problemName;
@@ -141,6 +167,8 @@ public class UmsUserFeedbackBean {
                 ", createTime=" + createTime +
                 ", problemId=" + problemId +
                 ", problemName='" + problemName + '\'' +
+                ", userType=" + userType +
+                ", nickName='" + nickName + '\'' +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 '}';

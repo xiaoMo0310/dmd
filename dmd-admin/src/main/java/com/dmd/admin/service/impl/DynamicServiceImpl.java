@@ -3,6 +3,7 @@ package com.dmd.admin.service.impl;
 import com.dmd.admin.mapper.CommentMapper;
 import com.dmd.admin.mapper.DynamicAmdinMappper;
 import com.dmd.admin.mapper.TopicAdminMapper;
+import com.dmd.admin.model.domain.CommentBean;
 import com.dmd.admin.model.domain.DynamicBean;
 import com.dmd.admin.model.domain.TopicBean;
 import com.dmd.admin.service.DynamicService;
@@ -10,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +35,14 @@ public class DynamicServiceImpl implements DynamicService {
     @Override
     public List<DynamicBean> queryDynamicPage(Integer pageNum, Integer pageSize, DynamicBean dynamicBean) {
         PageHelper.startPage(pageNum, pageSize);
-        return dynamicAmdinMappper.queryDynamicPage(dynamicBean);
+        //用户发布
+        List<DynamicBean> dynamicBeans = dynamicAmdinMappper.queryDynamicPage(dynamicBean);
+        //教练发布
+        List<DynamicBean> dynamicBeansByCoach = dynamicAmdinMappper.queryDynamicPageByCoach(dynamicBean);
+        //数据合并
+        dynamicBeans.addAll(dynamicBeansByCoach);
+        dynamicBeans.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
+        return dynamicBeans;
     }
 
     @Override
@@ -55,7 +64,15 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    public DynamicBean selectDynamicById(Long id) {
-        return dynamicAmdinMappper.selectDynamicById(id);
+    public DynamicBean selectDynamicById(Long id,Integer userType) {
+        DynamicBean dynamicBean1 = new DynamicBean();
+        if(userType == 1){
+            DynamicBean dynamicBean = dynamicAmdinMappper.selectDynamicById(id);
+            dynamicBean1 = dynamicBean;
+        }else if(userType == 2){
+            DynamicBean dynamicBean = dynamicAmdinMappper.selectDynamicByIdByCoach(id);
+            dynamicBean1 = dynamicBean;
+        }
+        return dynamicBean1;
     }
 }

@@ -47,7 +47,15 @@ public class UmsFeedbackManagementServiceImpl implements UmsFeedbackManagementSe
     @Override
     public List<UmsUserFeedbackBean> queryUserFeedback(Integer pageNum, Integer pageSize, UmsUserFeedbackBean umsUserFeedbackBean) {
         PageHelper.startPage(pageNum, pageSize);
-        return umsFeedbackManagementMapper.queryUserFeedback(umsUserFeedbackBean);
+        //查用户
+        List<UmsUserFeedbackBean> umsUserFeedbackBeans = umsFeedbackManagementMapper.queryUserFeedback(umsUserFeedbackBean);
+        //查教练
+        List<UmsUserFeedbackBean> umsUserFeedbackBeansCoach = umsFeedbackManagementMapper.queryUserFeedbackCoach(umsUserFeedbackBean);
+        //数据合并
+        umsUserFeedbackBeans.addAll(umsUserFeedbackBeansCoach);
+        //按照时间倒序排序
+        umsUserFeedbackBeans.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
+        return umsUserFeedbackBeans;
     }
 
     @Override

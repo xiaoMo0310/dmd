@@ -1,6 +1,7 @@
 package com.dmd.admin.service;
 
 import com.dmd.admin.model.domain.CommentBean;
+import com.dmd.admin.model.vo.CommentByDynamicIdVo;
 
 import java.util.List;
 
@@ -15,4 +16,8 @@ public interface CommentService {
     List<CommentBean> queryCommentAll(Integer pageNum, Integer pageSize, CommentBean commentBean);
 
     int updateCommentDelflag(List<Long> ids);
+
+    CommentByDynamicIdVo selectCommentByDynamic(Long forDynamicId, Long commentId, Integer userType);
+
+    List<CommentBean> queryCommentByDynamic(Integer pageNum, Integer pageSize, CommentBean commentBean, Long forDynamicId);
 }

@@ -49,7 +49,7 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
 
     List<PmsCourseProduct> queryPowerNotesPage(PmsCourseProduct pmsCourseProduct);
 
-    Integer queryPepleNum(@Param("id") Long id,@Param("userId") Long userId);
+    Integer queryPepleNum(@Param("id") Long id,@Param("userId") Long userId,@Param("productType") Integer productType);
 
     int selectCheckActivity(@Param("startTime") Date startTime, @Param("endTime") Date endTime, @Param("id") Long id);
 
@@ -66,4 +66,6 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     List<Map> countCertificateProductNumByAddrrss(@Param("productType") Integer productType, @Param("certificateId") Long certificateId);
 
     List<PmsCourseProduct> selectByStatus(Integer status);
+
+    List<PmsCourseProduct> queryPowerNotesCoachPage(PmsCourseProduct pmsCourseProduct);
 }

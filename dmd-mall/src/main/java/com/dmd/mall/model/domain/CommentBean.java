@@ -81,6 +81,19 @@ public class CommentBean {
      */
     private Integer userType;
 
+    /**
+     * 被回复者用户类型(1==用户,2==教练 )一级评论为动态发布者类型
+     */
+    private Integer forUserType;
+
+    public Integer getForUserType() {
+        return forUserType;
+    }
+
+    public void setForUserType(Integer forUserType) {
+        this.forUserType = forUserType;
+    }
+
     public Integer getUserType() {
         return userType;
     }
@@ -229,6 +242,7 @@ public class CommentBean {
                 ", userId=" + userId +
                 ", forPid=" + forPid +
                 ", userType=" + userType +
+                ", forUserType=" + forUserType +
                 ", children=" + children +
                 '}';
     }

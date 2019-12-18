@@ -62,10 +62,11 @@ public class CommentController {
                                         //回复的评论的ID
                                         @RequestParam Long commentId,
                                         //被回复者的ID
-                                        @RequestParam Long forUid
-
+                                        @RequestParam Long forUid,
+                                        //被回复者的用户类型
+                                        @RequestParam Integer forUserType
     ) {
-        int count = commentService.addCommentReply(commentBean,commentId,forUid);
+        int count = commentService.addCommentReply(commentBean,commentId,forUid,forUserType);
         if (count > 0) {
             return CommonResult.success(count,"回复成功");
         }

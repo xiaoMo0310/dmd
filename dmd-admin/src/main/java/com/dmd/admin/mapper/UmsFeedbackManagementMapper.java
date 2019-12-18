@@ -26,4 +26,6 @@ public interface UmsFeedbackManagementMapper {
     List<UmsProblemFeedbackBean> queryProblemFeedbackByName();
 
     int deleteUserFeedback(List<Long> ids);
+
+    List<UmsUserFeedbackBean> queryUserFeedbackCoach(UmsUserFeedbackBean umsUserFeedbackBean);
 }

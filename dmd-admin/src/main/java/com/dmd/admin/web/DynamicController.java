@@ -124,8 +124,8 @@ public class DynamicController {
     @ApiOperation("根据动态id查询动态详情")
     @RequestMapping(value = "/selectDynamicById",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<DynamicBean> queryDynamicById(@RequestParam Long id) {
-        DynamicBean dynamicList = dynamicService.selectDynamicById(id);
+    public CommonResult<DynamicBean> queryDynamicById(@RequestParam Long id,@RequestParam Integer userType) {
+        DynamicBean dynamicList = dynamicService.selectDynamicById(id,userType);
         return CommonResult.success(dynamicList);
     }
 }

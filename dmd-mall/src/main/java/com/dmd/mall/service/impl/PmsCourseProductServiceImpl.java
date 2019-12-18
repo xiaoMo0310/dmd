@@ -307,8 +307,14 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     }
 
     @Override
-    public Integer queryPeopleNum(Long id, Long userId) {
-        return pmsCourseProductMapper.queryPepleNum(id,userId);
+    public Integer queryPeopleNum(Long id, Long userId,Integer productType) {
+        return pmsCourseProductMapper.queryPepleNum(id,userId,productType);
     }
 
+    @Override
+    public List<PmsCourseProduct> queryPowerNotesCoachPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct) {
+        PageHelper.startPage(pageNum, pageSize);
+        pmsCourseProduct.setUserId(userId);
+        return pmsCourseProductMapper.queryPowerNotesCoachPage(pmsCourseProduct);
+    }
 }

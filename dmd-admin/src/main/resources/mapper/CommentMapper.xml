@@ -18,12 +18,15 @@
         <result column="lw_for_diveLog_id" property="forDiveLogId" />
         <result column="lw_userid" property="userId" />
         <result column="lw_for_pid" property="forPid" />
+        <result column="user_type" property="userType" />
+        <result column="for_user_type" property="forUserType" />
     </resultMap>
 
     <select id="queryCommentAll" parameterType="com.dmd.admin.model.domain.CommentBean" resultMap="commentMap">
         SELECT
         dc.commentId,
         um.nick_name AS lw_name,
+        um2.nick_name AS forUserTypeName,
         um.icon AS lw_head_portrait,
         dc.lw_date,
         dc.lw_content,
@@ -33,12 +36,13 @@
         dc.delflag,
         dc.lw_for_uid,
         dc.lw_for_dynamic_id,
-        dc.lw_for_diveLog_id,
         dc.lw_userid,
-        dc.lw_for_pid
+        dc.lw_for_pid,
+        dc.user_type
         FROM
         dmd_dynamic_comment dc
         LEFT JOIN ums_member um ON lw_userid = um.id
+        LEFT JOIN ums_coach um2 ON lw_for_uid = um2.id
         <include refid="commentWhere"></include>
         ORDER BY
         dc.lw_date DESC
@@ -66,9 +70,76 @@
             <if test="forDiveLogId !=null">
                 and lw_for_diveLog_id = #{forDiveLogId}
             </if>
+            <!-- 用户昵称 -->
+            <if test="commentName !=null and commentName != '' ">
+                and um.nick_name like '%${commentName}%'
+            </if>
                 and delflag = 0
+                and dc.user_type = 1
+                and (dc.lw_for_diveLog_id is null or  dc.lw_for_diveLog_id = "")
         </where>
     </sql>
+
+    <select id="queryCommentAllByCoach" parameterType="com.dmd.admin.model.domain.CommentBean" resultMap="commentMap">
+        SELECT
+        dc.commentId,
+        um.nick_name AS lw_name,
+        um2.nick_name AS forUserTypeName,
+        um.icon AS lw_head_portrait,
+        dc.lw_date,
+        dc.lw_content,
+        dc.lw_comment_type,
+        dc.ip_address,
+        dc.STATUS,
+        dc.delflag,
+        dc.lw_for_uid,
+        dc.lw_for_dynamic_id,
+        dc.lw_userid,
+        dc.lw_for_pid,
+        dc.user_type
+        FROM
+        dmd_dynamic_comment dc
+        LEFT JOIN ums_coach um ON lw_userid = um.id
+        LEFT JOIN ums_member um2 ON lw_for_uid = um2.id
+        <include refid="commentWhereByCoach"></include>
+        ORDER BY
+        dc.lw_date DESC
+    </select>
+
+
+    <!-- 公用标签 -->
+    <sql id="commentWhereByCoach">
+        <where>
+            <!-- 文章内容模糊查询 -->
+            <if test="content !=null and content != ''">
+                and lw_content like '%${content}%'
+            </if>
+            <!-- 日期区间查询 -->
+            <if test="stratTime != null">
+                and lw_date &gt;= #{stratTime}
+            </if>
+            <if test="endTime != null">
+                and lw_date &lt;= #{endTime}
+            </if>
+            <!-- 某个动态下的所有评论与回复 -->
+            <if test="forDynamicId !=null">
+                and lw_for_dynamic_id = #{forDynamicId}
+            </if>
+            <!-- 某个日志下的所有评论与回复 -->
+            <if test="forDiveLogId !=null">
+                and lw_for_diveLog_id = #{forDiveLogId}
+            </if>
+            <!-- 用户昵称 -->
+            <if test="commentName !=null and commentName != '' ">
+                and um.nick_name like '%${commentName}%'
+            </if>
+            and delflag = 0
+            and dc.user_type = 2
+            and (dc.lw_for_diveLog_id is null or  dc.lw_for_diveLog_id = "")
+        </where>
+    </sql>
+
+
 
     <update id="updateCommentDelflag" parameterType="java.lang.Long" >
         UPDATE dmd_dynamic_comment SET delflag = 1 WHERE commentId IN
@@ -91,5 +162,107 @@
         </foreach>
     </update>
 
+    <select id="selectCommentByIdMember" parameterType="java.lang.Long" resultMap="commentMap">
+        SELECT
+        dc.commentId,
+        um.nick_name AS lw_name,
+        um.icon AS lw_head_portrait,
+        dc.lw_date,
+        dc.lw_content,
+        dc.lw_comment_type,
+        dc.ip_address,
+        dc.STATUS,
+        dc.delflag,
+        dc.lw_for_uid,
+        dc.lw_for_dynamic_id,
+        dc.lw_userid,
+        dc.lw_for_pid,
+        dc.user_type
+        FROM
+        dmd_dynamic_comment dc
+        LEFT JOIN ums_member um ON dc.lw_userid = um.id
+        WHERE dc.commentId = #{commentId}
+    </select>
 
+    <select id="selectCommentByIdCoach" parameterType="java.lang.Long" resultMap="commentMap">
+        SELECT
+        dc.commentId,
+        um.nick_name AS lw_name,
+        um.icon AS lw_head_portrait,
+        dc.lw_date,
+        dc.lw_content,
+        dc.lw_comment_type,
+        dc.ip_address,
+        dc.STATUS,
+        dc.delflag,
+        dc.lw_for_uid,
+        dc.lw_for_dynamic_id,
+        dc.lw_userid,
+        dc.lw_for_pid,
+        dc.user_type
+        FROM
+        dmd_dynamic_comment dc
+        LEFT JOIN ums_coach um ON lw_userid = um.id
+        WHERE dc.commentId = #{commentId}
+    </select>
+
+
+    <select id="queryCommentByDynamic" parameterType="java.lang.Long" resultMap="commentMap">
+        SELECT
+        dc.commentId,
+        um.nick_name AS lw_name,
+        um2.nick_name AS forUserTypeName,
+        um.icon AS lw_head_portrait,
+        dc.lw_date,
+        dc.lw_content,
+        dc.lw_comment_type,
+        dc.ip_address,
+        dc.STATUS,
+        dc.delflag,
+        dc.lw_for_uid,
+        dc.lw_for_dynamic_id,
+        dc.lw_userid,
+        dc.lw_for_pid,
+        dc.user_type
+        FROM
+        dmd_dynamic_comment dc
+        LEFT JOIN ums_member um ON lw_userid = um.id
+        LEFT JOIN ums_coach um2 ON lw_for_uid = um2.id
+        WHERE  dc.lw_for_dynamic_id = #{forDynamicId}
+              and delflag = 0
+              and dc.user_type = 1
+              and (dc.lw_for_diveLog_id is null or  dc.lw_for_diveLog_id = "")
+        ORDER BY
+        dc.lw_date DESC
+    </select>
+
+
+    <select id="queryCommentByDynamicCoach" parameterType="java.lang.Long" resultMap="commentMap">
+        SELECT
+        dc.commentId,
+        um.nick_name AS lw_name,
+        um2.nick_name AS forUserTypeName,
+        um.icon AS lw_head_portrait,
+        dc.lw_date,
+        dc.lw_content,
+        dc.lw_comment_type,
+        dc.ip_address,
+        dc.STATUS,
+        dc.delflag,
+        dc.lw_for_uid,
+        dc.lw_for_dynamic_id,
+        dc.lw_userid,
+        dc.lw_for_pid,
+        dc.user_type
+        FROM
+        dmd_dynamic_comment dc
+        LEFT JOIN ums_coach um ON lw_userid = um.id
+        LEFT JOIN ums_member um2 ON lw_for_uid = um2.id
+        WHERE  dc.lw_for_dynamic_id = #{forDynamicId}
+              and delflag = 0
+              and dc.user_type = 2
+              and (dc.lw_for_diveLog_id is null or  dc.lw_for_diveLog_id = "")
+        ORDER BY
+        dc.lw_date DESC
+    </select>
 </mapper>

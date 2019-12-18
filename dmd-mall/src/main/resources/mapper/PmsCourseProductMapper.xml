@@ -127,12 +127,23 @@
 
     <select id="queryPepleNum" parameterType="map" resultType="java.lang.Integer">
         SELECT
-            count(*)
+        count(1)
         FROM
-            oms_order om
-            LEFT JOIN oms_order_item oi ON om.id = oi.order_id
-            LEFT JOIN pms_course_product pc ON pc.id = oi.product_id
-            WHERE om.`status`=2 and om.shop_id is not null and pc.id=#{id} and pc.user_id =#{userId}
+        pms_course_product pc
+        LEFT JOIN oms_order oo on oo.shop_id = pc.user_id
+        LEFT JOIN oms_order_item oi on oi.order_id = oo.id
+        WHERE
+        pc.user_id = #{userId}
+        AND
+        oi.product_id = #{id}
+        AND
+        oi.product_type = #{productType}
+        AND
+        pc.product_type = #{productType}
+        AND
+        pc.id = #{id}
+        AND pc.approval_status = 2
+        AND oo.status not in (0,6)
     </select>
     <select id="selectCheckActivity" resultType="java.lang.Integer">
         select count(*) from pms_course_product
@@ -228,5 +239,28 @@
         from pms_course_product
         where status = #{status}
         and approval_status = 2
+    </select>
+
+    <select id="queryPowerNotesCoachPage" parameterType="com.dmd.mall.model.domain.PmsCourseProduct" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
+        SELECT
+            pc.id,
+            pc.image,
+            pc.title,
+            pc.start_time,
+            pc.end_time,
+            pc.user_id,
+            pc.product_type
+        FROM
+            pms_course_product pc
+        WHERE
+            approval_status = 2
+            AND pc.user_id = #{userId}
+        <!-- 日期区间查询 -->
+        <if test="searchStartTime != null">
+            and start_time &gt;= #{searchStartTime}
+        </if>
+        <if test="searchEndTime != null">
+            and start_time &lt;= #{searchEndTime}
+        </if>
     </select>
 </mapper>

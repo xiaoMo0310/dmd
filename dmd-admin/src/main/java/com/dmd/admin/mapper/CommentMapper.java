@@ -19,4 +19,14 @@ public interface CommentMapper {
     void updateComment(List<Long> ids);
 
     int updateDiveLogDelflag(List<Long> ids);
+
+    List<CommentBean> queryCommentAllByCoach(CommentBean commentBean);
+
+    CommentBean selectCommentByIdMember(Long commentId);
+
+    CommentBean selectCommentByIdCoach(Long commentId);
+
+    List<CommentBean> queryCommentByDynamic(Long forDynamicId);
+
+    List<CommentBean> queryCommentByDynamicCoach(Long forDynamicId);
 }
