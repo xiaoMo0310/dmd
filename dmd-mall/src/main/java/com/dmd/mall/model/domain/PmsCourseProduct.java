@@ -137,17 +137,17 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("地址id")
     private Long addressId;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @ApiModelProperty("开始搜索时间")
     @Transient
-    private Date searchStartTime;
+    private String searchStartTime;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @ApiModelProperty("结束搜索时间")
     @Transient
-    private Date searchEndTime;
+    private String searchEndTime;
 
 
     @ApiModelProperty("教练头像")

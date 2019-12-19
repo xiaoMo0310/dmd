@@ -257,10 +257,7 @@
             AND pc.user_id = #{userId}
         <!-- 日期区间查询 -->
         <if test="searchStartTime != null">
-            and start_time &gt;= #{searchStartTime}
-        </if>
-        <if test="searchEndTime != null">
-            and start_time &lt;= #{searchEndTime}
+            and date_format( start_time, '%Y-%m-%d' ) = #{searchStartTime}
         </if>
     </select>
 
