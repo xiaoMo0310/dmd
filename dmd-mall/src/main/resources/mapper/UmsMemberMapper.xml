@@ -503,4 +503,7 @@
       where username = #{loginName};
     </select>
 
+  <select id="queryMyIntegralByCoach" parameterType="java.lang.Long" resultType="java.lang.Integer">
+      SELECT integration FROM  ums_coach WHERE id = #{userId}
+  </select>
 </mapper>

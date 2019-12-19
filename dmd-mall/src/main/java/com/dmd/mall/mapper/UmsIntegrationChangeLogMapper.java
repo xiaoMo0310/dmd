@@ -29,4 +29,12 @@ public interface UmsIntegrationChangeLogMapper extends MyMapper<UmsIntegrationCh
     Integer selectIntegralExpendSum(Long userId);
 
     List<UmsIntegrationChangeLog> selectIntegralIncome(@Param("userId")Long userId, @Param("startTime")Date startTime, @Param("endTime")Date endTime);
+
+    List<UmsIntegrationChangeLog> selectIntegralIncomeCoach(@Param("userId")Long userId, @Param("startTime")Date startTime, @Param("endTime")Date endTime);
+
+    List<UmsIntegrationChangeLog> selectIntegralExpendCoach(@Param("userId")Long userId, @Param("startTime")Date startTime, @Param("endTime")Date endTime);
+
+    Integer selectIntegralIncomeSumByCoach(Long userId);
+
+    Integer selectIntegralExpendByCoach(Long userId);
 }

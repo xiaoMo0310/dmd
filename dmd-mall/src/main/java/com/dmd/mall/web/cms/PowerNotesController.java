@@ -162,4 +162,18 @@ public class PowerNotesController {
         }
         return CommonResult.success(new PageInfo<>(objects));
     }
+
+
+    /**
+     * 当月教练日程
+     * @param userId
+     * @return
+     */
+    @ApiOperation("当月教练日程")
+    @RequestMapping(value = "/selectPowerNotesCoachToMonth", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<PmsCourseProduct>> queryPowerNotesCoachToMonth(@RequestParam Long userId) {
+        List<PmsCourseProduct> powerNotesList = pmsCourseProductService.queryPowerNotesCoachToMonth(userId);
+        return CommonResult.success(powerNotesList);
+    }
 }

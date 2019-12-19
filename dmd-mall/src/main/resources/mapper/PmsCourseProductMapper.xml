@@ -263,4 +263,23 @@
             and start_time &lt;= #{searchEndTime}
         </if>
     </select>
+
+
+    <select id="queryPowerNotesCoachToMonth" parameterType="com.dmd.mall.model.domain.PmsCourseProduct" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
+        SELECT
+        pc.id,
+        pc.image,
+        pc.title,
+        pc.start_time,
+        pc.end_time,
+        pc.user_id,
+        pc.product_type
+        FROM
+        pms_course_product pc
+        WHERE
+        approval_status = 2
+        AND pc.user_id = #{userId}
+        AND DATE_FORMAT( start_time, '%Y%m' ) = DATE_FORMAT( CURDATE() , '%Y%m' )
+
+    </select>
 </mapper>

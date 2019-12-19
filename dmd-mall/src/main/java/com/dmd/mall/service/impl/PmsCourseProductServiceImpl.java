@@ -323,4 +323,9 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         }
         return pmsCourseProducts;
     }
+
+    @Override
+    public List<PmsCourseProduct> queryPowerNotesCoachToMonth(Long userId) {
+        return pmsCourseProductMapper.queryPowerNotesCoachToMonth(userId);
+    }
 }

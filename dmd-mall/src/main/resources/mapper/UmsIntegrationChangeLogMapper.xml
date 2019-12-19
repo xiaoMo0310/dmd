@@ -49,6 +49,21 @@
         </where>
 
     </select>
+    <select id="selectIntegralIncomeCoach" parameterType="map" resultMap="BaseResultMap">
+        SELECT id,coach_id as member_id ,integral_trend,created_time,change_count,change_type FROM  ums_coach_integration_log
+        <where>
+            <!-- 日期区间查询 -->
+            <if test="startTime != null">
+                and created_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and created_time &lt;= #{endTime}
+            </if>
+            and change_type = 0 AND coach_id = #{userId}
+        </where>
+
+    </select>
+
 
     <select id="selectIntegralExpend" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT id,member_id,integral_trend,created_time,change_count,change_type FROM  ums_integration_change_log
@@ -64,11 +79,33 @@
         </where>
     </select>
 
+    <select id="selectIntegralExpendCoach" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT id,coach_id AS member_id,integral_trend,created_time,change_count,change_type FROM  ums_coach_integration_log
+        <where>
+            <!-- 日期区间查询 -->
+            <if test="startTime != null">
+                and created_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and created_time &lt;= #{endTime}
+            </if>
+            and change_type = 1 AND coach_id = #{userId}
+        </where>
+    </select>
+
     <select id="selectIntegralIncomeSum" parameterType="java.lang.Long" resultType="java.lang.Integer" >
         SELECT sum(change_count) FROM ums_integration_change_log WHERE change_type = 0 AND member_id = #{userId}
     </select>
 
     <select id="selectIntegralExpendSum" parameterType="java.lang.Long" resultType="java.lang.Integer" >
         SELECT sum(change_count) FROM ums_integration_change_log WHERE change_type = 1 AND member_id = #{userId}
+    </select>
+
+    <select id="selectIntegralIncomeSumByCoach" parameterType="java.lang.Long" resultType="java.lang.Integer" >
+        SELECT sum(change_count) FROM ums_coach_integration_log WHERE change_type = 0 AND coach_id = #{userId}
+    </select>
+
+    <select id="selectIntegralExpendByCoach" parameterType="java.lang.Long" resultType="java.lang.Integer" >
+        SELECT sum(change_count) FROM ums_coach_integration_log WHERE change_type = 1 AND coach_id = #{userId}
     </select>
 </mapper>

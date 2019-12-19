@@ -68,4 +68,6 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     List<PmsCourseProduct> selectByStatus(Integer status);
 
     List<PmsCourseProduct> queryPowerNotesCoachPage(PmsCourseProduct pmsCourseProduct);
+
+    List<PmsCourseProduct> queryPowerNotesCoachToMonth(Long userId);
 }

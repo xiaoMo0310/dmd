@@ -50,4 +50,6 @@ public interface UmsMemberMapper {
     UmsMember selectById(Long userId);
 
     UmsMember selectByUserName(String loginName);
+
+    Integer queryMyIntegralByCoach(Long userId);
 }
