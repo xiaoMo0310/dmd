@@ -373,7 +373,7 @@
     </select>
 
     <select id="selectDynamicById" resultMap="dynamicMap">
-        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,,dy.user_type
+        SELECT dy.r_id,dy.r_author,dy.r_head_portrait,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dy.user_type
          FROM dmd_dynamic dy where dy.r_id = #{id}
     </select>
 

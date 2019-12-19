@@ -363,11 +363,13 @@ public class DynamicServiceImpl implements DynamicService{
         else if (userTypes.equals("coach")){
             //用户所发动态按照时间排序
             List<DynamicBean> dynamicBeanList = dynamicMapper.queryTopicByDynamicTime(id);
+
             //查询教练是否关注用户
             for (int i = 0; i < dynamicBeanList.size(); i++) {
                 //用户id
                 Long userId1 = dynamicBeanList.get(i).getUserId();
                 Integer biaoshifu =  dynamicMapper.selectFavoritesByCoach(userId,userId1);
+                System.out.println(biaoshifu);
                 for (int j = 0; j <dynamicBeanList.size() ; j++) {
                     dynamicBeanList.get(i).setIdentification(biaoshifu);
                 }
