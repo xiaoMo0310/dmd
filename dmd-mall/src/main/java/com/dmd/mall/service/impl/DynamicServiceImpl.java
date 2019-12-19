@@ -619,8 +619,7 @@ public class DynamicServiceImpl implements DynamicService{
         }
         LoginAuthDto loginUser = RequestUtil.getLoginUser();
         //查询用户信息
-        UmsMember member = memberService.getById(loginUser.getUserId());
-        dynamicBean.setDynamicHeadPortrait(member.getIcon());
+        dynamicBean.setDynamicHeadPortrait("用户头像");
         //发布时间为当前时间
         dynamicBean.setCreateTime(new Date());
         //点赞数默认为0
