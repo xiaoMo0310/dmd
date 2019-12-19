@@ -54,4 +54,12 @@ public interface IntegralAdminService {
     IntegralGiftsSpeBean findIntegralGiftsSpeInfoById(Long id);
 
     int deleteIntegralGiftsSpeById(List<Long> ids);
+
+    List<UmsIntegrationChangeHistory> queryIntegralChangeByCoach(Integer pageNum, Integer pageSize, UmsIntegrationChangeHistory umsIntegrationChangeHistory);
+
+    int updateIntegrationCoach(UmsIntegrationChangeHistory umsIntegrationChangeHistory);
+
+    Integer queryMemberNumCoach(Long memberId);
+
+    int updateIntegrationReduceCoach(UmsIntegrationChangeHistory umsIntegrationChangeHistory);
 }

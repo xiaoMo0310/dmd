@@ -1,6 +1,7 @@
 package com.dmd.admin.mapper;
 
 import com.dmd.admin.model.domain.IntegralGiftsSpeBean;
+import com.dmd.admin.model.domain.UmsIntegrationChangeHistory;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -24,4 +25,5 @@ public interface IntegralGiftsSpeMapper {
     IntegralGiftsSpeBean findIntegralGiftsSpeInfoById(Long id);
 
     int deleteIntegralGiftsSpeById(List<Long> ids);
+
 }

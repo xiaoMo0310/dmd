@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface UmsOrderStatisticsMapper {
     List<UmsOrderStatisticsVo> queryOrderStatisticsPage(UmsOrderStatisticsVo umsOrderStatisticsVo);
+
+    List<UmsOrderStatisticsVo> queryOrderStatisticsPageCoach(UmsOrderStatisticsVo umsOrderStatisticsVo);
 }

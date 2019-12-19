@@ -25,11 +25,25 @@ public class UmsOrderStatisticsServiceImpl implements UmsOrderStatisticsService{
     @Override
     public List<UmsOrderStatisticsVo> queryOrderStatisticsPage(Integer pageNum, Integer pageSize, UmsOrderStatisticsVo umsOrderStatisticsVo) {
         PageHelper.startPage(pageNum, pageSize);
-        return umsOrderStatisticsMapper.queryOrderStatisticsPage(umsOrderStatisticsVo);
+        //用户订单
+        List<UmsOrderStatisticsVo> umsOrderStatisticsVos = umsOrderStatisticsMapper.queryOrderStatisticsPage(umsOrderStatisticsVo);
+        //教练订单
+        List<UmsOrderStatisticsVo> umsOrderStatisticsVosCoach = umsOrderStatisticsMapper.queryOrderStatisticsPageCoach(umsOrderStatisticsVo);
+        //数据合并
+        umsOrderStatisticsVos.addAll(umsOrderStatisticsVosCoach);
+        umsOrderStatisticsVos.sort((o1, o2) -> o2.getOrderCreatedTime().compareTo(o1.getOrderCreatedTime()));
+        return umsOrderStatisticsVos;
     }
 
     @Override
     public List<UmsOrderStatisticsVo> queryOrderStatistics(UmsOrderStatisticsVo umsOrderStatisticsVo) {
-        return umsOrderStatisticsMapper.queryOrderStatisticsPage(umsOrderStatisticsVo);
+        //用户订单
+        List<UmsOrderStatisticsVo> umsOrderStatisticsVos = umsOrderStatisticsMapper.queryOrderStatisticsPage(umsOrderStatisticsVo);
+        //教练订单
+        List<UmsOrderStatisticsVo> umsOrderStatisticsVosCoach = umsOrderStatisticsMapper.queryOrderStatisticsPageCoach(umsOrderStatisticsVo);
+        //数据合并
+        umsOrderStatisticsVos.addAll(umsOrderStatisticsVosCoach);
+        umsOrderStatisticsVos.sort((o1, o2) -> o2.getOrderCreatedTime().compareTo(o1.getOrderCreatedTime()));
+        return umsOrderStatisticsVos;
     }
 }

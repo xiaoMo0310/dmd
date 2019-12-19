@@ -173,4 +173,52 @@ public class IntegralAdminServiceImpl implements IntegralAdminService{
     public int deleteIntegralGiftsSpeById(List<Long> ids) {
         return integralGiftsSpeMapper.deleteIntegralGiftsSpeById(ids);
     }
+
+    @Override
+    public List<UmsIntegrationChangeHistory> queryIntegralChangeByCoach(Integer pageNum, Integer pageSize, UmsIntegrationChangeHistory umsIntegrationChangeHistory) {
+        PageHelper.startPage(pageNum, pageSize);
+        return umsIntegrationChangeHistoryMapper.queryIntegralChangeByCoach(umsIntegrationChangeHistory);
+    }
+
+    @Override
+    public int updateIntegrationCoach(UmsIntegrationChangeHistory umsIntegrationChangeHistory) {
+        //获取到增加的数量
+        Integer changeCount = umsIntegrationChangeHistory.getChangeCount();
+        //获取到用户id
+        Long memberId = umsIntegrationChangeHistory.getMemberId();
+        //去改变用户积分数量
+        umsMemberMapper.updateIntegrationForUserCoach(changeCount,memberId);
+        //收入
+        umsIntegrationChangeHistory.setChangeType(0);
+        //积分来源
+        umsIntegrationChangeHistory.setSourceType(2);
+        //创建时间
+        umsIntegrationChangeHistory.setCreateTime(new Date());
+        return umsIntegrationChangeHistoryMapper.updateIntegrationCoach(umsIntegrationChangeHistory);
+    }
+
+    @Override
+    public Integer queryMemberNumCoach(Long memberId) {
+        return umsMemberMapper.queryMemberNumCoach(memberId);
+    }
+
+    @Override
+    public int updateIntegrationReduceCoach(UmsIntegrationChangeHistory umsIntegrationChangeHistory) {
+        //获取到减少的数量
+        Integer changeCount = umsIntegrationChangeHistory.getChangeCount();
+        //获取到用户id
+        Long memberId = umsIntegrationChangeHistory.getMemberId();
+        //去改变用户积分数量
+        int count = umsMemberMapper.updateIntegrationForUserReduceCoach(changeCount,memberId);
+        if (count > 0) {
+            //支出
+            umsIntegrationChangeHistory.setChangeType(1);
+            //积分来源
+            umsIntegrationChangeHistory.setSourceType(2);
+            //创建时间
+            umsIntegrationChangeHistory.setCreateTime(new Date());
+            umsIntegrationChangeHistoryMapper.updateIntegrationCoach(umsIntegrationChangeHistory);
+        }
+        return count;
+    }
 }

@@ -32,4 +32,8 @@ public interface UmsIntegrationChangeHistoryMapper {
     List<UmsIntegrationChangeHistory> queryIntegralChangePage(UmsIntegrationChangeHistory umsIntegrationChangeHistory);
 
     int updateIntegration(UmsIntegrationChangeHistory umsIntegrationChangeHistory);
+
+    List<UmsIntegrationChangeHistory> queryIntegralChangeByCoach(UmsIntegrationChangeHistory umsIntegrationChangeHistory);
+
+    int updateIntegrationCoach(UmsIntegrationChangeHistory umsIntegrationChangeHistory);
 }

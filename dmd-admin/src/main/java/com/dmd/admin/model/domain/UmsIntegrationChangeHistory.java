@@ -34,7 +34,8 @@ public class UmsIntegrationChangeHistory implements Serializable {
     @ApiModelProperty("积分动向说明")
     private String integralTrend;
 
-
+    @ApiModelProperty("用户名称")
+    private String userName;
     /**
      * 开始时间
      */
@@ -54,6 +55,14 @@ public class UmsIntegrationChangeHistory implements Serializable {
      */
     @ApiModelProperty("用户总积分")
     private Integer integration;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -172,6 +181,7 @@ public class UmsIntegrationChangeHistory implements Serializable {
         sb.append(", startTime=").append(startTime);
         sb.append(", endTime=").append(endTime);
         sb.append(", integration=").append(integration);
+        sb.append(", userName=").append(userName);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

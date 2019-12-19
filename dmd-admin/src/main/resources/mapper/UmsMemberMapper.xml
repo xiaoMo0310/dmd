@@ -498,4 +498,17 @@
       from ums_member
       where invitation_code = #{invitationCode}
     </select>
+
+
+  <update id="updateIntegrationForUserCoach" parameterType="map">
+    UPDATE ums_coach SET integration = integration + #{changeCount} WHERE id = #{memberId}
+  </update>
+
+  <select id="queryMemberNumCoach" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    SELECT integration FROM ums_coach WHERE id = #{memberId}
+  </select>
+
+  <update id="updateIntegrationForUserReduceCoach" parameterType="map">
+    UPDATE ums_coach SET integration = integration - #{changeCount} WHERE id = #{memberId} AND integration >= #{changeCount}
+  </update>
 </mapper>

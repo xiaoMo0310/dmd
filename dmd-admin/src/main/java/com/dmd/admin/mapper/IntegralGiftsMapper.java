@@ -1,6 +1,7 @@
 package com.dmd.admin.mapper;
 
 import com.dmd.admin.model.domain.IntegralGiftsBean;
+import com.dmd.admin.model.domain.UmsIntegrationChangeHistory;
 
 import java.util.List;
 
@@ -25,4 +26,5 @@ public interface IntegralGiftsMapper {
     int updateIntegralGiftsPass(List<Long> ids);
 
     int updateIntegralGiftsNoPass(List<Long> ids);
+
 }

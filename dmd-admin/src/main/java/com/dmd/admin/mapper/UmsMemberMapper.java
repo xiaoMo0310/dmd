@@ -64,4 +64,10 @@ public interface UmsMemberMapper {
     Integer queryMemberNum(Long memberId);
 
     List<UmsUserVo> selectByInvitationCode(String invitationCode);
+
+    void updateIntegrationForUserCoach(@Param("changeCount")Integer changeCount,@Param("memberId") Long memberId);
+
+    Integer queryMemberNumCoach(Long memberId);
+
+    int updateIntegrationForUserReduceCoach(@Param("changeCount")Integer changeCount,@Param("memberId") Long memberId);
 }

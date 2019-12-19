@@ -460,4 +460,126 @@ public class IntegralAdminController {
         }
         return CommonResult.failed("删除失败");
     }
+
+
+    /**
+     * 查询积分明细记录
+     * @param pageNum
+     * @param pageSize
+     * @param umsIntegrationChangeHistory
+     * @return
+     */
+    @ApiOperation("查询教练积分明细记录")
+    @RequestMapping(value = "/selectIntegralChangeByCoach",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<CommonPage<UmsIntegrationChangeHistory>> queryIntegralChangeByCoach(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                                                         @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                                                         UmsIntegrationChangeHistory umsIntegrationChangeHistory
+    ) {
+
+        if(umsIntegrationChangeHistory.getStartTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsIntegrationChangeHistory.getStartTime());
+            if(StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "00");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsIntegrationChangeHistory.setStartTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(umsIntegrationChangeHistory.getEndTime() != null){
+            String time = "";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(umsIntegrationChangeHistory.getEndTime());
+            if(StringUtils.isNotBlank(dateStr)){
+                StringBuilder sb = new StringBuilder(dateStr);
+                sb.replace(11, 13, "24");
+                time = sb.toString();
+            }
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date = format.parse(time);
+                umsIntegrationChangeHistory.setEndTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        List<UmsIntegrationChangeHistory> List = integralAdminService.queryIntegralChangeByCoach(pageNum,pageSize,umsIntegrationChangeHistory);
+        return CommonResult.success(CommonPage.restPage(List));
+    }
+
+    /**
+     * 增加教练积分操作
+     * @param id
+     * @param changeCount
+     * @param operateMan
+     * @param operateNote
+     * @param memberId
+     * @return
+     */
+    @ApiOperation("增加教练积分操作")
+    @RequestMapping(value = "/addIntegrationCoach",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateIntegrationCoach(@RequestParam Long id,
+                                          @RequestParam Integer changeCount,
+                                          @RequestParam String operateMan,
+                                          @RequestParam String operateNote,
+                                          /*@RequestParam String integralTrend,*/
+                                          @RequestParam Long memberId) {
+        UmsIntegrationChangeHistory umsIntegrationChangeHistory = new UmsIntegrationChangeHistory();
+        umsIntegrationChangeHistory.setId(id);
+        umsIntegrationChangeHistory.setChangeCount(changeCount);
+        umsIntegrationChangeHistory.setOperateNote(operateNote);
+        /*umsIntegrationChangeHistory.setIntegralTrend(integralTrend);*/
+        umsIntegrationChangeHistory.setMemberId(memberId);
+        umsIntegrationChangeHistory.setOperateMan(operateMan);
+        int count = integralAdminService.updateIntegrationCoach(umsIntegrationChangeHistory);
+        if (count > 0) {
+            return CommonResult.success(count,"增加成功");
+        }
+        return CommonResult.failed("增加失败");
+    }
+
+    /**
+     * 减少教练积分操作
+     * @param id
+     * @param changeCount
+     * @param operateMan
+     * @param operateNote
+     * @param memberId
+     * @return
+     */
+    @ApiOperation("减少教练积分操作")
+    @RequestMapping(value = "/reduceIntegrationCoach",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateIntegrationReduceCoach(@RequestParam Long id,
+                                                @RequestParam Integer changeCount,
+                                                @RequestParam String operateMan,
+                                                @RequestParam String operateNote,
+                                                /*@RequestParam String integralTrend,*/
+                                                @RequestParam Long memberId) {
+        UmsIntegrationChangeHistory umsIntegrationChangeHistory = new UmsIntegrationChangeHistory();
+        umsIntegrationChangeHistory.setId(id);
+        umsIntegrationChangeHistory.setChangeCount(changeCount);
+        umsIntegrationChangeHistory.setOperateNote(operateNote);
+        /*umsIntegrationChangeHistory.setIntegralTrend(integralTrend);*/
+        umsIntegrationChangeHistory.setMemberId(memberId);
+        umsIntegrationChangeHistory.setOperateMan(operateMan);
+        int count = integralAdminService.updateIntegrationReduceCoach(umsIntegrationChangeHistory);
+        if (count > 0) {
+            return CommonResult.success(count,"减少成功");
+        }
+        //查询教练总积分
+        Integer num = integralAdminService.queryMemberNumCoach(memberId);
+        return CommonResult.failed("减少失败,减少的数额超过用户总积分！用户总积分为"+num+"请核实后在操作！");
+    }
+
 }

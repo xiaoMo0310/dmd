@@ -262,7 +262,7 @@
 
 
   <select id="queryIntegralChangePage" parameterType="com.dmd.admin.model.domain.UmsIntegrationChangeHistory" resultMap="BaseResultMap">
-    SELECT uc.id, uc.member_id, uc.created_time, uc.change_type, uc.change_count, uc.operate_man, uc.operate_note,
+    SELECT uc.id, uc.member_id, um.nick_name as userName, uc.created_time, uc.change_type, uc.change_count, uc.operate_man, uc.operate_note,
     uc.source_type ,uc.integral_trend , um.integration as integration
     FROM ums_integration_change_log uc LEFT JOIN  ums_member um
     ON uc.member_id = um.id
@@ -288,6 +288,9 @@
       <if test="endTime != null">
         and uc.created_time &lt;= #{endTime}
       </if>
+      <if test="userName != null and userName!= ''">
+        and um.nick_name like '%${userName}%'
+      </if>
     </where>
   </sql>
 
@@ -299,5 +302,51 @@
     values (#{memberId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{changeType,jdbcType=INTEGER},
       #{changeCount,jdbcType=INTEGER}, #{operateMan,jdbcType=VARCHAR}, #{operateNote,jdbcType=VARCHAR},
       #{sourceType,jdbcType=INTEGER},#{integralTrend,jdbcType=VARCHAR})
+  </insert>
+
+
+
+
+  <select id="queryIntegralChangeByCoach" parameterType="com.dmd.admin.model.domain.UmsIntegrationChangeHistory" resultMap="BaseResultMap">
+    SELECT uc.id, uc.coach_id AS member_id, um.nick_name as userName, uc.created_time, uc.change_type, uc.change_count, uc.operate_man, uc.operate_note,
+    uc.source_type ,uc.integral_trend , um.integration as integration
+    FROM ums_coach_integration_log uc LEFT JOIN  ums_coach um
+    ON uc.coach_id = um.id
+    <include refid="integralChangeWhere2"></include>
+    ORDER BY uc.created_time DESC
+  </select>
+
+  <!-- 公用标签 -->
+  <sql id="integralChangeWhere2">
+    <where>
+      <!-- 按照会员id查询会员所有记录 -->
+      <if test="memberId !=null ">
+        and uc.coach_id = #{memberId}
+      </if>
+      <!-- 查找增加或减少的记录 -->
+      <if test="changeType !=null ">
+        and uc.change_type = #{changeType}
+      </if>
+      <!-- 日期区间查询 -->
+      <if test="startTime != null">
+        and uc.created_time &gt;= #{startTime}
+      </if>
+      <if test="endTime != null">
+        and uc.created_time &lt;= #{endTime}
+      </if>
+      <if test="userName != null and userName!= ''">
+        and um.nick_name like '%${userName}%'
+      </if>
+    </where>
+  </sql>
+
+  <insert id="updateIntegrationCoach" parameterType="com.dmd.admin.model.domain.UmsIntegrationChangeHistory">
+    INSERT INTO ums_coach_integration_log
+    (coach_id , created_time, change_type,
+    change_count, operate_man, operate_note,
+    source_type)
+    values (#{memberId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{changeType,jdbcType=INTEGER},
+    #{changeCount,jdbcType=INTEGER}, #{operateMan,jdbcType=VARCHAR}, #{operateNote,jdbcType=VARCHAR},
+    #{sourceType,jdbcType=INTEGER})
   </insert>
 </mapper>
