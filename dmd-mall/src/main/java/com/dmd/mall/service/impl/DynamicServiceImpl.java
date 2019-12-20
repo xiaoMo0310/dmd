@@ -609,6 +609,42 @@ public class DynamicServiceImpl implements DynamicService{
                 }
                 objects=dynamicBeanList;
             }
+        }else if(userType == 0){
+            if (userTypes.equals("member")){
+                //用户发布用户登陆
+                List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamicById(id);
+                Long userId1 = dynamicBeanList.get(0).getUserId();
+                Integer biaoshifu =  dynamicMapper.selectFavorites(userId,userId1);
+                if (biaoshifu == 0){
+                    dynamicBeanList.get(0).setIdentification(0);
+                }if(biaoshifu !=0 ){
+                    dynamicBeanList.get(0).setIdentification(1);
+                }
+                Integer praiseBiaoshifu =  dynamicMapper.selectFavoritespraise(userId,id);
+                if (praiseBiaoshifu == 0){
+                    dynamicBeanList.get(0).setIdentificationPraise(0);
+                }if(praiseBiaoshifu !=0 ){
+                    dynamicBeanList.get(0).setIdentificationPraise(1);
+                }
+                objects=dynamicBeanList;
+            }else if(userTypes.equals("coach")){
+                //教练发布用户登陆
+                List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamicByCoachById(id);
+                Long userId1 = dynamicBeanList.get(0).getUserId();
+                Integer biaoshifu =  dynamicMapper.selectFavoritesCoach2(userId,userId1);
+                if (biaoshifu == 0){
+                    dynamicBeanList.get(0).setIdentification(0);
+                }if(biaoshifu !=0 ){
+                    dynamicBeanList.get(0).setIdentification(1);
+                }
+                Integer praiseBiaoshifu =  dynamicMapper.selectFavoritespraiseCoach(userId,id);
+                if (praiseBiaoshifu == 0){
+                    dynamicBeanList.get(0).setIdentificationPraise(0);
+                }if(praiseBiaoshifu !=0 ){
+                    dynamicBeanList.get(0).setIdentificationPraise(1);
+                }
+                objects=dynamicBeanList;
+            }
         }
         return objects;
     }
