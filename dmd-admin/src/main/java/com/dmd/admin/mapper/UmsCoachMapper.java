@@ -7,6 +7,7 @@ import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,4 +25,11 @@ public interface UmsCoachMapper extends MyMapper<UmsCoach> {
     List<UmsCoachVo> selectCoachList(UmsUserQueryParam userQueryParam);
 
     List<UmsCoachVo> selectCoachByStatus();
+
+    List<UmsCoach> selectRegisterCoach(Date date);
+
+    Long countYesterdayVisitCoach(Date date);
+
+    Long countTotalCoach();
+
 }

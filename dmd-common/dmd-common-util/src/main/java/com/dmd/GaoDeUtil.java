@@ -33,6 +33,7 @@ public class GaoDeUtil {
 		String url = String.format(urlAddressIp, ipAddr);
 		try {
 			String str = HttpClientUtil.get(HttpConfig.custom().url(url));
+			log.info(str);
 			location = new ObjectMapper().readValue(str, GaodeLocation.class);
 		} catch (Exception e) {
 			log.error("getCityByIpAddr={}", e.getMessage(), e);

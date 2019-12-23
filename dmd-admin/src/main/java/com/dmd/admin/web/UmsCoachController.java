@@ -1,6 +1,7 @@
 package com.dmd.admin.web;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.dmd.admin.model.dto.UmsCoachDto;
 import com.dmd.admin.model.dto.UmsUserQueryParam;
 import com.dmd.admin.model.vo.UmsCoachVo;
@@ -36,6 +37,40 @@ public class UmsCoachController extends BaseController {
     @Autowired
     private UmsCoachService umsCoachService;
 
+    @GetMapping("/registerCoach/countDay")
+    @ApiOperation(httpMethod = "GET", value = "统计当日新注册的教练")
+    public Wrapper countDayRegisterCoach() {
+        JSONObject registerUsers = umsCoachService.countDayRegisterCoach();
+        return WrapMapper.ok(registerUsers);
+    }
+
+    @GetMapping("/visitCoach/countYesterday")
+    @ApiOperation(httpMethod = "GET", value = "统计昨日访问教练的数量")
+    public Wrapper countYesterdayVisitCoach(){
+        Long visitUser = umsCoachService.countYesterdayVisitCoach();
+        return WrapMapper.ok(visitUser);
+    }
+
+    @GetMapping("/totalCoach/count")
+    @ApiOperation(httpMethod = "GET", value = "统计平台的总教练量")
+    public Wrapper countTotalCoach() {
+        Long totalUser = umsCoachService.countTotalCoach();
+        return WrapMapper.ok(totalUser);
+    }
+
+    @GetMapping("/coach/retentionRate/count/{day}")
+    @ApiOperation(httpMethod = "GET", value = "统计教练七日留存率")
+    public Wrapper countCoachSevenDayRetentionRate(@PathVariable Integer day){
+        JSONObject object = umsCoachService.countCoachRetentionRate(day);
+        return WrapMapper.ok(object);
+    }
+    @GetMapping("/coach/retentionRate/countThirty/{day}")
+    @ApiOperation(httpMethod = "GET", value = "统计教练三十日留存率")
+    public Wrapper countCoachThirtyDayRetentionRate(@PathVariable Integer day){
+        JSONObject object = umsCoachService.countCoachThirtyDayRetentionRate(day);
+        return WrapMapper.ok(object);
+    }
+    
     @PostMapping("/coachList/findPage")
     @ApiOperation(httpMethod = "POST", value = "查询用户列表信息")
     @ApiImplicitParam(name ="userQueryParam", value = "查询需要的数据", dataType = "UmsUserQueryParam")

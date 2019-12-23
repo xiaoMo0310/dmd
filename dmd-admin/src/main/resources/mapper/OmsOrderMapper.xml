@@ -101,6 +101,7 @@
     <if test="queryParam.createTime!=null and queryParam.createTime!=''">
       AND create_time LIKE concat(#{queryParam.createTime},"%")
     </if>
+    order by update_time desc
   </select>
   <update id="delivery">
     UPDATE oms_order

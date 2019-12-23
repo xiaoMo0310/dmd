@@ -49,7 +49,7 @@ PmsCertificateServiceImpl extends BaseService<PmsCertificate> implements PmsCert
     public PmsCertificateVo selectCertificateById(Long certificateId) {
         PmsCertificate pmsCertificate = pmsCertificateMapper.selectByPrimaryKey(certificateId);
         PmsCertificateVo pmsCertificateVo = new PmsCertificateVo();
-        if(pmsCertificateVo != null){
+        if(pmsCertificate != null){
             BeanUtils.copyProperties(pmsCertificate, pmsCertificateVo);
         }
         return pmsCertificateVo;

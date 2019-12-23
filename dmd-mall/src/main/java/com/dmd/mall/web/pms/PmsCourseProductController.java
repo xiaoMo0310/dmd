@@ -8,6 +8,7 @@ import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.dto.CourseProductDto;
 import com.dmd.mall.model.vo.CertificateProductVo;
 import com.dmd.mall.model.vo.DivingProductVo;
+import com.dmd.mall.model.vo.PmsCertificateVo;
 import com.dmd.mall.model.vo.PmsCourseListVo;
 import com.dmd.mall.service.PmsCourseProductService;
 import com.dmd.wrapper.WrapMapper;
@@ -20,6 +21,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -61,6 +64,22 @@ public class PmsCourseProductController extends BaseController {
         PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findCourseProductListByType(baseQuery, 2);
         return WrapMapper.ok(productList);
     }
+
+    @PostMapping("/divingProductList/findById")
+    @ApiOperation(httpMethod = "POST", value = "查询卖家潜水商品的列表信息")
+    @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery", paramType = "body")
+    public Wrapper findDivingProductList(@RequestBody BaseQuery baseQuery) {
+        PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findSellerCourseProductListByType(getLoginAuthDto(), baseQuery, 2);
+        return WrapMapper.ok(productList);
+    }
+
+    @PostMapping("/certificateProduct/findById")
+    @ApiOperation(httpMethod = "POST", value = "查询卖家所有的学证商品证书信息")
+    public Wrapper findCertificateProduct() {
+        List<PmsCertificateVo> pmsCertificates = pmsCourseProductService.findSellerCertificateMessage(getLoginAuthDto());
+        return WrapMapper.ok(pmsCertificates);
+    }
+
 
     @GetMapping("/certificateProduct/find")
     @ApiOperation(httpMethod = "GET", value = "查询学证产品的详细信息及教练信息,证书信息")

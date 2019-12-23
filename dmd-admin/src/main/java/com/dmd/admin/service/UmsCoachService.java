@@ -1,5 +1,6 @@
 package com.dmd.admin.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dmd.admin.model.domain.UmsCoach;
 import com.dmd.admin.model.dto.UmsCoachDto;
 import com.dmd.admin.model.dto.UmsUserQueryParam;
@@ -65,4 +66,36 @@ public interface UmsCoachService extends IService<UmsCoach> {
      * @return
      */
     int updateCoachMessageById(UmsCoachDto umsCoachDto, LoginAuthDto loginAuthDto);
+
+    /**
+     * 统计当日新注册的教练
+     * @return
+     */
+    JSONObject countDayRegisterCoach();
+
+    /**
+     * 统计昨日访问教练的数量
+     * @return
+     */
+    Long countYesterdayVisitCoach();
+
+    /**
+     *
+     * @return
+     */
+    Long countTotalCoach();
+
+    /**
+     * 统计平台的总教练量
+     * @param day
+     * @return
+     */
+    JSONObject countCoachRetentionRate(Integer day);
+
+    /**
+     * 统计教练三十日留存率
+     * @param day
+     * @return
+     */
+    JSONObject countCoachThirtyDayRetentionRate(Integer day);
 }

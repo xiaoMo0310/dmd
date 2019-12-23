@@ -27,6 +27,8 @@
         <result column="growth" property="growth" />
         <result column="certificate_pic" property="certificatePic"/>
         <result column="failure_reason" property="failureReason"/>
+        <result column="integration" property="integration"/>
+        <result column="history_integration" property="historyIntegration"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -38,7 +40,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        open_id, coach_name, nick_name, password, icon, phone, gender, coach_grade, invitation_code, total_invitation, status, personal_album, personal_profile, growth, certificate_pic, failure_reason
+        open_id, coach_name, nick_name, password, icon, phone, gender, coach_grade, invitation_code, total_invitation, status, personal_album, personal_profile, growth, certificate_pic, failure_reason, integration, history_integration
     </sql>
     <select id="selectCoachMessage" resultType="com.dmd.mall.model.domain.UmsCoach">
         select <include refid="Base_Column_List"/>

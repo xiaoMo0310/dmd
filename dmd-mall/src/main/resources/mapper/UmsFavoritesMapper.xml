@@ -36,8 +36,13 @@
     </update>
 
 
-    <select id="queryAttentionUser" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT <include refid="Base_Column_List"/> FROM ums_favorites WHERE user_id = #{userId} and status =1 and favorite_type = 1 or favorite_type = 2
+    <select id="queryAttentionUser" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+         FROM ums_favorites
+         WHERE user_id = #{userId}
+         and status =1 and user_type = #{userType}
+        and (favorite_type = 1 or favorite_type = 2)
     </select>
     <select id="selectAttentionMessage" resultType="com.dmd.mall.model.domain.UmsFavorites">
         select <include refid="Base_Column_List"/>
@@ -55,6 +60,12 @@
         SELECT count(*) FROM ums_favorites WHERE user_id = #{userId} AND (favorite_type = 1 OR favorite_type = 2 OR favorite_type = 6) and status = 1 AND user_type = 2
     </select>
     <select id="queryAttentionTopic" resultType="com.dmd.mall.model.domain.UmsFavorites">
-        SELECT <include refid="Base_Column_List"/> FROM ums_favorites WHERE user_id = #{userId} and favorite_type = 6 and status =1
+        SELECT
+        <include refid="Base_Column_List"/>
+         FROM ums_favorites
+         WHERE user_id = #{userId}
+         and user_type = #{userType}
+         and favorite_type = 6
+         and status =1
     </select>
 </mapper>

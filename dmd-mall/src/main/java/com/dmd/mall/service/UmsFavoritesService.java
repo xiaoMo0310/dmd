@@ -40,7 +40,7 @@ public interface UmsFavoritesService extends IService<UmsFavorites> {
      */
     Boolean checkAttention(LoginAuthDto loginAuthDto, Long targetId, Integer favoriteType);
 
-    JSONObject queryAttention(Long userId, Integer pageNum, Integer pageSize, Integer favoriteType);
+    JSONObject queryAttention(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer favoriteType);
 
-    Integer queryFavoritesCount(Long userId);
+    Integer queryFavoritesCount(Long userId, LoginAuthDto loginAuthDto);
 }

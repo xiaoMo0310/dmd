@@ -49,7 +49,7 @@ dmd:
     prefix: http://47.107.50.253:8080/webapps/uploadFile
     attachmentPath: /project/tomcat/webapps/uploadFile #要保存文件的父路径 D:\
   swagger:
-    enable: false
+    enable: true
 
 
 

@@ -78,13 +78,12 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         }
         List<Long> userIds = members.stream().map(UmsMember::getId).collect(Collectors.toList());
         //查询7天的留存数
-        Map map = umsMemberLoginLogMapper.selectRetentionNumber(firstDate, userIds);
+        Map map = umsMemberLoginLogMapper.selectRetentionNumber(firstDate, userIds, "member");
         if(map ==null){
             jsonObject.put("seven", 0);
             return jsonObject;
         }
         long sevenDayLogin = Long.parseLong(String.valueOf(map.get("day7")));
-        long thirtyDayLogin = Long.parseLong(String.valueOf(map.get("day30")));
         //查询当天新增的用户数
         double seven = sevenDayLogin / (double) members.size();
         seven = Double.valueOf(new BigDecimal(seven).setScale(2, RoundingMode.DOWN).multiply(new BigDecimal("100")).toString());
@@ -105,7 +104,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
             return jsonObject;
         }
         List<Long> userIds = members.stream().map(UmsMember::getId).collect(Collectors.toList());
-        Map map = umsMemberLoginLogMapper.selectRetentionNumber(firstDate, userIds);
+        Map map = umsMemberLoginLogMapper.selectRetentionNumber(firstDate, userIds, "member");
         if(map ==null){
             jsonObject.put("thirty", 0);
             return jsonObject;

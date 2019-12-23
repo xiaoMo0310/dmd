@@ -183,7 +183,9 @@
       member_id,
       DATE_FORMAT(create_time,'%Y/%m/%d') login_time
       from ums_member_login_log
-      where member_id in
+      where
+      user_type = #{userType}
+      and member_id in
       <foreach close=")" collection="userIds" item="userId" open="(" separator=",">
         #{userId}
       </foreach>

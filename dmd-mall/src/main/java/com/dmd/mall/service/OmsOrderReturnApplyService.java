@@ -1,9 +1,11 @@
 package com.dmd.mall.service;
 
+import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.OmsOrderReturnApply;
 import com.dmd.mall.model.dto.OrderReturnApplyDto;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -62,4 +64,20 @@ public interface OmsOrderReturnApplyService extends IService<OmsOrderReturnApply
      * @return
      */
     int updateOmsReturnStatus(LoginAuthDto loginAuthDto, Long returnOrderId, Integer status);
+
+    /**
+     * 查询卖家所有得退款申请
+     * @param baseQuery
+     * @param loginAuthDto
+     * @return
+     */
+    PageInfo findOrderReturnApplyMessageByPage(BaseQuery baseQuery, LoginAuthDto loginAuthDto);
+
+    /**
+     * 修改退款申请得信息
+     * @param orderReturnApplyDto
+     * @param loginAuthDto
+     * @return
+     */
+    int updateReturnApplyStatus(OrderReturnApplyDto orderReturnApplyDto, LoginAuthDto loginAuthDto);
 }

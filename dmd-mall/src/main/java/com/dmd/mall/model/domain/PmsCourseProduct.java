@@ -113,7 +113,7 @@ private static final long serialVersionUID = 1L;
     private String image;
 
     @Column(name = "content_arrangement")
-    @ApiModelProperty("内容安排(数据格式 [{\"day01\":\"内容\"}, {\"day02\":\"内容\"}])")
+    @ApiModelProperty("内容安排(数据格式 [{\"date\":\"第1天\",\"message\":\"内容\"},{\"date\":\"第2天\",\"message\":\"内容\"}]")
     private String contentArrangement;
 
     @ApiModelProperty("状态(1-在售 2-下架 3-删除 4-停止销售 5-已售完)")

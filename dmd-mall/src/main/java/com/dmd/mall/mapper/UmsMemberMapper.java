@@ -2,6 +2,7 @@ package com.dmd.mall.mapper;
 
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.domain.UmsMemberExample;
+import com.dmd.mall.model.vo.UmsMemberVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -52,4 +53,6 @@ public interface UmsMemberMapper {
     UmsMember selectByUserName(String loginName);
 
     Integer queryMyIntegralByCoach(Long userId);
+
+    List<UmsMemberVo> selectUmsMemberByInvitationCode(String coachInvitationCode);
 }

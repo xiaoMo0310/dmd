@@ -91,6 +91,10 @@ public class PmsCourseProductVo implements Serializable {
     @ApiModelProperty("销量")
     private Integer sales;
 
+    private Integer numberIsLimit;
+
+    private Integer numberLimit;
+
     /**
      * 证书id
      */

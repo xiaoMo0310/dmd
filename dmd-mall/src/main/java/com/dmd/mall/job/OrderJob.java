@@ -101,7 +101,7 @@ public class OrderJob {
     /**
      * 定时清理售后未审核的订单
      */
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void clearUnauditedOrders(){
         OmsOrderSetting omsOrderSetting = findOmsOrderSettingMessage();
         Integer returnOrderOvertime = omsOrderSetting.getReturnOrderOvertime();
@@ -114,7 +114,7 @@ public class OrderJob {
                 loginAuthDto.setUserId(0L);
                 loginAuthDto.setUserType("system");
                 loginAuthDto.setUserName("系统");
-                //修改售后订单未审核通过
+                //修改售后订单审核通过
                 int result = omsOrderReturnApplyService.updateOmsReturnStatus(loginAuthDto, omsOrderReturnApply.getId(), 1);
                 if(result <= 0){
                     throw new PmsBizException("定时修改售后订单状态异常");

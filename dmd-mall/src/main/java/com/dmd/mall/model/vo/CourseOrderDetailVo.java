@@ -59,6 +59,11 @@ public class CourseOrderDetailVo implements Serializable {
     private String phone;
 
     /**
+     * 昵称
+     */
+    private String nickName;
+
+    /**
      * 订单总金额
      */
     private BigDecimal totalAmount;

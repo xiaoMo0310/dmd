@@ -51,13 +51,13 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
 
     Integer queryPepleNum(@Param("id") Long id,@Param("userId") Long userId,@Param("productType") Integer productType);
 
-    int selectCheckActivity(@Param("startTime") Date startTime, @Param("endTime") Date endTime, @Param("id") Long id);
+    List<PmsCourseProduct> selectCheckActivity(@Param("startTime") Date startTime, @Param("endTime") Date endTime, @Param("id") Long id, @Param("userId") Long userId);
 
     PmsCourseListVo selectCourseProductById(Long productId);
 
     List<PmsCourseProduct> queryPmsCourseProduct(@Param("content")String content);
 
-    int selectByUserId(@Param("userId") Long userId, @Param("certificateId") Long certificateId, @Param("addressId") Long addressId);
+    PmsCourseProduct selectByUserId(@Param("userId") Long userId, @Param("certificateId") Long certificateId, @Param("addressId") Long addressId);
 
     List<PmsCourseProduct> queryPmsCourseProductByType(@Param("content")String content);
 
@@ -69,5 +69,11 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
 
     List<PmsCourseProduct> queryPowerNotesCoachPage(PmsCourseProduct pmsCourseProduct);
 
+    List<PmsCourseListVo> selectSellerCourseProductListByType(@Param("userId") Long userId, @Param("productType") Integer productType);
+
+    List<PmsCourseProduct> selectProductByUserId(@Param("userId") Long userId, @Param("productType") Integer productType);
+
     List<PmsCourseProduct> queryPowerNotesCoachToMonth(Long userId);
+
+    Long countSellerProductNum(Long coachId);
 }

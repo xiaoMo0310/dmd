@@ -1,13 +1,10 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.GaoDeUtil;
 import com.dmd.RedisKeyUtil;
-import com.dmd.base.constant.GlobalConstant;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.dto.UserTokenDto;
 import com.dmd.core.support.BaseService;
 import com.dmd.core.utils.RequestUtil;
-import com.dmd.gaode.GaodeLocation;
 import com.dmd.mall.mapper.UmsMemberLoginLogMapper;
 import com.dmd.mall.model.domain.UmsMemberLoginLog;
 import com.dmd.mall.service.UmsMemberLoginLogService;
@@ -55,8 +52,8 @@ public class UmsMemberLoginLogServiceImpl extends BaseService<UmsMemberLoginLog>
         if (location.startsWith(temp) || location.startsWith(temp2) || location.startsWith(temp3)) {
             location = "111.199.188.14";
         }
-        GaodeLocation gaodeLocation = GaoDeUtil.getCityByIpAddr(location);
-        String remoteLocation = gaodeLocation.getProvince().contains("市") ? gaodeLocation.getCity() : gaodeLocation.getProvince() + GlobalConstant.Symbol.SHORT_LINE + gaodeLocation.getCity();
+        /*GaodeLocation gaodeLocation = GaoDeUtil.getCityByIpAddr(location);
+        String remoteLocation = gaodeLocation.getProvince().contains("市") ? gaodeLocation.getCity() : gaodeLocation.getProvince() + GlobalConstant.Symbol.SHORT_LINE + gaodeLocation.getCity();*/
 
         UmsMemberLoginLog memberLoginLog = new UmsMemberLoginLog();
         memberLoginLog.setAccessToken(accessToken);
@@ -64,7 +61,7 @@ public class UmsMemberLoginLogServiceImpl extends BaseService<UmsMemberLoginLog>
         memberLoginLog.setBrowser(browser);
         memberLoginLog.setOs(os);
         memberLoginLog.setLoginIp(remoteAddr);
-        memberLoginLog.setLoginLocation(remoteLocation);
+        memberLoginLog.setLoginLocation(null);
         memberLoginLog.setCreateTime(new Date());
         memberLoginLog.setMemberId(loginAuthDto.getUserId());
         memberLoginLog.setUserType(loginAuthDto.getUserType());
@@ -79,7 +76,7 @@ public class UmsMemberLoginLogServiceImpl extends BaseService<UmsMemberLoginLog>
         userTokenDto.setAccessToken(accessToken);
         userTokenDto.setAccessTokenValidity(accessTokenValidateSeconds);
         userTokenDto.setLoginIp(remoteAddr);
-        userTokenDto.setLoginLocation(remoteLocation);
+        userTokenDto.setLoginLocation(null);
         userTokenDto.setRefreshToken(refreshToken);
         userTokenDto.setRefreshTokenValidity(refreshTokenValiditySeconds);
         userTokenDto.setUserId(loginAuthDto.getUserId());

@@ -31,4 +31,6 @@ public class UmsFavoritesVo implements Serializable {
 
     private String topicPicture;
 
+    private Integer favoriteType;
+
 }

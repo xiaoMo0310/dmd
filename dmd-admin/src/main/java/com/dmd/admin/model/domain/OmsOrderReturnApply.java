@@ -137,5 +137,9 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("收货备注")
     private String receiveNote;
 
+    @Column(name = "failure_reason")
+    @ApiModelProperty("审核不通过原因")
+    private String failureReason;
+
 
 }

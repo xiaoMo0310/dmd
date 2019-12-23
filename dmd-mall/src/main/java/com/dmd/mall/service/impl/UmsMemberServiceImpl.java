@@ -2,6 +2,7 @@ package com.dmd.mall.service.impl;
 
 import com.dmd.ChineseNickNameUtil;
 import com.dmd.RedisKeyUtil;
+import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.base.result.CommonResult;
@@ -10,6 +11,7 @@ import com.dmd.mall.mapper.UmsMemberMapper;
 import com.dmd.mall.model.domain.MemberDetails;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.domain.UmsMemberExample;
+import com.dmd.mall.model.vo.UmsMemberVo;
 import com.dmd.mall.security.redis.ValidateCodeRepository;
 import com.dmd.mall.security.sms.ValidateCode;
 import com.dmd.mall.security.sms.ValidateCodeException;
@@ -20,6 +22,8 @@ import com.dmd.mall.util.CodeValidateUtil;
 import com.dmd.mall.util.JwtUtil;
 import com.dmd.mall.util.MailUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,6 +135,8 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         umsMember.setNickname(ChineseNickNameUtil.generateName());
         //设置默认的头像
         umsMember.setIcon("http://47.107.50.253:8080/webapps/uploadFile/compent/20191208145645.png");
+        umsMember.setIntegration(0);
+        umsMember.setHistoryIntegration(0);
         memberMapper.insert(umsMember);
         if (invitationCode!=null){
             //在邀请码不等于null的时候自动加入邀请码对应的教练的群
@@ -339,6 +345,13 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         UmsMember umsMember = principal.getUmsMember();
         LoginAuthDto loginAuthDto = new LoginAuthDto(umsMember.getId(), umsMember.getUsername(), umsMember.getNickname(), umsMember.getLoginType(), umsMember.getPhone());
         memberLoginLogService.saveLoginUserLog(accessToken, refreshToken, loginAuthDto, request);
+    }
+
+    @Override
+    public PageInfo<UmsMemberVo> findCoachInviteUser(BaseQuery baseQuery, String coachInvitationCode) {
+        PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
+        List<UmsMemberVo> umsMemberVos = memberMapper.selectUmsMemberByInvitationCode(coachInvitationCode);
+        return new PageInfo<>(umsMemberVos);
     }
 
 

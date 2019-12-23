@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author paascloud.net @gmail.com
  */
 @Slf4j
-public class OmsBizException extends BusinessException {
+public class OmsBizException extends BusinessException{
 
     private static final long serialVersionUID = -6552248511084911254L;
 

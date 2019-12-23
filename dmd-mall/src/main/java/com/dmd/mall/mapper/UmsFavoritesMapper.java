@@ -20,7 +20,7 @@ import java.util.List;
 @Component
 public interface UmsFavoritesMapper extends MyMapper<UmsFavorites> {
 
-    List<UmsFavorites> queryAttentionUser(Long userId);
+    List<UmsFavorites> queryAttentionUser(@Param("userId") Long userId, @Param("userType") Integer userType);
 
     int updateAttentionStatus(@Param("userId") Long userId, @Param("userName") String userName,@Param("umsFavorites") UmsFavorites umsFavorites);
 
@@ -28,7 +28,7 @@ public interface UmsFavoritesMapper extends MyMapper<UmsFavorites> {
 
     Integer queryFavoritesCount(Long userId);
 
-    List<UmsFavorites> queryAttentionTopic(Long userId);
+    List<UmsFavorites> queryAttentionTopic(@Param("userId") Long userId, @Param("userType") Integer userType);
 
     Integer queryFavoritesCountByCoach(Long userId);
 }

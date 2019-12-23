@@ -425,7 +425,7 @@ public enum ErrorCodeEnum {
 	/**
 	 * PMS 10021029error code enum.
 	 */
-	PMS10021029(10021029, "有重复的商品活动"),
+	PMS10021029(10021029, "当前时间段有重复的商品活动"),
 
 	/**
 	 * PMS 10021030error code enum.
@@ -552,7 +552,7 @@ public enum ErrorCodeEnum {
 	/**
 	 * OMS 10031028 error code enum.
 	 */
-	OMS10031028(10031028, "没有上级证书暂不购买该商品"),
+	OMS10031028(10031028, "不能越级购买学证产品"),
 	/**
 	 * Opc 10040001 error code enum.
 	 */

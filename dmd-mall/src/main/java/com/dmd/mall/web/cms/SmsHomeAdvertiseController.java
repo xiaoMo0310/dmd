@@ -1,4 +1,4 @@
-package com.dmd.mall.web;
+package com.dmd.mall.web.cms;
 
 
 import com.dmd.core.support.BaseController;
