@@ -86,4 +86,11 @@ private static final long serialVersionUID = 1L;
     @Column(name = "failure_reason")
     private String failureReason;
 
+    @ApiModelProperty(value = "积分")
+    private Integer integration;
+
+    @ApiModelProperty(value = "历史积分数量")
+    @Column(name = "history_integration")
+    private Integer historyIntegration;
+
 }

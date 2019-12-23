@@ -73,7 +73,7 @@ public class UmsFavoritesController extends BaseController {
     public Wrapper<JSONObject> findFavoritesList(@RequestParam("pageNum") Integer pageNum,
                                                  @RequestParam("pageSize") Integer pageSize,
                                                  @RequestParam("favoriteType") Integer favoriteType) {
-        JSONObject jsonObject = umsFavoritesService.queryAttention(getLoginAuthDto().getUserId(), pageNum, pageSize, favoriteType);
+        JSONObject jsonObject = umsFavoritesService.queryAttention(getLoginAuthDto(), pageNum, pageSize, favoriteType);
         return WrapMapper.ok(jsonObject);
     }
 
@@ -86,7 +86,7 @@ public class UmsFavoritesController extends BaseController {
     @RequestMapping(value = "/selectFavoritesCount",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<Integer> queryFavoritesCount(@RequestParam Long userId) {
-        Integer count = umsFavoritesService.queryFavoritesCount(userId);
+        Integer count = umsFavoritesService.queryFavoritesCount(userId, getLoginAuthDto());
         return CommonResult.success(count);
     }
 

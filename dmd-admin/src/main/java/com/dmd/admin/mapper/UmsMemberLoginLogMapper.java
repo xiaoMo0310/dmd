@@ -40,7 +40,7 @@ public interface UmsMemberLoginLogMapper {
      * @param userIds
      * @return
      */
-    Map selectRetentionNumber(@Param("firstDate") Date firstDate, @Param("userIds") List<Long> userIds);
+    Map selectRetentionNumber(@Param("firstDate") Date firstDate, @Param("userIds") List<Long> userIds, @Param("userType") String userType);
 
     /**
      * 查询用户昨日访问量

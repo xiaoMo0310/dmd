@@ -2,9 +2,13 @@ package com.dmd.mall.web.ums;
 
 
 import com.dmd.FileUploadUtil;
+import com.dmd.GaoDeUtil;
+import com.dmd.base.constant.GlobalConstant;
 import com.dmd.base.result.CommonResult;
 import com.dmd.base.result.FileResult;
 import com.dmd.core.support.BaseController;
+import com.dmd.core.utils.RequestUtil;
+import com.dmd.gaode.GaodeLocation;
 import com.dmd.mall.model.dto.FindPasswordDto;
 import com.dmd.mall.model.dto.UmsCoachRegisterDto;
 import com.dmd.mall.service.UmsCoachService;
@@ -54,7 +58,7 @@ public class UmsCoachController extends BaseController {
     @PostMapping(value = "/coach/findPassword")
     @ApiImplicitParam(name ="findPasswordDto", value = "找回密码信息", dataType = "FindPasswordDto", paramType = "body")
     public Wrapper findPassword(@RequestBody FindPasswordDto findPasswordDto, HttpServletRequest request) {
-        return umsCoachService.findPassword(findPasswordDto.getTelephone(), findPasswordDto.getPassword(),findPasswordDto.getConfirmPassword(), findPasswordDto.getAuthCode(),request);
+        return umsCoachService.findPassword(findPasswordDto.getTelephone(), findPasswordDto.getNewPassword(),findPasswordDto.getConfirmPassword(), findPasswordDto.getAuthCode(),request);
     }
 
     @ApiOperation("图片上传")
@@ -67,5 +71,24 @@ public class UmsCoachController extends BaseController {
         return CommonResult.success(newStr);
     }
 
+    @ApiOperation("获取ip")
+    @PostMapping(value="/findIp")
+    @ResponseBody
+    public CommonResult getIp(HttpServletRequest request) {
+        final String remoteAddr = RequestUtil.getRemoteAddr(request);
+        String temp = "127.0.";
+        String temp2 = "192.168.";
+        String temp3 = "0:0:";
+        String location = remoteAddr;
+        if (location.startsWith(temp) || location.startsWith(temp2) || location.startsWith(temp3)) {
+            location = "111.199.188.14";
+        }
+        logger.info(remoteAddr);
+        logger.info(location);
+         GaodeLocation gaodeLocation = GaoDeUtil.getCityByIpAddr(location);
+        String remoteLocation = gaodeLocation.getProvince().contains("市") ? gaodeLocation.getCity() : gaodeLocation.getProvince() + GlobalConstant.Symbol.SHORT_LINE + gaodeLocation.getCity();
+        logger.info(remoteLocation);
+        return CommonResult.success(remoteLocation);
+    }
 }
 

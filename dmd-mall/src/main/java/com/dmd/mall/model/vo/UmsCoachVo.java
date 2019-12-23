@@ -64,4 +64,19 @@ public class UmsCoachVo implements Serializable {
      */
     private String certificatePic;
 
+    /**
+     * 邀请总数
+     */
+    private Long totalInvitations;
+
+    /**
+     *关注总数
+     */
+    private Integer totalFollow;
+
+    /**
+     * 发布商品总数
+     */
+    private Long totalProduct;
+
 }

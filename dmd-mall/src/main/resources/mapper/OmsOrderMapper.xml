@@ -69,10 +69,16 @@
          receiver_name, receiver_mobile_no, province_name, city_name, district_name, detail_address, receiver_zip_code
     </sql>
     <sql id="Course_Product_Order_List">
-        uc.coach_name userName, uc.icon userIcon, uc.coach_Grade, uc.id userId, oo.order_sn, oo.total_amount, oo.id orderId,
+        uc.coach_name userName, uc.icon userIcon, uc.coach_Grade, uc.id userId, uc.nick_name, oo.order_sn, oo.total_amount, oo.id orderId,
         oo.pay_amount, oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
         oo.status, oo.order_type, ooi.id orderItmeId, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity,
          ooi.product_attr spec, ooi.product_type, ooi.product_id, ooi.real_amount, ooi.product_name
+    </sql>
+    <sql id="Seller_Course_Product_Order_List">
+        um.username userName, um.icon userIcon, um.id userId, um.nick_name, oo.order_sn, oo.total_amount, oo.id orderId,
+        oo.pay_amount, oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
+        oo.status, oo.order_type, ooi.id orderItmeId, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity,
+        ooi.product_attr spec, ooi.product_type, ooi.product_id, ooi.real_amount, ooi.product_name
     </sql>
     <select id="selectByUserId" resultMap="BaseResultMap" parameterType="long">
         SELECT
@@ -97,14 +103,13 @@
         order by oo.update_time desc
     </select>
     <select id="selectSellerOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
-        SELECT <include refid="Course_Product_Order_List"/>
+        SELECT <include refid="Seller_Course_Product_Order_List"/>
          FROM oms_order oo
         left join ums_member um on oo.member_id = um.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
         where oo.shop_id = #{coachId}
         and oo.status = #{status}
-        and oo.user_type = #{userType}
         and oo.order_type = 1
         order by oo.update_time desc
     </select>
@@ -117,7 +122,7 @@
         where oo.member_id = #{userId} and oo.order_sn = #{orderSn}
     </select>
     <select id="selectSellerOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
-        SELECT <include refid="Course_Product_Order_List"/>
+        SELECT <include refid="Seller_Course_Product_Order_List"/>
          FROM oms_order oo
         left join ums_member um on oo.member_id = um.id
         left join oms_order_item ooi

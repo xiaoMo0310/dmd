@@ -7,7 +7,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author YangAnsheng
@@ -46,12 +48,12 @@ public class CourseProductDto implements Serializable {
     private Integer isTimeLimit;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @ApiModelProperty("开始时间")
     private Date startTime;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @ApiModelProperty("结束时间")
     private Date endTime;
 
@@ -79,8 +81,8 @@ public class CourseProductDto implements Serializable {
     @ApiModelProperty("产品图片(多个使用 , 隔开)")
     private String image;
 
-    @ApiModelProperty("内容安排(数据格式 [{\"day01\":\"内容\"}, {\"day02\":\"内容\"}])")
-    private String contentArrangement;
+    @ApiModelProperty("内容安排(数据格式 [{\"date\":\"第1天\",\"message\":\"内容\"},{\"date\":\"第2天\",\"message\":\"内容\"}]")
+    private List contentArrangements = new ArrayList<>(0);
 
     @ApiModelProperty("排序")
     private Integer sort;

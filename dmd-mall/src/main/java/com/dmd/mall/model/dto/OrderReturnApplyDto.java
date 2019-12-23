@@ -23,6 +23,10 @@ import java.util.List;
 public class OrderReturnApplyDto implements Serializable {
 
     private static final long serialVersionUID = -8013189198872143385L;
+
+    @ApiModelProperty("退款申请id")
+    private Long returnApplyId;
+
     @ApiModelProperty("订单编号")
     private String orderSn;
 
@@ -44,5 +48,9 @@ public class OrderReturnApplyDto implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createdTime;
 
+    @ApiModelProperty("退款金额")
     private BigDecimal returnAmount;
+
+    @ApiModelProperty("审核不通过原因")
+    private String failureReason;
 }

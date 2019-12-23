@@ -1,6 +1,7 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.BeanUtils;
+import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
@@ -12,6 +13,7 @@ import com.dmd.mall.model.dto.OrderReturnApplyDto;
 import com.dmd.mall.model.vo.CourseOrderDetailVo;
 import com.dmd.mall.service.OmsOrderReturnApplyService;
 import com.dmd.mall.service.OmsOrderService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,6 +88,7 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
         OrderReturnApplyDto orderReturnApplyDto = new OrderReturnApplyDto();
         if(omsOrderReturnApply != null){
             BeanUtils.copyProperties(omsOrderReturnApply, orderReturnApplyDto);
+            orderReturnApplyDto.setReturnApplyId(omsOrderReturnApply.getId());
             if(omsOrderReturnApply.getProofPics() != null){
                 orderReturnApplyDto.setPicList(Arrays.asList(omsOrderReturnApply.getProofPics().split(",")));
             }
@@ -114,5 +117,19 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
         orderReturnApply.setId(returnOrderId);
         orderReturnApply.setStatus(1);
         return omsOrderReturnApplyMapper.updateByPrimaryKeySelective(orderReturnApply);
+    }
+
+    @Override
+    public PageInfo findOrderReturnApplyMessageByPage(BaseQuery baseQuery, LoginAuthDto loginAuthDto) {
+        //OmsOrderReturnApplyParam omsOrderReturnApplyMapper.selectByOrderReturnApplyMessageByPage(loginAuthDto.getUserId());
+        return null ;
+    }
+
+    @Override
+    public int updateReturnApplyStatus(OrderReturnApplyDto orderReturnApplyDto, LoginAuthDto loginAuthDto) {
+        OmsOrderReturnApply omsOrderReturnApply = new OmsOrderReturnApply();
+        BeanUtils.copyProperties(orderReturnApplyDto, omsOrderReturnApply);
+        omsOrderReturnApply.setId(orderReturnApplyDto.getReturnApplyId());
+        return omsOrderReturnApplyMapper.updateByPrimaryKeySelective(omsOrderReturnApply);
     }
 }

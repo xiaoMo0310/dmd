@@ -80,4 +80,9 @@ public class PmsCourseListVo implements Serializable {
      * 可用积分
      */
     private Integer availableIntegral;
+
+    /**
+     * 商品状态
+     */
+    private Integer status;
 }

@@ -37,6 +37,7 @@
         <result column="receive_man" property="receiveMan" />
         <result column="receive_time" property="receiveTime" />
         <result column="receive_note" property="receiveNote" />
+        <result column="failure_reason" property="failureReason" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -48,7 +49,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        order_id, shipping_id, product_id, order_sn, member_username, return_amount, return_name, return_phone, status, product_pic, product_name, product_title, product_brand, product_attr, product_count, product_price, product_real_price, reason, description, proof_pics, handle_time, handle_note, handle_man, receive_man, receive_time, receive_note
+        order_id, shipping_id, product_id, order_sn, member_username, return_amount, return_name, return_phone, status, product_pic, product_name, product_title, product_brand, product_attr, product_count, product_price, product_real_price, reason, description, proof_pics, handle_time, handle_note, handle_man, receive_man, receive_time, receive_note, failure_reason
     </sql>
 
     <resultMap id="returnApplyDetailResultMap" type="com.dmd.admin.model.dto.OmsOrderReturnApplyResult" extends="com.dmd.admin.mapper.OmsOrderReturnApplyMapper.BaseResultMap">
@@ -90,6 +91,7 @@
             AND (return_name LIKE concat("%",#{queryParam.receiverKeyword},"%")
             OR return_phone LIKE concat("%",#{queryParam.receiverKeyword},"%"))
         </if>
+        order by update_time desc
     </select>
     <select id="getDetail" resultMap="returnApplyDetailResultMap">
         SELECT

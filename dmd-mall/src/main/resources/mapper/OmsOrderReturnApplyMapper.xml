@@ -37,6 +37,7 @@
         <result column="receive_man" property="receiveMan" />
         <result column="receive_time" property="receiveTime" />
         <result column="receive_note" property="receiveNote" />
+        <result column="failure_reason" property="failureReason" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -50,7 +51,7 @@
         update_time,
         order_id, shipping_id, product_id, order_sn, member_username, return_amount, return_name, return_phone, status, product_pic,
         product_name, product_brand, product_attr, product_count, product_price, product_real_price, reason, description, proof_pics,
-        handle_time, handle_note, handle_man, receive_man, receive_time, receive_note, product_title
+        handle_time, handle_note, handle_man, receive_man, receive_time, receive_note, product_title, failure_reason
     </sql>
     <select id="selectByOrderSn" resultType="com.dmd.mall.model.domain.OmsOrderReturnApply">
         select <include refid="Base_Column_List"/>

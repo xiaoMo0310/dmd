@@ -1,9 +1,12 @@
 package com.dmd.mall.service;
 
+import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.MemberDetails;
 import com.dmd.mall.model.domain.UmsMember;
+import com.dmd.mall.model.vo.UmsMemberVo;
+import com.github.pagehelper.PageInfo;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -108,4 +111,11 @@ public interface UmsMemberService {
      * @param request
      */
     void handlerLoginData(OAuth2AccessToken token, MemberDetails principal, HttpServletRequest request);
+
+    /**
+     * 查询教练邀请得人
+     * @param baseQuery
+     * @return
+     */
+    PageInfo<UmsMemberVo> findCoachInviteUser(BaseQuery baseQuery, String coachInvitationCode);
 }

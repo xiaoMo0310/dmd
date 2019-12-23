@@ -3,6 +3,7 @@ package com.dmd.mall.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.BeanUtils;
+import com.dmd.PublicUtil;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
@@ -47,7 +48,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     @Autowired
     private UmsMemberService umsMemberService;
     @Autowired
-    PmsPlayAddressService playAddressService;
+    private PmsPlayAddressService playAddressService;
 
     @Override
     public int saveCourseProductMessage(LoginAuthDto loginAuthDto, CourseProductDto courseProductDto) {
@@ -57,29 +58,40 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         PmsCourseProduct courseProduct = new PmsCourseProduct();
         BeanUtils.copyProperties(courseProductDto, courseProduct);
         //判断是否有证书商品
-        if(courseProductDto.getProductType() == 1){
-            int count = pmsCourseProductMapper.selectByUserId(loginAuthDto.getUserId(), courseProductDto.getCertificateId(), courseProduct.getAddressId());
-            if(count > 0){
-                throw new PmsBizException(ErrorCodeEnum.PMS10021029);
+        if(courseProductDto.getProductType() == 1 && courseProduct.isNew()){
+            PmsCourseProduct pmsCourseProduct = pmsCourseProductMapper.selectByUserId(loginAuthDto.getUserId(), courseProductDto.getCertificateId(), courseProduct.getAddressId());
+            if(!PublicUtil.isEmpty(pmsCourseProduct)){
+                //查询证书信息
+                PmsCertificateVo pmsCertificateVo = certificateService.selectCertificateById(pmsCourseProduct.getCertificateId());
+                throw new PmsBizException(10021029, "您已发布" + pmsCertificateVo.getEnglishShorthand() + "证书,不能重复发布");
             }
         }
         //判断卖家是否有活动
-        int count = pmsCourseProductMapper.selectCheckActivity(courseProductDto.getStartTime(), courseProduct.getEndTime(),courseProduct.getId());
-        if(count > 0){
+        List<PmsCourseProduct> pmsCourseProducts = pmsCourseProductMapper.selectCheckActivity(courseProductDto.getStartTime(), courseProduct.getEndTime(),courseProduct.getId(), loginAuthDto.getUserId());
+        if(!CollectionUtils.isEmpty(pmsCourseProducts)){
             throw new PmsBizException(ErrorCodeEnum.PMS10021029);
         }
         int resultInt;
         courseProduct.setUpdateInfo(loginAuthDto);
         courseProduct.setStatus(2);
         courseProduct.setApprovalStatus(1);
+        courseProduct.setUserId(loginAuthDto.getUserId());
+        if(!CollectionUtils.isEmpty(courseProductDto.getContentArrangements())){
+            courseProduct.setContentArrangement(JSONArray.toJSONString(courseProductDto.getContentArrangements()));
+        }
         if (courseProduct.isNew()) {
+            if(courseProductDto.getProductType() == 1){
+                courseProduct.setProductName("学证商品");
+            }else if(courseProductDto.getProductType() == 2){
+                courseProduct.setProductName("潜水商品");
+            }
             resultInt = pmsCourseProductMapper.insertSelective(courseProduct);
         } else {
+            courseProduct.setApprovalStatus(1);
             resultInt = pmsCourseProductMapper.updateByPrimaryKeySelective(courseProduct);
         }
         return resultInt;
     }
-
 
     @Override
     public DivingProductVo findCourseProductById(Long id) {
@@ -304,6 +316,29 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         courseProduct.setId(id);
         courseProduct.setStatus(status);
         return pmsCourseProductMapper.updateByPrimaryKeySelective(courseProduct);
+    }
+
+    @Override
+    public PageInfo<PmsCourseListVo> findSellerCourseProductListByType(LoginAuthDto loginAuthDto, BaseQuery baseQuery, Integer productType) {
+        PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
+        List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectSellerCourseProductListByType(loginAuthDto.getUserId(), productType);
+        if(!CollectionUtils.isEmpty(pmsCourseProductVos)){
+            for (PmsCourseListVo pmsCourseProductVo : pmsCourseProductVos) {
+                pmsCourseProductVo.setImage(pmsCourseProductVo.getImage().split(",")[0]);
+            }
+        }
+        return new PageInfo<>(pmsCourseProductVos);
+    }
+
+    @Override
+    public List<PmsCertificateVo> findSellerCertificateMessage(LoginAuthDto loginAuthDto) {
+        List<PmsCourseProduct> pmsCourseProducts = pmsCourseProductMapper.selectProductByUserId(loginAuthDto.getUserId(), 1);
+        return pmsCourseProducts.stream().map(pmsCourseProduct -> certificateService.selectCertificateById(pmsCourseProduct.getCertificateId())).collect(Collectors.toList());
+    }
+
+    @Override
+    public Long countSellerProductNum(Long coachId) {
+        return pmsCourseProductMapper.countSellerProductNum(coachId);
     }
 
     @Override

@@ -55,7 +55,7 @@
         select
             uc.id coachId, uc.icon coachIcon, uc.coach_name coachName, uc.coach_grade, psp.id, psp.product_name, psp.title, psp.image, psp.price, psp.location, psp.start_time, psp.end_time
         from pms_course_product psp, ums_coach uc
-        where uc.id = psp.shop_id
+        where uc.id = psp.user_id
         and uc.status = 2
         and psp.product_type = #{type}
         and psp.status = 1
@@ -145,19 +145,24 @@
         AND pc.approval_status = 2
         AND oo.status not in (0,6)
     </select>
-    <select id="selectCheckActivity" resultType="java.lang.Integer">
-        select count(*) from pms_course_product
-        where start_time BETWEEN #{startTime,jdbcType=DATE} and #{endTime,jdbcType=DATE}
-        or end_time BETWEEN #{startTime,jdbcType=DATE} and #{endTime,jdbcType=DATE}
+    <select id="selectCheckActivity" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
+        select <include refid="Base_Column_List"/>
+        from pms_course_product
+        where approval_status != 3
+        and status != 3
+        and status != 2
+        and user_id = #{userId}
         <if test="id != null">
             and id != #{id}
         </if>
+        and (date_format(start_time,'%Y-%m-%d') BETWEEN #{startTime,jdbcType=DATE} and #{endTime,jdbcType=DATE}
+        or date_format(end_time,'%Y-%m-%d') BETWEEN #{startTime,jdbcType=DATE} and #{endTime,jdbcType=DATE})
     </select>
     <select id="selectCourseProductById" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
         select
             uc.id coachId, uc.icon coachIcon, uc.coach_name coachName, uc.coach_grade, psp.id, psp.product_name, psp.title, psp.image, psp.price, psp.location, psp.start_time, psp.end_time
         from pms_course_product psp, ums_coach uc
-        where uc.id = psp.shop_id
+        where uc.id = psp.user_id
         and uc.status = 2
         and psp.id = #{productId}
         and psp.status = 1
@@ -190,8 +195,12 @@
         </where>
         ORDER BY pc.sales DESC
     </select>
-    <select id="selectByUserId" resultType="java.lang.Integer">
-        select count(1) from pms_course_product where user_id = #{userId} and certificate_id = #{certificateId} and address_id = #{addressId}
+    <select id="selectByUserId" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
+        select <include refid="Base_Column_List"/>
+        from pms_course_product
+        where user_id = #{userId}
+        and certificate_id = #{certificateId}
+        and address_id = #{addressId}
     </select>
 
     <select id="queryPmsCourseProductByType" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -240,6 +249,26 @@
         where status = #{status}
         and approval_status = 2
     </select>
+    <select id="selectSellerCourseProductListByType" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
+        select
+            uc.id coachId, uc.icon coachIcon, uc.coach_name coachName, uc.coach_grade, psp.id, psp.product_name, psp.title, psp.image, psp.price, psp.location, psp.start_time, psp.end_time
+        from pms_course_product psp, ums_coach uc
+        where uc.id = psp.user_id
+        and uc.status = 2
+        and psp.product_type = #{productType}
+        and psp.user_id = #{userId}
+        and psp.approval_status = 2
+        order by sort,psp.update_time desc
+    </select>
+    <select id="selectProductByUserId" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
+        select <include refid="Base_Column_List"/>
+        from pms_course_product
+        where status = 1
+        and approval_status = 2
+        and user_id = #{userId}
+        and product_type = #{productType}
+        order by update_time desc
+    </select>
 
     <select id="queryPowerNotesCoachPage" parameterType="com.dmd.mall.model.domain.PmsCourseProduct" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
         SELECT
@@ -278,5 +307,8 @@
         AND pc.user_id = #{userId}
         AND DATE_FORMAT( start_time, '%Y%m' ) = DATE_FORMAT( CURDATE() , '%Y%m' )
 
+    </select>
+    <select id="countSellerProductNum" resultType="java.lang.Long">
+        select count(1) from pms_course_product where user_id = #{coachId} and status !=3 and approval_status != 1 and approval_status != 3
     </select>
 </mapper>

@@ -4,6 +4,7 @@ import com.dmd.BeanUtils;
 import com.dmd.ChineseNickNameUtil;
 import com.dmd.PublicUtil;
 import com.dmd.ShareCodeUtil;
+import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
@@ -13,13 +14,16 @@ import com.dmd.mall.model.domain.UmsCoach;
 import com.dmd.mall.model.dto.UmsCoachDto;
 import com.dmd.mall.model.dto.UmsCoachRegisterDto;
 import com.dmd.mall.model.vo.UmsCoachVo;
+import com.dmd.mall.model.vo.UmsMemberVo;
 import com.dmd.mall.security.redis.ValidateCodeRepository;
 import com.dmd.mall.security.sms.ValidateCode;
 import com.dmd.mall.security.sms.ValidateCodeException;
-import com.dmd.mall.service.UmsCoachService;
+import com.dmd.mall.service.*;
 import com.dmd.mall.util.CodeValidateUtil;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
+import com.github.pagehelper.PageInfo;
+import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -47,6 +51,14 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
     private ValidateCodeRepository validateCodeRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UmsCoachIntegrationLogService coachIntegrationLogService;
+    @Autowired
+    private UmsMemberService memberService;
+    @Autowired
+    private UmsFavoritesService umsFavoritesService;
+    @Autowired
+    private PmsCourseProductService courseProductService;
 
     @Override
     public UmsCoachVo selectCoachMessage(Long id) {
@@ -72,7 +84,7 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
     }
 
     @Override
-    public Wrapper findPassword(String telephone, String password, String confirmPassword, String authCode, HttpServletRequest request) {
+    public Wrapper findPassword(String telephone, String newPassword, String confirmPassword, String authCode, HttpServletRequest request) {
         //验证验证码
         try {
             ValidateCode validateCode=validateCodeRepository.get(new ServletWebRequest(request));
@@ -80,7 +92,7 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
         }catch (ValidateCodeException e){
             return WrapMapper.error(e.getMessage());
         }
-        return verification(telephone,null,password,confirmPassword);
+        return verification(telephone,null,newPassword,confirmPassword);
     }
 
     @Override
@@ -121,25 +133,75 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
         UmsCoach coach = new UmsCoach();
         coach.setCoachName(coachRegisterDto.getPhone());
         coach.setPhone(coachRegisterDto.getPhone());
-        coach.setCertificatePic(coachRegisterDto.getPhone());
+        coach.setCertificatePic(coachRegisterDto.getCertificatePic());
         LoginAuthDto loginAuthDto = new LoginAuthDto();
         loginAuthDto.setUserName(coachRegisterDto.getPhone());
+        coach.setStatus(1);
         //如果有审核未通过的信息修改
-        if(umsCoach.getStatus() == 3){
-            coach.setId(umsCoach.getId());
-            coach.setUpdateInfo(loginAuthDto);
-            return umsCoachMapper.updateByPrimaryKeySelective(coach);
+        if(!PublicUtil.isEmpty(umsCoach)){
+            if(umsCoach.getStatus() == 3){
+                coach.setId(umsCoach.getId());
+                coach.setUpdateInfo(loginAuthDto);
+                return umsCoachMapper.updateByPrimaryKeySelective(coach);
+            }
         }
         coach.setGender(0);
         coach.setCoachGrade(1 + "");
-        coach.setStatus(1);
         coach.setInvitationCode(ShareCodeUtil.toSerialCode(Long.valueOf(coachRegisterDto.getPhone())));
         //设置默认昵称
         coach.setNickName(ChineseNickNameUtil.generateName());
         //设置默认的头像
         coach.setIcon("http://47.107.50.253:8080/webapps/uploadFile/compent/20191208145645.png");
+        coach.setIntegration(0);
+        coach.setHistoryIntegration(0);
         coach.setUpdateInfo(loginAuthDto);
         return umsCoachMapper.insertSelective(coach);
+    }
+
+    @Override
+    public void updateIntegration(UmsCoach umsCoach, Integer integration, String operateNote, int changeType) {
+        Preconditions.checkArgument(umsCoach != null, "用户信息不能为空");
+        Preconditions.checkArgument(integration != 0, "要消费的积分不能为空");
+        //判断用户积分是否充足
+        if(umsCoach.getIntegration() < integration){
+            throw new UmsBizException(ErrorCodeEnum.OMS10031015);
+        }
+        Integer totalIntegration = umsCoach.getIntegration();
+        umsCoach.setHistoryIntegration(totalIntegration);
+        umsCoach.setIntegration(totalIntegration - integration);
+        umsCoachMapper.updateByPrimaryKeySelective(umsCoach);
+        //记录日志totalIntegration
+        coachIntegrationLogService.updateIntegrationAndAddLog(umsCoach, integration, totalIntegration, operateNote, changeType);
+    }
+
+    @Override
+    public UmsCoachVo findUmsCoachByCoachId(LoginAuthDto loginAuthDto) {
+        UmsCoach umsCoach = umsCoachMapper.selectByPrimaryKey(loginAuthDto.getUserId());
+        UmsCoachVo umsCoachVo = new UmsCoachVo();
+        BeanUtils.copyProperties(umsCoach, umsCoachVo);
+        return umsCoachVo;
+    }
+
+    @Override
+    public UmsCoachVo findCoachMessageAndCountNum(LoginAuthDto loginAuthDto) {
+        //查询教练信息
+        UmsCoachVo umsCoachVo = this.findUmsCoachByCoachId(loginAuthDto);
+        //统计教练邀请得人数
+        PageInfo<UmsMemberVo> memberVoPageInfo = memberService.findCoachInviteUser(new BaseQuery(), umsCoachVo.getInvitationCode());
+        //统计关注人数
+        Integer totalFollow = umsFavoritesService.queryFavoritesCount(loginAuthDto.getUserId(), loginAuthDto);
+        //查询发布商品总数
+        Long totalProduct = courseProductService.countSellerProductNum(umsCoachVo.getId());
+        umsCoachVo.setTotalInvitations(memberVoPageInfo.getTotal());
+        umsCoachVo.setTotalFollow(totalFollow);
+        umsCoachVo.setTotalProduct(totalProduct);
+        return umsCoachVo;
+    }
+
+    @Override
+    public PageInfo<UmsMemberVo> findCoachInviteUserMessage(BaseQuery baseQuery, LoginAuthDto loginAuthDto) {
+        UmsCoachVo coach = this.findUmsCoachByCoachId(loginAuthDto);
+        return memberService.findCoachInviteUser(baseQuery, coach.getInvitationCode());
     }
 
     private Wrapper verification(String telephone,String oldPassword,String newPassword,String confirmPassword){
@@ -160,5 +222,4 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
         umsCoachMapper.updateByPrimaryKeySelective(umsCoach);
         return WrapMapper.wrap(200, "密码修改成功");
     }
-
 }

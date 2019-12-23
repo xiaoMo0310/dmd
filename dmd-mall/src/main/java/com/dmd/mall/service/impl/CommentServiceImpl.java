@@ -122,13 +122,12 @@ public class CommentServiceImpl implements CommentService{
         //添加发送消息
         if(result >0 ){
             //回复发送消息
-            LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
             MessageDto messageDto = new MessageDto();
             messageDto.setTitle("动态评论消息");
             messageDto.setContent(content);
             messageDto.setJumpAddress(commentBean.getForDynamicId() + "");
-            //发送消息 todo 教练待做
-            noticeService.saveNoticeMessage(loginAuthDto, commentBean.getUserId(), "member", 3, messageDto);
+            //发送消息
+            noticeService.saveNoticeMessage(loginAuthDtos, commentBean.getUserId(), userTypes, 3, messageDto);
         }
         return result;
     }
@@ -181,13 +180,12 @@ public class CommentServiceImpl implements CommentService{
         int result = dynamicMapper.addrCommentNum(commentBean.getForDynamicId());
         if(result >0 ){
             //回复发送消息
-            LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
             MessageDto messageDto = new MessageDto();
             messageDto.setTitle("动态回复消息");
             messageDto.setContent(content);
             messageDto.setJumpAddress(commentBean.getForDynamicId() + "");
-            //发送消息 todo 教练待做
-            noticeService.saveNoticeMessage(loginAuthDto, forUid, "member", 3, messageDto);
+            //发送消息
+            noticeService.saveNoticeMessage(loginAuthDtos, forUid, userTypes, 3, messageDto);
         }
         return result;
     }

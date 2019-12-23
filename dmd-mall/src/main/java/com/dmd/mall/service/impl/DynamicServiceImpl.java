@@ -1,6 +1,5 @@
 package com.dmd.mall.service.impl;
 
-import com.dmd.BeanUtils;
 import com.dmd.WordFilter;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.utils.RequestUtil;
@@ -9,7 +8,6 @@ import com.dmd.mall.mapper.DynamicMapper;
 import com.dmd.mall.mapper.TopicMapper;
 import com.dmd.mall.model.domain.DynamicAlbumTimeBean;
 import com.dmd.mall.model.domain.DynamicBean;
-import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.dto.MessageDto;
 import com.dmd.mall.model.vo.UserDetailsVo;
 import com.dmd.mall.service.DynamicService;
@@ -18,9 +16,8 @@ import com.dmd.mall.service.UmsNoticeService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -243,8 +240,8 @@ public class DynamicServiceImpl implements DynamicService{
             messageDto.setTitle("动态点赞消息");
             messageDto.setContent(dynamicBean.getDynamicContent());
             messageDto.setJumpAddress(dynamicBean.getId() + "");
-            //发送消息 todo 教练待做
-            noticeService.saveNoticeMessage(loginAuthDto, dynamicBean.getUserId(), "member", 2, messageDto);
+            //发送消息
+            noticeService.saveNoticeMessage(loginAuthDto, dynamicBean.getUserId(), userTypes, 2, messageDto);
         }
         return result;
     }

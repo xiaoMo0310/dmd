@@ -3,7 +3,6 @@ package com.dmd.mall.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseService;
-import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.UmsFavoritesMapper;
 import com.dmd.mall.model.domain.TopicBean;
@@ -25,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -108,30 +108,44 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
     }
 
     @Override
-    public JSONObject queryAttention(Long userId, Integer pageNum, Integer pageSize, Integer favoriteType) {
+    public JSONObject queryAttention(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer favoriteType) {
         PageHelper.startPage(pageNum, pageSize);
         List<UmsFavorites> umsFavorites = null;
         if(favoriteType == 1){
             //查询普通用户和教练的
-             umsFavorites = umsFavoritesMapper.queryAttentionUser(userId);
+            if(loginAuthDto.getUserType().equals("member")){
+                umsFavorites = umsFavoritesMapper.queryAttentionUser(loginAuthDto.getUserId(), 1);
+            }else if(loginAuthDto.getUserType().equals("coach")){
+                umsFavorites = umsFavoritesMapper.queryAttentionUser(loginAuthDto.getUserId(), 2);
+            }
         }else if(favoriteType == 2){
             //查询话题
-            umsFavorites = umsFavoritesMapper.queryAttentionTopic(userId);
+            if(loginAuthDto.getUserType().equals("member")){
+                umsFavorites = umsFavoritesMapper.queryAttentionTopic(loginAuthDto.getUserId(), 1);
+            }else if(loginAuthDto.getUserType().equals("coach")){
+                umsFavorites = umsFavoritesMapper.queryAttentionTopic(loginAuthDto.getUserId(), 2);
+            }
         }
         PageInfo<UmsFavorites> favoritesPageInfo = new PageInfo<>(umsFavorites);
         List<UmsFavoritesVo> umsFavoritesVos = favoritesPageInfo.getList().stream().map(favoritePageInfo -> {
             UmsFavoritesVo umsFavoritesVo = new UmsFavoritesVo();
+            //封装普通用户信息
             if (favoritePageInfo.getFavoriteType() == 1) {
                 UmsMember umsMember = umsMemberService.getById(favoritePageInfo.getTargetId());
+                Optional.ofNullable(umsMember).orElseThrow(() ->new UmsBizException("未查询到关注的用户信息"));
                 BeanUtils.copyProperties(umsMember, umsFavoritesVo);
                 BeanUtils.copyProperties(favoritePageInfo, umsFavoritesVo);
                 umsFavoritesVo.setUserId(umsMember.getId());
             }
+            //封装教练用户信息
             if (favoritePageInfo.getFavoriteType() == 2) {
                 UmsCoach umsCoach = umsCoachService.selectByKey(favoritePageInfo.getTargetId());
+                Optional.ofNullable(umsCoach).orElseThrow(() ->new UmsBizException("未查询到关注的教练信息"));
                 BeanUtils.copyProperties(umsCoach, umsFavoritesVo);
                 BeanUtils.copyProperties(favoritePageInfo, umsFavoritesVo);
+                umsFavoritesVo.setNickname(umsCoach.getNickName());
             }
+            //封装话题信息
             if (favoritePageInfo.getFavoriteType() == 6) {
                 List<TopicBean> topicBeans = topicService.queryTopicById(Integer.valueOf(favoritePageInfo.getTargetId() + ""));
                 if(!CollectionUtils.isEmpty(topicBeans)){
@@ -140,6 +154,8 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
                     umsFavoritesVo.setTopicNum(topicBean.getTopicNum());
                     umsFavoritesVo.setTopicPicture(topicBean.getTopicPicture());
                     BeanUtils.copyProperties(favoritePageInfo, umsFavoritesVo);
+                }else {
+                    throw new UmsBizException("未查询到关注的话题信息");
                 }
             }
             return umsFavoritesVo;
@@ -151,21 +167,14 @@ public class UmsFavoritesServiceImpl extends BaseService<UmsFavorites> implement
     }
 
     @Override
-    public Integer queryFavoritesCount(Long userId) {
+    public Integer queryFavoritesCount(Long userId, LoginAuthDto loginAuthDto) {
         int num = 0;
-        //登陆信息
-        LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
         //登陆角色
-        String userTypes = loginAuthDto.getUserType();
         if(loginAuthDto.getUserType().equals("member")){
-            Integer count = umsFavoritesMapper.queryFavoritesCount(userId);
-            num = count;
+            num = umsFavoritesMapper.queryFavoritesCount(userId);
         }else if(loginAuthDto.getUserType().equals("coach")){
-            Integer count = umsFavoritesMapper.queryFavoritesCountByCoach(userId);
-            num = count;
+            num = umsFavoritesMapper.queryFavoritesCountByCoach(userId);
         }
         return num;
     }
-
-
 }
