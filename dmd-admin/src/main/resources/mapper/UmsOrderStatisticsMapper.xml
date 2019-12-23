@@ -29,7 +29,11 @@
         um.nick_name AS  username,
         um.phone ,
         um.create_time ,
+        uc.nick_name AS  coachName,
+        uc.phone AS phoneCoach,
+        uc.created_time AS  coachCreateTime,
         um.invitation_code ,
+        uc.invitation_code AS invitationCodeCoach,
         oo.created_time ,
         oo.payment_time ,
         oo.end_time ,
@@ -39,10 +43,12 @@
         oo.integration_amount ,
         oo.integration,
         oo.status,
-        oo.order_type
+        oo.order_type,
+        oo.user_type AS userType
     FROM
 	oms_order oo
 	LEFT JOIN ums_member um ON oo.member_id = um.id
+    LEFT JOIN ums_coach uc ON oo.member_id = uc.id
 	LEFT JOIN oms_order_item oi ON oo.id = oi.order_id
         <include refid="orderStatisticsWhere"></include>
     </select>
@@ -60,7 +66,7 @@
             </if>
             <!-- 用户名 -->
             <if test="userName !=null and userName != ''">
-                and um.nick_name like '%${userName}%'
+                and (um.nick_name like '%${userName}%' or  uc.nick_name like '%${userName}%')
             </if>
             <!-- 注册手机号 -->
             <if test="phone != null and phone != ''">
@@ -151,7 +157,6 @@
             <if test="status != null">
                 and oo.status = #{status}
             </if>
-            and oo.user_type = "member"
         </where>
     </sql>
 

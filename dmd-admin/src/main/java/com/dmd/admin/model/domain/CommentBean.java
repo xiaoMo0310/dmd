@@ -28,6 +28,15 @@ public class CommentBean {
      * 评论人头像
      */
     private String commentHeadPortrait;
+
+    /**
+     * 教练昵称
+     */
+    private String coachName;
+    /**
+     * 教练头像
+     */
+    private String commentHeadPortraitCoach;
     /**
      * 评论时间为当前时间
      */
@@ -108,6 +117,35 @@ public class CommentBean {
      */
     private String forUserTypeName;
 
+    /**
+     * 被回复者用户昵称
+     */
+    private String forUserTypeName2;
+
+
+    public String getForUserTypeName2() {
+        return forUserTypeName2;
+    }
+
+    public void setForUserTypeName2(String forUserTypeName2) {
+        this.forUserTypeName2 = forUserTypeName2;
+    }
+
+    public String getCoachName() {
+        return coachName;
+    }
+
+    public void setCoachName(String coachName) {
+        this.coachName = coachName;
+    }
+
+    public String getCommentHeadPortraitCoach() {
+        return commentHeadPortraitCoach;
+    }
+
+    public void setCommentHeadPortraitCoach(String commentHeadPortraitCoach) {
+        this.commentHeadPortraitCoach = commentHeadPortraitCoach;
+    }
 
     public Long getCommentId() {
         return commentId;
@@ -267,6 +305,8 @@ public class CommentBean {
                 "commentId=" + commentId +
                 ", commentName='" + commentName + '\'' +
                 ", commentHeadPortrait='" + commentHeadPortrait + '\'' +
+                ", coachName='" + coachName + '\'' +
+                ", commentHeadPortraitCoach='" + commentHeadPortraitCoach + '\'' +
                 ", createTime=" + createTime +
                 ", content='" + content + '\'' +
                 ", type=" + type +
@@ -283,6 +323,7 @@ public class CommentBean {
                 ", endTime=" + endTime +
                 ", forUserType=" + forUserType +
                 ", forUserTypeName='" + forUserTypeName + '\'' +
+                ", forUserTypeName2='" + forUserTypeName2 + '\'' +
                 '}';
     }
 }

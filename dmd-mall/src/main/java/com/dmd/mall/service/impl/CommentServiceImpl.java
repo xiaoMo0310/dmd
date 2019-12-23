@@ -174,7 +174,7 @@ public class CommentServiceImpl implements CommentService{
         }else if(userTypes.equals("coach")){
             commentBean.setUserType(2);
         }
-        //被回复者用户类型(1==用户,2==教练 )一级评论为动态发布者类型
+        //被回复者用户类型(1==用户,2==教练 )
         commentBean.setForUserType(forUserType);
         commentMapper.addComment(commentBean);
         //发布回复，动态评论数加1

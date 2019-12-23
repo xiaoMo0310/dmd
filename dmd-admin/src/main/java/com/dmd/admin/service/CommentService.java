@@ -19,5 +19,5 @@ public interface CommentService {
 
     CommentByDynamicIdVo selectCommentByDynamic(Long forDynamicId, Long commentId, Integer userType);
 
-    List<CommentBean> queryCommentByDynamic(Integer pageNum, Integer pageSize, CommentBean commentBean, Long forDynamicId);
+    List<CommentBean> queryCommentByDynamic(Integer pageNum, Integer pageSize, Long forDynamicId);
 }

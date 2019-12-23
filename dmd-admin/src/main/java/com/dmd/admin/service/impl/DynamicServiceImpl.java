@@ -35,13 +35,22 @@ public class DynamicServiceImpl implements DynamicService {
     @Override
     public List<DynamicBean> queryDynamicPage(Integer pageNum, Integer pageSize, DynamicBean dynamicBean) {
         PageHelper.startPage(pageNum, pageSize);
-        //用户发布
+
         List<DynamicBean> dynamicBeans = dynamicAmdinMappper.queryDynamicPage(dynamicBean);
-        //教练发布
+        for (int i = 0; i < dynamicBeans.size(); i++) {
+            if(dynamicBeans.get(i).getUserType() == 1){
+                dynamicBeans.get(i).setDynamicAuthor(dynamicBeans.get(i).getDynamicAuthor());
+                dynamicBeans.get(i).setDynamicHeadPortrait(dynamicBeans.get(i).getDynamicHeadPortrait());
+            }else if(dynamicBeans.get(i).getUserType() == 2){
+                dynamicBeans.get(i).setDynamicAuthor(dynamicBeans.get(i).getCoachName());
+                dynamicBeans.get(i).setDynamicHeadPortrait(dynamicBeans.get(i).getDynamicHeadPortraitCoach());
+            }
+        }
+        /*//教练发布
         List<DynamicBean> dynamicBeansByCoach = dynamicAmdinMappper.queryDynamicPageByCoach(dynamicBean);
         //数据合并
         dynamicBeans.addAll(dynamicBeansByCoach);
-        dynamicBeans.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
+        dynamicBeans.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));*/
         return dynamicBeans;
     }
 

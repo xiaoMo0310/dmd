@@ -32,15 +32,35 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public List<CommentBean> queryCommentAll(Integer pageNum, Integer pageSize, CommentBean commentBean) {
         PageHelper.startPage(pageNum, pageSize);
-        //用户发布
+        //全部评论
         List<CommentBean> commentBeans = commentMapper.queryCommentAll(commentBean);
-        //教练发布
-        List<CommentBean> commentBeansCoach = commentMapper.queryCommentAllByCoach(commentBean);
+        for (int i = 0; i < commentBeans.size(); i++) {
+            if (commentBeans.get(i).getUserType() == 1){
+                commentBeans.get(i).setCommentHeadPortrait(commentBeans.get(i).getCommentHeadPortrait());
+                commentBeans.get(i).setCommentName(commentBeans.get(i).getCommentName());
+                commentBeans.get(i).setCommentHeadPortraitCoach("");
+                commentBeans.get(i).setCoachName("");
+            }else if(commentBeans.get(i).getUserType() == 2){
+                commentBeans.get(i).setCommentHeadPortraitCoach(commentBeans.get(i).getCommentHeadPortraitCoach());
+                commentBeans.get(i).setCoachName(commentBeans.get(i).getCoachName());
+                commentBeans.get(i).setCommentHeadPortrait("");
+                commentBeans.get(i).setCommentName("");
+            }
+            if(commentBeans.get(i).getForUserType()!=null && commentBeans.get(i).getForUserType() == 1){
+                commentBeans.get(i).setForUserTypeName2(commentBeans.get(i).getForUserTypeName2());
+                commentBeans.get(i).setForUserTypeName("");
+            }else if(commentBeans.get(i).getForUserType()!=null && commentBeans.get(i).getForUserType() == 2){
+                commentBeans.get(i).setForUserTypeName(commentBeans.get(i).getForUserTypeName());
+                commentBeans.get(i).setForUserTypeName2("");
+            }
+        }
+        /*//教练发布
+        List<CommentBean> commentBeansCoach = commentMapper.queryCommentAllByCoach(commentBean);*/
 
-        //数据合并
+        /*//数据合并
         commentBeans.addAll(commentBeansCoach);
         //按照时间倒序排序
-        commentBeans.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
+        commentBeans.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));*/
         return commentBeans;
     }
 
@@ -81,17 +101,26 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<CommentBean> queryCommentByDynamic(Integer pageNum, Integer pageSize, CommentBean commentBean, Long forDynamicId) {
+    public List<CommentBean> queryCommentByDynamic(Integer pageNum, Integer pageSize, Long forDynamicId) {
         PageHelper.startPage(pageNum, pageSize);
-        //用户发布
         List<CommentBean> commentBeans = commentMapper.queryCommentByDynamic(forDynamicId);
-        //教练发布
-        List<CommentBean> commentBeansCoach = commentMapper.queryCommentByDynamicCoach(forDynamicId);
 
-        //数据合并
-        commentBeans.addAll(commentBeansCoach);
-        //按照时间倒序排序
-        commentBeans.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
+        for (int i = 0; i < commentBeans.size(); i++) {
+            if (commentBeans.get(i).getUserType() == 1){
+                commentBeans.get(i).setCommentName(commentBeans.get(i).getCommentName());
+                commentBeans.get(i).setCoachName("");
+            }else if(commentBeans.get(i).getUserType() == 2){
+                commentBeans.get(i).setCoachName(commentBeans.get(i).getCoachName());
+                commentBeans.get(i).setCommentName("");
+            }
+            if(commentBeans.get(i).getForUserType()!=null && commentBeans.get(i).getForUserType() == 1){
+                commentBeans.get(i).setForUserTypeName2(commentBeans.get(i).getForUserTypeName2());
+                commentBeans.get(i).setForUserTypeName("");
+            }else if(commentBeans.get(i).getForUserType()!=null && commentBeans.get(i).getForUserType() == 2){
+                commentBeans.get(i).setForUserTypeName(commentBeans.get(i).getForUserTypeName());
+                commentBeans.get(i).setForUserTypeName2("");
+            }
+        }
         return commentBeans;
     }
 }

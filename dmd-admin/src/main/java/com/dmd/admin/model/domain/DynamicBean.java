@@ -60,6 +60,32 @@ public class DynamicBean {
      */
     private Integer userType;
 
+    /**
+     * 教练昵称
+     */
+    private String coachName;
+
+    /**
+     * 教练头像
+     */
+    private String dynamicHeadPortraitCoach;
+
+    public String getCoachName() {
+        return coachName;
+    }
+
+    public void setCoachName(String coachName) {
+        this.coachName = coachName;
+    }
+
+    public String getDynamicHeadPortraitCoach() {
+        return dynamicHeadPortraitCoach;
+    }
+
+    public void setDynamicHeadPortraitCoach(String dynamicHeadPortraitCoach) {
+        this.dynamicHeadPortraitCoach = dynamicHeadPortraitCoach;
+    }
+
     public Integer getUserType() {
         return userType;
     }
@@ -216,6 +242,8 @@ public class DynamicBean {
                 ", stratTime=" + stratTime +
                 ", endTime=" + endTime +
                 ", userType=" + userType +
+                ", coachName='" + coachName + '\'' +
+                ", dynamicHeadPortraitCoach='" + dynamicHeadPortraitCoach + '\'' +
                 '}';
     }
 }

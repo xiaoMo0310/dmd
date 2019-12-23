@@ -23,7 +23,7 @@
     </resultMap>
 
     <select id="queryCommentAll" parameterType="com.dmd.admin.model.domain.CommentBean" resultMap="commentMap">
-        SELECT
+        <!--SELECT
         dc.commentId,
         um.nick_name AS lw_name,
         um2.nick_name AS forUserTypeName,
@@ -43,6 +43,35 @@
         dmd_dynamic_comment dc
         LEFT JOIN ums_member um ON lw_userid = um.id
         LEFT JOIN ums_coach um2 ON lw_for_uid = um2.id
+        <include refid="commentWhere"></include>
+        ORDER BY
+        dc.lw_date DESC-->
+        SELECT
+        dc.commentId,
+        um.nick_name AS lw_name,
+        um2.nick_name AS coachName,
+        um.icon AS lw_head_portrait,
+        um2.icon AS commentHeadPortraitCoach,
+        um3.nick_name AS forUserTypeName,
+        um4.nick_name AS forUserTypeName2,
+        dc.lw_date,
+        dc.lw_content,
+        dc.lw_comment_type,
+        dc.ip_address,
+        dc.STATUS,
+        dc.delflag,
+        dc.lw_for_uid,
+        dc.lw_for_dynamic_id,
+        dc.lw_userid,
+        dc.lw_for_pid,
+        dc.user_type,
+        dc.for_user_type
+        FROM
+        dmd_dynamic_comment dc
+        LEFT JOIN ums_member um ON lw_userid = um.id
+        LEFT JOIN ums_coach um2 ON lw_userid = um2.id
+        LEFT JOIN ums_coach um3 ON lw_for_uid = um3.id
+        LEFT JOIN ums_member um4 ON lw_for_uid = um4.id
         <include refid="commentWhere"></include>
         ORDER BY
         dc.lw_date DESC
@@ -70,12 +99,15 @@
             <if test="forDiveLogId !=null">
                 and lw_for_diveLog_id = #{forDiveLogId}
             </if>
+            <if test="userType != null">
+                and dc.user_type = #{userType}
+            </if>
             <!-- 用户昵称 -->
             <if test="commentName !=null and commentName != '' ">
-                and um.nick_name like '%${commentName}%'
+                and (um.nick_name like '%${commentName}%' or um2.nick_name like '%${commentName}%')
             </if>
                 and delflag = 0
-                and dc.user_type = 1
+                /*and dc.user_type = 1*/
                 and (dc.lw_for_diveLog_id is null or  dc.lw_for_diveLog_id = "")
         </where>
     </sql>
@@ -208,11 +240,16 @@
 
 
     <select id="queryCommentByDynamic" parameterType="java.lang.Long" resultMap="commentMap">
+
+
         SELECT
         dc.commentId,
         um.nick_name AS lw_name,
-        um2.nick_name AS forUserTypeName,
+        um2.nick_name AS coachName,
         um.icon AS lw_head_portrait,
+        um2.icon AS commentHeadPortraitCoach,
+        um3.nick_name AS forUserTypeName,
+        um4.nick_name AS forUserTypeName2,
         dc.lw_date,
         dc.lw_content,
         dc.lw_comment_type,
@@ -223,14 +260,16 @@
         dc.lw_for_dynamic_id,
         dc.lw_userid,
         dc.lw_for_pid,
-        dc.user_type
+        dc.user_type,
+        dc.for_user_type
         FROM
         dmd_dynamic_comment dc
         LEFT JOIN ums_member um ON lw_userid = um.id
-        LEFT JOIN ums_coach um2 ON lw_for_uid = um2.id
-        WHERE  dc.lw_for_dynamic_id = #{forDynamicId}
+        LEFT JOIN ums_coach um2 ON lw_userid = um2.id
+        LEFT JOIN ums_coach um3 ON lw_for_uid = um3.id
+        LEFT JOIN ums_member um4 ON lw_for_uid = um4.id
+        WHERE dc.lw_for_dynamic_id = #{forDynamicId}
               and delflag = 0
-              and dc.user_type = 1
               and (dc.lw_for_diveLog_id is null or  dc.lw_for_diveLog_id = "")
         ORDER BY
         dc.lw_date DESC

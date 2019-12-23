@@ -1,6 +1,7 @@
 package com.dmd.admin.mapper;
 
 import com.dmd.admin.model.domain.CommentBean;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

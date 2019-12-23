@@ -122,19 +122,18 @@ public class CommentController {
      * 根据动态id查询对应评论
      * @param pageNum
      * @param pageSize
-     * @param commentBean
      * @param forDynamicId
      * @return
      */
     @ApiOperation("根据动态id查询对应评论")
-    @RequestMapping(value = "/selectDynamicByIdComment",method = RequestMethod.POST)
+    @RequestMapping(value = "/selectDynamicByIdComment",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<CommonPage<CommentBean>> queryDynamicById(
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-            CommentBean commentBean,
-            @RequestParam Long forDynamicId) {
-        List<CommentBean> CommentList = commentService.queryCommentByDynamic(pageNum,pageSize,commentBean,forDynamicId);
+            @RequestParam Long forDynamicId
+            ) {
+        List<CommentBean> CommentList = commentService.queryCommentByDynamic(pageNum,pageSize,forDynamicId);
         return CommonResult.success(CommonPage.restPage(CommentList));
     }
 }

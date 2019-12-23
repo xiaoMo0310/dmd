@@ -22,10 +22,12 @@
     </resultMap>
 
     <select id="queryDynamicPage" resultMap="dynamicMap" parameterType="com.dmd.admin.model.domain.DynamicBean">
-        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type,
+        uc.nick_name AS coachName, uc.icon AS dynamicHeadPortraitCoach
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
         LEFT JOIN ums_member um on dy.r_userid = um.id
+        LEFT JOIN ums_coach uc on dy.r_userid = uc.id
         <include refid="dynamicWhere"></include>
         ORDER BY dy.r_createtime DESC
     </select>
@@ -52,11 +54,13 @@
             <if test="topicId != null">
                 and dy.r_topicid = #{topicId}
             </if>
+            <if test="userType != null">
+                and dy.user_type = #{userType}
+            </if>
             <if test="dynamicAuthor != null and dynamicAuthor != ''">
-                and um.nick_name like '%${dynamicAuthor}%'
+                and (um.nick_name like '%${dynamicAuthor}%' OR uc.nick_name like '%${dynamicAuthor}%')
             </if>
                 and dy.delflag = 0
-                and dy.user_type = 1
         </where>
     </sql>
 

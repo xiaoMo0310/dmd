@@ -30,10 +30,22 @@ public class UmsOrderStatisticsVo implements Serializable {
     @Excel(name = "用户名", orderNum = "1" , width = 20 )
     private String userName;
     /**
+     * 教练名称
+     */
+    private String coachName;
+    /**
+     * 用户类型
+     */
+    private String userType;
+    /**
      * 注册手机号
      */
     @Excel(name = "注册手机号", orderNum = "2" , width = 20)
     private String phone;
+    /**
+     * 教练注册手机号
+     */
+    private String phoneCoach;
     /**
      * 注册时间
      */
@@ -42,6 +54,7 @@ public class UmsOrderStatisticsVo implements Serializable {
     @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone="GMT+8")
     private Date userCreateTime;
 
+    private Date coachCreateTime;
     /**
      * 注册查询开始时间
      */
@@ -62,6 +75,10 @@ public class UmsOrderStatisticsVo implements Serializable {
      */
     @Excel(name = "邀请码", orderNum = "4")
     private String invitationCode;
+    /**
+     * 教练邀请码
+     */
+    private String invitationCodeCoach;
     /**
      * 下单时间
      */
@@ -192,6 +209,46 @@ public class UmsOrderStatisticsVo implements Serializable {
     @Excel(name = "订单状态", orderNum = "14",replace = {"待付款_0", "待发货_1","已发货_2","已完成_3","已关闭_4","售后_5","取消_6"})
     private Integer status;
 
+
+    public String getInvitationCodeCoach() {
+        return invitationCodeCoach;
+    }
+
+    public void setInvitationCodeCoach(String invitationCodeCoach) {
+        this.invitationCodeCoach = invitationCodeCoach;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getCoachName() {
+        return coachName;
+    }
+
+    public void setCoachName(String coachName) {
+        this.coachName = coachName;
+    }
+
+    public String getPhoneCoach() {
+        return phoneCoach;
+    }
+
+    public void setPhoneCoach(String phoneCoach) {
+        this.phoneCoach = phoneCoach;
+    }
+
+    public Date getCoachCreateTime() {
+        return coachCreateTime;
+    }
+
+    public void setCoachCreateTime(Date coachCreateTime) {
+        this.coachCreateTime = coachCreateTime;
+    }
 
     public Integer getOrderType() {
         return orderType;
@@ -422,11 +479,16 @@ public class UmsOrderStatisticsVo implements Serializable {
         return "UmsOrderStatisticsVo{" +
                 "memberId=" + memberId +
                 ", userName='" + userName + '\'' +
+                ", coachName='" + coachName + '\'' +
+                ", userType='" + userType + '\'' +
                 ", phone='" + phone + '\'' +
+                ", phoneCoach='" + phoneCoach + '\'' +
                 ", userCreateTime=" + userCreateTime +
+                ", coachCreateTime=" + coachCreateTime +
                 ", startUserCreateTime=" + startUserCreateTime +
                 ", endUserCreateTime=" + endUserCreateTime +
                 ", invitationCode='" + invitationCode + '\'' +
+                ", invitationCodeCoach='" + invitationCodeCoach + '\'' +
                 ", orderCreatedTime=" + orderCreatedTime +
                 ", orderType=" + orderType +
                 ", startOrderCreatedTime=" + startOrderCreatedTime +

@@ -25,13 +25,30 @@ public class UmsOrderStatisticsServiceImpl implements UmsOrderStatisticsService{
     @Override
     public List<UmsOrderStatisticsVo> queryOrderStatisticsPage(Integer pageNum, Integer pageSize, UmsOrderStatisticsVo umsOrderStatisticsVo) {
         PageHelper.startPage(pageNum, pageSize);
-        //用户订单
         List<UmsOrderStatisticsVo> umsOrderStatisticsVos = umsOrderStatisticsMapper.queryOrderStatisticsPage(umsOrderStatisticsVo);
+
+        for (int i = 0; i < umsOrderStatisticsVos.size(); i++) {
+            if (umsOrderStatisticsVos.get(i).getUserType().equals("member")){
+                umsOrderStatisticsVos.get(i).setUserName(umsOrderStatisticsVos.get(i).getUserName());
+                umsOrderStatisticsVos.get(i).setPhone(umsOrderStatisticsVos.get(i).getPhone());
+                umsOrderStatisticsVos.get(i).setUserCreateTime(umsOrderStatisticsVos.get(i).getUserCreateTime());
+                umsOrderStatisticsVos.get(i).setInvitationCode(umsOrderStatisticsVos.get(i).getInvitationCode());
+                umsOrderStatisticsVos.get(i).setCoachName("");
+                umsOrderStatisticsVos.get(i).setPhoneCoach("");
+                umsOrderStatisticsVos.get(i).setCoachCreateTime(null);
+                umsOrderStatisticsVos.get(i).setInvitationCodeCoach("");
+            }else if(umsOrderStatisticsVos.get(i).getUserType().equals("coach")){
+                umsOrderStatisticsVos.get(i).setCoachName(umsOrderStatisticsVos.get(i).getCoachName());
+                umsOrderStatisticsVos.get(i).setPhoneCoach(umsOrderStatisticsVos.get(i).getPhoneCoach());
+                umsOrderStatisticsVos.get(i).setCoachCreateTime(umsOrderStatisticsVos.get(i).getCoachCreateTime());
+                umsOrderStatisticsVos.get(i).setInvitationCodeCoach(umsOrderStatisticsVos.get(i).getInvitationCodeCoach());
+                umsOrderStatisticsVos.get(i).setUserName("");
+                umsOrderStatisticsVos.get(i).setPhone("");
+                umsOrderStatisticsVos.get(i).setUserCreateTime(null);
+                umsOrderStatisticsVos.get(i).setInvitationCode("");
+            }
+        }
         //教练订单
-        List<UmsOrderStatisticsVo> umsOrderStatisticsVosCoach = umsOrderStatisticsMapper.queryOrderStatisticsPageCoach(umsOrderStatisticsVo);
-        //数据合并
-        umsOrderStatisticsVos.addAll(umsOrderStatisticsVosCoach);
-        umsOrderStatisticsVos.sort((o1, o2) -> o2.getOrderCreatedTime().compareTo(o1.getOrderCreatedTime()));
         return umsOrderStatisticsVos;
     }
 
