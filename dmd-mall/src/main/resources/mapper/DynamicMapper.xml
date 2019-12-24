@@ -185,13 +185,13 @@
    <select id="queryDynamicTime" resultMap="dynamicMap">
         SELECT dy.r_id,dy.r_picture,r_author,r_head_portrait,r_praise,r_userid,dy.height,dy.width,dy.user_type
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
-        ON dy.r_topicid  = dt.id WHERE delflag = 0 AND dy.r_picture is not null ORDER BY r_createtime DESC
+        ON dy.r_topicid  = dt.id WHERE delflag = 0 AND dy.r_picture is not null AND dy.r_picture &lt;&gt; "" ORDER BY r_createtime DESC
     </select>
 
     <select id="queryDynamicHeat" resultMap="dynamicMap">
         SELECT dy.r_id,dy.r_picture,r_author,r_head_portrait,r_praise,dy.height,dy.width,dy.user_type
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
-        ON dy.r_topicid  = dt.id WHERE delflag = 0 AND dy.r_picture is not null ORDER BY r_praise DESC , r_createtime DESC
+        ON dy.r_topicid  = dt.id WHERE delflag = 0 AND dy.r_picture is not null AND dy.r_picture &lt;&gt; "" ORDER BY r_praise DESC , r_createtime DESC
     </select>
 
    <select id="queryDynamicByContent" parameterType="java.lang.String" resultMap="dynamicMap">

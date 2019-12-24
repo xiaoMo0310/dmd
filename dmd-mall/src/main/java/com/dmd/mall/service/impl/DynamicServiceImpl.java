@@ -697,7 +697,7 @@ public class DynamicServiceImpl implements DynamicService{
     @Override
     public int addDynamic(DynamicBean dynamicBean) {
         //判断用户是否选择话题类型,如果选择,话题下的动态数量+1
-        if (dynamicBean.getTopicId() != null){
+        if (dynamicBean.getTopicId() != 0 && dynamicBean.getTopicId() != null ){
             topicMapper.addTopicNum(dynamicBean.getTopicId());
         }
         LoginAuthDto loginUser = RequestUtil.getLoginUser();
