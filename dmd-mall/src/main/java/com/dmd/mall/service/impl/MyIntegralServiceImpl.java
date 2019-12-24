@@ -41,24 +41,18 @@ public class MyIntegralServiceImpl implements MyIntegralService{
         //普通用户登录
         if (userTypes.equals("member")){
             Integer integer = umsMemberMapper.queryMyIntegral(userId);
-            if (integer==0){
+            if (integer==null || integer==0){
                 num = 0;
             }
-            else if (integer==null){
-                num = 0;
-            }
-            else if(integer != 0 || integer!=null){
+            else if(integer!=null||integer != 0 ){
                 num = integer;
             }
         }else if(userTypes.equals("coach")){
             Integer integerCoach = umsMemberMapper.queryMyIntegralByCoach(userId);
-            if (integerCoach==0){
+            if (integerCoach==null||integerCoach==0){
                 num = 0;
             }
-            else if (integerCoach==null){
-                num = 0;
-            }
-            else if(integerCoach != 0 || integerCoach!=null){
+            else if(integerCoach!=null || integerCoach != 0  ){
                 num = integerCoach;
             }
         }

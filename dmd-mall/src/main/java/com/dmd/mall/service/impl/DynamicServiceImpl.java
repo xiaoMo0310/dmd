@@ -2,6 +2,7 @@ package com.dmd.mall.service.impl;
 
 import com.dmd.WordFilter;
 import com.dmd.base.dto.LoginAuthDto;
+import com.dmd.base.result.CommonResult;
 import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.mapper.CommentMapper;
 import com.dmd.mall.mapper.DynamicMapper;
@@ -14,6 +15,7 @@ import com.dmd.mall.service.DynamicService;
 import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.service.UmsNoticeService;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -355,6 +357,30 @@ public class DynamicServiceImpl implements DynamicService{
             objects = dynamicBeanList;
             //按照时间倒序排序
             objects.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
+            //分页
+            /*Integer count = objects.size(); // 记录总数
+            System.out.println(count);
+
+            Integer pageCount = 0; // 页数
+            if (count % pageSize == 0) {
+                pageCount = count / pageSize;
+            } else {
+                pageCount = count / pageSize + 1;
+            }
+
+            int fromIndex = 0; // 开始索引
+            int toIndex = 0; // 结束索引
+
+            if (pageNum != pageCount) {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = fromIndex + pageSize;
+            } else {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = count;
+            }
+
+            List pageList = objects.subList(fromIndex, toIndex);
+            return pageList;*/
         }
         //教练登陆
         else if (userTypes.equals("coach")){
@@ -405,6 +431,28 @@ public class DynamicServiceImpl implements DynamicService{
             objects = dynamicBeanList;
             //按照时间倒序排序
             objects.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
+            /*Integer count = objects.size(); // 记录总数
+
+            Integer pageCount = 0; // 页数
+            if (count % pageSize == 0) {
+                pageCount = count / pageSize;
+            } else {
+                pageCount = count / pageSize + 1;
+            }
+
+            int fromIndex = 0; // 开始索引
+            int toIndex = 0; // 结束索引
+
+            if (pageNum != pageCount) {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = fromIndex + pageSize;
+            } else {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = count;
+            }
+
+            List pageList = objects.subList(fromIndex, toIndex);
+            return pageList;*/
         }
 
         return objects;
