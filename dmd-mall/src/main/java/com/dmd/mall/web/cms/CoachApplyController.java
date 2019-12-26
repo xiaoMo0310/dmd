@@ -48,5 +48,4 @@ public class CoachApplyController {
         }
         return CommonResult.failed("提交申请失败");
     }
-
 }

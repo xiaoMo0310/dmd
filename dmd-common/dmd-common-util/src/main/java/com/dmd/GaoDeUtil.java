@@ -29,7 +29,7 @@ public class GaoDeUtil {
 		// http://lbs.amap.com/api/webservice/guide/api/ipconfig/
 		log.info("getCityByIpAddr - 根据IP定位. ipAddr={}", ipAddr);
 		GaodeLocation location = null;
-		String urlAddressIp = "http://restapi.amap.com/v3/ip?key=f8bdce6f882a98635bb0b7b897331327&ip=%s";
+		String urlAddressIp = "http://restapi.amap.com/v3/ip?key=a0702be26e001e719c6a48de11c76568&ip=%s";
 		String url = String.format(urlAddressIp, ipAddr);
 		try {
 			String str = HttpClientUtil.get(HttpConfig.custom().url(url));

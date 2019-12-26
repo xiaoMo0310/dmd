@@ -151,6 +151,7 @@ public class DmdIntegralGiftServiceImpl extends BaseService<DmdIntegralGift> imp
 
 
 
+    @Override
     public List<Map> packageSpecMessage(DmdIntegralGiftSpe dmdIntegralGiftSpe) {
         List<Map> list = new ArrayList<>();
         if(!StringUtils.isEmpty(dmdIntegralGiftSpe.getSize())){

@@ -1,6 +1,7 @@
 package com.dmd.admin.web;
 
 
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.PmsPlayAddress;
 import com.dmd.admin.model.dto.PmsPlayAddressDto;
 import com.dmd.admin.service.PmsPlayAddressService;
@@ -42,6 +43,7 @@ public class PmsPlayAddressController extends BaseController {
         return WrapMapper.ok(pageInfo);
     }
 
+    @OperationLog(content = "修改默认地址")
     @GetMapping("/isDefault/update/{id}")
     @ApiOperation(httpMethod = "GET", value = "修改默认地址")
     @ApiImplicitParam(name ="id", value = "id", paramType = "path", dataType = "long")
@@ -49,6 +51,8 @@ public class PmsPlayAddressController extends BaseController {
         int result = pmsPlayAddressService.updateIsDefaultById(getLoginAuthDto(), id);
         return handleResult(result);
     }
+
+    @OperationLog(content = "添加或修改潜水地址信息")
     @PostMapping("/playAddress/saveOrUpdate")
     @ApiOperation(httpMethod = "POST", value = "添加或修改潜水地址信息")
     @ApiImplicitParam(name ="pmsPlayAddressDto", value = "潜水地址信息", paramType = "body", dataType = "PmsPlayAddressDto")
@@ -65,6 +69,7 @@ public class PmsPlayAddressController extends BaseController {
         return WrapMapper.ok(pmsPlayAddress);
     }
 
+    @OperationLog(content = "删除潜水地址信息")
     @ApiOperation("删除潜水地址信息")
     @RequestMapping(value = "/playAddress/delete", method = RequestMethod.POST)
     public Wrapper deletePlayAddress(@RequestParam("ids") List<Long> ids) {

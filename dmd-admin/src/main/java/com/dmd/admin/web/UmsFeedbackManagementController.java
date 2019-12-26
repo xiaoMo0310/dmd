@@ -1,10 +1,9 @@
 package com.dmd.admin.web;
 
-import com.dmd.admin.model.domain.TopicBean;
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.UmsProblemFeedbackBean;
 import com.dmd.admin.model.domain.UmsUserFeedbackBean;
 import com.dmd.admin.service.UmsFeedbackManagementService;
-import com.dmd.annotation.NoNeedAccessAuthentication;
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
@@ -51,12 +50,8 @@ public class UmsFeedbackManagementController {
         return CommonResult.success(CommonPage.restPage(umsProblemFeedbackBeans));
     }
 
-    /**
-     * 修改启动/禁用
-     * @param umsProblemFeedbackBean
-     * @return
-     */
-    @ApiOperation("修改启动/禁用")
+    @OperationLog(content = "批量删除用户意见反馈")
+    @ApiOperation("修改问题反馈启动/禁用")
     @RequestMapping(value = "/saveOrUpdateStatus",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult saveOrUpdateStatus(@RequestParam Long id,@RequestParam Integer status) {
@@ -70,11 +65,7 @@ public class UmsFeedbackManagementController {
         return CommonResult.failed("修改失败");
     }
 
-    /**
-     * 修改启动/禁用
-     * @param umsProblemFeedbackBean
-     * @return
-     */
+    @OperationLog(content = "修改问题反馈")
     @ApiOperation("修改问题反馈")
     @RequestMapping(value = "/updateStatus",method = RequestMethod.POST)
     @ResponseBody
@@ -190,6 +181,7 @@ public class UmsFeedbackManagementController {
      * @param ids
      * @return
      */
+    @OperationLog(content = "批量删除用户意见反馈")
     @ApiOperation("批量删除用户意见反馈")
     @RequestMapping(value = "/deleteUserFeedback",method = RequestMethod.POST)
     @ResponseBody

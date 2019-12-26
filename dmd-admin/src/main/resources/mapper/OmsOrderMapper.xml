@@ -101,6 +101,9 @@
     <if test="queryParam.createTime!=null and queryParam.createTime!=''">
       AND create_time LIKE concat(#{queryParam.createTime},"%")
     </if>
+      <if test="queryParam.receiverName!=null">
+          AND receiver_name like '%${queryParam.receiverName}%' or receiver_mobile_no = #{queryParam.receiverName}
+      </if>
     order by update_time desc
   </select>
   <update id="delivery">
@@ -152,7 +155,7 @@
         FROM
             oms_order o
             LEFT JOIN oms_order_item oi ON o.id = oi.order_id
-            LEFT JOIN oms_order_operate_history oh ON o.id = oh.order_id
+            LEFT JOIN oms_order_operate_history oh ON o.id = oh.order_id and oh.order_type = 1
         WHERE
             o.id = #{id}
         ORDER BY oi.id ASC,oh.create_time DESC

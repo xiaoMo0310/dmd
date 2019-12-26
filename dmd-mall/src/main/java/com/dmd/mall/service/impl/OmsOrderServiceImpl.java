@@ -361,6 +361,7 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
             throw new OmsBizException(ErrorCodeEnum.OMS10031020);
         }
         courseOrderDetailVo.setProductPic(courseOrderDetailVo.getProductPic().split(",")[0]);
+        updateReturnStatus(courseOrderDetailVo);
         return courseOrderDetailVo;
     }
 
@@ -481,7 +482,6 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
         if(!CollectionUtils.isEmpty(courseOrderDetailVos)){
             courseOrderDetailVos.forEach(courseOrderDetailVo -> {
                 courseOrderDetailVo.setProductPic(courseOrderDetailVo.getProductPic().split(",")[0]);
-                updateReturnStatus(courseOrderDetailVo);
                 List<Map> maps = (List<Map>) JSONArray.parse(courseOrderDetailVo.getSpec());
                 List<Map> sizeList = maps.stream().filter(map -> map.get("key").equals("尺码")).collect(Collectors.toList());
                 if(!CollectionUtils.isEmpty(sizeList)){

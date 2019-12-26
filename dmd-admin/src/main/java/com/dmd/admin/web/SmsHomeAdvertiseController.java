@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.SmsHomeAdvertise;
 import com.dmd.admin.service.SmsHomeAdvertiseService;
 import com.dmd.base.result.CommonPage;
@@ -33,6 +34,7 @@ public class SmsHomeAdvertiseController {
         return CommonResult.failed();
     }
 
+    @OperationLog(content = "删除广告")
     @ApiOperation("删除广告")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
@@ -43,7 +45,7 @@ public class SmsHomeAdvertiseController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("修改上下线状态")
+    @OperationLog(content = "修改广告上下线状态")
     @RequestMapping(value = "/update/status/{id}", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult updateStatus(@PathVariable Long id, Integer status) {
@@ -61,6 +63,7 @@ public class SmsHomeAdvertiseController {
         return CommonResult.success(advertise);
     }
 
+    @OperationLog(content = "修改广告")
     @ApiOperation("修改广告")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody

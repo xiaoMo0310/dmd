@@ -5,10 +5,11 @@ import com.dmd.core.enums.LogTypeEnum;
 import java.lang.annotation.*;
 
 
-/**
- * 操作日志.
- *
- * @author paascloud.net@gmail.com
+/**操作日志管理
+ * @author YangAnsheng
+ * @version 1.0
+ * @createDate 2019/12/26 16:21
+ * @Description
  */
 @Target({ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -16,7 +17,6 @@ import java.lang.annotation.*;
 public @interface LogAnnotation {
 	/**
 	 * 日志类型
-	 *
 	 * @return the log type enum
 	 */
 	LogTypeEnum logType() default LogTypeEnum.OPERATION_LOG;

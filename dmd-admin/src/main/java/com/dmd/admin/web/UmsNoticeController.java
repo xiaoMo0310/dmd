@@ -2,10 +2,10 @@ package com.dmd.admin.web;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.dto.MessageDto;
 import com.dmd.admin.model.dto.MessageListDto;
 import com.dmd.admin.service.UmsNoticeService;
-import com.dmd.core.annotation.LogAnnotation;
 import com.dmd.core.support.BaseController;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
@@ -35,7 +35,6 @@ public class UmsNoticeController extends BaseController {
     @Autowired
     private UmsNoticeService umsNoticeService;
 
-    @LogAnnotation
     @PostMapping("/message/send/{id}/{userType}")
     @ApiOperation(httpMethod = "POST", value = "保存通知信息")
     @ApiImplicitParams({@ApiImplicitParam(name ="id", value = "用户id", paramType = "path", dataType = "Long"),
@@ -73,6 +72,7 @@ public class UmsNoticeController extends BaseController {
         return WrapMapper.ok(object);
     }
 
+    @OperationLog(content = "删除通知消息")
     @PostMapping("/message/delete")
     @ApiOperation(httpMethod = "POST", value = "删除通知消息")
     @ApiImplicitParams({@ApiImplicitParam(name ="ids", value = "id", paramType = "query", dataType = "List")})
@@ -81,6 +81,7 @@ public class UmsNoticeController extends BaseController {
         return handleResult(count);
     }
 
+    @OperationLog(content = "修改通知撤销的状态")
     @PostMapping("/message/update/isCancel/{id}")
     @ApiOperation(httpMethod = "POST", value = "修改通知撤销的状态")
     @ApiImplicitParams({@ApiImplicitParam(name ="id", value = "通知id", paramType = "path", dataType = "Long"),

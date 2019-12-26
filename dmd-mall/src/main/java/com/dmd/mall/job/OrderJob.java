@@ -149,7 +149,7 @@ public class OrderJob {
                     loginAuthDto.setUserType("system");
                     loginAuthDto.setUserName("系统");
                     omsOrderService.updateOrderStatus(loginAuthDto, omsOrder.getOrderSn(), OmsApiConstant.OrderStatusEnum.ORDER_SUCCESS.getCode());
-                    if(confirmOvertime.equals(finishOvertime)){
+                    if(finishOvertime == 0 ){
                         //自动好评 并关闭订单
                         praiseAndCloseOrder(omsOrder.getId(), courseProduct.getId(), omsOrder.getMemberId());
                     }

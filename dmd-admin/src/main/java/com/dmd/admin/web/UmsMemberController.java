@@ -2,6 +2,7 @@ package com.dmd.admin.web;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.dto.UmsUserQueryParam;
 import com.dmd.admin.model.vo.UmsUserVo;
 import com.dmd.admin.service.UmsMemberService;
@@ -78,6 +79,7 @@ public class UmsMemberController extends BaseController {
         return WrapMapper.ok(pageInfo);
     }
 
+    @OperationLog(content = "修改用户的状态信息")
     @GetMapping("user/editStatus")
     @ApiOperation(httpMethod = "GET", value = "修改用户的状态信息")
     @ApiImplicitParams({@ApiImplicitParam(name ="id", value = "用户id", paramType = "query", dataType = "Long"),

@@ -47,6 +47,7 @@ public class OmsOrderServiceImpl implements OmsOrderService {
                     history.setOperateMan("后台管理员");
                     history.setOrderStatus(2);
                     history.setNote("完成发货");
+                    history.setOrderType(1);
                     return history;
                 }).collect(Collectors.toList());
         orderOperateHistoryMapper.insertList(operateHistoryList);
@@ -67,6 +68,7 @@ public class OmsOrderServiceImpl implements OmsOrderService {
             history.setOperateMan("后台管理员");
             history.setOrderStatus(4);
             history.setNote("订单关闭:"+note);
+            history.setOrderType(1);
             return history;
         }).collect(Collectors.toList());
         orderOperateHistoryMapper.insertList(historyList);
@@ -108,6 +110,7 @@ public class OmsOrderServiceImpl implements OmsOrderService {
         history.setOperateMan("后台管理员");
         history.setOrderStatus(receiverInfoParam.getStatus());
         history.setNote("修改收货人信息");
+        history.setOrderType(1);
         orderOperateHistoryMapper.insert(history);
         return count;
     }
@@ -127,6 +130,7 @@ public class OmsOrderServiceImpl implements OmsOrderService {
         history.setOperateMan("后台管理员");
         history.setOrderStatus(moneyInfoParam.getStatus());
         history.setNote("修改费用信息");
+        history.setOrderType(1);
         orderOperateHistoryMapper.insert(history);
         return count;
     }
@@ -144,6 +148,7 @@ public class OmsOrderServiceImpl implements OmsOrderService {
         history.setOperateMan("后台管理员");
         history.setOrderStatus(status);
         history.setNote("修改备注信息："+note);
+        history.setOrderType(1);
         orderOperateHistoryMapper.insert(history);
         return count;
     }

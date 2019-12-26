@@ -2,13 +2,11 @@ package com.dmd.mall.service;
 
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
-import com.dmd.mall.model.domain.DmdIntegralGift;
-import com.dmd.mall.model.domain.IntegralGiftsBean;
-import com.dmd.mall.model.domain.IntegralGiftsSpeBean;
-import com.dmd.mall.model.domain.OmsOrderItem;
+import com.dmd.mall.model.domain.*;
 import com.dmd.mall.model.vo.IntegralProductVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -53,6 +51,13 @@ public interface DmdIntegralGiftService extends IService<DmdIntegralGift> {
      * @return
      */
     IntegralProductVo settlementIntegralProduct(LoginAuthDto loginAuthDto, Long productSkuId, Integer productQuantity);
+
+    /**
+     * 封装积分好礼的规格信息
+     * @param dmdIntegralGiftSpe
+     * @return
+     */
+    List<Map> packageSpecMessage(DmdIntegralGiftSpe dmdIntegralGiftSpe);
 
     Integer selectIntegralGiftsSpeNum(Long id);
 }
