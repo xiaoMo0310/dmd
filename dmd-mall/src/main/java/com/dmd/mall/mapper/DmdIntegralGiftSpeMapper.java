@@ -26,4 +26,6 @@ public interface DmdIntegralGiftSpeMapper extends MyMapper<DmdIntegralGiftSpe> {
     Integer selectIntegralGiftsSpecStock(@Param("id")Long id, @Param("size") String size, @Param("color") String color);
 
     DmdIntegralGiftSpe selectByGiftId(Long giftId);
+
+    Integer selectIntegralGiftsSpeNum(Long id);
 }

@@ -41,4 +41,9 @@ public class DmdIntegralGiftSpeServiceImpl extends BaseService<DmdIntegralGiftSp
     public Integer selectIntegralGiftsSpecStock(Long id, String size, String color) {
         return dmdIntegralGiftSpeMapper.selectIntegralGiftsSpecStock(id, size, color);
     }
+
+    @Override
+    public Integer selectIntegralGiftsSpeNum(Long id) {
+        return dmdIntegralGiftSpeMapper.selectIntegralGiftsSpeNum(id);
+    }
 }

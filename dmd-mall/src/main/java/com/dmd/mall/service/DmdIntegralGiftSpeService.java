@@ -21,4 +21,6 @@ public interface DmdIntegralGiftSpeService extends IService<DmdIntegralGiftSpe> 
     List<IntegralGiftsSpeBean> queryIntegralGiftsSpeById(Long id);
 
     Integer selectIntegralGiftsSpecStock(Long id, String size, String color);
+
+    Integer selectIntegralGiftsSpeNum(Long id);
 }

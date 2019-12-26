@@ -50,4 +50,7 @@
         select <include refid="Base_Column_List"/> from dmd_integral_gift_spe where giftId = #{giftId}
     </select>
 
+    <select id="selectIntegralGiftsSpeNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT SUM(specStock) FROM dmd_integral_gift_spe WHERE giftId = #{id}
+    </select>
 </mapper>

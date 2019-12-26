@@ -168,5 +168,18 @@ public class DmdIntegralGiftController extends BaseController {
         return WrapMapper.ok(integralProductVo);
     }
 
+    /**
+     * 查询对应礼品总库存
+     * @param id
+     * @return
+     */
+    @ApiOperation("查询对应礼品总库存")
+    @RequestMapping(value = "/selectIntegralGiftsSpeNum",method = RequestMethod.GET)
+    public CommonResult<Integer> selectIntegralGiftsSpeNum(@RequestParam Long id) {
+        Integer specStock = dmdIntegralGiftService.selectIntegralGiftsSpeNum(id);
+        return CommonResult.success(specStock);
+    }
+
+
 }
 

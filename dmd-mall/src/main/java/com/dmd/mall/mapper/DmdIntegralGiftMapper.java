@@ -33,4 +33,5 @@ public interface DmdIntegralGiftMapper extends MyMapper<DmdIntegralGift> {
     int deleteIntegralGiftsById(Long id);
 
     DmdIntegralGift selectById(Long productId);
+
 }

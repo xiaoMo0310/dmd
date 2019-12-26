@@ -53,4 +53,6 @@ public interface DmdIntegralGiftService extends IService<DmdIntegralGift> {
      * @return
      */
     IntegralProductVo settlementIntegralProduct(LoginAuthDto loginAuthDto, Long productSkuId, Integer productQuantity);
+
+    Integer selectIntegralGiftsSpeNum(Long id);
 }

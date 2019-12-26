@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/get")
 public class GetUserSigController {
 
-    @ApiOperation("查询我的动态")
+    @ApiOperation("即时通讯UserSig")
     @RequestMapping(value = "/getUserSig",method = RequestMethod.GET)
     @ResponseBody
     public String getUserSig(){

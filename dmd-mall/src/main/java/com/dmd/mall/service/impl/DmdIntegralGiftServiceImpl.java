@@ -149,6 +149,8 @@ public class DmdIntegralGiftServiceImpl extends BaseService<DmdIntegralGift> imp
         return integralProductVo;
     }
 
+
+
     public List<Map> packageSpecMessage(DmdIntegralGiftSpe dmdIntegralGiftSpe) {
         List<Map> list = new ArrayList<>();
         if(!StringUtils.isEmpty(dmdIntegralGiftSpe.getSize())){
@@ -164,5 +166,10 @@ public class DmdIntegralGiftServiceImpl extends BaseService<DmdIntegralGift> imp
             list.add(mapB);
         }
         return list;
+    }
+
+    @Override
+    public Integer selectIntegralGiftsSpeNum(Long id) {
+        return integralGiftSpeService.selectIntegralGiftsSpeNum(id);
     }
 }
