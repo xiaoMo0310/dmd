@@ -16,7 +16,6 @@ spring:
     name: @pom.artifactId@
   profiles:
     active: @profileActive@
-
 mybatis:
   type-aliases-package: com.dmd.mall.model.domain
   mapper-locations: classpath*:mapper/*.xml

@@ -149,6 +149,7 @@ public class DmdIntegralGiftServiceImpl extends BaseService<DmdIntegralGift> imp
         return integralProductVo;
     }
 
+    @Override
     public List<Map> packageSpecMessage(DmdIntegralGiftSpe dmdIntegralGiftSpe) {
         List<Map> list = new ArrayList<>();
         if(!StringUtils.isEmpty(dmdIntegralGiftSpe.getSize())){

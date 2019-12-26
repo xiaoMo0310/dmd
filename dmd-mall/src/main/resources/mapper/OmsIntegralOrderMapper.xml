@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.OmsIntegralOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.mall.model.domain.OmsIntegralOrder">
+    <result column="id" property="id" />
+    <result column="creator" property="creator" />
+    <result column="creator_id" property="creatorId" />
+    <result column="created_time" property="createdTime" />
+    <result column="last_operator" property="lastOperator" />
+    <result column="last_operator_id" property="lastOperatorId" />
+    <result column="update_time" property="updateTime" />
+        <result column="order_sn" property="orderSn" />
+        <result column="member_id" property="memberId" />
+        <result column="user_type" property="userType" />
+        <result column="shop_id" property="shopId" />
+        <result column="member_username" property="memberUsername" />
+        <result column="product_id" property="productId" />
+        <result column="product_pic" property="productPic" />
+        <result column="product_name" property="productName" />
+        <result column="product_title" property="productTitle" />
+        <result column="product_brand" property="productBrand" />
+        <result column="product_type" property="productType" />
+        <result column="product_price" property="productPrice" />
+        <result column="product_quantity" property="productQuantity" />
+        <result column="product_sku_id" property="productSkuId" />
+        <result column="product_category_id" property="productCategoryId" />
+        <result column="product_attr" property="productAttr" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="pay_amount" property="payAmount" />
+        <result column="freight_amount" property="freightAmount" />
+        <result column="pay_type" property="payType" />
+        <result column="source_type" property="sourceType" />
+        <result column="status" property="status" />
+        <result column="order_type" property="orderType" />
+        <result column="delivery_company" property="deliveryCompany" />
+        <result column="delivery_sn" property="deliverySn" />
+        <result column="receiver_name" property="receiverName" />
+        <result column="receiver_mobile_no" property="receiverMobileNo" />
+        <result column="province_name" property="provinceName" />
+        <result column="city_name" property="cityName" />
+        <result column="district_name" property="districtName" />
+        <result column="detail_address" property="detailAddress" />
+        <result column="receiver_zip_code" property="receiverZipCode" />
+        <result column="remark" property="remark" />
+        <result column="confirm_status" property="confirmStatus" />
+        <result column="delete_status" property="deleteStatus" />
+        <result column="use_integration" property="useIntegration" />
+        <result column="payment_time" property="paymentTime" />
+        <result column="delivery_time" property="deliveryTime" />
+        <result column="receive_time" property="receiveTime" />
+        <result column="end_time" property="endTime" />
+        <result column="close_time" property="closeTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        creator,
+        creator_id,
+        created_time,
+        last_operator,
+        last_operator_id,
+        update_time,
+        order_sn, member_id, user_type, shop_id, member_username, product_id, product_pic, product_name, product_title, product_brand, product_type, product_price, product_quantity, product_sku_id, product_category_id, product_attr, total_amount, pay_amount, freight_amount, pay_type, source_type, status, order_type, delivery_company, delivery_sn, receiver_name, receiver_mobile_no, province_name, city_name, district_name, detail_address, receiver_zip_code, remark, confirm_status, delete_status, use_integration, payment_time, delivery_time, receive_time, end_time, close_time
+    </sql>
+
+    <sql id="Integral_Product_Order_List">
+        oo.order_sn, oo.total_amount, oo.id orderId,oo.pay_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time,
+        oo.end_time,oo.status, oo.order_type, oo.product_pic, oo.product_title, oo.product_price, oo.product_quantity,oo.product_attr spec,
+        oo.product_type, oo.product_id,oo.product_name
+    </sql>
+    <select id="selectIntegralOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+        SELECT <include refid="Integral_Product_Order_List"/>
+        FROM oms_integral_order oo
+        where oo.member_id = #{userId}
+        and oo.user_type = #{userType}
+        and oo.status in
+        <foreach collection="statusList" item="status" open="(" close=")" separator=",">
+            #{status}
+        </foreach>
+        order by oo.update_time desc
+    </select>
+    <select id="selectUserOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+        SELECT <include refid="Integral_Product_Order_List"/>
+        FROM oms_integral_order oo
+        where oo.member_id = #{userId}
+        and oo.status = #{status}
+        and oo.user_type = #{userType}
+        order by oo.update_time desc
+    </select>
+
+    <select id="selectUserIntegralOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+        SELECT <include refid="Integral_Product_Order_List"/>
+        FROM oms_integral_order oo
+        where oo.member_id = #{userId} and oo.order_sn = #{orderSn}
+    </select>
+    <select id="selectSellerIntegralOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+        SELECT <include refid="Integral_Product_Order_List"/>
+        FROM oms_integral_order oo
+        where oo.shop_id = #{coachId} and oo.order_sn = #{orderSn}
+    </select>
+</mapper>

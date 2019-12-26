@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.OmsOrder;
 import com.dmd.admin.model.dto.*;
 import com.dmd.admin.model.vo.SetTimeoutVo;
@@ -36,6 +37,7 @@ public class OmsOrderController {
         return CommonResult.success(CommonPage.restPage(orderList));
     }
 
+    @OperationLog(content = "批量发货")
     @ApiOperation("批量发货")
     @RequestMapping(value = "/update/delivery", method = RequestMethod.POST)
     public CommonResult delivery(@RequestBody List<OmsOrderDeliveryParam> deliveryParamList) {
@@ -46,6 +48,7 @@ public class OmsOrderController {
         return CommonResult.failed();
     }
 
+    @OperationLog(content = "批量关闭订单")
     @ApiOperation("批量关闭订单")
     @RequestMapping(value = "/update/close", method = RequestMethod.POST)
     public CommonResult close(@RequestParam("ids") List<Long> ids, @RequestParam String remark) {
@@ -55,7 +58,7 @@ public class OmsOrderController {
         }
         return CommonResult.failed();
     }
-
+    @OperationLog(content = "批量删除订单")
     @ApiOperation("批量删除订单")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public CommonResult delete(@RequestParam("ids") List<Long> ids) {
@@ -73,6 +76,7 @@ public class OmsOrderController {
         return CommonResult.success(orderDetailResult);
     }
 
+    @OperationLog(content = "修改收货人信息")
     @ApiOperation("修改收货人信息")
     @RequestMapping(value = "/update/receiverInfo", method = RequestMethod.POST)
     public CommonResult updateReceiverInfo(@RequestBody OmsReceiverInfoParam receiverInfoParam) {
@@ -83,6 +87,7 @@ public class OmsOrderController {
         return CommonResult.failed();
     }
 
+    @OperationLog(content = "修改订单费用信息")
     @ApiOperation("修改订单费用信息")
     @RequestMapping(value = "/update/moneyInfo", method = RequestMethod.POST)
     public CommonResult updateReceiverInfo(@RequestBody OmsMoneyInfoParam moneyInfoParam) {
@@ -93,6 +98,7 @@ public class OmsOrderController {
         return CommonResult.failed();
     }
 
+    @OperationLog(content = "备注订单")
     @ApiOperation("备注订单")
     @RequestMapping(value = "/update/note", method = RequestMethod.POST)
     public CommonResult updateNote(@RequestParam("id") Long id,

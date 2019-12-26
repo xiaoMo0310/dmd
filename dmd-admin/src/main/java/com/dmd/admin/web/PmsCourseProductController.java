@@ -1,6 +1,7 @@
 package com.dmd.admin.web;
 
 
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.PmsCourseProduct;
 import com.dmd.admin.model.dto.PmsCourseProductDto;
 import com.dmd.admin.model.dto.PmsCourseProductListDto;
@@ -49,6 +50,7 @@ public class PmsCourseProductController extends BaseController {
         return WrapMapper.ok(courseProduct);
     }
 
+    @OperationLog(content = "修改商品的审核状态")
     @PostMapping("/approvalStatus/update")
     @ApiOperation(httpMethod = "POST", value = "修改商品的审核状态")
     @ApiImplicitParam(name ="courseProduct", value = "要修改的信息", paramType = "body", dataType = "PmsCourseProduct")
@@ -72,6 +74,7 @@ public class PmsCourseProductController extends BaseController {
      * 审核通过商品
      * @return
      */
+    @OperationLog
     @ApiOperation("审核通过商品")
     @RequestMapping(value = "/queryAuditPass", method = RequestMethod.GET)
     public CommonResult<Integer> queryAuditPass() {
@@ -83,6 +86,7 @@ public class PmsCourseProductController extends BaseController {
      * 审核未通过商品
      * @return
      */
+    @OperationLog(content = "审核未通过商品")
     @ApiOperation("审核未通过商品")
     @RequestMapping(value = "/queryAuditFailed", method = RequestMethod.GET)
     public CommonResult<Integer> queryAuditFailed() {
