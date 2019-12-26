@@ -59,5 +59,7 @@ public interface DmdIntegralGiftService extends IService<DmdIntegralGift> {
      */
     List<Map> packageSpecMessage(DmdIntegralGiftSpe dmdIntegralGiftSpe);
 
+
     Integer selectIntegralGiftsSpeNum(Long id);
+
 }
