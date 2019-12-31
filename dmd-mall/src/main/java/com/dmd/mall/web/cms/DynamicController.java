@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -47,20 +46,20 @@ public class DynamicController {
      * 分页查询我的动态 改
      * @param userId
      * @return
-     */
-    @ApiOperation("分页查询我的动态")
-    @RequestMapping(value = "/selectDynamicPage",method = RequestMethod.GET)
-    @ResponseBody
-    public CommonResult<PageInfo<DynamicBean>> queryDynamicPage(@RequestParam Long userId,
-                                                                @RequestParam Integer pageNum,
-                                                                @RequestParam Integer pageSize,
-                                                                Integer userType) {
-        List<DynamicBean> dynamicList = dynamicService.queryDynamicPage(userId,pageNum,pageSize,userType);
-        return CommonResult.success(new PageInfo<>(dynamicList));
-    }
+         */
+        @ApiOperation("分页查询我的动态")
+        @RequestMapping(value = "/selectDynamicPage",method = RequestMethod.GET)
+        @ResponseBody
+        public CommonResult<PageInfo<DynamicBean>> queryDynamicPage(@RequestParam Long userId,
+                                                                    @RequestParam Integer pageNum,
+                                                                    @RequestParam Integer pageSize,
+                                                                    Integer userType) {
+            List<DynamicBean> dynamicList = dynamicService.queryDynamicPage(userId,pageNum,pageSize,userType);
+            return CommonResult.success(new PageInfo<>(dynamicList));
+        }
 
-    /**
-     * 查询点赞数
+        /**
+         * 查询点赞数
      * @param 动态id
      * @return
      */
@@ -97,11 +96,6 @@ public class DynamicController {
         Integer shareNum = dynamicService.queryShare(id);
         return CommonResult.success(shareNum);
     }
-
-    /**
-     * 评论数+1,发表留言或者回复时,先修改操作动态表,动态表评论数加一,删除动态时留言回复数据表全部删除。(删除动态时也要注意话题表中动态数相应减一) 删除留言时，先删除回复再删除留言,删除回复执行修改操作评论数减一,再删除留言,评论数再减一。
-     */
-
 
 
     /**
@@ -220,7 +214,7 @@ public class DynamicController {
     @RequestMapping(value = "/selectDynamicTime",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<PageInfo<DynamicBean>> queryDynamicTime(@RequestParam Integer pageNum,
-                                                            @RequestParam Integer pageSize) {
+                                                                @RequestParam Integer pageSize) {
         List<DynamicBean> dynamicList = dynamicService.queryDynamicTime(pageNum,pageSize);
         return CommonResult.success(new PageInfo<>(dynamicList));
     }
@@ -233,7 +227,7 @@ public class DynamicController {
     @RequestMapping(value = "/selectDynamicHeat",method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<PageInfo<DynamicBean>> queryDynamicHeat(@RequestParam Integer pageNum,
-                                                            @RequestParam Integer pageSize) {
+                                                                @RequestParam Integer pageSize) {
         List<DynamicBean> dynamicList = dynamicService.queryDynamicHeat(pageNum,pageSize);
         return CommonResult.success(new PageInfo<>(dynamicList));
     }

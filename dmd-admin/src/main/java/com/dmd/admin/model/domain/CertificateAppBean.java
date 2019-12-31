@@ -28,6 +28,10 @@ public class CertificateAppBean {
      */
     private Long userId;
     /**
+     * 用户名
+     */
+    private String userName;
+    /**
      * 审核状态
      */
     private Integer status;
@@ -175,12 +179,21 @@ public class CertificateAppBean {
         this.reason = reason;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     @Override
     public String toString() {
         return "CertificateAppBean{" +
                 "id=" + id +
                 ", pictures='" + pictures + '\'' +
                 ", userId=" + userId +
+                ", userName='" + userName + '\'' +
                 ", status=" + status +
                 ", certificateId=" + certificateId +
                 ", createTime=" + createTime +
