@@ -43,4 +43,12 @@ dmd:
   enableSqlLogInterceptor: false
   auth:
     refresh-token-url: http://localhost:8000/oauth/token
+  tencent:
+    sms:
+      appId: 1400300687
+      appKey: 081f85c93b305ba6e59b6a5e0c39c6ee
+      smsSign: 香港誼行悅航互聯網
+      templateIdA: 508518
+      templateIdB: 512331
+      templateIdC: 512337
 

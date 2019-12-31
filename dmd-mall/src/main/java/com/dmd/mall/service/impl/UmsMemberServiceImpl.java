@@ -2,6 +2,7 @@ package com.dmd.mall.service.impl;
 
 import com.dmd.ChineseNickNameUtil;
 import com.dmd.RedisKeyUtil;
+import com.dmd.base.constant.GlobalConstant;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
@@ -9,6 +10,7 @@ import com.dmd.base.result.CommonResult;
 import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.UmsMemberMapper;
 import com.dmd.mall.model.domain.MemberDetails;
+import com.dmd.mall.model.domain.UmsCoach;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.domain.UmsMemberExample;
 import com.dmd.mall.model.vo.UmsMemberVo;
@@ -21,10 +23,14 @@ import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.CodeValidateUtil;
 import com.dmd.mall.util.JwtUtil;
 import com.dmd.mall.util.MailUtil;
+import com.dmd.sms.SendUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,15 +49,13 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 会员管理Service实现类
  * Created by macro on 2018/8/3.
  */
+@Slf4j
 @Service
 public class UmsMemberServiceImpl implements UmsMemberService {
     private Logger logger= LoggerFactory.getLogger(getClass());
@@ -67,11 +71,15 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     private UmsMemberLoginLogService memberLoginLogService;
     @Autowired
     private UmsIntegrationChangeLogService integrationChangeLogService;
+    @Autowired
+    private SendUtil sendUtil;
     @Value("${redis.key.prefix.authCode}")
     private String REDIS_KEY_PREFIX_AUTH_CODE;
     @Value("${redis.key.expire.authCode}")
     private Long AUTH_CODE_EXPIRE_SECONDS;
     private static final String SESSION_KEY="smsCode";
+    @Value("${spring.profiles.active}")
+    private String profile;
 
     @Override
     public UmsMember getByUsername(String username) {
@@ -140,23 +148,20 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         memberMapper.insert(umsMember);
         if (invitationCode!=null){
             //在邀请码不等于null的时候自动加入邀请码对应的教练的群
-            String coachUserName=memberMapper.getCoachUser(invitationCode);
+            UmsCoach umsCoach =memberMapper.getCoachUser(invitationCode);
             //调用腾讯接口查询教练群组并加入
 
         }
         //调用腾讯接口将账号和腾讯IM建立关联
 
-        umsMember.setPassword(null);
+        //umsMember.setPassword(null);
         return CommonResult.success(null, "注册成功");
     }
 
     @Override
     public CommonResult generateAuthCode(String telephone,HttpServletRequest request) {
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < 6; i++) {
-            sb.append(random.nextInt(10));
-        }
+        Preconditions.checkArgument(StringUtils.isNotEmpty(telephone), "手机号码不能为空");
+        String smsCode = RandomStringUtils.randomNumeric(6);
         //验证码绑定设备id并存储到redis
         ValidateCode validateCode=new ValidateCode("666666",AUTH_CODE_EXPIRE_SECONDS);
         validateCodeRepository.save(new ServletWebRequest(request),validateCode);//保存验证码到redis
@@ -171,20 +176,17 @@ public class UmsMemberServiceImpl implements UmsMemberService {
                 return CommonResult.failed( "验证码发送失败"+e);
             }
         }else {
-//            long tKey = Instant.now().getEpochSecond();
-//            String password=smsCode.getPassword();
-//            String passwordMd5= MD5Gen.getMD5(MD5Gen.getMD5(password)+tKey);
-//            smsCode.setMobile(telephone);
-//            smsCode.setContent("【潜水伴侣】您正在登陆验证，验证码"+"666666"+",请在15分钟内按页面提示提交验证码，切勿将验证码泄露给他人");
-//            smsCode.setTKey(Long.toString(tKey));
-//            smsCode.setPassword(passwordMd5);
-//            try {
-//                result=SmsCodeUtil.sendMsg(smsCode);
-//            } catch (IOException e){
-//                return CommonResult.failed("链接关闭异常");
-//            }
+            if (GlobalConstant.DEV_PROFILE.equals(profile)) {
+                smsCode = "666666";
+            }
+            if (GlobalConstant.PRO_PROFILE.equals(profile)) {
+                // todo 待放开
+                /*String[] params = {smsCode};
+                sendUtil.sendMsg(params, telephone, "A");
+                smsCode = null;*/
+            }
         }
-        return CommonResult.success("666666", "发送成功");//在真实环境下需要把验证码的数据改成null不该也行可以让app再证一次
+        return CommonResult.success("666666", "发送成功");
     }
 
     @Override

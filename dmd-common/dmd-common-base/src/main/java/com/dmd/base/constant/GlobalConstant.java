@@ -27,7 +27,7 @@ public class GlobalConstant {
 
 	public static final String DEV_PROFILE = "dev";
 	public static final String TEST_PROFILE = "test";
-	public static final String PRO_PROFILE = "pro";
+	public static final String PRO_PROFILE = "prod";
 	public static final int TWO_INT = 2;
 	public static final int M_SIZE = 1024;
 	public static final String ROOT_PREFIX = "dmd";

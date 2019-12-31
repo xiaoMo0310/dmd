@@ -1,5 +1,6 @@
 package com.dmd.mall.mapper;
 
+import com.dmd.mall.model.domain.UmsCoach;
 import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.domain.UmsMemberExample;
 import com.dmd.mall.model.vo.UmsMemberVo;
@@ -37,7 +38,7 @@ public interface UmsMemberMapper {
 
     Set<String> getPermission(@Param("username")String username);
 
-    String getCoachUser(@Param("invitationCode") String invitationCode);
+    UmsCoach getCoachUser(@Param("invitationCode") String invitationCode);
 
     Integer queryMyIntegral(Long userId);
 

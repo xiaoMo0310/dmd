@@ -15,6 +15,7 @@ import com.dmd.admin.service.UmsCoachService;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseService;
+import com.dmd.sms.SendUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
@@ -25,9 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -48,6 +47,8 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UmsMemberLoginLogMapper umsMemberLoginLogMapper;
+    @Autowired
+    private SendUtil sendUtil;
 
 
     @Override
@@ -91,9 +92,8 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
 
     @Override
     public int updateCoachMessageById(UmsCoachDto umsCoachDto, LoginAuthDto loginAuthDto) {
-        UmsCoach umsCoach = new UmsCoach();
+        UmsCoach umsCoach = umsCoachMapper.selectByPrimaryKey(umsCoachDto.getCoachId());
         BeanUtils.copyProperties(umsCoachDto, umsCoach);
-        umsCoach.setId(umsCoachDto.getCoachId());
         umsCoach.setUpdateInfo(loginAuthDto);
         if(umsCoachDto.getStatus() == 2){
             //生成默认登录密码并
@@ -101,9 +101,13 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
             //umsCoach.setPassword(passwordEncoder.encode(numberCode));
             umsCoach.setPassword(passwordEncoder.encode(12345678 + ""));
             umsCoach.setFailureReason(null);
-            //发送短信通知 todo 待做
+            //发送短信通知 todo 待放开
+            /*String[] params = {numberCode};
+            sendUtil.sendMsg(params, umsCoach.getPhone(), "B");*/
         }else if (umsCoachDto.getStatus() == 3){
-            //发送短信通知注册失败 todo 待做
+            //发送短信通知注册失败 todo 待放开
+            /*String[] params = {umsCoachDto.getFailureReason()};
+            sendUtil.sendMsg(params, umsCoach.getPhone(), "C");*/
         }
         int result = umsCoachMapper.updateByPrimaryKeySelective(umsCoach);
         return result;

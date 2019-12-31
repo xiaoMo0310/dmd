@@ -67,7 +67,7 @@ public class OrderJob {
     /**
      * 定时清理未支付的订单
      */
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void clearNoPayOrder(){
         OmsOrderSetting omsOrderSetting = findOmsOrderSettingMessage();
         Integer normalOrderOvertime = omsOrderSetting.getNormalOrderOvertime();
@@ -127,6 +127,7 @@ public class OrderJob {
      * 定时自动完成订单如果完成时间和评价时间相同好评(凌晨1:15执行)
      */
     @Scheduled(cron = "0 15 1 * * ?")
+    @Transactional(rollbackFor = Exception.class)
     public void AutomaticOrderFulfillment(){
         OmsOrderSetting omsOrderSetting = findOmsOrderSettingMessage();
         //确认完成时间

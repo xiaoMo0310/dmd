@@ -1,6 +1,7 @@
 package com.dmd.admin;
 
 import com.dmd.FileUploadUtil;
+import com.dmd.sms.SendUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -29,5 +30,10 @@ public class MallAdminApplication extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return super.configure(builder);
+    }
+
+    @Bean
+    public SendUtil createSmsUtil(){
+        return new SendUtil();
     }
 }

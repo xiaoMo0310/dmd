@@ -388,8 +388,9 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     public void updateReturnStatus(CourseOrderDetailVo courseOrderDetailVo) {
         if(courseOrderDetailVo.getStatus() == OmsApiConstant.OrderStatusEnum.AFTER_SALE.getCode()){
             //查询售后的状态
-            OmsOrderReturnApply applyMessageByOrderSn = orderReturnApplyService.findReturnApplyMessageByOrderSn(courseOrderDetailVo.getOrderSn());
-            courseOrderDetailVo.setReturnStatus(applyMessageByOrderSn.getStatus());
+            OmsOrderReturnApply omsOrderReturnApply = orderReturnApplyService.findReturnApplyMessageByOrderSn(courseOrderDetailVo.getOrderSn());
+            courseOrderDetailVo.setReturnStatus(omsOrderReturnApply.getStatus());
+            courseOrderDetailVo.setReturnApplyTime(omsOrderReturnApply.getCreatedTime());
         }
     }
 
