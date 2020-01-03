@@ -25,14 +25,15 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> implements PmsCourseProductService {
+public class
+PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> implements PmsCourseProductService {
 
     @Autowired
     private PmsCourseProductMapper pmsCourseProductMapper;
 
     @Override
     public PageInfo<PmsCourseProduct> findCourseProductList(PmsCourseProductListDto courseProductListDto) {
-        PageHelper.startPage(courseProductListDto.getPageNum(), courseProductListDto.getPageSize());
+        PageHelper.startPage(courseProductListDto.getPageNum(), courseProductListDto.getPageSize(), courseProductListDto.getOrderBy());
         List<PmsCourseProduct> courseProducts = pmsCourseProductMapper.selectCourseProductList(courseProductListDto);
         return new PageInfo<PmsCourseProduct>(courseProducts);
     }
@@ -60,5 +61,17 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     @Override
     public Integer queryAllMerchandise() {
         return pmsCourseProductMapper.queryAllMerchandise();
+    }
+
+    @Override
+    public PmsCourseProduct findCourseProductAndPageNum(PmsCourseProductListDto courseProductListDto) {
+        //查询商品的信息
+        PmsCourseProduct pmsCourseProduct = pmsCourseProductMapper.selectByPrimaryKey(courseProductListDto.getProductId());
+        //统计数量
+        Long beforeNum = pmsCourseProductMapper.selectBeforeNumByStatus(pmsCourseProduct.getStatus());
+        Long sameNum = pmsCourseProductMapper.selectSameNumByStatusAndId(pmsCourseProduct.getId(), pmsCourseProduct.getStatus());
+        Long pageNum = ((beforeNum+sameNum)/courseProductListDto.getPageSize()) + 1;
+        pmsCourseProduct.setPageNum(Integer.valueOf(pageNum + ""));
+        return pmsCourseProduct;
     }
 }

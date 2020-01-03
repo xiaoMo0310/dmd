@@ -471,7 +471,7 @@
   </select>
 
   <select id="getCoachUser" resultType="com.dmd.mall.model.domain.UmsCoach">
-        select <include refid="Base_Column_List"/> from ums_coach where invitation_code=#{invitationCode}
+        select * from ums_coach where invitation_code=#{invitationCode}
   </select>
 
   <select id="queryMyIntegral" parameterType="java.lang.Long" resultType="java.lang.Integer">
@@ -510,5 +510,8 @@
 
   <select id="queryMyIntegralByCoach" parameterType="java.lang.Long" resultType="java.lang.Integer">
       SELECT integration FROM  ums_coach WHERE id = #{userId}
+  </select>
+  <select id="countNumByInvitationCode" resultType="java.lang.Long">
+    select count(1) from ums_member where invitation_code = #{invitationCode}
   </select>
 </mapper>

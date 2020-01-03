@@ -56,4 +56,6 @@ public interface UmsMemberMapper {
     Integer queryMyIntegralByCoach(Long userId);
 
     List<UmsMemberVo> selectUmsMemberByInvitationCode(String coachInvitationCode);
+
+    long countNumByInvitationCode(@Param("invitationCode") String invitationCode);
 }

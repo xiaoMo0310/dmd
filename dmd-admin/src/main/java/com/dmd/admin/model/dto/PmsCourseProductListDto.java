@@ -14,4 +14,8 @@ public class PmsCourseProductListDto extends BaseQuery {
     private Integer approvalStatus;
 
     private Integer productType;
+
+    private Integer status;
+
+    private Long productId;
 }

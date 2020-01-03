@@ -32,4 +32,8 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     Integer queryAuditFailed();
 
     Integer queryAllMerchandise();
+
+    Long selectBeforeNumByStatus(@Param("status") Integer status);
+
+    Long selectSameNumByStatusAndId(@Param("id")Long id, @Param("status") Integer status);
 }

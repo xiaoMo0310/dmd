@@ -39,4 +39,11 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
     Integer queryAuditFailed();
 
     Integer queryAllMerchandise();
+
+    /**
+     * 查询潜水学证的商品信息及所在的页数
+     * @param courseProductListDto
+     * @return
+     */
+    PmsCourseProduct findCourseProductAndPageNum(PmsCourseProductListDto courseProductListDto);
 }

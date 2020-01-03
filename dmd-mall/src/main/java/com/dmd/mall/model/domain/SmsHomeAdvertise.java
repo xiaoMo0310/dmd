@@ -72,4 +72,9 @@ private static final long serialVersionUID = 1L;
     @Column(name = "link_type")
     private Integer linkType;
 
+    @ApiModelProperty(value = "是否可以跳转(0-不可以 1-可以")
+    @Column(name = "is_jump")
+    private Integer isJump;
+
+
 }

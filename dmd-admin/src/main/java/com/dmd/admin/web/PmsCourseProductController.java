@@ -6,6 +6,7 @@ import com.dmd.admin.model.domain.PmsCourseProduct;
 import com.dmd.admin.model.dto.PmsCourseProductDto;
 import com.dmd.admin.model.dto.PmsCourseProductListDto;
 import com.dmd.admin.service.PmsCourseProductService;
+import com.dmd.annotation.NoNeedAccessAuthentication;
 import com.dmd.base.result.CommonResult;
 import com.dmd.core.support.BaseController;
 import com.dmd.wrapper.WrapMapper;
@@ -37,9 +38,18 @@ public class PmsCourseProductController extends BaseController {
     @PostMapping("/courseProductList/find")
     @ApiOperation(httpMethod = "POST", value = "查询潜水学证的商品列表信息")
     @ApiImplicitParam(name ="courseProductListDto", value = "查询商品信息所需要的参数", paramType = "body", dataType = "PmsCourseProductListDto")
+    @NoNeedAccessAuthentication
     public Wrapper findCourseProductList(@RequestBody PmsCourseProductListDto courseProductListDto) {
         PageInfo<PmsCourseProduct> pmsCourseProductPageInfo = pmsCourseProductService.findCourseProductList(courseProductListDto);
         return WrapMapper.ok(pmsCourseProductPageInfo);
+    }
+
+    @PostMapping("/productAndPageNum/find")
+    @ApiOperation(httpMethod = "POST", value = "查询潜水学证的商品信息及所在的页数")
+    @ApiImplicitParam(name ="courseProductListDto", value = "查询商品信息所需要的参数", paramType = "body", dataType = "PmsCourseProductListDto")
+    public Wrapper findProductAndPageNum(@RequestBody PmsCourseProductListDto courseProductListDto) {
+        PmsCourseProduct courseProductPageVo = pmsCourseProductService.findCourseProductAndPageNum(courseProductListDto);
+        return WrapMapper.ok(courseProductPageVo);
     }
 
     @GetMapping("/courseProduct/find/{id}")
