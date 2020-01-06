@@ -114,6 +114,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
 
     @Override
     public PageInfo<PmsCourseListVo> findCourseProductListByType(BaseQuery baseQuery, Integer type){
+        //下架与删除的商品不显示
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
         List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectCourseProductByType(type);
         if(!CollectionUtils.isEmpty(pmsCourseProductVos)){

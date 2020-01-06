@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,6 +53,10 @@ public class UmsGroupChatServiceImpl extends BaseService<UmsGroupChat> implement
         umsGroupChat.setFounderAccount(founderAccount);
         umsGroupChat.setMemberAccount(memberAccount);
         umsGroupChat.setIsFirst(isFirst);
+        umsGroupChat.setStatus(0);
+        Date date = new Date();
+        umsGroupChat.setUpdateTime(date);
+        umsGroupChat.setCreatedTime(date);
         return umsGroupChatMapper.insertSelective(umsGroupChat);
     }
 

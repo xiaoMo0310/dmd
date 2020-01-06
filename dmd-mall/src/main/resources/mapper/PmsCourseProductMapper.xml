@@ -58,21 +58,25 @@
         where uc.id = psp.user_id
         and uc.status = 2
         and psp.product_type = #{type}
-        and psp.status = 1
         and psp.approval_status = 2
+        and (psp.status != 2 or psp.status != 3)
         order by sort,psp.update_time desc
     </select>
     <select id="selectCoachIdByCertificateId" resultType="java.lang.Long">
         select user_id
         from pms_course_product
-        where certificate_id = #{certificateId} and address_id = #{addressId} and product_type = #{productType} and status = 1 and approval_status = 2
+        where certificate_id = #{certificateId}
+        and address_id = #{addressId}
+        and product_type = #{productType}
+        and (status != 2 or status != 3)
+        and approval_status = 2
     </select>
     <select id="selectByCoachId" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
         select <include refid="Base_Column_List"/>
         from pms_course_product
         where user_id = #{coachId}
         and certificate_id = #{certificateId}
-        and status = 1
+        and (status != 2 or status != 3)
         and approval_status = 2
         and product_type = 1
         <if test="addressId != null">
@@ -240,7 +244,7 @@
         where product_type = #{productType}
         and certificate_id = #{certificateId}
         and approval_status = 2
-        and status = 1
+        and (status != 2 or status != 3)
         group by address_id
     </select>
     <select id="selectByStatus" resultType="com.dmd.mall.model.domain.PmsCourseProduct">

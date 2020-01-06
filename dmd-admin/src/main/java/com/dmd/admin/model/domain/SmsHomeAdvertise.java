@@ -48,6 +48,9 @@ public class SmsHomeAdvertise implements Serializable {
     @ApiModelProperty(value = "链接类型(1-商品 2-话题 3-页面)")
     private Integer linkType;
 
+    @ApiModelProperty(value = "是否可以跳转(0-不可以 1-可以")
+    private Integer isJump;
+
     private static final long serialVersionUID = 1L;
 
 }

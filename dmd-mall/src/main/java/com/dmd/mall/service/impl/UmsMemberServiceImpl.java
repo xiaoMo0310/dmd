@@ -1,6 +1,7 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.ChineseNickNameUtil;
+import com.dmd.PublicUtil;
 import com.dmd.RedisKeyUtil;
 import com.dmd.base.constant.GlobalConstant;
 import com.dmd.base.dto.BaseQuery;
@@ -17,6 +18,7 @@ import com.dmd.mall.model.vo.UmsMemberVo;
 import com.dmd.mall.security.redis.ValidateCodeRepository;
 import com.dmd.mall.security.sms.ValidateCode;
 import com.dmd.mall.security.sms.ValidateCodeException;
+import com.dmd.mall.service.UmsGroupChatService;
 import com.dmd.mall.service.UmsIntegrationChangeLogService;
 import com.dmd.mall.service.UmsMemberLoginLogService;
 import com.dmd.mall.service.UmsMemberService;
@@ -49,7 +51,9 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 会员管理Service实现类
@@ -71,6 +75,8 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     private UmsMemberLoginLogService memberLoginLogService;
     @Autowired
     private UmsIntegrationChangeLogService integrationChangeLogService;
+    @Autowired
+    private UmsGroupChatService umsGroupChatService;
     @Autowired
     private SendUtil sendUtil;
     @Value("${redis.key.prefix.authCode}")
@@ -106,7 +112,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     public CommonResult register(String username, String password, String invitationCode, String authCode, HttpServletRequest request) {
         //验证邀请码是否存在
         int verifiedInvitationCode=memberMapper.verifiedInvitationCode(invitationCode);
-        if (verifiedInvitationCode != 1 && invitationCode!=null && !invitationCode.equals("")){
+        if (verifiedInvitationCode != 1 && !StringUtils.isEmpty(invitationCode)){
             return CommonResult.failed("邀请码不存在");
         }
         //验证验证码
@@ -150,11 +156,18 @@ public class UmsMemberServiceImpl implements UmsMemberService {
             //在邀请码不等于null的时候自动加入邀请码对应的教练的群
             UmsCoach umsCoach =memberMapper.getCoachUser(invitationCode);
             //调用腾讯接口查询教练群组并加入
+            if(!PublicUtil.isEmpty(umsCoach)){
+                //添加创建群组信息
+                //查询该教练是否未首次绑定
+                long memberNum = memberMapper.countNumByInvitationCode(invitationCode);
+                if(memberNum == 0){
+                    umsGroupChatService.createGroupChartMessage(umsCoach.getPhone(), username, 1);
+                }else {
+                    umsGroupChatService.createGroupChartMessage(umsCoach.getPhone(), username, 0);
+                }
+            }
 
         }
-        //调用腾讯接口将账号和腾讯IM建立关联
-
-        //umsMember.setPassword(null);
         return CommonResult.success(null, "注册成功");
     }
 

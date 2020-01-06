@@ -49,6 +49,7 @@ public class UmsMemberController {
 
     @ApiOperation("注册")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @ApiImplicitParam(name ="deviceId", value = "deviceId", dataType = "String", paramType = "header")
     @ResponseBody
     public CommonResult register(@RequestParam(required = true) String username,
                                  @RequestParam(required = true) String password,

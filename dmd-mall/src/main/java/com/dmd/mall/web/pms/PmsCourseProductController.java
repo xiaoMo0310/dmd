@@ -80,7 +80,6 @@ public class PmsCourseProductController extends BaseController {
         return WrapMapper.ok(pmsCertificates);
     }
 
-
     @GetMapping("/certificateProduct/find")
     @ApiOperation(httpMethod = "GET", value = "查询学证产品的详细信息及教练信息,证书信息")
     @ApiImplicitParams({@ApiImplicitParam(name ="certificateId", value = "证书id", dataType = "Long", paramType = "query"),

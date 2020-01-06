@@ -27,6 +27,7 @@ public class SmsHomeAdvertiseServiceImpl implements SmsHomeAdvertiseService {
     public int create(SmsHomeAdvertise advertise) {
         advertise.setClickCount(0);
         advertise.setOrderCount(0);
+        advertise.setIsJump(1);
         return advertiseMapper.insert(advertise);
     }
 
