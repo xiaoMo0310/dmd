@@ -292,7 +292,7 @@ public class DynamicServiceImpl implements DynamicService{
         //动态删除时对应的动态下评论也全部删除
         commentMapper.updateComment(id);
         //动态删除时判断是否有话题id，如果有话题id则话题下动态数量减1
-        List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamicById(id);
+        List<DynamicBean> dynamicBeanList = dynamicMapper.queryDynamicByIdDelflag(id);
         if (dynamicBeanList.get(0).getTopicId() != null){
             topicMapper.reduceTopicNum(dynamicBeanList.get(0).getTopicId());
         }

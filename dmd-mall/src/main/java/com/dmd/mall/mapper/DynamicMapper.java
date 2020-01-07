@@ -133,4 +133,6 @@ public interface DynamicMapper {
     List<DynamicBean> selectTopicByDynamicByCoachHeat(Integer id);
 
     List<DynamicBean> queryDynamicByContentByCoach(@Param("content")String content);
+
+    List<DynamicBean> queryDynamicByIdDelflag(Long id);
 }
