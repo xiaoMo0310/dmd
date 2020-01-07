@@ -59,7 +59,7 @@
         and uc.status = 2
         and psp.product_type = #{type}
         and psp.approval_status = 2
-        and (psp.status != 2 or psp.status != 3)
+        and psp.status not in (2,3)
         order by sort,psp.update_time desc
     </select>
     <select id="selectCoachIdByCertificateId" resultType="java.lang.Long">
@@ -68,7 +68,7 @@
         where certificate_id = #{certificateId}
         and address_id = #{addressId}
         and product_type = #{productType}
-        and (status != 2 or status != 3)
+        and status not in (2,3)
         and approval_status = 2
     </select>
     <select id="selectByCoachId" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
@@ -76,7 +76,7 @@
         from pms_course_product
         where user_id = #{coachId}
         and certificate_id = #{certificateId}
-        and (status != 2 or status != 3)
+        and status not in (2,3)
         and approval_status = 2
         and product_type = 1
         <if test="addressId != null">
@@ -86,7 +86,7 @@
     <select id="selectCourseProductByIds" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
         select <include refid="Base_Column_List"/>
         from pms_course_product
-        where status = 1 and approval_status = 2 and product_type = 1
+        where approval_status = 2 and product_type = 1 and status not in (2,3)
         <if test="certificateId != null">
             and certificate_id = #{certificateId}
         </if>
@@ -164,12 +164,12 @@
     </select>
     <select id="selectCourseProductById" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
         select
-            uc.id coachId, uc.icon coachIcon, uc.coach_name coachName, uc.coach_grade, psp.id, psp.product_name, psp.title, psp.image, psp.price, psp.location, psp.start_time, psp.end_time
+            uc.id coachId, uc.icon coachIcon, uc.coach_name coachName, uc.coach_grade, psp.id, psp.product_name, psp.title, psp.image, psp.price, psp.location, psp.start_time, psp.end_time, psp.status
         from pms_course_product psp, ums_coach uc
         where uc.id = psp.user_id
         and uc.status = 2
         and psp.id = #{productId}
-        and psp.status = 1
+        and psp.status not in (2,3)
         and psp.approval_status = 2
         order by sort desc
     </select>
@@ -237,14 +237,14 @@
         where product_type = #{productType}
         and certificate_id = #{certificateId}
         and approval_status = 2
-        and status = 1
+        and status not in (2,3)
     </select>
     <select id="countCertificateProductNumByAddrrss" resultType="java.util.Map">
         select address_id addressId, count(1) num from pms_course_product
         where product_type = #{productType}
         and certificate_id = #{certificateId}
         and approval_status = 2
-        and (status != 2 or status != 3)
+        and status not in (2,3)
         group by address_id
     </select>
     <select id="selectByStatus" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
