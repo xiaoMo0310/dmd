@@ -5,8 +5,12 @@ package com.dmd.mall.security.social.weixin.config;
 
 import com.dmd.mall.security.social.view.DmdResultView;
 import com.dmd.mall.security.social.weixin.connect.WeixinConnectionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.web.servlet.View;
@@ -20,9 +24,17 @@ import org.springframework.web.servlet.View;
 @Configuration
 public class WeixinAutoConfiguration extends SocialConfigurerAdapter {
 
-	protected ConnectionFactory<?> createConnectionFactory() {
-		return new WeixinConnectionFactory("weixin", "wxd99431bbff8305a0",
-				"60f78681d063590a469f1b297feff3c4");
+	@Autowired
+	private SecurityProperties securityProperties;
+
+	@Override
+	public void addConnectionFactories(ConnectionFactoryConfigurer configurer,
+									   Environment environment) {
+		configurer.addConnectionFactory(createConnectionFactory());
+	}
+	public ConnectionFactory<?> createConnectionFactory() {
+		return new WeixinConnectionFactory("weixin", "wxecf55d2536e35e80",
+				"ab2156a97ca1dc6305d8427899c83a06");
 	}
 
 	@Bean({"connect/weixinConnected","connect/weixinConnect"})

@@ -31,6 +31,7 @@
             LEFT JOIN ums_permission p ON rp.permission_id = p.id
         WHERE
             ar.admin_id = #{adminId}
+            and p.status=1
             AND p.id IS NOT NULL
             AND p.id NOT IN (
                 SELECT
@@ -40,6 +41,7 @@
                     LEFT JOIN ums_permission p ON pr.permission_id = p.id
                 WHERE
                     pr.type = - 1
+                    and p.status=1
                     AND pr.admin_id = #{adminId}
             )
         UNION
@@ -50,6 +52,7 @@
             LEFT JOIN ums_permission p ON pr.permission_id = p.id
         WHERE
             pr.type = 1
+            and p.status=1
             AND pr.admin_id = #{adminId}
     </select>
 
@@ -99,7 +102,11 @@
     </delete>
 
     <select id="getAllPermission" resultType="com.dmd.admin.model.domain.UmsPermission">
-        select * from ums_permission ORDER BY pid
+        select * from ums_permission
+        <if test="type==1">
+            where status=1
+        </if>
+        ORDER BY pid
     </select>
     <update id="isForbiddenPermission">
         update ums_permission set status=#{status} where id=#{id}
@@ -115,6 +122,9 @@
 
     <select id="roleList" resultType="com.dmd.admin.model.domain.UmsRole">
         select * from ums_role
+            <if test="type==1">
+                where status=1
+            </if>
     </select>
     <select id="roleForAdminList" resultType="com.dmd.admin.model.domain.UmsRole">
         select ur.* from ums_role ur
