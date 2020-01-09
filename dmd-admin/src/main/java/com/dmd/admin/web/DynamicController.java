@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.DynamicBean;
 import com.dmd.admin.model.domain.TopicBean;
 import com.dmd.admin.service.DynamicService;
@@ -105,6 +106,7 @@ public class DynamicController {
      * @param ids
      * @return
      */
+    @OperationLog(content = "删除用户动态")
     @ApiOperation("批量删除用户动态")
     @RequestMapping(value = "/updateDynamicDelflagById",method = RequestMethod.POST)
     @ResponseBody

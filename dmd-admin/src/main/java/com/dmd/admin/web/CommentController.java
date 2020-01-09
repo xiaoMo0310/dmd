@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.CommentBean;
 import com.dmd.admin.model.domain.DynamicBean;
 import com.dmd.admin.model.vo.CommentByDynamicIdVo;
@@ -91,6 +92,7 @@ public class CommentController {
      * @param ids
      * @return
      */
+    @OperationLog(content = "删除动态或者日志评论")
     @ApiOperation("批量删除动态或者日志评论")
     @RequestMapping(value = "/updateCommentDelflag",method = RequestMethod.POST)
     @ResponseBody

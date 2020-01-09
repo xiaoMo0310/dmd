@@ -49,8 +49,7 @@ public class UmsFeedbackManagementController {
         List<UmsProblemFeedbackBean> umsProblemFeedbackBeans = umsFeedbackManagementService.queryProblemFeedback(pageNum,pageSize);
         return CommonResult.success(CommonPage.restPage(umsProblemFeedbackBeans));
     }
-
-    @OperationLog(content = "批量删除用户意见反馈")
+    @OperationLog(content = "修改问题反馈状态(启动/禁用)")
     @ApiOperation("修改问题反馈启动/禁用")
     @RequestMapping(value = "/saveOrUpdateStatus",method = RequestMethod.POST)
     @ResponseBody

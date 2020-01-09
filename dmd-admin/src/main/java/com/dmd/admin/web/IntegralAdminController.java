@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.*;
 import com.dmd.admin.service.IntegralAdminService;
 import com.dmd.base.result.CommonPage;
@@ -50,6 +51,7 @@ public class IntegralAdminController {
      * @param integralRuleBean
      * @return
      */
+    @OperationLog(content = "修改积分规则说明")
     @ApiOperation("修改积分规则说明")
     @RequestMapping(value = "/updateIntegralRule",method = RequestMethod.POST)
     @ResponseBody
@@ -141,6 +143,7 @@ public class IntegralAdminController {
      * @param memberId
      * @return
      */
+    @OperationLog(content = "增加用户积分操作")
     @ApiOperation("增加用户积分操作")
     @RequestMapping(value = "/addIntegration",method = RequestMethod.POST)
     @ResponseBody
@@ -174,6 +177,7 @@ public class IntegralAdminController {
      * @param memberId
      * @return
      */
+    @OperationLog(content = "减少用户积分操作")
     @ApiOperation("减少用户积分操作")
     @RequestMapping(value = "/reduceIntegration",method = RequestMethod.POST)
     @ResponseBody
@@ -258,6 +262,7 @@ public class IntegralAdminController {
      * @param integralGiftsBean
      * @return
      */
+    @OperationLog(content = "修改积分好礼")
     @ApiOperation("修改积分好礼")
     @RequestMapping(value = "/updateIntegralGifts",method = RequestMethod.POST)
     @ResponseBody
@@ -304,6 +309,7 @@ public class IntegralAdminController {
      * @param ids
      * @return
      */
+    @OperationLog(content = "删除积分好礼")
     @ApiOperation("批量删除积分好礼")
     @RequestMapping(value = "/deleteIntegralGiftsById",method = RequestMethod.POST)
     @ResponseBody
@@ -387,6 +393,7 @@ public class IntegralAdminController {
      * @param ids
      * @return
      */
+    @OperationLog(content = "礼品上架")
     @ApiOperation("礼品批量上架")
     @RequestMapping(value = "/updateIntegralGiftsPass",method = RequestMethod.POST)
     @ResponseBody
@@ -403,6 +410,7 @@ public class IntegralAdminController {
      * @param ids
      * @return
      */
+    @OperationLog(content = "礼品下架")
     @ApiOperation("礼品批量下架")
     @RequestMapping(value = "/updateIntegralGiftsNoPass",method = RequestMethod.POST)
     @ResponseBody
@@ -420,6 +428,7 @@ public class IntegralAdminController {
      * @param integralGiftsSpeBean
      * @return
      */
+    @OperationLog(content = "修改礼品规格")
     @ApiOperation("修改礼品规格")
     @RequestMapping(value = "/updateIntegralGiftsSpe",method = RequestMethod.POST)
     @ResponseBody
@@ -450,6 +459,7 @@ public class IntegralAdminController {
      * @param ids
      * @return
      */
+    @OperationLog(content = "删除礼品规格")
     @ApiOperation("批量删除礼品规格")
     @RequestMapping(value = "/deleteIntegralGiftsSpeById",method = RequestMethod.POST)
     @ResponseBody
@@ -525,6 +535,7 @@ public class IntegralAdminController {
      * @param memberId
      * @return
      */
+    @OperationLog(content = "增加教练积分操作")
     @ApiOperation("增加教练积分操作")
     @RequestMapping(value = "/addIntegrationCoach",method = RequestMethod.POST)
     @ResponseBody
@@ -557,6 +568,7 @@ public class IntegralAdminController {
      * @param memberId
      * @return
      */
+    @OperationLog(content = "减少教练积分操作")
     @ApiOperation("减少教练积分操作")
     @RequestMapping(value = "/reduceIntegrationCoach",method = RequestMethod.POST)
     @ResponseBody

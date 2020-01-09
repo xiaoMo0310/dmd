@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.TopicBean;
 import com.dmd.admin.service.TopicService;
 import com.dmd.base.result.CommonPage;
@@ -88,6 +89,7 @@ public class TopicController {
      * @param topicBean
      * @return
      */
+    @OperationLog(content = "修改话题")
     @ApiOperation("修改话题")
     @RequestMapping(value = "/addOrUpdateTopic",method = RequestMethod.POST)
     @ResponseBody
@@ -153,6 +155,7 @@ public class TopicController {
      * @param ids
      * @return
      */
+    @OperationLog(content = "删除话题")
     @ApiOperation("批量删除话题")
     @RequestMapping(value = "/deleteTopicById",method = RequestMethod.POST)
     @ResponseBody

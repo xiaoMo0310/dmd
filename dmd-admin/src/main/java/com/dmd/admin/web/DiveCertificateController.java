@@ -1,5 +1,6 @@
 package com.dmd.admin.web;
 
+import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.CertificateAppBean;
 import com.dmd.admin.model.domain.DiveCertificateBean;
 import com.dmd.admin.model.domain.UmsIntegrationChangeHistory;
@@ -97,6 +98,7 @@ public class DiveCertificateController {
      * @param ids
      * @return
      */
+    @OperationLog(content = "证书审核通过")
     @ApiOperation("批量审核通过")
     @RequestMapping(value = "/updateDiveCertificateStatusPass",method = RequestMethod.POST)
     @ResponseBody
@@ -113,6 +115,7 @@ public class DiveCertificateController {
      * @param ids
      * @return
      */
+    @OperationLog(content = "证书审核不通过")
     @ApiOperation("批量审核不通过")
     @RequestMapping(value = "/updateDiveCertificateStatusNoPass",method = RequestMethod.POST)
     @ResponseBody
@@ -136,6 +139,7 @@ public class DiveCertificateController {
      * @param reason
      * @return
      */
+    @OperationLog(content = "证书审核不通过")
     @ApiOperation("审核不通过")
     @RequestMapping(value = "/updateCertificateStatusNoPass",method = RequestMethod.POST)
     @ResponseBody
