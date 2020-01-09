@@ -104,7 +104,7 @@
         pms_course_product
     </select>
     <select id="selectBeforeNumByStatus" resultType="java.lang.Long">
-        select count(1) from pms_course_product where #{status} > status and product_type = 2 order by status, id asc
+        select count(1) from pms_course_product where #{status} > status and product_type = 2 order by status asc, id asc
     </select>
     <select id="selectSameNumByStatusAndId" resultType="java.lang.Long">
         select count(1) from pms_course_product where status = #{status}  and #{id} > id and product_type = 2  order by id asc

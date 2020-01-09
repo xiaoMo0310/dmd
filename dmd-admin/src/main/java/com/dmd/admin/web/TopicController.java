@@ -2,10 +2,13 @@ package com.dmd.admin.web;
 
 import com.dmd.admin.annotation.OperationLog;
 import com.dmd.admin.model.domain.TopicBean;
+import com.dmd.admin.model.vo.TopicVo;
 import com.dmd.admin.service.TopicService;
 import com.dmd.base.result.CommonPage;
 import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,6 +151,16 @@ public class TopicController {
     public CommonResult<TopicBean> findTopicInfoById(@RequestParam Long id){
         TopicBean topicBean = topicService.findTopicInfoById(id);
         return CommonResult.success(topicBean);
+    }
+
+    @ApiOperation(httpMethod = "GET", value = "查询话题信息及所在的页数")
+    @RequestMapping(value = "/topicAndPage/findById/{id}/{pageSize}",method = RequestMethod.GET)
+    @ResponseBody
+    @ApiImplicitParams({@ApiImplicitParam(name ="id", value = "话题id", dataType = "Long", paramType = "path"),
+                        @ApiImplicitParam(name ="pageSize", value = "每页显示条数", dataType = "int", paramType = "path")})
+    public CommonResult<TopicVo> findTopicAndPageById(@PathVariable Long id, @PathVariable Integer pageSize){
+        TopicVo topicVo = topicService.findTopicAndPageById(id, pageSize);
+        return CommonResult.success(topicVo);
     }
 
     /**

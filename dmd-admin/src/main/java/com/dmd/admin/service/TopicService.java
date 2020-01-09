@@ -1,6 +1,7 @@
 package com.dmd.admin.service;
 
 import com.dmd.admin.model.domain.TopicBean;
+import com.dmd.admin.model.vo.TopicVo;
 
 import java.util.List;
 
@@ -21,4 +22,12 @@ public interface TopicService {
     TopicBean findTopicInfoById(Long id);
 
     int deleteTopicById(List<Long> ids);
+
+    /**
+     * 查询话题信息及所在的页数
+     * @param id
+     * @param pageSize
+     * @return
+     */
+    TopicVo findTopicAndPageById(Long id, Integer pageSize);
 }

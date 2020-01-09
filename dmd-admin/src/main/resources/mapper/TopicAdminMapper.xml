@@ -17,7 +17,7 @@
     <select id="queryTopicPage" parameterType="com.dmd.admin.model.domain.TopicBean" resultMap="topicMap">
         SELECT id,topicName,topicNum,topicDescribes,createTime,topicPicture,updateTime,operationName FROM dmd_dynamic_topic
         <include refid="topicWhere"></include>
-        ORDER BY topicNum DESC
+        ORDER BY topicNum DESC ,id DESC
     </select>
 
     <!-- 公用标签 -->
@@ -89,6 +89,12 @@
     <select id="queryTopic" resultMap="topicMap">
         SELECT id,topicName FROM dmd_dynamic_topic
         ORDER BY topicNum DESC
+    </select>
+    <select id="selectBeforeNumByTopicNum" resultType="java.lang.Long">
+        select count(1) from dmd_dynamic_topic where topicNum > #{topicNum} order by topicNum DESC, id DESC
+    </select>
+    <select id="selectSameNumByTopicNumAndId" resultType="java.lang.Long">
+        select count(1) from dmd_dynamic_topic where topicNum = #{topicNum} and id > #{id} order by id DESC
     </select>
 
     <update id="reduceTopicNum" parameterType="map">

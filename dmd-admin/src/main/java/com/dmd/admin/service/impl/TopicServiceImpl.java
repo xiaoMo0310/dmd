@@ -1,7 +1,9 @@
 package com.dmd.admin.service.impl;
 
+import com.dmd.BeanUtils;
 import com.dmd.admin.mapper.TopicAdminMapper;
 import com.dmd.admin.model.domain.TopicBean;
+import com.dmd.admin.model.vo.TopicVo;
 import com.dmd.admin.service.TopicService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +71,19 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public int deleteTopicById(List<Long> ids) {
         return topicMapper.deleteTopicById(ids);
+    }
+
+    @Override
+    public TopicVo findTopicAndPageById(Long id, Integer pageSize) {
+        TopicBean topicBean = this.findTopicInfoById(id);
+        //查询所在的页数
+        Long beforeNum = topicMapper.selectBeforeNumByTopicNum(topicBean.getTopicNum());
+        Long sameNum = topicMapper.selectSameNumByTopicNumAndId(topicBean.getId(), topicBean.getTopicNum());
+        Long pageNum = ((beforeNum+sameNum)/pageSize) + 1;
+        TopicVo topicVo = new TopicVo();
+        BeanUtils.copyProperties(topicBean, topicVo);
+        topicVo.setPageNum(Integer.valueOf(pageNum + ""));
+        return topicVo;
     }
 
 }

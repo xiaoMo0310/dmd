@@ -27,4 +27,8 @@ public interface TopicAdminMapper {
     List<TopicBean> queryTopic();
 
     void reduceTopicNum(@Param("list")List<Long> dynamicTopicId,@Param("size") Integer size);
+
+    Long selectBeforeNumByTopicNum(Integer topicNum);
+
+    Long selectSameNumByTopicNumAndId(@Param("id") Integer id, @Param("topicNum") Integer topicNum);
 }
