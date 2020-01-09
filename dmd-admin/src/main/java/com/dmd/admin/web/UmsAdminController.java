@@ -56,9 +56,13 @@ public class UmsAdminController {
     @ResponseBody
     public CommonResult login(@RequestBody UmsAdminLoginParam umsAdminLoginParam, BindingResult result) {
         String token = adminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
-        if (token == null) {
-            return CommonResult.validateFailed("用户名或密码错误");
+        if (token==null) {
+            return CommonResult.validateFailed("未知异常");
         }
+        if (token.contains("用户")) {
+            return CommonResult.validateFailed(token);
+        }
+
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
@@ -86,10 +90,12 @@ public class UmsAdminController {
     public CommonResult getAdminInfo(Principal principal) {
         String username = principal.getName();
         UmsAdmin umsAdmin = adminService.getAdminByUsername(username);
+        List<UmsPermission> permissionList = adminService.getPermissionList(umsAdmin.getId());
         Map<String, Object> data = new HashMap<>();
         data.put("username", umsAdmin.getUsername());
         data.put("roles", new String[]{"TEST"});
         data.put("icon", umsAdmin.getIcon());
+        data.put("permissionList", permissionList);
         return CommonResult.success(data);
     }
 
@@ -189,8 +195,8 @@ public class UmsAdminController {
     @ApiOperation("获取所有权限")
     @RequestMapping(value = "/allPermission", method = RequestMethod.POST)
     @ResponseBody
-    public Wrapper<PageInfo> getAllPermission(@RequestBody BaseQuery baseQuery) {
-        PageInfo pageInfo = adminService.getAllPermission(baseQuery);
+    public Wrapper<PageInfo> getAllPermission(@RequestBody BaseQuery baseQuery,String type) {
+        PageInfo pageInfo = adminService.getAllPermission(baseQuery,type);
         return WrapMapper.ok(pageInfo);
     }
     @ApiOperation("禁用和启用权限")
@@ -217,8 +223,8 @@ public class UmsAdminController {
     @ApiOperation("获取所有角色")
     @RequestMapping(value = "/roleList", method = RequestMethod.POST)
     @ResponseBody
-    public Wrapper<PageInfo> roleList(@RequestBody BaseQuery baseQuery) {
-        PageInfo pageInfo = adminService.getRoleList(baseQuery);
+    public Wrapper<PageInfo> roleList(@RequestBody BaseQuery baseQuery,String type) {
+        PageInfo pageInfo = adminService.getRoleList(baseQuery,type);
         return  WrapMapper.ok(pageInfo);
     }
     @ApiOperation("建立权限和角色的关系")

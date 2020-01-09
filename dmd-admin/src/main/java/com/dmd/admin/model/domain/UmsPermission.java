@@ -34,17 +34,41 @@ public class UmsPermission extends BaseQuery implements Serializable{
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
+    @ApiModelProperty(value = "是否显示")
+    private int isShow;
+    @ApiModelProperty(value = "访问路径")
+    private String path;
+
     @ApiModelProperty(value = "排序")
     private Integer sort;
+    private Meta meta=new Meta();
+    private List<UmsPermission> children;
 
-    private List<UmsPermission> umsPermissions;
-
-    public List<UmsPermission> getUmsPermissions() {
-        return umsPermissions;
+    public String getPath() {
+        return path;
     }
 
-    public void setUmsPermissions(List<UmsPermission> umsPermissions) {
-        this.umsPermissions = umsPermissions;
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public int getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(int isShow) {
+        this.isShow = isShow;
+    }
+    public Meta getMeta() {
+        return meta;
+    }
+
+    public List<UmsPermission> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<UmsPermission> children) {
+        this.children = children;
     }
 
     private static final long serialVersionUID = 1L;
@@ -70,6 +94,7 @@ public class UmsPermission extends BaseQuery implements Serializable{
     }
 
     public void setName(String name) {
+        this.meta.setTitle(name);
         this.name = name;
     }
 
@@ -86,6 +111,7 @@ public class UmsPermission extends BaseQuery implements Serializable{
     }
 
     public void setIcon(String icon) {
+        this.meta.setIcon(icon);
         this.icon = icon;
     }
 

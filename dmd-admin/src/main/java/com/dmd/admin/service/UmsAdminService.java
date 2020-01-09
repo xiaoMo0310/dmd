@@ -82,7 +82,7 @@ public interface UmsAdminService {
     /**
      * 所有权限列表
     */
-    PageInfo getAllPermission(BaseQuery baseQuery);
+    PageInfo getAllPermission(BaseQuery baseQuery,String type);
 
     /**
      * 所有权限列表
@@ -100,7 +100,7 @@ public interface UmsAdminService {
     /**
      * 查询所有角色
      */
-    PageInfo getRoleList(BaseQuery baseQuery);
+    PageInfo getRoleList(BaseQuery baseQuery,String type);
     /**
      * 建立角色和权限的关系
      */

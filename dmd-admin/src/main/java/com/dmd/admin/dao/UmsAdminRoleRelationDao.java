@@ -57,13 +57,13 @@ public interface UmsAdminRoleRelationDao {
      */
     int deletePermissionForRole(@Param("roleId") Long roleId);
 
-    List<UmsPermission> getAllPermission();
+    List<UmsPermission> getAllPermission(@Param("type") String type);
 
     int isForbiddenPermission(@Param("id") Long id,@Param("status") int status);
 
     List<UmsPermission> roleForPermission(@Param("roleId") Long roleId);
 
-    List<UmsRole> roleList();
+    List<UmsRole> roleList(@Param("type") String type);
     List<UmsRole> roleForAdminList(@Param("adminId") Long adminId);
 
     //是否启用角色

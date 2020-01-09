@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -106,7 +107,10 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         try {
             AdminUserDetails userDetails = (AdminUserDetails) userDetailsService.loadUserByUsername(username);
             if(!passwordEncoder.matches(password,userDetails.getPassword())){
-                throw new BadCredentialsException("密码不正确");
+                return "用户名或密码不正确";
+            }
+            if(userDetails.getUmsAdmin().getStatus().equals(0)){
+                return "用户被禁用";
             }
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -249,13 +253,26 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public List<UmsPermission> getPermissionList(Long adminId) {
-        return adminRoleRelationDao.getPermissionList(adminId);
+        List<UmsPermission> list=adminRoleRelationDao.getPermissionList(adminId);
+        UmsPermission u=new UmsPermission();
+        u.setId(0L);
+        return getPer(list,u);
     }
-
+    public List<UmsPermission> getPer(List<UmsPermission> list,UmsPermission u){
+        List<UmsPermission> newList=new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            if (list.get(i).getPid()==u.getId()){
+                newList.add(list.get(i));
+                u.setChildren(newList);
+                getPer(list,list.get(i));
+            }
+        }
+        return newList;
+    }
     @Override
-    public PageInfo getAllPermission(BaseQuery baseQuery) {
+    public PageInfo getAllPermission(BaseQuery baseQuery,String type) {
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
-        List<UmsPermission> umsPermissions=adminRoleRelationDao.getAllPermission();
+        List<UmsPermission> umsPermissions=adminRoleRelationDao.getAllPermission(type);
         List<UmsPermission> rolePermission=adminRoleRelationDao.roleForPermission(baseQuery.getRoleId());
         //用于判断所有权限中角色的权限
         for (UmsPermission umsPermission:umsPermissions){
@@ -265,6 +282,13 @@ public class UmsAdminServiceImpl implements UmsAdminService {
                 }
             }
         }
+
+        if(type.equals("1")){
+            UmsPermission u=new UmsPermission();
+            u.setId(0L);
+            umsPermissions=getPer(umsPermissions,u);
+        }
+
         return new PageInfo<>(umsPermissions);
     }
 
@@ -284,10 +308,10 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     }
 
     @Override
-    public PageInfo getRoleList(BaseQuery baseQuery) {
+    public PageInfo getRoleList(BaseQuery baseQuery,String type) {
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
         List<UmsRole> umsRolesForAmin=new ArrayList<>();
-        List<UmsRole> umsRoles =adminRoleRelationDao.roleList();
+        List<UmsRole> umsRoles =adminRoleRelationDao.roleList(type);
         if (baseQuery.getAdminId()!=null){
             if (baseQuery.getAdminId()!=null){
                 umsRolesForAmin=adminRoleRelationDao.roleForAdminList(baseQuery.getAdminId());

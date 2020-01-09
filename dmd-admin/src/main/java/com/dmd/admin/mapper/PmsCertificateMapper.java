@@ -1,7 +1,7 @@
 package com.dmd.admin.mapper;
 
 import com.dmd.admin.model.domain.PmsCertificate;
-import com.dmd.base.dto.BaseQuery;
+import com.dmd.admin.model.dto.PmsCertificateDto;
 import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,9 @@ import java.util.List;
 @Component
 public interface PmsCertificateMapper extends MyMapper<PmsCertificate> {
 
-    List<PmsCertificate> selectCertificateList(BaseQuery baseQuery);
+    List<PmsCertificate> selectCertificateList(PmsCertificateDto certificateDto);
 
     int selectCertificateCount();
+
+    Long countBeforeCertificate(Integer certificateLevel);
 }

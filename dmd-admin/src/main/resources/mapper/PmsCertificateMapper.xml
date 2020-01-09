@@ -34,10 +34,16 @@
     <select id="selectCertificateList" resultType="com.dmd.admin.model.domain.PmsCertificate">
         select <include refid="Base_Column_List"/>
         from pms_certificate
-        order by #{orderBy}
+        where 1 = 1
+        <if test="status != null" >
+            and status = #{status}
+        </if>
     </select>
     <select id="selectCertificateCount" resultType="java.lang.Integer">
         select count(1) from pms_certificate
+    </select>
+    <select id="countBeforeCertificate" resultType="java.lang.Long">
+        select count(1) from pms_certificate where #{certificateLevel} > CONVERT(certificate_level,SIGNED) and status = 1 order by CONVERT(certificate_level,SIGNED) asc
     </select>
 
 </mapper>

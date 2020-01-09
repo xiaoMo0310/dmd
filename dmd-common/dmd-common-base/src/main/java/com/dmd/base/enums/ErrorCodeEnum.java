@@ -361,7 +361,7 @@ public enum ErrorCodeEnum {
 	/**
 	 * PMS 10021017 error code enum.
 	 */
-	PMS10021017(10021017, "产品已下架或者删除, productId=%s"),
+	PMS10021017(10021017, "产品已下架或者删除"),
 	/**
 	 * PMS 10021018 error code enum.
 	 */
@@ -439,6 +439,10 @@ public enum ErrorCodeEnum {
 	 * PMS 10021032error code enum.
 	 */
 	PMS10021032(10021032, "减库存失败"),
+	/**
+	 * PMS 10021033error code enum.
+	 */
+	PMS10021033(10021033, "产品已售完"),
 // 1003 订单中心
 	/**
 	 * OMS 10031001 error code enum.

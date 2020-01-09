@@ -294,6 +294,12 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         if(pmsCourseListVo == null){
             throw new PmsBizException(ErrorCodeEnum.PMS10021003);
         }
+        if(pmsCourseListVo.getStatus() == 4){
+            throw new PmsBizException(ErrorCodeEnum.PMS10021027);
+        }
+        if(pmsCourseListVo.getStatus() == 5){
+            throw new PmsBizException(ErrorCodeEnum.PMS10021033);
+        }
         pmsCourseListVo.setImage(pmsCourseListVo.getImage().split(",")[0]);
         //查询当前用户可用积分数量
         UmsMember umsMember = umsMemberService.selectByLoginAuthDto(loginAuthDto);

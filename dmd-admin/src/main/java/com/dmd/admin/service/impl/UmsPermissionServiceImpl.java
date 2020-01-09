@@ -64,7 +64,7 @@ public class UmsPermissionServiceImpl implements UmsPermissionService {
     private UmsPermissionNode covert(UmsPermission permission, List<UmsPermission> permissionList){
         UmsPermissionNode node = new UmsPermissionNode();
         BeanUtils.copyProperties(permission,node);
-        List<UmsPermissionNode> children = permissionList.stream()
+        List<UmsPermission> children = permissionList.stream()
                 .filter(subPermission -> subPermission.getPid().equals(permission.getId()))
                 .map(subPermission -> covert(subPermission,permissionList)).collect(Collectors.toList());
         node.setChildren(children);

@@ -21,6 +21,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
     private DataSource dataSource;
     @Autowired
     private DmdConnectionSignUp signUp;
+    //成功或失败处理器
     @Autowired(required = false)
     private SocialAuthenticationFilterPostProcessor processor;
     @Override

@@ -1,7 +1,7 @@
 package com.dmd.admin.service;
 
 import com.dmd.admin.model.domain.PmsCertificate;
-import com.dmd.base.dto.BaseQuery;
+import com.dmd.admin.model.dto.PmsCertificateDto;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.github.pagehelper.PageInfo;
@@ -18,10 +18,10 @@ public interface PmsCertificateService extends IService<PmsCertificate> {
 
     /**
      * 分页查询数据
-     * @param baseQuery
+     * @param certificateDto
      * @return
      */
-    PageInfo<PmsCertificate> findCertificateList(BaseQuery baseQuery);
+    PageInfo<PmsCertificate> findCertificateList(PmsCertificateDto certificateDto);
 
     /**
      * 添加或修改证书信息
@@ -43,4 +43,11 @@ public interface PmsCertificateService extends IService<PmsCertificate> {
      * @return
      */
     int selectCertificateCount();
+
+    /**
+     * 根据id查询证书信息
+     * @param id
+     * @return
+     */
+    PmsCertificate findCertificateAndPageById(Long id, Integer pageSize);
 }

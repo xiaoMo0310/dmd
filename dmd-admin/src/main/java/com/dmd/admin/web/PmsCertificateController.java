@@ -2,14 +2,15 @@ package com.dmd.admin.web;
 
 
 import com.dmd.admin.model.domain.PmsCertificate;
+import com.dmd.admin.model.dto.PmsCertificateDto;
 import com.dmd.admin.service.PmsCertificateService;
-import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -35,10 +36,10 @@ public class PmsCertificateController extends BaseController {
     private PmsCertificateService pmsCertificateService;
 
     @PostMapping("/certificateList/findByPage")
-    @ApiOperation(httpMethod = "POST", value = "查询待分账的账单")
-    @ApiImplicitParam(name ="baseQuery", value = "搜索分页数据", paramType = "body", dataType = "BaseQuery")
-    public Wrapper findCertificateList(@RequestBody BaseQuery baseQuery) {
-        PageInfo<PmsCertificate> pageInfo = pmsCertificateService.findCertificateList(baseQuery);
+    @ApiOperation(httpMethod = "POST", value = "查询全部的证书信息")
+    @ApiImplicitParam(name ="PmsCertificateDto", value = "查询需要数据", paramType = "body", dataType = "BaseQuery")
+    public Wrapper findCertificateList(@RequestBody PmsCertificateDto certificateDto) {
+        PageInfo<PmsCertificate> pageInfo = pmsCertificateService.findCertificateList(certificateDto);
         return WrapMapper.ok(pageInfo);
     }
 
@@ -51,10 +52,19 @@ public class PmsCertificateController extends BaseController {
     }
 
     @GetMapping("/certificate/findById/{id}")
-    @ApiOperation(httpMethod = "GET", value = "查询所有的证书信息")
+    @ApiOperation(httpMethod = "GET", value = "根据id查询证书信息")
     @ApiImplicitParam(name ="id", value = "主键id", dataType = "long", paramType = "path")
     public Wrapper findCertificateById(@PathVariable Long id) {
         PmsCertificate pmsCertificate = pmsCertificateService.findCertificateById(id);
+        return WrapMapper.ok(pmsCertificate);
+    }
+
+    @GetMapping("/certificateAndPage/findById/{id}/{pageSize}")
+    @ApiOperation(httpMethod = "GET", value = "根据id查询证书信息及页码")
+    @ApiImplicitParams({@ApiImplicitParam(name ="id", value = "主键id", dataType = "long", paramType = "path"),
+            @ApiImplicitParam(name ="pageSize", value = "每页显示条数", dataType = "int", paramType = "path")})
+    public Wrapper findCertificateAndPageById(@PathVariable Long id, @PathVariable Integer pageSize) {
+        PmsCertificate pmsCertificate = pmsCertificateService.findCertificateAndPageById(id, pageSize);
         return WrapMapper.ok(pmsCertificate);
     }
 
