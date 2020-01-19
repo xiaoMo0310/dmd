@@ -40,7 +40,7 @@ public class OmsOrderAppraiseServiceImpl extends BaseService<OmsOrderAppraise> i
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertAppraiseMessage(LoginAuthDto loginAuthDto, OrderAppraiseDto orderAppraiseDto) {
-        OmsOrder order = omsOrderService.getOmsOrderByOrderId(loginAuthDto, orderAppraiseDto.getOrderId());
+        OmsOrder order = omsOrderService.selectByKey(orderAppraiseDto.getOrderId());
         if (order.getStatus() != OmsApiConstant.OrderStatusEnum.ORDER_SUCCESS.getCode()) {
             throw new OmsBizException(ErrorCodeEnum.OMS10031023);
         }

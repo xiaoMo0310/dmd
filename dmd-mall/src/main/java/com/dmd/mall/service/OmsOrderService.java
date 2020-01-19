@@ -106,11 +106,10 @@ public interface OmsOrderService extends IService<OmsOrder> {
 
     /**
      * 根据订单号查询订单信息
-     * @param loginAuthDto
      * @param orderId
      * @return
      */
-    OmsOrder getOmsOrderByOrderId(LoginAuthDto loginAuthDto, Long orderId);
+    OmsOrder getOmsOrderByOrderId(Long orderId);
 
     List<CourseOrderDetailVo> queryOrderListByStatus(Integer orderType, Integer status);
 

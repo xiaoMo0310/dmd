@@ -91,8 +91,8 @@
     </select>
 
     <select id="selectUserOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
-         SELECT <include refid="Course_Product_Order_List"/>
-         FROM oms_order oo
+        SELECT <include refid="Course_Product_Order_List"/>
+        FROM oms_order oo
         left join ums_coach uc on oo.shop_id = uc.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
@@ -104,7 +104,7 @@
     </select>
     <select id="selectSellerOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
         SELECT <include refid="Seller_Course_Product_Order_List"/>
-         FROM oms_order oo
+        FROM oms_order oo
         left join ums_member um on oo.member_id = um.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
@@ -115,7 +115,7 @@
     </select>
     <select id="selectUserOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
         SELECT <include refid="Course_Product_Order_List"/>
-         FROM oms_order oo
+        FROM oms_order oo
         left join ums_coach uc on oo.shop_id = uc.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
@@ -123,7 +123,7 @@
     </select>
     <select id="selectSellerOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
         SELECT <include refid="Seller_Course_Product_Order_List"/>
-         FROM oms_order oo
+        FROM oms_order oo
         left join ums_member um on oo.member_id = um.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id

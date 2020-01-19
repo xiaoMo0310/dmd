@@ -9,6 +9,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -47,6 +48,10 @@ public class UmsWebMvcConfig extends WebMvcConfigurationSupport {
 		PcObjectMapper.buidMvcMessageConverter(converters);
 	}
 
-
-
+	@Override
+	public RequestMappingHandlerMapping createRequestMappingHandlerMapping() {
+		ApiVersionHandlerMapping handlerMapping = new ApiVersionHandlerMapping();
+		handlerMapping.setOrder(0);
+		return handlerMapping;
+	}
 }

@@ -17,10 +17,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import tk.mybatis.spring.annotation.MapperScan;
 
-@SpringBootApplication
-@EnableScheduling
 @EnableWebMvc
 @EnableSwagger2
+@EnableScheduling
+@SpringBootApplication
 @EnableTransactionManagement
 @EnableConfigurationProperties
 @EnableCaching

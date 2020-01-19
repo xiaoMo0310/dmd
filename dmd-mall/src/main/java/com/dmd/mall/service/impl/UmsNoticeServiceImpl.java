@@ -121,6 +121,13 @@ public class UmsNoticeServiceImpl extends BaseService<UmsNotice> implements UmsN
 
     @Override
     public void saveNoticeMessage(LoginAuthDto loginAuthDto, Long userId, String userType, Integer messageType, MessageDto messageDto) {
+        //查询是否有当前评论或者是点赞的消息
+        if(messageType == 2 || messageType == 3){
+            Long num = umsNoticeMapper.countNoticeNum(userId, userType, messageType, messageDto.getJumpAddress());
+            if(num >= 1){
+                return;
+            }
+        }
         UmsNotice umsNotice = saveUmsNotice(loginAuthDto, userType, 1, messageType, messageDto);
         //添加用户通知标志信息
         noticeMarkService.insertNoticeMarkMessage(umsNotice.getId(), userId, userType, messageType, loginAuthDto);

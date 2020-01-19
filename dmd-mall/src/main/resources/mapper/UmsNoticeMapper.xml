@@ -43,5 +43,17 @@
         from ums_notice
         where type = #{type}  and message_type = #{messageType} and is_delete = 1 and is_cancel = 1
     </select>
+    <select id="countNoticeNum" resultType="java.lang.Long">
+        select  count(1)
+        from ums_notice un, ums_notice_mark unm
+        where un.id = unm.notice_id
+        and unm.message_type = #{messageType}
+        and unm.user_type = #{userType}
+        and unm.user_id = #{userId}
+        and un.jump_address = #{jumpAddress}
+        and unm.is_read = 0
+        and un.is_delete != 0
+        and un.is_cancel != 0
+    </select>
 
 </mapper>

@@ -78,7 +78,6 @@ public class UmsMemberController {
     @ApiOperation(httpMethod = "POST", value = "刷新token")
     @ResponseBody
     public Wrapper refreshToken(@RequestBody RefreshTokenDto refreshTokenDto, HttpServletRequest request) {
-        System.out.println("刷新进来了");
         String accessToken = refreshTokenDto.getAccessToken();
         String refreshToken = refreshTokenDto.getRefreshToken();
         String loginType = refreshTokenDto.getLoginType();

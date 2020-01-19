@@ -438,12 +438,11 @@ public class OmsOrderServiceImpl extends BaseService<OmsOrder> implements OmsOrd
     }
 
     @Override
-    public OmsOrder getOmsOrderByOrderId(LoginAuthDto loginAuthDto, Long orderId) {
+    public OmsOrder getOmsOrderByOrderId(Long orderId) {
         //查询订单
-        Long userId = loginAuthDto.getUserId();
-        OmsOrder order = omsOrderMapper.selectByUserIdAndOrderId(userId, loginAuthDto.getUserType(), orderId);
+        OmsOrder order = omsOrderMapper.selectByPrimaryKey(orderId);
         if (order == null) {
-            logger.error("该用户此订单不存在, userId={}, orderNo={}", userId, orderId);
+            logger.error("该用户此订单不存在, orderId={}",  orderId);
             throw new OmsBizException(ErrorCodeEnum.OMS10031003);
         }
         return order;

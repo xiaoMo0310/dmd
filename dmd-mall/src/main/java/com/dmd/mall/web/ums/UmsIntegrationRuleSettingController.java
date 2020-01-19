@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>
  * 积分消费设置 前端控制器
  * </p>
- *
  * @author YangAnsheng
  * @since 2019-10-15
  */

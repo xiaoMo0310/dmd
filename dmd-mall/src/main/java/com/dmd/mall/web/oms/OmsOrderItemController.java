@@ -24,7 +24,5 @@ public class OmsOrderItemController extends BaseController {
 
     @Autowired
     private OmsOrderItemService omsOrderItemService;
-
-
 }
 

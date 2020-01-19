@@ -23,4 +23,6 @@ public interface UmsNoticeMapper extends MyMapper<UmsNotice> {
     UmsNotice selectById(@Param("noticeId") Long noticeId, @Param("messageType") Integer messageType);
 
     List<UmsNotice> selectByType(@Param("type") Integer type, @Param("messageType") Integer messageType);
+
+    Long countNoticeNum(@Param("userId")Long userId, @Param("userType") String userType, @Param("messageType") Integer messageType, @Param("jumpAddress") String jumpAddress);
 }

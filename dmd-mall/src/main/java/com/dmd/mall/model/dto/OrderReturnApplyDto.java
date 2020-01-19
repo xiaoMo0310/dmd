@@ -30,10 +30,10 @@ public class OrderReturnApplyDto implements Serializable {
     @ApiModelProperty("订单编号")
     private String orderSn;
 
-    @ApiModelProperty("原因")
+    @ApiModelProperty("用户申请退款原因")
     private String reason;
 
-    @ApiModelProperty("说明")
+    @ApiModelProperty("用户申请退款说明")
     private String description;
 
     @ApiModelProperty("图片")

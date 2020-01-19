@@ -2,13 +2,12 @@ package com.dmd.mall.web.ums;
 
 
 import com.dmd.FileUploadUtil;
-import com.dmd.GaoDeUtil;
-import com.dmd.base.constant.GlobalConstant;
+import com.dmd.TaoBaoUtil;
 import com.dmd.base.result.CommonResult;
 import com.dmd.base.result.FileResult;
+import com.dmd.core.annotation.ApiVersion;
 import com.dmd.core.support.BaseController;
 import com.dmd.core.utils.RequestUtil;
-import com.dmd.gaode.GaodeLocation;
 import com.dmd.mall.model.dto.FindPasswordDto;
 import com.dmd.mall.model.dto.UmsCoachRegisterDto;
 import com.dmd.mall.service.UmsCoachService;
@@ -85,8 +84,26 @@ public class UmsCoachController extends BaseController {
         }
         logger.info(remoteAddr);
         logger.info(location);
-         GaodeLocation gaodeLocation = GaoDeUtil.getCityByIpAddr(location);
-        String remoteLocation = gaodeLocation.getProvince().contains("市") ? gaodeLocation.getCity() : gaodeLocation.getProvince() + GlobalConstant.Symbol.SHORT_LINE + gaodeLocation.getCity();
+        String remoteLocation = TaoBaoUtil.getCityByIpAddr(location);
+        logger.info(remoteLocation);
+        return CommonResult.success(remoteLocation);
+    }
+    @ApiVersion(1)
+    @ApiOperation("获取ip")
+    @PostMapping(value="/findIp")
+    @ResponseBody
+    public CommonResult getIpA(HttpServletRequest request) {
+        final String remoteAddr = RequestUtil.getRemoteAddr(request);
+        String temp = "127.0.";
+        String temp2 = "192.168.";
+        String temp3 = "0:0:";
+        String location = remoteAddr;
+        if (location.startsWith(temp) || location.startsWith(temp2) || location.startsWith(temp3)) {
+            location = "111.199.188.14";
+        }
+        logger.info(remoteAddr);
+        logger.info(location);
+        String remoteLocation = TaoBaoUtil.getCityByIpAddr(location);
         logger.info(remoteLocation);
         return CommonResult.success(remoteLocation);
     }
