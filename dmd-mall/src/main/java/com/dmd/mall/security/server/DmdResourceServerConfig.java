@@ -1,11 +1,10 @@
 package com.dmd.mall.security.server;
 
 import com.dmd.mall.component.*;
-import com.dmd.mall.security.filter.LoginFilter;
+import com.dmd.mall.security.filter.SocialLoginFilter;
 import com.dmd.mall.security.redis.ValidateCodeRepository;
 import com.dmd.mall.security.sms.SmsCodeFilter;
 import com.dmd.mall.security.sms.SmsCodeSecurityConfig;
-import com.dmd.mall.security.usernameLogin.MyUsernamePasswordSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 @Configuration
@@ -25,14 +25,14 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
     private GoAuthenticationSuccessHandler goAuthenticationSuccessHandler;
     @Autowired
     private SmsCodeSecurityConfig smsCodeSecurityConfig;
-    @Autowired
-    private LoginFilter loginFilter;
-    @Autowired
-    private MyUsernamePasswordSecurityConfig myUsernamePasswordSecurityConfig;
+//    @Autowired
+//    private MyUsernamePasswordSecurityConfig myUsernamePasswordSecurityConfig;
     @Autowired
     private ValidateCodeRepository validateCodeRepository;
     @Autowired
     private SpringSocialConfigurer springSocialConfigurer;
+    @Autowired
+    private SocialLoginFilter socialLoginFilter;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -42,8 +42,9 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
         SmsCodeFilter smsCodeFilter=new SmsCodeFilter();
         smsCodeFilter.setValidateCodeRepository(validateCodeRepository);
         http.addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(socialLoginFilter, SecurityContextPersistenceFilter.class)
                 .formLogin()
+                .loginPage("/sso/login")
                 .successHandler(goAuthenticationSuccessHandler)//登陆成功处理器
                 .failureHandler(new GoAuthenticationFailureHandler())//登陆失败处理器
                 .and()
@@ -83,8 +84,8 @@ public class DmdResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable()
-                .apply(myUsernamePasswordSecurityConfig)
-                .and()
+//                .apply(myUsernamePasswordSecurityConfig)
+//                .and()
                 .apply(smsCodeSecurityConfig)//验证码登陆配置
                 .and()
                 .apply(springSocialConfigurer);//第三方登陆

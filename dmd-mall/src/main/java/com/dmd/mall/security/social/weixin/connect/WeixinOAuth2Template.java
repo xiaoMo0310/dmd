@@ -98,13 +98,19 @@ public class WeixinOAuth2Template extends OAuth2Template {
 		}
 		
 		WeixinAccessGrant accessToken = new WeixinAccessGrant(
-				MapUtils.getString(result, "access_token"), 
-				MapUtils.getString(result, "scope"), 
-				MapUtils.getString(result, "refresh_token"), 
+				MapUtils.getString(result, "access_token"),
+				MapUtils.getString(result, "scope"),
+				MapUtils.getString(result, "refresh_token"),
 				MapUtils.getLong(result, "expires_in"));
-		
+
 		accessToken.setOpenId(MapUtils.getString(result, "openid"));
-		
+//		WeixinAccessGrant accessToken = new WeixinAccessGrant(
+//				"access_token",
+//				"scope",
+//				"refresh_token",
+//				4564L);
+//
+//		accessToken.setOpenId("OPENID");
 		return accessToken;
 	}
 	

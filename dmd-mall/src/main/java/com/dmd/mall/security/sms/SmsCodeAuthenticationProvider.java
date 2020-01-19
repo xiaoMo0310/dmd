@@ -30,12 +30,9 @@ public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         SmsCodeAuthenticationToken smsToken=(SmsCodeAuthenticationToken)authentication;
-        String type=smsToken.getType();
-        String loginType=smsToken.getLoginType();
         MemberDetails userDetails=null;
         synchronized (MyUserDetailsService.class){
             userDetailsService.setType("smsCode");
-            userDetailsService.setLoginType(loginType);
             userDetails= (MemberDetails) userDetailsService.loadUserByUsername((String) smsToken.getPrincipal());
         }
         SmsCodeAuthenticationToken smsCodeToken=new SmsCodeAuthenticationToken(userDetails,userDetails.getAuthorities());

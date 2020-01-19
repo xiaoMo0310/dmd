@@ -111,9 +111,11 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     @Override
     public CommonResult register(String username, String password, String invitationCode, String authCode, HttpServletRequest request) {
         //验证邀请码是否存在
-        int verifiedInvitationCode=memberMapper.verifiedInvitationCode(invitationCode);
-        if (verifiedInvitationCode != 1 && !StringUtils.isEmpty(invitationCode)){
-            return CommonResult.failed("邀请码不存在");
+        if (!StringUtils.isEmpty(invitationCode)){
+            int verifiedInvitationCode=memberMapper.verifiedInvitationCode(invitationCode);
+            if(verifiedInvitationCode != 1 ){
+                return CommonResult.failed("邀请码不存在");
+            }
         }
         //验证验证码
         ValidateCode validateCode=validateCodeRepository.get(new ServletWebRequest(request));

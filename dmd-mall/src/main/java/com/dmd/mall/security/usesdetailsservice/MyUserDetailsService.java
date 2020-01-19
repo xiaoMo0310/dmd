@@ -1,7 +1,9 @@
 package com.dmd.mall.security.usesdetailsservice;
 
+import com.dmd.core.utils.ThreadLocalUtil;
 import com.dmd.mall.model.domain.MemberDetails;
 import com.dmd.mall.model.domain.UmsMember;
+import com.dmd.mall.security.social.SocialConfig;
 import com.dmd.mall.service.UmsMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -14,13 +16,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MyUserDetailsService implements UserDetailsService, SocialUserDetailsService {
-    private String loginType;
-    public String getLoginType() {
-        return loginType;
-    }
-    public void setLoginType(String loginType) {
-        this.loginType = loginType;
-    }
     private String type="";
     public String getType() {
         return type;
@@ -30,8 +25,11 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
     }
     @Autowired
     private UmsMemberService memberService;
+    @Autowired
+    private SocialConfig socialConfig;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        String loginType= ThreadLocalUtil.threadLocal.get().get("loginType");
         try {
             UmsMember member =null;
             if (loginType.equals("member")){
@@ -51,14 +49,19 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
             return new MemberDetails(member);
         }finally {
             type="";
-            loginType="";
         }
 
     }
 
     @Override
     public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
-        UmsMember member = memberService.getByUsername(userId);
+        UmsMember member =null;
+        String loginType= ThreadLocalUtil.threadLocal.get().get("loginType");
+        if (loginType.equals("member")){
+            member = memberService.getByUsername(userId);
+        }else if (loginType.equals("coach")){
+            member = memberService.getByUsernameCoach(userId);
+        }
         return new MemberDetails(member);
     }
 }

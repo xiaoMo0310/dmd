@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -31,10 +32,10 @@ public class TokenInterceptor implements HandlerInterceptor {
 
 	@Resource
 	private RedisTemplate<String, Object> redisTemplate;
-
 	private static final String OPTIONS = "OPTIONS";
 	private static final String AUTH_PATH1 = "/sso";
 	private static final String AUTH_PATH2 = "/oauth";
+	private static final String AUTH_PATH6 = "/auth";
 	private static final String AUTH_PATH3 = "/error";
 	private static final String AUTH_PATH4 = "/api";
 	private static final String AUTH_PATH5 = "/actuator";
@@ -79,7 +80,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-
 		/*Enumeration<String> paraNames=request.getParameterNames();
 		for(Enumeration<String> e = paraNames; e.hasMoreElements();){
 			String thisName=e.nextElement().toString();
@@ -93,7 +93,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 		}*/
 		String uri = request.getRequestURI();
 		log.info("<== preHandle - 权限拦截器.  url={}", uri);
-		if (uri.contains(AUTH_PATH1) || uri.contains(AUTH_PATH2) || uri.contains(AUTH_PATH3) || uri.contains(AUTH_PATH4) || uri.contains(AUTH_PATH5)) {
+		if (uri.contains(AUTH_PATH1) || uri.contains(AUTH_PATH2) || uri.contains(AUTH_PATH3) || uri.contains(AUTH_PATH4) || uri.contains(AUTH_PATH5)||uri.contains(AUTH_PATH6)) {
 			log.info("<== preHandle - 配置URL不走认证.  url={}", uri);
 			return true;
 		}
@@ -141,6 +141,9 @@ public class TokenInterceptor implements HandlerInterceptor {
 	}
 
 	private boolean isHaveAccess(Object handler) {
+		if (handler instanceof ResourceHttpRequestHandler){
+			return true;
+		}
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
 		Method method = handlerMethod.getMethod();
 		NoNeedAccessAuthentication responseBody = AnnotationUtils.findAnnotation(method, NoNeedAccessAuthentication.class);
@@ -165,5 +168,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 		}
 		return buffer;
 	}
+
 }
   

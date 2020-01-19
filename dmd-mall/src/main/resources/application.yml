@@ -16,6 +16,9 @@ spring:
     name: @pom.artifactId@
   profiles:
     active: @profileActive@
+  cache:
+    ehcache:
+      config: classpath:ehcache/ehcache.xml
 mybatis:
   type-aliases-package: com.dmd.mall.model.domain
   mapper-locations: classpath*:mapper/*.xml

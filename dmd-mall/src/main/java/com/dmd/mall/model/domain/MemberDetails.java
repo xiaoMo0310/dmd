@@ -60,6 +60,6 @@ public class MemberDetails implements UserDetails, SocialUserDetails {
 
     @Override
     public String getUserId() {
-        return null;
+        return umsMember.getUsername();
     }
 }
