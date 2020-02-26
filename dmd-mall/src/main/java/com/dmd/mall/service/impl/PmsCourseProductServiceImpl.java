@@ -76,6 +76,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         courseProduct.setStatus(2);
         courseProduct.setApprovalStatus(1);
         courseProduct.setUserId(loginAuthDto.getUserId());
+        //TODo 店铺信息待做
         if(!CollectionUtils.isEmpty(courseProductDto.getContentArrangements())){
             courseProduct.setContentArrangement(JSONArray.toJSONString(courseProductDto.getContentArrangements()));
         }

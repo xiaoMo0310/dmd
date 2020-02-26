@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * The class Thread local map.
- *
+ *线程局部变量
  * @author paascloud.net@gmail.com
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
