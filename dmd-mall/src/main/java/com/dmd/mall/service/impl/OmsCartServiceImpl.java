@@ -12,7 +12,7 @@ import com.dmd.mall.model.vo.OrderCreateVo;
 import com.dmd.mall.service.OmsCartService;
 import com.dmd.mall.service.PmsProductService;
 import com.dmd.mall.service.PmsSkuStockService;
-import com.dmd.mall.service.UmsShopService;
+import com.dmd.mall.service.UmsCoachShopService;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class OmsCartServiceImpl extends BaseService<OmsCart> implements OmsCartS
     @Autowired
     private PmsSkuStockService pmsSkuStockService;
     @Autowired
-    private UmsShopService umsShopService;
+    private UmsCoachShopService umsShopService;
 
     @Override
     public List<OmsCart> findOmsCart(Long memberId) {
@@ -120,7 +120,7 @@ public class OmsCartServiceImpl extends BaseService<OmsCart> implements OmsCartS
             Long shopId = it.next();
             OrderCreateVo.OrderGroupByShop orderGroupByShop = new OrderCreateVo.OrderGroupByShop();
             orderGroupByShop.setShopId(shopId);
-            UmsShop umsShop = umsShopService.selectByKey(shopId);
+            UmsCoachShop umsShop = umsShopService.selectByKey(shopId);
             orderGroupByShop.setShopName(umsShop.getName());
             orderGroupByShop.setLogo(umsShop.getLogo());
             //店铺合计

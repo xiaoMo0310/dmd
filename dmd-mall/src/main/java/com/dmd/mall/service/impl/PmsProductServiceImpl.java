@@ -44,7 +44,7 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
     @Autowired
     private PmsSkuStockMapper pmsProductSkuMapper;
     @Autowired
-    private UmsShopMapper umsShopMapper;
+    private UmsCoachShopMapper umsShopMapper;
     @Autowired
     private PmsProductCategoryMapper productCategoryMapper;
 
@@ -62,7 +62,7 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
         PmsProduct pmsProduct = pmsProductMapper.selectByPrimaryKey(productId);
         BeanUtils.copyProperties(pmsProduct, pmsProductVo);
         //查询商铺的信息
-        UmsShop umsShop = umsShopMapper.selectByPrimaryKey(pmsProduct.getShopId());
+        UmsCoachShop umsShop = umsShopMapper.selectByPrimaryKey(pmsProduct.getShopId());
         pmsProductVo.setShopId(umsShop.getId());
         pmsProductVo.setShopName(umsShop.getName());
         pmsProductVo.setLogo(umsShop.getLogo());
