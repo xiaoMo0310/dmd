@@ -440,14 +440,14 @@
         SELECT r_picture AS picture
         FROM dmd_dynamic
         WHERE
-        date_format(r_createtime, '%Y%m') = #{months} and r_userid = #{userId} and r_picture is not null and r_picture &lt;&gt; "" and user_type = 1 and delflag = 0 GROUP BY r_createtime DESC
+        date_format(r_createtime, '%Y%m') = #{months} and r_userid = #{userId} and r_picture is not null and r_picture &lt;&gt; "" and user_type = 1 and delflag = 0 GROUP BY r_createtime
     </select>
 
     <select id="queryDynamicAlbumTimePictureByCoach" parameterType="map" resultType="com.dmd.mall.model.domain.DynamicAlbumTimeBean">
         SELECT r_picture AS picture
         FROM dmd_dynamic
         WHERE
-        date_format(r_createtime, '%Y%m') = #{months} and r_userid = #{userId} and r_picture is not null and r_picture &lt;&gt; "" and user_type = 2 AND delflag = 0 GROUP BY r_createtime DESC
+        date_format(r_createtime, '%Y%m') = #{months} and r_userid = #{userId} and r_picture is not null and r_picture &lt;&gt; "" and user_type = 2 AND delflag = 0 GROUP BY r_createtime
     </select>
 
     <select id="queryUserDetails" resultType="com.dmd.mall.model.vo.UserDetailsVo">

@@ -1,6 +1,7 @@
 package com.dmd.mall.web.cms;
 
 import com.dmd.TLSSigAPIv2;
+import com.dmd.base.result.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
@@ -22,12 +23,12 @@ public class GetUserSigController {
     @ApiOperation("即时通讯UserSig")
     @RequestMapping(value = "/getUserSig",method = RequestMethod.GET)
     @ResponseBody
-    public String getUserSig(){
+    public CommonResult<String> getUserSig(){
         //sdkappid
         //key：秘钥
         //identifier:帐号管理员ID
-        TLSSigAPIv2 tlsSigAPIv2 = new TLSSigAPIv2(1400300687,"081f85c93b305ba6e59b6a5e0c39c6ee");
-        String s = tlsSigAPIv2.genSig("香港誼行悅航互聯網",1400300687);
-        return  s;
+        TLSSigAPIv2 tlsSigAPIv2 = new TLSSigAPIv2(1400301957,"d3066baeb58329e7a92db0c65b33fa074f33b2a53c0446b795b194ed79e78e41");
+        String s = tlsSigAPIv2.genSig("香港誼行悅航互聯網",1400301957);
+        return  CommonResult.success(s);
     }
 }

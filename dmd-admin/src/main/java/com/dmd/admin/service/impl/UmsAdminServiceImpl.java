@@ -273,15 +273,15 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     public PageInfo getAllPermission(BaseQuery baseQuery,String type) {
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
         List<UmsPermission> umsPermissions=adminRoleRelationDao.getAllPermission(type);
-        List<UmsPermission> rolePermission=adminRoleRelationDao.roleForPermission(baseQuery.getRoleId());
+        //List<UmsPermission> rolePermission=adminRoleRelationDao.roleForPermission(baseQuery.getRoleId());
         //用于判断所有权限中角色的权限
-        for (UmsPermission umsPermission:umsPermissions){
+        /*for (UmsPermission umsPermission:umsPermissions){
             for (UmsPermission umsPermission1: rolePermission){
                 if (umsPermission.getName().equals(umsPermission1.getName())){
                     umsPermission.setBeCheck(true);
                 }
             }
-        }
+        }*/
 
         if(type.equals("1")){
             UmsPermission u=new UmsPermission();
@@ -312,7 +312,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
         List<UmsRole> umsRolesForAmin=new ArrayList<>();
         List<UmsRole> umsRoles =adminRoleRelationDao.roleList(type);
-        if (baseQuery.getAdminId()!=null){
+        /*if (baseQuery.getAdminId()!=null){
             if (baseQuery.getAdminId()!=null){
                 umsRolesForAmin=adminRoleRelationDao.roleForAdminList(baseQuery.getAdminId());
             }
@@ -323,7 +323,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
                     umsRole.setBeCheck(true);
                 }
             }
-        }
+        }*/
 
         return new PageInfo<>(umsRoles);
     }

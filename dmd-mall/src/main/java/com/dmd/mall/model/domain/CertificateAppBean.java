@@ -65,6 +65,19 @@ public class CertificateAppBean {
      */
     private String certificateLevel;
 
+    /**
+     * 用户类型
+     */
+    private Integer userType;
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
     public String getCertificateLevel() {
         return certificateLevel;
     }
@@ -167,6 +180,7 @@ public class CertificateAppBean {
                 ", reason='" + reason + '\'' +
                 ", certificateName='" + certificateName + '\'' +
                 ", certificateLevel='" + certificateLevel + '\'' +
+                ", userType=" + userType +
                 '}';
     }
 }

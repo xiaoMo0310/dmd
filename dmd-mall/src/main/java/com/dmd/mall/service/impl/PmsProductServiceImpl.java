@@ -43,8 +43,8 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
     private PmsCommentMapper pmsCommentMapper;
     @Autowired
     private PmsSkuStockMapper pmsProductSkuMapper;
-    @Autowired
-    private UmsShopMapper umsShopMapper;
+    //@Autowired
+    //private UmsShopMapper umsShopMapper;
     @Autowired
     private PmsProductCategoryMapper productCategoryMapper;
 
@@ -62,10 +62,10 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
         PmsProduct pmsProduct = pmsProductMapper.selectByPrimaryKey(productId);
         BeanUtils.copyProperties(pmsProduct, pmsProductVo);
         //查询商铺的信息
-        UmsShop umsShop = umsShopMapper.selectByPrimaryKey(pmsProduct.getShopId());
-        pmsProductVo.setShopId(umsShop.getId());
-        pmsProductVo.setShopName(umsShop.getName());
-        pmsProductVo.setLogo(umsShop.getLogo());
+        //UmsShop umsShop = umsShopMapper.selectByPrimaryKey(pmsProduct.getShopId());
+        //pmsProductVo.setShopId(umsShop.getId());
+        //pmsProductVo.setShopName(umsShop.getName());
+        //pmsProductVo.setLogo(umsShop.getLogo());
         //查询sku的数据信息
         if(pmsProduct.getProductType() != 3){
             List<PmsSkuStock> pmsProductSkuVos = pmsProductSkuMapper.selectSkuMessageByProductId(productId);

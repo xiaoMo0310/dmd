@@ -1,5 +1,7 @@
 package com.dmd.mall.service.impl;
 
+import com.dmd.base.dto.LoginAuthDto;
+import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.mapper.DiveCertificateMapper;
 import com.dmd.mall.mapper.PmsCertificateMapper;
 import com.dmd.mall.model.domain.CertificateAppBean;
@@ -27,10 +29,23 @@ public class DiveCertificateServiceImpl implements DiveCertificateServuce{
 
     @Override
     public List<CertificateAppBean> queryDiveCertificate(Long userId) {
-        //我上传的证书数量
-        List<CertificateAppBean> certificateAppBeans = diveCertificateMapper.queryDiveCertificate(userId);
+        //登陆信息
+        LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
+        //登陆角色
+        String userType = loginAuthDto.getUserType();
+        Integer userTypes = null;
+        //用户登录
+        if(userType.equals("member")){
+            userTypes = 1;
+        }
+        //教练登陆
+        if(userType.equals("coach")){
+            userTypes = 2;
+        }
+        //我的证书
+        List<CertificateAppBean> certificateAppBeans = diveCertificateMapper.queryDiveCertificate(userId,userTypes);
         //查询用户是否上传过证书
-        Long num = diveCertificateMapper.selectCertificateBydUserId(userId);
+        Long num = diveCertificateMapper.selectCertificateBydUserId(userId,userTypes);
         if (num == 0 ){//用户无任何上传
             List<PmsCertificate> pmsCertificates = pmsCertificateMapper.selectCertificateList();
             for (int i = 0; i <pmsCertificates.size() ; i++) {
@@ -38,6 +53,8 @@ public class DiveCertificateServiceImpl implements DiveCertificateServuce{
                 certificateAppBean.setCertificateName(pmsCertificates.get(i).getEnglishShorthand());
                 certificateAppBean.setCertificateLevel(pmsCertificates.get(i).getCertificateLevel());
                 certificateAppBean.setCertificateId(Integer.valueOf(pmsCertificates.get(i).getCertificateLevel()));
+                certificateAppBean.setUserType(userTypes);
+                certificateAppBean.setStatus(3);
                 certificateAppBeans.add(certificateAppBean);
             }
         }
@@ -58,13 +75,25 @@ public class DiveCertificateServiceImpl implements DiveCertificateServuce{
 
     @Override
     public int addDiveCertificate(CertificateAppBean certificateAppBean) {
+        //登陆信息
+        LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
+        //登陆角色
+        String userType = loginAuthDto.getUserType();
+        Integer userTypes = null;
+        //用户登录
+        if(userType.equals("member")){
+            userTypes = 1;
+        }
+        //教练登陆
+        if(userType.equals("coach")){
+            userTypes = 2;
+        }
         //查询用户目前的最高证书等级
         //Integer identifierNum = diveCertificateMapper.selectCertificateId(certificateAppBean.getUserId());
         //Integer status = diveCertificateMapper.selectCertificateStatus(certificateAppBean.getUserId(),certificateAppBean.getCertificateId());
-        CertificateAppBean certificateAppBean2 = diveCertificateMapper.selectCertificateByStatus(certificateAppBean.getUserId(),certificateAppBean.getCertificateId());
+        CertificateAppBean certificateAppBean2 = diveCertificateMapper.selectCertificateByStatus(certificateAppBean.getUserId(),certificateAppBean.getCertificateId(),userTypes);
         Integer count = 0;
         /*//第一次上传
-
 
         if (identifierNum == null){
             identifierNum = 0;
@@ -90,15 +119,17 @@ public class DiveCertificateServiceImpl implements DiveCertificateServuce{
         //证书的数量
         if (certificateAppBean2!=null){
             certificateAppBean.setId(certificateAppBean2.getId());
+            certificateAppBean.setUserType(userTypes);
             int count3 = diveCertificateMapper.updateCertificate(certificateAppBean);
             count = count3;
         }else{
             certificateAppBean.setCreateTime(new Date());
             certificateAppBean.setStatus(0);
+            certificateAppBean.setUserType(userTypes);
             int count2 = diveCertificateMapper.addDiveCertificate(certificateAppBean);
             List<PmsCertificate> pmsCertificates = pmsCertificateMapper.queryCertificateList(certificateAppBean.getCertificateId());
             for (int i = 0; i < pmsCertificates.size(); i++) {
-                diveCertificateMapper.addDiveCertificateAll(pmsCertificates.get(i).getCertificateLevel(),certificateAppBean.getUserId());
+                diveCertificateMapper.addDiveCertificateAll(pmsCertificates.get(i).getCertificateLevel(),certificateAppBean.getUserId(),userTypes);
             }
             count = count2;
         }

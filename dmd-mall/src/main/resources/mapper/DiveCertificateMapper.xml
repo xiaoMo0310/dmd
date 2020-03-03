@@ -34,14 +34,15 @@
         <result column="adop_time" property="adopTime" />
         <result column="operator" property="operator" />
         <result column="reason" property="reason" />
+        <result column="user_type" property="userType" />
     </resultMap>
 
-    <select id="queryDiveCertificate" resultMap="CertificateMap" parameterType="java.lang.Long">
+    <select id="queryDiveCertificate" resultMap="CertificateMap" parameterType="map">
         SELECT da.id,da.pictures,da.status,da.reason,pc.english_shorthand AS certificateName,da.certificate_id,pc.certificate_level AS certificateLevel
         FROM dmd_dive_certificate_app da
         LEFT JOIN
         pms_certificate pc ON da.certificate_id = pc.id
-        WHERE da.user_id = #{userId}
+        WHERE da.user_id = #{userId} AND da.user_type = #{userTypes}
         ORDER BY da.certificate_id
     </select>
 
@@ -59,7 +60,8 @@
         create_time,
         adop_time,
         operator,
-        reason
+        reason,
+        user_type
         )
         VALUES (
 
@@ -70,7 +72,8 @@
         #{createTime,jdbcType=TIMESTAMP},
         #{adopTime,jdbcType=TIMESTAMP},
         #{operator,jdbcType=VARCHAR},
-        #{reason,jdbcType=VARCHAR}
+        #{reason,jdbcType=VARCHAR},
+        #{userType,jdbcType=INTEGER}
         )
     </insert>
 
@@ -106,7 +109,7 @@
         SELECT status FROM dmd_dive_certificate_app WHERE user_id = #{userId} AND certificate_id = #{identifier} - 1
     </select>
     <select id="selectCertificateByStatus"  parameterType="map" resultMap="CertificateMap" >
-        SELECT status,id FROM dmd_dive_certificate_app WHERE user_id = #{userId} AND certificate_id = #{certificateId}
+        SELECT status,id FROM dmd_dive_certificate_app WHERE user_id = #{userId} AND certificate_id = #{certificateId} AND user_type = #{userTypes}
     </select>
     <select id="queryUserCertificateList" resultType="com.dmd.mall.model.domain.CertificateAppBean">
         SELECT da.id,da.pictures,da.status,da.reason,pc.english_shorthand AS certificateName,da.certificate_id,pc.certificate_level AS certificateLevel
@@ -125,7 +128,8 @@
         create_time = now(),
         adop_time = null,
         operator = '',
-        reason = ''
+        reason = '',
+        user_type = #{userType}
         where
         id = #{id}
     </update>
@@ -151,16 +155,20 @@
         INSERT INTO dmd_dive_certificate_app
         (
         user_id,
-        certificate_id
+        certificate_id,
+        user_type,
+        status
         )
         VALUES (
         #{userId,jdbcType=BIGINT},
-        #{certificateLevel,jdbcType=INTEGER}
+        #{certificateLevel,jdbcType=INTEGER},
+        #{userTypes,jdbcType=INTEGER},
+        3
         )
     </insert>
 
-    <select id="selectCertificateBydUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
-        SELECT COUNT(1) FROM dmd_dive_certificate_app WHERE user_id = #{userId}
+    <select id="selectCertificateBydUserId" parameterType="map" resultType="java.lang.Long">
+        SELECT COUNT(1) FROM dmd_dive_certificate_app WHERE user_id = #{userId} AND user_type = #{userTypes}
     </select>
 
 </mapper>

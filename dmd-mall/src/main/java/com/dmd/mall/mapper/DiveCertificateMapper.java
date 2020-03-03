@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2019/11/413:31
  */
 public interface DiveCertificateMapper {
-    List<CertificateAppBean> queryDiveCertificate(Long userId);
+    List<CertificateAppBean> queryDiveCertificate(@Param("userId")Long userId,@Param("userTypes")Integer userTypes);
 
     Integer queryUserId(Long userId);
 
@@ -28,7 +28,7 @@ public interface DiveCertificateMapper {
 
     Integer selectCertificateStatus(@Param("userId") Long userId,@Param("identifier") Integer identifier);
 
-    CertificateAppBean selectCertificateByStatus(@Param("userId")Long userId,@Param("certificateId") Integer certificateId);
+    CertificateAppBean selectCertificateByStatus(@Param("userId")Long userId,@Param("certificateId") Integer certificateId,@Param("userTypes") Integer userTypes);
 
     int updateCertificate(CertificateAppBean certificateAppBean);
 
@@ -38,7 +38,7 @@ public interface DiveCertificateMapper {
 
     Integer queryCertificateMin(Long userId);
 
-    void addDiveCertificateAll(@Param("certificateLevel")String certificateLevel,@Param("userId")Long userId);
+    void addDiveCertificateAll(@Param("certificateLevel")String certificateLevel,@Param("userId")Long userId,@Param("userTypes") Integer userTypes);
 
-    Long selectCertificateBydUserId(Long userId);
+    Long selectCertificateBydUserId(@Param("userId")Long userId,@Param("userTypes")Integer userTypes);
 }
