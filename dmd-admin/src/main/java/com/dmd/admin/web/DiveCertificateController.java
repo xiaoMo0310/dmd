@@ -149,7 +149,8 @@ public class DiveCertificateController {
                                                       @RequestParam Integer certificateId,
                                                       @RequestParam Date createTime,
                                                       @RequestParam String operator,
-                                                      @RequestParam String reason
+                                                      @RequestParam String reason,
+                                                      @RequestParam Integer userType
 
     ) {
 
@@ -163,12 +164,15 @@ public class DiveCertificateController {
         certificateAppBean.setAdopTime(null);
         certificateAppBean.setOperator(operator);
         certificateAppBean.setReason(reason);
+        certificateAppBean.setUserType(userType);
         int count = diveCertificateService.updateCertificateStatusNoPass(certificateAppBean);
         if (count > 0) {
             return CommonResult.success(count,"审核不通过成功!");
         }
         return CommonResult.failed("审核不通过失败!");
     }
+
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder, WebRequest request) {

@@ -33,6 +33,7 @@
         <result column="adop_time" property="adopTime" />
         <result column="operator" property="operator" />
         <result column="reason" property="reason" />
+        <result column="user_type" property="userType" />
     </resultMap>
 
     <update id="updateCertificateStatusNoPass" parameterType="com.dmd.admin.model.domain.CertificateAppBean">
@@ -46,16 +47,19 @@
         operator = #{operator},
         reason = #{reason}
         where id = #{id}
+        AND user_type = #{userType}
     </update>
 
 
     <select id="queryDiveCertificate" resultMap="CertificateMap" parameterType="com.dmd.admin.model.domain.CertificateAppBean">
-        SELECT da.id,da.user_id,da.pictures,da.status,da.certificate_id,da.create_time,da.adop_time,da.operator,da.reason ,pc.english_shorthand AS certificateName,uo.nick_name AS userName
+        SELECT da.id,da.user_id,da.pictures,da.status,da.certificate_id,da.create_time,da.adop_time,da.operator,da.reason ,pc.english_shorthand AS certificateName,uo.nick_name AS userName,uc.nick_name AS coachName,da.user_type
         FROM dmd_dive_certificate_app da
         LEFT JOIN
         pms_certificate pc ON da.certificate_id = pc.id
         LEFT JOIN
         ums_member uo ON uo.id = da.user_id
+        LEFT JOIN
+        ums_coach uc ON da.user_id = uc.id
         <include refid="diveCertificateWhere"></include>
         ORDER by da.status,da.create_time DESC
     </select>
@@ -76,6 +80,9 @@
             <!-- 按照状态查找 -->
             <if test="status !=null">
                 and da.status = #{status}
+            </if>
+            <if test="userType != null">
+                and da.user_type = #{userType}
             </if>
                 and da.pictures &lt;&gt; &quot;&quot;
         </where>

@@ -25,7 +25,15 @@ public class DiveCertificateServiceImpl implements DiveCertificateService{
     @Override
     public List<CertificateAppBean > queryDiveCertificate(Integer pageNum, Integer pageSize, CertificateAppBean certificateAppBean) {
         PageHelper.startPage(pageNum, pageSize);
-        return diveCertificateMapper.queryDiveCertificate(certificateAppBean);
+        List<CertificateAppBean> certificateAppBeans = diveCertificateMapper.queryDiveCertificate(certificateAppBean);
+        for (int i = 0; i < certificateAppBeans.size(); i++) {
+            if(certificateAppBeans.get(i).getUserType() == 1){
+                certificateAppBeans.get(i).setUserName(certificateAppBeans.get(i).getUserName());
+            }else if(certificateAppBeans.get(i).getUserType() == 2){
+                certificateAppBeans.get(i).setUserName(certificateAppBeans.get(i).getCoachName());
+            }
+        }
+        return certificateAppBeans;
     }
 
     @Override
