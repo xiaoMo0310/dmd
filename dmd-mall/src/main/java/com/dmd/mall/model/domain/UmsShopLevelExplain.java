@@ -1,8 +1,8 @@
 package com.dmd.mall.model.domain;
 
-import com.baomidou.mybatisplus.annotations.TableField;
+/*import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.annotations.Version;
+import com.baomidou.mybatisplus.annotations.Version;*/
 import com.dmd.core.mybatis.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
