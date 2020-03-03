@@ -12,6 +12,7 @@ import com.dmd.mall.model.vo.OrderCreateVo;
 import com.dmd.mall.service.OmsCartService;
 import com.dmd.mall.service.PmsProductService;
 import com.dmd.mall.service.PmsSkuStockService;
+import com.dmd.mall.service.UmsCoachShopService;
 //import com.dmd.mall.service.UmsShopService;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
@@ -43,6 +44,8 @@ public class OmsCartServiceImpl extends BaseService<OmsCart> implements OmsCartS
     private PmsProductService pmsProductService;
     @Autowired
     private PmsSkuStockService pmsSkuStockService;
+    @Autowired
+    private UmsCoachShopService umsShopService;
     //@Autowired
     //private UmsShopService umsShopService;
 
@@ -120,6 +123,9 @@ public class OmsCartServiceImpl extends BaseService<OmsCart> implements OmsCartS
             Long shopId = it.next();
             OrderCreateVo.OrderGroupByShop orderGroupByShop = new OrderCreateVo.OrderGroupByShop();
             orderGroupByShop.setShopId(shopId);
+            UmsCoachShop umsShop = umsShopService.selectByKey(shopId);
+            orderGroupByShop.setShopName(umsShop.getName());
+            orderGroupByShop.setLogo(umsShop.getLogo());
             //UmsShop umsShop = umsShopService.selectByKey(shopId);
             //orderGroupByShop.setShopName(umsShop.getName());
             //orderGroupByShop.setLogo(umsShop.getLogo());

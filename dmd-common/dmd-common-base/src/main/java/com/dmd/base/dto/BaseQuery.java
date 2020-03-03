@@ -30,16 +30,11 @@ public class BaseQuery implements Serializable {
 	 * 排序 例:xxx asc, xxx desc
 	 */
 	private String orderBy = "update_time desc";
-/*	*//**
-	 * 排序 例:xxx asc, xxx desc
-	 *//*
+
 	private boolean beCheck=false;
-	*//**
-	 * 排序 例:xxx asc, xxx desc
-	 *//*
 	private Long roleId;
 
-	private Long adminId;*/
+	private Long adminId;
 
 
 }
