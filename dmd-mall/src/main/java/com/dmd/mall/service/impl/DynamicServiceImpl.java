@@ -19,10 +19,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author ChenYanbing
@@ -732,6 +730,8 @@ public class DynamicServiceImpl implements DynamicService{
         }else if(userType.equals("coach")){
             dynamicBean.setUserType(2);
         }
+        //置顶标识符为0
+        dynamicBean.setNumber(0);
         return dynamicMapper.addDynamic(dynamicBean);
     }
 
@@ -927,4 +927,363 @@ public class DynamicServiceImpl implements DynamicService{
         return userDetailsVo1;
     }
 
+    /**
+     * 店铺下动态查询 时间排序
+     * @param id
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public List<DynamicBean> queryShopByDynamicTime(Long id, Integer pageNum, Integer pageSize) {
+        List<DynamicBean> objects = new ArrayList<>();
+        //登陆信息
+        LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
+        //当前登录人
+        Long userId = loginAuthDto.getUserId();
+        //登录角色
+        String userTypes = loginAuthDto.getUserType();
+        //用户登录
+        if (userTypes.equals("member")){
+            //用户所发动态按照时间排序
+            List<DynamicBean> dynamicBeanList = dynamicMapper.queryShopByDynamicTime(id);
+            //查询用户是否关注用户
+            for (int i = 0; i < dynamicBeanList.size(); i++) {
+                //用户id
+                Long userId1 = dynamicBeanList.get(i).getUserId();
+                Integer biaoshifu =  dynamicMapper.selectFavorites(userId,userId1);
+                for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                    dynamicBeanList.get(i).setIdentification(biaoshifu);
+                }
+            }
+            //查询用户是否点赞用户
+            for (int i = 0; i < dynamicBeanList.size(); i++) {
+                //用户所发动态id
+                Long dynamicId = dynamicBeanList.get(i).getId();
+                Integer biaoshifuPraise =  dynamicMapper.selectFavoritespraiseTopic(userId,dynamicId);
+                for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                    dynamicBeanList.get(i).setIdentificationPraise(biaoshifuPraise);
+                }
+            }
+
+            //教练所发动态按照时间排序
+            List<DynamicBean> dynamicBeanCoachList = dynamicMapper.queryShopByDynamicForCoachTime(id);
+            //查询用户是否关注教练
+            for (int i = 0; i < dynamicBeanCoachList.size(); i++) {
+                //教练id
+                Long userId1 = dynamicBeanCoachList.get(i).getUserId();
+                Integer biaoshifu =  dynamicMapper.selectFavoritesCoach(userId,userId1);
+                for (int j = 0; j <dynamicBeanCoachList.size() ; j++) {
+                    dynamicBeanCoachList.get(i).setIdentification(biaoshifu);
+                }
+            }
+            //查询用户是否点赞教练
+            for (int i = 0; i < dynamicBeanCoachList.size(); i++) {
+                //教练所发动态id
+                Long dynamicId = dynamicBeanCoachList.get(i).getId();
+                Integer praiseBiaoshifu =  dynamicMapper.selectFavoritespraiseCoach2(userId,dynamicId);
+                for (int j = 0; j <dynamicBeanCoachList.size() ; j++) {
+                    dynamicBeanCoachList.get(i).setIdentificationPraise(praiseBiaoshifu);
+                }
+
+            }
+            //数据合并
+            dynamicBeanList.addAll(dynamicBeanCoachList);
+            objects = dynamicBeanList;
+            //按照置顶标识符与时间倒序排序
+            objects.sort(Comparator.comparing(DynamicBean::getNumber).reversed().thenComparing(
+                    (o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime())
+            ));
+            //分页
+            /*Integer count = objects.size(); // 记录总数
+            System.out.println(count);
+
+            Integer pageCount = 0; // 页数
+            if (count % pageSize == 0) {
+                pageCount = count / pageSize;
+            } else {
+                pageCount = count / pageSize + 1;
+            }
+
+            int fromIndex = 0; // 开始索引
+            int toIndex = 0; // 结束索引
+
+            if (pageNum != pageCount) {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = fromIndex + pageSize;
+            } else {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = count;
+            }
+
+            List pageList = objects.subList(fromIndex, toIndex);
+            return pageList;*/
+        }
+        //教练登陆
+        else if (userTypes.equals("coach")){
+            //用户所发动态按照时间排序
+            List<DynamicBean> dynamicBeanList = dynamicMapper.queryShopByDynamicTime(id);
+
+            //查询教练是否关注用户
+            for (int i = 0; i < dynamicBeanList.size(); i++) {
+                //用户id
+                Long userId1 = dynamicBeanList.get(i).getUserId();
+                Integer biaoshifu =  dynamicMapper.selectFavoritesByCoach(userId,userId1);
+                System.out.println(biaoshifu);
+                for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                    dynamicBeanList.get(i).setIdentification(biaoshifu);
+                }
+            }
+            //查询教练是否点赞用户
+            for (int i = 0; i < dynamicBeanList.size(); i++) {
+                //用户所发动态id
+                Long dynamicId = dynamicBeanList.get(i).getId();
+                Integer biaoshifuPraise =  dynamicMapper.selectFavoritespraiseByCoach(userId,dynamicId);
+                for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                    dynamicBeanList.get(i).setIdentificationPraise(biaoshifuPraise);
+                }
+            }
+            //教练所发动态按照时间排序
+            List<DynamicBean> dynamicBeanCoachList = dynamicMapper.queryShopByDynamicForCoachTime(id);
+            //查询用户是否关注教练
+            for (int i = 0; i < dynamicBeanCoachList.size(); i++) {
+                //教练id
+                Long userId1 = dynamicBeanCoachList.get(i).getUserId();
+                Integer biaoshifu =  dynamicMapper.selectFavoritesCoach2(userId,userId1);
+                for (int j = 0; j <dynamicBeanCoachList.size() ; j++) {
+                    dynamicBeanCoachList.get(i).setIdentification(biaoshifu);
+                }
+            }
+            //查询教练是否点赞教练
+            for (int i = 0; i < dynamicBeanCoachList.size(); i++) {
+                //教练所发动态id
+                Long dynamicId = dynamicBeanCoachList.get(i).getId();
+                Integer praiseBiaoshifu =  dynamicMapper.selectFavoritespraiseCoach(userId,dynamicId);
+                for (int j = 0; j <dynamicBeanCoachList.size() ; j++) {
+                    dynamicBeanCoachList.get(i).setIdentificationPraise(praiseBiaoshifu);
+                }
+            }
+            //数据合并
+            dynamicBeanList.addAll(dynamicBeanCoachList);
+            objects = dynamicBeanList;
+            //按照置顶标识符与时间倒序排序
+            objects.sort(Comparator.comparing(DynamicBean::getNumber).reversed().thenComparing(
+                    (o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime())
+            ));
+            /*Integer count = objects.size(); // 记录总数
+
+            Integer pageCount = 0; // 页数
+            if (count % pageSize == 0) {
+                pageCount = count / pageSize;
+            } else {
+                pageCount = count / pageSize + 1;
+            }
+
+            int fromIndex = 0; // 开始索引
+            int toIndex = 0; // 结束索引
+
+            if (pageNum != pageCount) {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = fromIndex + pageSize;
+            } else {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = count;
+            }
+
+            List pageList = objects.subList(fromIndex, toIndex);
+            return pageList;*/
+        }
+
+        return objects;
+    }
+
+    @Override
+    public List<DynamicBean> queryShopByDynamicHeat(Long id, Integer pageNum, Integer pageSize) {
+        List<DynamicBean> objects = new ArrayList<>();
+        //登陆信息
+        LoginAuthDto loginAuthDto = RequestUtil.getLoginUser();
+        //当前登录人
+        Long userId = loginAuthDto.getUserId();
+        //登录角色
+        String userTypes = loginAuthDto.getUserType();
+        //用户登录
+        if (userTypes.equals("member")){
+            //用户所发动态按照热度排序
+            List<DynamicBean> dynamicBeanList = dynamicMapper.queryShopByDynamicHeat(id);
+            //查询用户是否关注用户
+            for (int i = 0; i < dynamicBeanList.size(); i++) {
+                //用户id
+                Long userId1 = dynamicBeanList.get(i).getUserId();
+                Integer biaoshifu =  dynamicMapper.selectFavorites(userId,userId1);
+                for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                    dynamicBeanList.get(i).setIdentification(biaoshifu);
+                }
+            }
+            //查询用户是否点赞用户
+            for (int i = 0; i < dynamicBeanList.size(); i++) {
+                //用户所发动态id
+                Long dynamicId = dynamicBeanList.get(i).getId();
+                Integer biaoshifuPraise =  dynamicMapper.selectFavoritespraiseTopic(userId,dynamicId);
+                for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                    dynamicBeanList.get(i).setIdentificationPraise(biaoshifuPraise);
+                }
+            }
+
+            //教练所发动态按照时间排序
+            List<DynamicBean> dynamicBeanCoachList = dynamicMapper.queryShopByDynamicForCoachHeat(id);
+            //查询用户是否关注教练
+            for (int i = 0; i < dynamicBeanCoachList.size(); i++) {
+                //教练id
+                Long userId1 = dynamicBeanCoachList.get(i).getUserId();
+                Integer biaoshifu =  dynamicMapper.selectFavoritesCoach(userId,userId1);
+                for (int j = 0; j <dynamicBeanCoachList.size() ; j++) {
+                    dynamicBeanCoachList.get(i).setIdentification(biaoshifu);
+                }
+            }
+            //查询用户是否点赞教练
+            for (int i = 0; i < dynamicBeanCoachList.size(); i++) {
+                //教练所发动态id
+                Long dynamicId = dynamicBeanCoachList.get(i).getId();
+                Integer praiseBiaoshifu =  dynamicMapper.selectFavoritespraiseCoach2(userId,dynamicId);
+                for (int j = 0; j <dynamicBeanCoachList.size() ; j++) {
+                    dynamicBeanCoachList.get(i).setIdentificationPraise(praiseBiaoshifu);
+                }
+
+            }
+            //数据合并
+            dynamicBeanList.addAll(dynamicBeanCoachList);
+            objects = dynamicBeanList;
+            //按照热度倒序排序
+            objects.sort((o1, o2) -> o2.getDynamicPraise().compareTo(o1.getDynamicPraise()));
+            //分页
+            /*Integer count = objects.size(); // 记录总数
+            System.out.println(count);
+
+            Integer pageCount = 0; // 页数
+            if (count % pageSize == 0) {
+                pageCount = count / pageSize;
+            } else {
+                pageCount = count / pageSize + 1;
+            }
+
+            int fromIndex = 0; // 开始索引
+            int toIndex = 0; // 结束索引
+
+            if (pageNum != pageCount) {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = fromIndex + pageSize;
+            } else {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = count;
+            }
+
+            List pageList = objects.subList(fromIndex, toIndex);
+            return pageList;*/
+        }
+        //教练登陆
+        else if (userTypes.equals("coach")){
+            //用户所发动态按照热度排序
+            List<DynamicBean> dynamicBeanList = dynamicMapper.queryShopByDynamicHeat(id);
+
+            //查询教练是否关注用户
+            for (int i = 0; i < dynamicBeanList.size(); i++) {
+                //用户id
+                Long userId1 = dynamicBeanList.get(i).getUserId();
+                Integer biaoshifu =  dynamicMapper.selectFavoritesByCoach(userId,userId1);
+                System.out.println(biaoshifu);
+                for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                    dynamicBeanList.get(i).setIdentification(biaoshifu);
+                }
+            }
+            //查询教练是否点赞用户
+            for (int i = 0; i < dynamicBeanList.size(); i++) {
+                //用户所发动态id
+                Long dynamicId = dynamicBeanList.get(i).getId();
+                Integer biaoshifuPraise =  dynamicMapper.selectFavoritespraiseByCoach(userId,dynamicId);
+                for (int j = 0; j <dynamicBeanList.size() ; j++) {
+                    dynamicBeanList.get(i).setIdentificationPraise(biaoshifuPraise);
+                }
+            }
+            //教练所发动态按照热度排序
+            List<DynamicBean> dynamicBeanCoachList = dynamicMapper.queryShopByDynamicForCoachHeat(id);
+            //查询用户是否关注教练
+            for (int i = 0; i < dynamicBeanCoachList.size(); i++) {
+                //教练id
+                Long userId1 = dynamicBeanCoachList.get(i).getUserId();
+                Integer biaoshifu =  dynamicMapper.selectFavoritesCoach2(userId,userId1);
+                for (int j = 0; j <dynamicBeanCoachList.size() ; j++) {
+                    dynamicBeanCoachList.get(i).setIdentification(biaoshifu);
+                }
+            }
+            //查询教练是否点赞教练
+            for (int i = 0; i < dynamicBeanCoachList.size(); i++) {
+                //教练所发动态id
+                Long dynamicId = dynamicBeanCoachList.get(i).getId();
+                Integer praiseBiaoshifu =  dynamicMapper.selectFavoritespraiseCoach(userId,dynamicId);
+                for (int j = 0; j <dynamicBeanCoachList.size() ; j++) {
+                    dynamicBeanCoachList.get(i).setIdentificationPraise(praiseBiaoshifu);
+                }
+            }
+            //数据合并
+            dynamicBeanList.addAll(dynamicBeanCoachList);
+            objects = dynamicBeanList;
+            //按照热度倒序排序
+            objects.sort((o1, o2) -> o2.getDynamicPraise().compareTo(o1.getDynamicPraise()));
+
+            /*Integer count = objects.size(); // 记录总数
+
+            Integer pageCount = 0; // 页数
+            if (count % pageSize == 0) {
+                pageCount = count / pageSize;
+            } else {
+                pageCount = count / pageSize + 1;
+            }
+
+            int fromIndex = 0; // 开始索引
+            int toIndex = 0; // 结束索引
+
+            if (pageNum != pageCount) {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = fromIndex + pageSize;
+            } else {
+                fromIndex = (pageNum - 1) * pageSize;
+                toIndex = count;
+            }
+
+            List pageList = objects.subList(fromIndex, toIndex);
+            return pageList;*/
+        }
+
+        return objects;
+    }
+
+    @Override
+    public Integer selectTopDynamicNum(Long shopId) {
+        return dynamicMapper.selectTopDynamicNum(shopId);
+    }
+
+    @Override
+    public int topDynamic(Long dynamicId,Integer count) {
+        return dynamicMapper.topDynamic(dynamicId,count);
+    }
+
+    @Override
+    public Integer cancelTopDynamicNum(Long dynamicId) {
+        return dynamicMapper.cancelTopDynamicNum(dynamicId);
+    }
+
+    @Override
+    public void updateTopDynamicNum(Long shopId) {
+        dynamicMapper.updateTopDynamicNum(shopId);
+    }
+
+    @Override
+    public void updateTopDynamicNum2(Long shopId) {
+        dynamicMapper.updateTopDynamicNum2(shopId);
+    }
+
+    @Override
+    public void cancelTopDynamic(Long dynamicId) {
+        dynamicMapper.cancelTopDynamic(dynamicId);
+    }
 }

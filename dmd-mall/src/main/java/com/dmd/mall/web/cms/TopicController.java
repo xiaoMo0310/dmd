@@ -124,4 +124,93 @@ public class TopicController {
         return CommonResult.success(topicList);
     }
 
+    /**
+     * 店铺下最新动态查询，按照发布时间排序
+     * @param id
+     * @return
+     */
+    @ApiOperation("店铺下最新动态分页查询")
+    @RequestMapping(value = "/queryShopByDynamicTime",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<PageInfo<DynamicBean>> queryShopByDynamicTime(  @RequestParam Integer pageNum,
+                                                                        @RequestParam Integer pageSize,
+                                                                        //店铺ID
+                                                                        @RequestParam Long id
+    ){
+        List<DynamicBean> dynamicList = dynamicService.queryShopByDynamicTime(id,pageNum,pageSize);
+        return CommonResult.success(new PageInfo<>(dynamicList));
+    }
+
+    /**
+     * 店铺下最热动态查询，按照点赞量倒叙排序
+     * @param id
+     * @return
+     */
+    @ApiOperation("店铺下最热动态分页查询")
+    @RequestMapping(value = "/queryShopByDynamicHeat",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<PageInfo<DynamicBean>> queryShopByDynamicHeat(  @RequestParam Integer pageNum,
+                                                                        @RequestParam Integer pageSize,
+                                                                        //店铺ID
+                                                                        @RequestParam Long id
+    ){
+        List<DynamicBean> dynamicList = dynamicService.queryShopByDynamicHeat(id,pageNum,pageSize);
+        return CommonResult.success(new PageInfo<>(dynamicList));
+    }
+
+    /**
+     * 店铺动态下动态置顶
+     * @param shopId
+     * @param dynamicId
+     * @return
+     */
+    @ApiOperation("店铺动态下动态置顶")
+    @RequestMapping(value = "/topDynamic",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult topDynamic(@RequestParam Long shopId,@RequestParam Long dynamicId
+    ){
+        Integer count = null;
+        //查询当前店铺动态置顶的条数
+        Integer num = dynamicService.selectTopDynamicNum(shopId);
+        if (num == 3){
+            return CommonResult.failed("最多置顶三条动态！");
+        }else if (num == 0){
+            count = num+1;
+            dynamicService.topDynamic(dynamicId,count);
+        }else if (num == 1){
+            count = num+1;
+            dynamicService.topDynamic(dynamicId,count);
+        }else if (num == 2){
+            count = num+1;
+            dynamicService.topDynamic(dynamicId,count);
+        }
+        return CommonResult.success("置顶成功！");
+    }
+
+    /**
+     * 店铺动态下动态取消置顶
+     * @param shopId
+     * @param dynamicId
+     * @return
+     */
+    @ApiOperation("店铺动态下动态取消置顶")
+    @RequestMapping(value = "/cancelTopDynamic",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult cancelTopDynamic(@RequestParam Long shopId,@RequestParam Long dynamicId
+    ){
+        //查询当前动态置顶等级
+        Integer num = dynamicService.cancelTopDynamicNum(dynamicId);
+        //如果等级为一级找出前两级number减一
+        if (num == 1){
+            dynamicService.updateTopDynamicNum(shopId);
+            //取消置顶
+            dynamicService.cancelTopDynamic(dynamicId);
+        }else if(num == 2){
+            dynamicService.updateTopDynamicNum2(shopId);
+            dynamicService.cancelTopDynamic(dynamicId);
+        }else if(num == 3){
+            dynamicService.cancelTopDynamic(dynamicId);
+        }
+        return CommonResult.success("取消置顶成功！");
+    }
 }

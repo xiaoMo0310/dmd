@@ -135,4 +135,24 @@ public interface DynamicMapper {
     List<DynamicBean> queryDynamicByContentByCoach(@Param("content")String content);
 
     List<DynamicBean> queryDynamicByIdDelflag(Long id);
+
+    List<DynamicBean> queryShopByDynamicTime(Long id);
+
+    List<DynamicBean> queryShopByDynamicForCoachTime(Long id);
+
+    List<DynamicBean> queryShopByDynamicHeat(Long id);
+
+    List<DynamicBean> queryShopByDynamicForCoachHeat(Long id);
+
+    Integer selectTopDynamicNum(Long shopId);
+
+    int topDynamic(@Param("dynamicId")Long dynamicId,@Param("count")Integer count);
+
+    Integer cancelTopDynamicNum(Long dynamicId);
+
+    void updateTopDynamicNum(Long shopId);
+
+    void updateTopDynamicNum2(Long shopId);
+
+    void cancelTopDynamic(Long dynamicId);
 }

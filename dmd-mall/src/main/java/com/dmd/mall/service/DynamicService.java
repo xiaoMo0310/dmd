@@ -49,4 +49,27 @@ public interface DynamicService {
     List<DynamicAlbumTimeBean> queryDynamicAlbumTimeBean(Long userId, Integer pageNum, Integer pageSize,Integer userType);
 
     UserDetailsVo queryUserDetails(Long userId,Integer userType);
+
+    /**
+     * 店铺下动态查询  时间排序
+     * @param id
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    List<DynamicBean> queryShopByDynamicTime(Long id, Integer pageNum, Integer pageSize);
+
+    List<DynamicBean> queryShopByDynamicHeat(Long id, Integer pageNum, Integer pageSize);
+
+    Integer selectTopDynamicNum(Long shopId);
+
+    int topDynamic(Long dynamicId,Integer count);
+
+    Integer cancelTopDynamicNum(Long dynamicId);
+
+    void updateTopDynamicNum(Long shopId);
+
+    void updateTopDynamicNum2(Long shopId);
+
+    void cancelTopDynamic(Long dynamicId);
 }

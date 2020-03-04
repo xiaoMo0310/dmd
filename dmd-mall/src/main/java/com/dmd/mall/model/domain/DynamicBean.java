@@ -65,6 +65,46 @@ public class DynamicBean {
      */
     private Integer userType;
 
+    /**
+     * 店铺id
+     */
+    private Long shopId;
+
+    /**
+     * 置顶标识符
+     */
+    private Integer number;
+
+    /**
+     * 店铺名称
+     */
+    private String shopName;
+
+
+    public Long getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
     public Integer getUserType() {
         return userType;
     }
@@ -239,6 +279,9 @@ public class DynamicBean {
                 ", width=" + width +
                 ", height=" + height +
                 ", userType=" + userType +
+                ", shopId=" + shopId +
+                ", number=" + number +
+                ", shopName='" + shopName + '\'' +
                 '}';
     }
 }

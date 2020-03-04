@@ -21,6 +21,8 @@
         <result column="width" property="width" />
         <result column="height" property="height" />
         <result column="user_type" property="userType"/>
+        <result column="shop_id" property="shopId"/>
+        <result column="number" property="number"/>
     </resultMap>
 
 
@@ -117,7 +119,7 @@
 
 
     <select id="queryDynamicById" resultMap="dynamicMap" parameterType="java.lang.Long">
-        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type,dy.shop_id
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
         LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_id = #{value} AND delflag = 0 AND user_type = 1
@@ -131,7 +133,7 @@
     </select>
 
     <select id="queryDynamicByCoachById" resultMap="dynamicMap" parameterType="java.lang.Long">
-        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type,dy.shop_id
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
         LEFT JOIN ums_coach um on dy.r_userid = um.id WHERE  dy.r_id = #{value} AND delflag = 0 AND user_type = 2
@@ -160,7 +162,9 @@
         width,
         height,
         delflag,
-        user_type
+        user_type,
+        shop_id,
+        number
         )
         VALUES (
         #{dynamicAuthor,jdbcType=VARCHAR},
@@ -177,7 +181,9 @@
         #{width,jdbcType=INTEGER},
         #{height,jdbcType=INTEGER},
         #{delflag,jdbcType=INTEGER},
-        #{userType,jdbcType=INTEGER}
+        #{userType,jdbcType=INTEGER},
+        #{shopId,jdbcType=BIGINT},
+        #{number,jdbcType=INTEGER}
         )
     </insert>
 
@@ -457,5 +463,59 @@
     <select id="queryUserDetailsByCoach" resultType="com.dmd.mall.model.vo.UserDetailsVo">
         SELECT id,nick_name,icon,personal_album as pics ,personal_profile as personalized_signature ,coach_grade AS  member_level_id FROM ums_coach WHERE id = #{userId}
     </select>
+    <!--店铺下动态查询时间排序-->
+    <select id="queryShopByDynamicTime" parameterType="java.lang.Long" resultMap="dynamicMap">
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.name as shopName,delflag,dy.user_type,dy.shop_id,dy.number
+        FROM dmd_dynamic dy LEFT JOIN ums_coach_shop dt
+        ON dy.shop_id  = dt.id
+        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.shop_id = #{value} AND delflag = 0 AND user_type = 1 ORDER BY number DESC , r_createtime DESC
+    </select>
 
+    <!--店铺下动态查询时间排序-->
+    <select id="queryShopByDynamicForCoachTime" parameterType="java.lang.Long" resultMap="dynamicMap">
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.name as shopName,delflag,dy.user_type,dy.shop_id,dy.number
+        FROM dmd_dynamic dy LEFT JOIN ums_coach_shop dt
+        ON dy.shop_id  = dt.id
+        LEFT JOIN ums_coach um on dy.r_userid = um.id WHERE  dy.shop_id = #{value} AND delflag = 0 AND user_type = 2 ORDER BY number DESC , r_createtime DESC
+    </select>
+
+    <!--店铺下动态查询热度排序-->
+    <select id="queryShopByDynamicHeat" parameterType="java.lang.Long" resultMap="dynamicMap">
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.name as shopName,delflag,dy.user_type,dy.shop_id,dy.number
+        FROM dmd_dynamic dy LEFT JOIN ums_coach_shop dt
+        ON dy.shop_id  = dt.id
+        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.shop_id = #{value} AND delflag = 0 AND user_type = 1 ORDER BY  r_praise DESC,r_createtime DESC
+    </select>
+
+    <!--店铺下动态查询热度排序-->
+    <select id="queryShopByDynamicForCoachHeat" parameterType="java.lang.Long" resultMap="dynamicMap">
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.name as shopName,delflag,dy.user_type,dy.shop_id,dy.number
+        FROM dmd_dynamic dy LEFT JOIN ums_coach_shop dt
+        ON dy.shop_id  = dt.id
+        LEFT JOIN ums_coach um on dy.r_userid = um.id WHERE  dy.shop_id = #{value} AND delflag = 0 AND user_type = 2 ORDER BY  r_praise DESC,r_createtime DESC
+    </select>
+
+    <select id="selectTopDynamicNum"  parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(*) FROM dmd_dynamic where shop_id = #{value} AND number &lt;&gt; 0
+    </select>
+
+    <update id="topDynamic" parameterType="map">
+        UPDATE dmd_dynamic SET number = #{count} where r_id = #{dynamicId}
+    </update>
+
+    <select id="cancelTopDynamicNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT number from dmd_dynamic where r_id = #{value}
+    </select>
+
+    <update id="updateTopDynamicNum" parameterType="java.lang.Long">
+        update dmd_dynamic set number = number - 1 where shop_id = #{value} and number &lt;&gt; 0
+    </update>
+
+    <update id="updateTopDynamicNum2" parameterType="java.lang.Long">
+        update dmd_dynamic set number = number - 1 where shop_id = #{value} and number &lt;&gt; 0 and number &lt;&gt; 1
+    </update>
+
+    <update id="cancelTopDynamic" parameterType="java.lang.Long">
+        update dmd_dynamic set number = 0 where r_id = #{value}
+    </update>
 </mapper>
