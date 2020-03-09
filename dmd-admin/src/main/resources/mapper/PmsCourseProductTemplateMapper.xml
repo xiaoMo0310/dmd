@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.admin.mapper.PmsCourseProductTemplateMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dmd.admin.model.domain.PmsCourseProductTemplate">
+    <result column="id" property="id" />
+    <result column="creator" property="creator" />
+    <result column="creator_id" property="creatorId" />
+    <result column="created_time" property="createdTime" />
+    <result column="last_operator" property="lastOperator" />
+    <result column="last_operator_id" property="lastOperatorId" />
+    <result column="update_time" property="updateTime" />
+        <result column="user_id" property="userId" />
+        <result column="shop_id" property="shopId" />
+        <result column="product_name" property="productName" />
+        <result column="address_id" property="addressId" />
+        <result column="play_address" property="playAddress" />
+        <result column="diving_time" property="divingTime" />
+        <result column="related_product" property="relatedProduct" />
+        <result column="product_price" property="productPrice" />
+        <result column="equipment_price" property="equipmentPrice" />
+        <result column="total_price" property="totalPrice" />
+        <result column="diving_description" property="divingDescription" />
+        <result column="show_status" property="showStatus" />
+        <result column="sort" property="sort" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        creator,
+        creator_id,
+        created_time,
+        last_operator,
+        last_operator_id,
+        update_time,
+        user_id, shop_id, product_name, address_id, play_address, diving_time, related_product, product_price, equipment_price, total_price, diving_description, show_status, sort
+    </sql>
+    <select id="selectByUserId" resultType="com.dmd.admin.model.domain.PmsCourseProductTemplate">
+        select <include refid="Base_Column_List"/>
+        from pms_course_product_template
+        where user_id = #{userId} and shop_id = 0
+    </select>
+
+</mapper>
