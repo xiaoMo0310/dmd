@@ -355,20 +355,64 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     }
 
     @Override
-    public List<PmsCourseProduct> queryPowerNotesCoachPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct) {
+    public List<PowerNotesBean> queryPowerNotesCoachPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct) {
         PageHelper.startPage(pageNum, pageSize);
         pmsCourseProduct.setUserId(userId);
+        //教练的日程
         List<PmsCourseProduct> pmsCourseProducts = pmsCourseProductMapper.queryPowerNotesCoachPage(pmsCourseProduct);
-        //查询报名人数
+        //新增到教练日程表
+        //判断教练的日程是否已经新增：
+        //日程表中该教练的所有产品id
+        for (int i = 0; i < pmsCourseProducts.size(); i++) {
+            //判断教练的这个日程是否已经新增
+            Integer count = pmsCourseProductMapper.selectProductId(userId,pmsCourseProducts.get(i).getId());
+            if(count == 0){
+                //这条记录没有新增，去新增
+                PowerNotesBean powerNotesBean = new PowerNotesBean();
+                powerNotesBean.setImage(pmsCourseProducts.get(i).getImage());
+                powerNotesBean.setTitle(pmsCourseProducts.get(i).getTitle());
+                powerNotesBean.setProductName(pmsCourseProducts.get(i).getProductName());
+                powerNotesBean.setStartTime(pmsCourseProducts.get(i).getStartTime());
+                powerNotesBean.setEndTime(pmsCourseProducts.get(i).getEndTime());
+                powerNotesBean.setUserId(userId);
+                powerNotesBean.setProductType(pmsCourseProducts.get(i).getProductType());
+                powerNotesBean.setProductId(pmsCourseProducts.get(i).getId());
+                powerNotesBean.setLocation(pmsCourseProducts.get(i).getLocation());
+                pmsCourseProductMapper.addProwerNotes(powerNotesBean);
+            }
+        }
+        //教练的日程
+        List<PowerNotesBean> powerNotesBean = pmsCourseProductMapper.selectPowerNotesPage(pmsCourseProduct);
+        //日程状态  1==已完成 2==未完成
+        for (int i = 0; i < powerNotesBean.size(); i++) {
+            if (powerNotesBean.get(i).getEndTime().before(new Date())){
+                powerNotesBean.get(i).setStatus(1);
+            }else{
+                powerNotesBean.get(i).setStatus(2);
+
+            }
+        }
+        /*//查询报名人数
         for (int i = 0; i < pmsCourseProducts.size(); i++) {
             Integer integer = pmsCourseProductMapper.queryPepleNum(pmsCourseProducts.get(i).getId(), pmsCourseProducts.get(i).getUserId(), pmsCourseProducts.get(i).getProductType());
             pmsCourseProducts.get(i).setPeopleNum(integer);
-        }
-        return pmsCourseProducts;
+        }*/
+
+        return powerNotesBean;
     }
 
     @Override
-    public List<PmsCourseProduct> queryPowerNotesCoachToMonth(Long userId) {
-        return pmsCourseProductMapper.queryPowerNotesCoachToMonth(userId);
+    public List<PowerNotesBean> queryPowerNotesCoachToMonth(Long userId) {
+        List<PowerNotesBean> powerNotesBeans = pmsCourseProductMapper.queryPowerNotesCoachToMonth(userId);
+        //日程状态  1==已完成 2==未完成
+        for (int i = 0; i < powerNotesBeans.size(); i++) {
+            if (powerNotesBeans.get(i).getEndTime().before(new Date())){
+                powerNotesBeans.get(i).setStatus(1);
+            }else{
+                powerNotesBeans.get(i).setStatus(2);
+
+            }
+        }
+        return powerNotesBeans;
     }
 }

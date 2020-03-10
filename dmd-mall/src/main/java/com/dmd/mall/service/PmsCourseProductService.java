@@ -6,6 +6,7 @@ import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.OmsOrderItem;
 import com.dmd.mall.model.domain.PmsCourseProduct;
+import com.dmd.mall.model.domain.PowerNotesBean;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.dto.CourseProductDto;
 import com.dmd.mall.model.vo.CertificateProductVo;
@@ -131,7 +132,7 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
 
     Long  countSellerProductNum(Long coachId);
 
-    List<PmsCourseProduct> queryPowerNotesCoachPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct);
+    List<PowerNotesBean> queryPowerNotesCoachPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct);
 
-    List<PmsCourseProduct> queryPowerNotesCoachToMonth(Long userId);
+    List<PowerNotesBean> queryPowerNotesCoachToMonth(Long userId);
 }

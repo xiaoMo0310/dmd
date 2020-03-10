@@ -70,6 +70,16 @@ public class DynamicBean {
      */
     private String dynamicHeadPortraitCoach;
 
+    private String shopName;
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
     public String getCoachName() {
         return coachName;
     }
@@ -244,6 +254,7 @@ public class DynamicBean {
                 ", userType=" + userType +
                 ", coachName='" + coachName + '\'' +
                 ", dynamicHeadPortraitCoach='" + dynamicHeadPortraitCoach + '\'' +
+                ", shopName='" + shopName + '\'' +
                 '}';
     }
 }

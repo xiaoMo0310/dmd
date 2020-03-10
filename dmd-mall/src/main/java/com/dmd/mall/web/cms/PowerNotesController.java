@@ -5,6 +5,7 @@ import com.dmd.base.result.CommonResult;
 import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.PmsCourseProduct;
+import com.dmd.mall.model.domain.PowerNotesBean;
 import com.dmd.mall.service.PmsCourseProductService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -124,11 +125,11 @@ public class PowerNotesController {
     @ApiOperation("教练日程明细查询")
     @RequestMapping(value = "/selectPowerNotesCoachPage", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<PageInfo<PmsCourseProduct>> queryPowerNotesCoachPage(@RequestParam Integer pageNum,
-                                                                             @RequestParam Integer pageSize,
-                                                                             @RequestParam Long userId,
-                                                                             PmsCourseProduct pmsCourseProduct) {
-        List<PmsCourseProduct> powerNotesList = pmsCourseProductService.queryPowerNotesCoachPage(pageNum, pageSize, userId, pmsCourseProduct);
+    public CommonResult<PageInfo<PowerNotesBean>> queryPowerNotesCoachPage(@RequestParam Integer pageNum,
+                                                                           @RequestParam Integer pageSize,
+                                                                           @RequestParam Long userId,
+                                                                           PmsCourseProduct pmsCourseProduct) {
+        List<PowerNotesBean> powerNotesList = pmsCourseProductService.queryPowerNotesCoachPage(pageNum, pageSize, userId, pmsCourseProduct);
         return CommonResult.success(new PageInfo<>(powerNotesList));
     }
 
@@ -141,8 +142,10 @@ public class PowerNotesController {
     @ApiOperation("当月教练日程")
     @RequestMapping(value = "/selectPowerNotesCoachToMonth", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<PmsCourseProduct>> queryPowerNotesCoachToMonth(@RequestParam Long userId) {
-        List<PmsCourseProduct> powerNotesList = pmsCourseProductService.queryPowerNotesCoachToMonth(userId);
+    public CommonResult<List<PowerNotesBean>> queryPowerNotesCoachToMonth(@RequestParam Long userId) {
+        List<PowerNotesBean> powerNotesList = pmsCourseProductService.queryPowerNotesCoachToMonth(userId);
         return CommonResult.success(powerNotesList);
     }
+
+
 }

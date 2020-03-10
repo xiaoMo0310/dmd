@@ -23,11 +23,12 @@
 
     <select id="queryDynamicPage" resultMap="dynamicMap" parameterType="com.dmd.admin.model.domain.DynamicBean">
         SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type,
-        uc.nick_name AS coachName, uc.icon AS dynamicHeadPortraitCoach
+        uc.nick_name AS coachName, uc.icon AS dynamicHeadPortraitCoach,cs.name AS shopName
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
         LEFT JOIN ums_member um on dy.r_userid = um.id
         LEFT JOIN ums_coach uc on dy.r_userid = uc.id
+        LEFT JOIN ums_coach_shop cs on dy.shop_id = cs.id
         <include refid="dynamicWhere"></include>
         ORDER BY dy.r_createtime DESC
     </select>
@@ -65,10 +66,11 @@
     </sql>
 
     <select id="queryDynamicPageByCoach" resultMap="dynamicMap" parameterType="com.dmd.admin.model.domain.DynamicBean">
-        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type,cs.name AS shopName
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
         LEFT JOIN ums_coach um on dy.r_userid = um.id
+        LEFT JOIN ums_coach_shop cs on dy.shop_id = cs.id
         <include refid="dynamicWhereCoach"></include>
         ORDER BY dy.r_createtime DESC
     </select>
@@ -118,16 +120,20 @@
     </update>
 
     <select id="selectDynamicById" parameterType="java.lang.Long" resultMap="dynamicMap">
-        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type,cs.name AS shopName
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
-        LEFT JOIN ums_member um on dy.r_userid = um.id WHERE  dy.r_id = #{value} AND delflag = 0
+        LEFT JOIN ums_member um on dy.r_userid = um.id
+        LEFT JOIN ums_coach_shop cs on dy.shop_id = cs.id
+        WHERE  dy.r_id = #{value} AND delflag = 0
     </select>
     <select id="selectDynamicByIdByCoach" parameterType="java.lang.Long" resultMap="dynamicMap">
-        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type
+        SELECT dy.r_id,um.nick_name AS r_author,um.icon AS r_head_portrait ,dy.r_content,dy.r_createtime,dy.r_address,dy.r_picture,dy.r_praise,dy.r_share_num,dy.r_comment_num,dy.r_userid,dy.r_topicid,dt.topicName as r_topicName,delflag,dy.user_type,cs.name AS shopName
         FROM dmd_dynamic dy LEFT JOIN dmd_dynamic_topic dt
         ON dy.r_topicid  = dt.id
-        LEFT JOIN ums_coach um on dy.r_userid = um.id WHERE  dy.r_id = #{value} AND delflag = 0
+        LEFT JOIN ums_coach um on dy.r_userid = um.id
+        LEFT JOIN ums_coach_shop cs on dy.shop_id = cs.id
+        WHERE  dy.r_id = #{value} AND delflag = 0
     </select>
 
 

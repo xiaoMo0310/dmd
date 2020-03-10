@@ -40,6 +40,22 @@
         <result column="stock" property="stock" />
     </resultMap>
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="powerMap" type="com.dmd.mall.model.domain.PowerNotesBean">
+        <result column="id" property="id" />
+        <result column="image" property="image" />
+        <result column="title" property="title" />
+        <result column="product_name" property="productName" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="user_id" property="userId" />
+        <result column="product_type" property="productType" />
+        <result column="remarks" property="remarks" />
+        <result column="product_id" property="productId" />
+        <result column="location" property="location" />
+    </resultMap>
+
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,
@@ -278,11 +294,13 @@
         SELECT
             pc.id,
             pc.image,
+            pc.product_name,
             pc.title,
             pc.start_time,
             pc.end_time,
             pc.user_id,
-            pc.product_type
+            pc.product_type,
+            pc.location
         FROM
             pms_course_product pc
         WHERE
@@ -295,24 +313,79 @@
     </select>
 
 
-    <select id="queryPowerNotesCoachToMonth" parameterType="com.dmd.mall.model.domain.PmsCourseProduct" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
+    <select id="queryPowerNotesCoachToMonth" parameterType="java.lang.Long" resultType="com.dmd.mall.model.domain.PowerNotesBean">
         SELECT
         pc.id,
         pc.image,
+        pc.product_name,
         pc.title,
         pc.start_time,
         pc.end_time,
         pc.user_id,
-        pc.product_type
+        pc.product_type,
+        pc.location,
+        pc.product_id
         FROM
-        pms_course_product pc
+        pms_power_notes pc
         WHERE
-        approval_status = 2
-        AND pc.user_id = #{userId}
+        /*approval_status = 2*/
+        pc.user_id = #{userId}
         AND DATE_FORMAT( start_time, '%Y%m' ) = DATE_FORMAT( CURDATE() , '%Y%m' )
 
     </select>
     <select id="countSellerProductNum" resultType="java.lang.Long">
         select count(1) from pms_course_product where user_id = #{coachId} and status !=3 and approval_status != 1 and approval_status != 3
+    </select>
+
+    <select id="selectProductId" parameterType="map" resultType="java.lang.Integer">
+        select count(1) FROM pms_power_notes where user_id = #{userId} AND product_id = #{id}
+    </select>
+
+    <insert id="addProwerNotes" parameterType="com.dmd.mall.model.domain.PowerNotesBean">
+        INSERT INTO pms_power_notes(
+        image,
+        title,
+        product_name,
+        start_time,
+        end_time,
+        user_id,
+        product_type,
+        product_id,
+        location
+        )
+        VALUES (
+        #{image,jdbcType=VARCHAR},
+        #{title,jdbcType=VARCHAR},
+        #{productName,jdbcType=VARCHAR},
+        #{startTime,jdbcType=TIMESTAMP},
+        #{endTime,jdbcType=TIMESTAMP},
+        #{userId,jdbcType=BIGINT},
+        #{productType,jdbcType=INTEGER},
+        #{productId,jdbcType=BIGINT},
+        #{location,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="selectPowerNotesPage" parameterType="com.dmd.mall.model.domain.PmsCourseProduct" resultType="com.dmd.mall.model.domain.PowerNotesBean">
+        SELECT
+        pc.id,
+        pc.image,
+        pc.title,
+        pc.product_name,
+        pc.start_time,
+        pc.end_time,
+        pc.user_id,
+        pc.product_type,
+        pc.remarks,
+        pc.product_id,
+        pc.location
+        FROM
+        pms_power_notes pc
+        WHERE pc.user_id = #{userId}
+        <!-- 日期区间查询 -->
+        <if test="searchStartTime != null">
+            and date_format( start_time, '%Y-%m-%d' ) = #{searchStartTime}
+        </if>
+
     </select>
 </mapper>
