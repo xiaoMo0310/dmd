@@ -1,8 +1,8 @@
 package com.dmd.admin.web;
 
 import com.dmd.admin.model.domain.PmsCourseProductTemplate;
+import com.dmd.admin.model.dto.PmsCourseProductTemplateDto;
 import com.dmd.admin.service.PmsCourseProductTemplateService;
-import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
@@ -43,9 +43,9 @@ public class PmsCourseProductTemplateController extends BaseController {
 
     @PostMapping("/courseProduct/templateList")
     @ApiOperation(httpMethod = "POST", value = "分页查询模板信息")
-    @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery", paramType = "body")
-    public Wrapper getList(@RequestBody BaseQuery baseQuery) {
-        PageInfo<PmsCourseProductTemplate> courseProductTemplates = courseProductTemplateService.getTemplateList(baseQuery);
+    @ApiImplicitParam(name ="courseProductTemplateDto", value = "查询需要的数据", dataType = "PmsCourseProductTemplateDto", paramType = "body")
+    public Wrapper getList(@RequestBody PmsCourseProductTemplateDto courseProductTemplateDto) {
+        PageInfo<PmsCourseProductTemplate> courseProductTemplates = courseProductTemplateService.getTemplateList(courseProductTemplateDto);
         return WrapMapper.ok(courseProductTemplates);
     }
 
@@ -57,11 +57,11 @@ public class PmsCourseProductTemplateController extends BaseController {
         return WrapMapper.ok(courseProductTemplate);
     }
 
-    @PostMapping("/courseProduct/template/delete/{id}")
+    @PostMapping("/courseProduct/template/delete")
     @ApiOperation(httpMethod = "POST", value = "删除商品模板")
-    @ApiImplicitParam(name ="id", value = "模板id", dataType = "long", paramType = "path")
-    public Wrapper delete(@PathVariable Long id) {
-        int count = courseProductTemplateService.deleteCourseProductTemplate( id );
+    @ApiImplicitParam(name ="ids", value = "模板id", dataType = "list", paramType = "query")
+    public Wrapper delete(@RequestParam List<Long> ids) {
+        int count = courseProductTemplateService.deleteCourseProductTemplate( ids );
         return handleResult( count );
     }
 

@@ -54,7 +54,7 @@ private static final long serialVersionUID = 1L;
     private String divingTime;
 
     @Column(name = "related_product")
-    @ApiModelProperty("关联产品(格式[{\"id\":33,\"text\":\"眼镜\",\"price\":\"200\"}])")
+    @ApiModelProperty("关联产品(格式[{\"parentId\":22,id\":33,\"text\":\"眼镜\",\"price\":\"200\"}])")
     private String relatedProduct;
 
     @Column(name = "product_price")

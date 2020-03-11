@@ -2,6 +2,7 @@ package com.dmd.mall.mapper;
 
 import com.dmd.mall.model.domain.PmsCourseProductTemplate;
 import com.dmd.core.mybatis.MyMapper;
+import com.dmd.mall.model.vo.PmsCourseProductTemplateVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -19,5 +20,5 @@ import java.util.List;
 @Component
 public interface PmsCourseProductTemplateMapper extends MyMapper<PmsCourseProductTemplate> {
 
-    List<PmsCourseProductTemplate> selectTemplateByShopId(Long shopId);
+    List<PmsCourseProductTemplateVo> selectTemplateByShopId(Long shopId);
 }

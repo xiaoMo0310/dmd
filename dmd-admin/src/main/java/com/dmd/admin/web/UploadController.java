@@ -31,17 +31,33 @@ public class UploadController {
     @Autowired
     private FileUploadUtil fileUploadUtil;
 
-    @PostMapping("/file")
-    @ApiOperation(httpMethod = "POST",value = "上传图片")
+    @PostMapping("/image")
+    @ApiOperation(httpMethod = "POST",value = "上传单图片")
     public Wrapper<FileResult> uploadImage(@RequestBody MultipartFile file) throws IOException {
         FileResult fileResult = fileUploadUtil.saveFile(file, "dmd", true);
         return WrapMapper.ok(fileResult);
     }
 
-    @ApiOperation("图片上传")
+    @PostMapping("/file")
+    @ApiOperation(httpMethod = "POST",value = "上传单文件")
+    public Wrapper<FileResult> uploadFile(@RequestBody MultipartFile file) throws IOException {
+        FileResult fileResult = fileUploadUtil.saveFile(file, "dmd", false);
+        return WrapMapper.ok(fileResult);
+    }
+
+    @ApiOperation("多文件上传")
     @PostMapping(value="/saveFile")
     @ResponseBody
     public CommonResult filesUpload(@RequestParam("files") MultipartFile[] files) {
+        List<FileResult> fileResults = fileUploadUtil.saveFiles(files, "image", false);
+        List<String> urlList = fileResults.stream().map(fileResult -> fileResult.getServerPath()).collect(Collectors.toList());
+        String newStr = StringUtils.join(urlList, ",");
+        return CommonResult.success(newStr);
+    }
+    @ApiOperation("多图片上传")
+    @PostMapping(value="/saveImage")
+    @ResponseBody
+    public CommonResult imagesUpload(@RequestParam("files") MultipartFile[] files) {
         List<FileResult> fileResults = fileUploadUtil.saveFiles(files, "image", true);
         List<String> urlList = fileResults.stream().map(fileResult -> fileResult.getServerPath()).collect(Collectors.toList());
         String newStr = StringUtils.join(urlList, ",");

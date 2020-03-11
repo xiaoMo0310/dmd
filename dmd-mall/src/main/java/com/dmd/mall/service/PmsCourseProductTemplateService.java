@@ -3,6 +3,7 @@ package com.dmd.mall.service;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.mall.model.domain.PmsCourseProductTemplate;
 import com.dmd.core.support.IService;
+import com.dmd.mall.model.vo.PmsCourseProductTemplateVo;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -21,5 +22,5 @@ public interface PmsCourseProductTemplateService extends IService<PmsCourseProdu
      * @param baseQuery
      * @return
      */
-    PageInfo<PmsCourseProductTemplate> findTemplateByShopId(Long shopId, BaseQuery baseQuery);
+    PageInfo<PmsCourseProductTemplateVo> findTemplateByShopId(Long shopId, BaseQuery baseQuery);
 }

@@ -40,7 +40,14 @@
     <select id="selectByUserId" resultType="com.dmd.admin.model.domain.PmsCourseProductTemplate">
         select <include refid="Base_Column_List"/>
         from pms_course_product_template
-        where user_id = #{userId} and shop_id = 0
+        where user_id = 0
+        and shop_id = 0
+        <if test="playAddress != null">
+            and play_address LIKE '%${playAddress}%'
+        </if>
+        <if test="productName != null">
+            and product_name LIKE '%${productName}%'
+        </if>
     </select>
 
 </mapper>

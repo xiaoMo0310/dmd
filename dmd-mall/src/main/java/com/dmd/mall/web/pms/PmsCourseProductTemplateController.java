@@ -2,8 +2,7 @@ package com.dmd.mall.web.pms;
 
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
-import com.dmd.mall.model.domain.PmsCourseProductCategory;
-import com.dmd.mall.model.domain.PmsCourseProductTemplate;
+import com.dmd.mall.model.vo.PmsCourseProductTemplateVo;
 import com.dmd.mall.service.PmsCourseProductTemplateService;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
@@ -15,8 +14,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * <p>
@@ -39,7 +36,7 @@ public class PmsCourseProductTemplateController extends BaseController {
     @ApiImplicitParams( {@ApiImplicitParam(name ="shopId", value = "店铺Id(如果是平台模板为0)", dataType = "long", paramType = "query"),
                         @ApiImplicitParam(name ="baseQuery", value = "分页信息", dataType = "BaseQuery", paramType = "body")} )
     public Wrapper getList(@RequestParam Long shopId, @RequestBody BaseQuery baseQuery) {
-        PageInfo<PmsCourseProductTemplate> courseProductTemplatePageInfo= courseProductTemplateService.findTemplateByShopId(shopId, baseQuery);
+        PageInfo<PmsCourseProductTemplateVo> courseProductTemplatePageInfo= courseProductTemplateService.findTemplateByShopId(shopId, baseQuery);
         return WrapMapper.ok(courseProductTemplatePageInfo);
     }
 

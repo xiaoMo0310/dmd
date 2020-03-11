@@ -1,9 +1,11 @@
 package com.dmd.mall.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseService;
 import com.dmd.mall.mapper.PmsCourseProductTemplateMapper;
 import com.dmd.mall.model.domain.PmsCourseProductTemplate;
+import com.dmd.mall.model.vo.PmsCourseProductTemplateVo;
 import com.dmd.mall.service.PmsCourseProductTemplateService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,9 +32,13 @@ public class PmsCourseProductTemplateServiceImpl extends BaseService<PmsCoursePr
     private PmsCourseProductTemplateMapper courseProductTemplateMapper;
 
     @Override
-    public PageInfo<PmsCourseProductTemplate> findTemplateByShopId(Long shopId, BaseQuery baseQuery) {
+    public PageInfo<PmsCourseProductTemplateVo> findTemplateByShopId(Long shopId, BaseQuery baseQuery) {
         PageHelper.startPage( baseQuery.getPageNum(), baseQuery.getPageSize() );
-        List<PmsCourseProductTemplate> courseProductTemplates = courseProductTemplateMapper.selectTemplateByShopId(shopId);
+        List<PmsCourseProductTemplateVo> courseProductTemplates = courseProductTemplateMapper.selectTemplateByShopId(shopId);
+        courseProductTemplates.forEach( courseProductTemplateVo -> {
+            List<Map> relatedProduct = (List<Map>) JSONArray.parse( courseProductTemplateVo.getRelatedProduct() );
+            courseProductTemplateVo.setRelatedProductList( relatedProduct );
+        });
         return new PageInfo<>( courseProductTemplates );
     }
 }
