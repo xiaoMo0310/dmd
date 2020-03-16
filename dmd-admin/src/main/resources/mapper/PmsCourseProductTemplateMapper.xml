@@ -21,6 +21,7 @@
         <result column="product_price" property="productPrice" />
         <result column="equipment_price" property="equipmentPrice" />
         <result column="total_price" property="totalPrice" />
+        <result column="diving_image" property="divingImage" />
         <result column="diving_description" property="divingDescription" />
         <result column="show_status" property="showStatus" />
         <result column="sort" property="sort" />
@@ -35,7 +36,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        user_id, shop_id, product_name, address_id, play_address, diving_time, related_product, product_price, equipment_price, total_price, diving_description, show_status, sort
+        user_id, shop_id, product_name, address_id, play_address, diving_time, related_product, product_price, equipment_price, total_price, diving_image, diving_description, show_status, sort
     </sql>
     <select id="selectByUserId" resultType="com.dmd.admin.model.domain.PmsCourseProductTemplate">
         select <include refid="Base_Column_List"/>

@@ -61,13 +61,13 @@ public class BaseEntity implements Serializable {
 	private Date updateTime;
 
 	@Transient
-	private Integer pageNum = 0;
+	private Integer pageNum;
 
 	@Transient
-	private Integer pageSize = 5;
+	private Integer pageSize;
 
 	@Transient
-	private String orderBy = "update_time desc";
+	private String orderBy;
 
 
 

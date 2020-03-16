@@ -69,6 +69,10 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("产品总的价格")
     private BigDecimal totalPrice;
 
+    @Column(name = "diving_image")
+    @ApiModelProperty("潜水图片")
+    private String divingImage;
+
     @Column(name = "diving_description")
     @ApiModelProperty("潜水点描述")
     private String divingDescription;
