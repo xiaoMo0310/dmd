@@ -72,8 +72,8 @@ public class OmsIntegralOrderServiceImpl extends BaseService<OmsIntegralOrder> i
             throw new PmsBizException(ErrorCodeEnum.PMS10021026);
         }
 
-        //封装积分好礼订单详情数据
-        OmsOrderItem orderItem = integralGiftService.createIntegralOrderItem(integralGift, orderParamDto.getProductSkuId(), orderParamDto.getQuantity());
+        /*//封装积分好礼订单详情数据
+        OmsOrderItem orderItem = integralGiftService.createIntegralOrderItem(integralGift, orderParamDto.getProductSkuId(), orderParamDto.getQuantity());*/
 
         //判单商品的积分和使用的商品积分相同
         /*if(!orderParamDto.getUseIntegration().equals(integralGift.getIntegral() * orderParamDto.getQuantity())){
@@ -112,7 +112,7 @@ public class OmsIntegralOrderServiceImpl extends BaseService<OmsIntegralOrder> i
             umsCoachService.updateIntegration(umsCoach, useIntegration, "积分兑换商品扣减积分", 1);
         }
         //减库存
-        reduceIntegralProductInventory(loginAuthDto,orderItem.getProductSkuId(), orderItem.getProductQuantity());
+        reduceIntegralProductInventory(loginAuthDto,order.getProductSkuId(), order.getProductQuantity());
     }
 
     @Override
@@ -193,7 +193,6 @@ public class OmsIntegralOrderServiceImpl extends BaseService<OmsIntegralOrder> i
         order.setUserType(userType);
         order.setFreightAmount(postage);
         order.setUseIntegration(orderCreateVo.getUseIntegration());
-        order.setOrderType(0);
         order.setSourceType(1);
         order.setMemberId(loginAuthDto.getUserId());
         order.setShopId(shopId);
@@ -204,7 +203,7 @@ public class OmsIntegralOrderServiceImpl extends BaseService<OmsIntegralOrder> i
         order.setStatus(OmsApiConstant.OrderStatusEnum.PAID.getCode());
         order.setPayType(3);
         order.setPaymentTime(new Date());
-        order.setOrderType(2);
+        order.setOrderType(1);
         //封装积分商品收货地址信息
         addOrderShippingMessage(order, orderCreateVo.getShippingId());
         order.setRemark(remark);
@@ -231,7 +230,7 @@ public class OmsIntegralOrderServiceImpl extends BaseService<OmsIntegralOrder> i
         order.setProductPic(integralGift.getPicture());
         order.setProductName(integralGift.getName());
         order.setProductTitle(integralGift.getName());
-        order.setProductType(4);
+        order.setProductType(1);
         order.setProductQuantity(quantity);
         //封装商品sku数据
         order.setProductSkuId(dmdIntegralGiftSpe.getId());

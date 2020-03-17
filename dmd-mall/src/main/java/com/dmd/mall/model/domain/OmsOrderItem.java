@@ -65,6 +65,10 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("销售价格")
     private BigDecimal productPrice;
 
+    @Column(name = "equipment_price")
+    @ApiModelProperty(value = "其它装备价格")
+    private BigDecimal equipmentPrice;
+
     @Column(name = "product_quantity")
     @ApiModelProperty("购买数量")
     private Integer productQuantity;

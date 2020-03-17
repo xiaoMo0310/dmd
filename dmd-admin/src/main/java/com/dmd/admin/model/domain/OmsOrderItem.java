@@ -29,12 +29,11 @@ public class OmsOrderItem implements Serializable {
 
     private String productName;
 
-    private String productBrand;
-
-    private String productSn;
-
     @ApiModelProperty(value = "销售价格")
     private BigDecimal productPrice;
+
+    @ApiModelProperty(value = "其它装备价格")
+    private BigDecimal equipmentPrice;
 
     @ApiModelProperty(value = "购买数量")
     private Integer productQuantity;
@@ -42,11 +41,8 @@ public class OmsOrderItem implements Serializable {
     @ApiModelProperty(value = "商品sku编号")
     private Long productSkuId;
 
-    @ApiModelProperty(value = "商品sku条码")
-    private String productSkuCode;
-
-    @ApiModelProperty(value = "商品分类id")
-    private Long productCategoryId;
+    @ApiModelProperty(value = "商品分类价格商品分类价格(格式[{\"parentId\":22,id\":33,\"text\":\"眼镜\",\"price\":\"200\"}])")
+    private String productCategoryPrice;
 
     @ApiModelProperty(value = "商品促销名称")
     private String promotionName;
@@ -62,7 +58,4 @@ public class OmsOrderItem implements Serializable {
 
     @ApiModelProperty(value = "该商品经过优惠后的分解金额")
     private BigDecimal realAmount;
-
-    @ApiModelProperty(value = "商品销售属性:[{'key':'颜色','value':'颜色'},{'key':'容量','value':'4G'}]")
-    private String productAttr;
 }

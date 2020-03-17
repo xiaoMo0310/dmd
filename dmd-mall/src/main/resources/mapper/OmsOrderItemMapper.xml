@@ -20,6 +20,7 @@
         <result column="product_brand" property="productBrand" />
         <result column="product_sn" property="productSn" />
         <result column="product_price" property="productPrice" />
+        <result column="equipment_price" property="equipmentPrice" />
         <result column="product_quantity" property="productQuantity" />
         <result column="total_price" property="totalPrice" />
         <result column="product_sku_id" property="productSkuId" />
@@ -40,7 +41,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        order_id, order_sn, product_id, product_pic, product_name, product_brand, product_sn, product_price, product_quantity, product_sku_id, product_sku_code, product_category_id, integration_amount, real_amount, product_attr, total_price totalPrice, product_type productType, product_title
+        order_id, order_sn, product_id, product_pic, product_name, product_brand, product_sn, product_price, product_quantity, product_sku_id, product_sku_code, product_category_id, integration_amount, real_amount, product_attr, total_price totalPrice, product_type productType, product_title, equipment_price
     </sql>
 
     <select id="getListByOrderNoUserId" parameterType="map" resultMap="BaseResultMap">

@@ -32,7 +32,7 @@ public interface DiveCertificateMapper {
 
     int updateCertificate(CertificateAppBean certificateAppBean);
 
-    List<CertificateAppBean> queryUserCertificateList(Long userId);
+    List<CertificateAppBean> queryUserCertificateList(Long userId, Integer userType);
 
     Integer queryCertificateMax(Long userId);
 

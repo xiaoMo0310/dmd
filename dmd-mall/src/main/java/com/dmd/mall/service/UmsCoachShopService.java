@@ -19,6 +19,7 @@ public interface UmsCoachShopService extends IService<UmsCoachShop> {
     /**
      * 根据教练id查询店铺信息
      * @param userId
+     * @param loginAuthDto
      * @return
      */
     UmsCoachShop findByCoachId(Long coachId);

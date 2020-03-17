@@ -55,8 +55,16 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("产品的价格")
     private BigDecimal price;
 
+    @ApiModelProperty("其它产品的价格")
+    @Column(name = "equipment_price")
+    private BigDecimal equipmentPrice;
+
+    @ApiModelProperty("产品总的价格")
+    @Column(name = "total_price")
+    private BigDecimal totalPrice;
+
     @Column(name = "product_type")
-    @ApiModelProperty("产品类型(1:学证 2:潜水)")
+    @ApiModelProperty("产品类型(1:学证 2:潜水 3:组团)")
     private Integer productType;
 
     @ApiModelProperty("地点")
@@ -93,17 +101,9 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("库存")
     private Integer stock;
 
-    @Column(name = "cost_includes")
-    @ApiModelProperty("费用包含")
-    private String costIncludes;
-
-    @Column(name = "cost_not_includes")
-    @ApiModelProperty("费用不含")
-    private String costNotIncludes;
-
-    @Column(name = "purchase_notes")
-    @ApiModelProperty("购买须知")
-    private String purchaseNotes;
+    @Column(name = "related_product")
+    @ApiModelProperty("关联产品(格式[{\"parentId\":22,id\":33,\"text\":\"眼镜\",\"price\":\"200\"}])")
+    private String relatedProduct;
 
     @Column(name = "product_description")
     @ApiModelProperty("产品介绍")
@@ -111,10 +111,6 @@ private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("产品图片(多个使用 , 隔开)")
     private String image;
-
-    @Column(name = "content_arrangement")
-    @ApiModelProperty("内容安排(数据格式 [{\"date\":\"第1天\",\"message\":\"内容\"},{\"date\":\"第2天\",\"message\":\"内容\"}]")
-    private String contentArrangement;
 
     @ApiModelProperty("状态(1-在售 2-下架 3-删除 4-停止销售 5-已售完)")
     private Integer status;

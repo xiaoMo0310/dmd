@@ -21,5 +21,5 @@ public interface DiveCertificateServuce {
      * @param userId
      * @return
      */
-    List<CertificateAppBean> queryUserCertificateList(Long userId);
+    List<CertificateAppBean> queryUserCertificateList(Long userId, String userType);
 }

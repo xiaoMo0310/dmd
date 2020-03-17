@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.constant.OmsApiConstant;
-import com.dmd.mall.model.dto.OrderParamDto;
 import com.dmd.mall.model.dto.PmsCourseOrderDto;
 import com.dmd.mall.model.vo.CourseOrderDetailVo;
 import com.dmd.mall.model.vo.OrderCreateResultVo;
@@ -46,14 +45,6 @@ public class OmsOrderController extends BaseController {
     public Wrapper<OrderCreateResultVo> createOrder(@RequestBody OrderCreateVo orderCreateVo) {
         OrderCreateResultVo orderVo = omsOrderService.createOrder(getLoginAuthDto(), orderCreateVo);
         return WrapMapper.ok(orderVo);
-    }
-
-    @PostMapping("/IntegralOrder/create")
-    @ApiOperation(httpMethod = "POST", value = "创建积分好礼订单")
-    @ApiImplicitParam(name ="orderParamDto", value = "创建订单需要的参数", dataType = "OrderParamDto")
-    public Wrapper<OrderCreateResultVo> createIntegralProductOrder(@RequestBody OrderParamDto orderParamDto) {
-        omsOrderService.createIntegralOrder(getLoginAuthDto(), orderParamDto);
-        return WrapMapper.ok();
     }
 
     @PostMapping("/courseProductOrder/create")

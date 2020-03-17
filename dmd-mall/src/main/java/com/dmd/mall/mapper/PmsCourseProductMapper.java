@@ -5,7 +5,6 @@ import com.dmd.mall.model.domain.PmsCourseProduct;
 import com.dmd.mall.model.domain.PowerNotesBean;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.vo.PmsCourseListVo;
-import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -31,7 +30,7 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
      * @param type
      * @return
      */
-    List<PmsCourseListVo> selectCourseProductByType(Integer type);
+    List<PmsCourseListVo> selectCourseProductByType();
 
     /**
      * 根据证书id查询商品的信息
@@ -71,7 +70,7 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
 
     List<PmsCourseProduct> queryPowerNotesCoachPage(PmsCourseProduct pmsCourseProduct);
 
-    List<PmsCourseListVo> selectSellerCourseProductListByType(@Param("userId") Long userId, @Param("productType") Integer productType);
+    List<PmsCourseListVo> selectSellerCourseProductListByType(@Param("userId") Long userId);
 
     List<PmsCourseProduct> selectProductByUserId(@Param("userId") Long userId, @Param("productType") Integer productType);
 

@@ -73,7 +73,7 @@ private static final long serialVersionUID = 1L;
     private String productBrand;
 
     @Column(name = "product_type")
-    @ApiModelProperty("商品类型(4:积分商品)")
+    @ApiModelProperty("商品类型(1:积分商品)")
     private Integer productType;
 
     @Column(name = "product_price")
@@ -120,7 +120,7 @@ private static final long serialVersionUID = 1L;
     private Integer status;
 
     @Column(name = "order_type")
-    @ApiModelProperty("订单类型：2->积分商品订单")
+    @ApiModelProperty("订单类型：1->积分商品订单")
     private Integer orderType;
 
     @Column(name = "delivery_company")

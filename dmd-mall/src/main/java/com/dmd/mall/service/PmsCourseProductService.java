@@ -46,10 +46,9 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
      * 分页查询产品列表信息
      *
      * @param baseQuery
-     * @param type
      * @return
      */
-    PageInfo<PmsCourseListVo> findCourseProductListByType(BaseQuery baseQuery, Integer type);
+    PageInfo<PmsCourseListVo> findCourseProductListByType(BaseQuery baseQuery);
 
     /**
      * 查询学证产品的详细信息
@@ -121,7 +120,7 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
      * @param baseQuery
      * @return
      */
-    PageInfo<PmsCourseListVo> findSellerCourseProductListByType(LoginAuthDto loginAuthDto, BaseQuery baseQuery, Integer type);
+    PageInfo<PmsCourseListVo> findSellerCourseProductListByType(LoginAuthDto loginAuthDto, BaseQuery baseQuery);
 
     /**
      * 查询卖家所有的学证商品证书信息

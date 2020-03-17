@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.OmsOrder;
-import com.dmd.mall.model.dto.OrderParamDto;
 import com.dmd.mall.model.dto.PmsCourseOrderDto;
 import com.dmd.mall.model.vo.CourseOrderDetailVo;
 import com.dmd.mall.model.vo.OrderCreateResultVo;
@@ -30,14 +29,6 @@ public interface OmsOrderService extends IService<OmsOrder> {
      * @param orderCreateVo
      */
     OrderCreateResultVo createOrder(LoginAuthDto loginAuthDto, OrderCreateVo orderCreateVo);
-
-    /**
-     * 创建积分订单
-     * @param loginAuthDto
-     * @param orderParamDto
-     * @return
-     */
-    void createIntegralOrder(LoginAuthDto loginAuthDto, OrderParamDto orderParamDto);
 
     /**
      * 创建潜水学证商品订单

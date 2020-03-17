@@ -25,9 +25,7 @@ import javax.persistence.Table;
 @ApiModel
 public class PmsTag extends BaseEntity {
 
-private static final long serialVersionUID = 1L;
-
-
+    private static final long serialVersionUID = 8778752813955764219L;
     @Column(name = "tag_name")
     @ApiModelProperty("标签名称")
     private String tagName;

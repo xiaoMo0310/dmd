@@ -61,7 +61,7 @@ public class PmsCourseProductController extends BaseController {
     @ApiOperation(httpMethod = "POST", value = "查询潜水商品的列表信息")
     @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery", paramType = "body")
     public Wrapper findDivingProductMessage(@RequestBody BaseQuery baseQuery) {
-        PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findCourseProductListByType(baseQuery, 2);
+        PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findCourseProductListByType(baseQuery);
         return WrapMapper.ok(productList);
     }
 
@@ -69,7 +69,7 @@ public class PmsCourseProductController extends BaseController {
     @ApiOperation(httpMethod = "POST", value = "查询卖家潜水商品的列表信息")
     @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery", paramType = "body")
     public Wrapper findDivingProductList(@RequestBody BaseQuery baseQuery) {
-        PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findSellerCourseProductListByType(getLoginAuthDto(), baseQuery, 2);
+        PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findSellerCourseProductListByType(getLoginAuthDto(), baseQuery);
         return WrapMapper.ok(productList);
     }
 

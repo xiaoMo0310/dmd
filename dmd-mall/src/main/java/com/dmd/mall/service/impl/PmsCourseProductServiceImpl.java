@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -46,50 +47,72 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     @Autowired
     private UmsCoachService umsCoachService;
     @Autowired
+    private UmsCoachShopService coachShopService;
+    @Autowired
     private UmsMemberService umsMemberService;
     @Autowired
     private PmsPlayAddressService playAddressService;
+    @Autowired
+    private DiveCertificateServuce diveCertificateServuce;
+    @Autowired
+    private PmsProductTagService productTagService;
 
     @Override
     public int saveCourseProductMessage(LoginAuthDto loginAuthDto, CourseProductDto courseProductDto) {
         if(!loginAuthDto.getUserType().equals("coach")){
             throw new UmsBizException(ErrorCodeEnum.UMS10011023);
         }
-        PmsCourseProduct courseProduct = new PmsCourseProduct();
-        BeanUtils.copyProperties(courseProductDto, courseProduct);
-        //判断是否有证书商品
-        if(courseProductDto.getProductType() == 1 && courseProduct.isNew()){
-            PmsCourseProduct pmsCourseProduct = pmsCourseProductMapper.selectByUserId(loginAuthDto.getUserId(), courseProductDto.getCertificateId(), courseProduct.getAddressId());
-            if(!PublicUtil.isEmpty(pmsCourseProduct)){
-                //查询证书信息
-                PmsCertificateVo pmsCertificateVo = certificateService.selectCertificateById(pmsCourseProduct.getCertificateId());
-                throw new PmsBizException(10021029, "您已发布" + pmsCertificateVo.getEnglishShorthand() + "证书,不能重复发布");
+        //判断教练的等级
+        if(courseProductDto.getProductType() == 1){
+            //查询证书的信息
+            PmsCertificateVo pmsCertificateVo = certificateService.selectCertificateById(courseProductDto.getCertificateId());
+            //判断用户证书信息
+            List<CertificateAppBean> certificateAppBeans = diveCertificateServuce.queryUserCertificateList(loginAuthDto.getUserId(), loginAuthDto.getUserType());
+            if(CollectionUtils.isEmpty(certificateAppBeans)){
+                throw new PmsBizException(ErrorCodeEnum.PMS10021034);
+            }
+            CertificateAppBean appBean = null;
+            if(!CollectionUtils.isEmpty(certificateAppBeans)){
+                appBean = certificateAppBeans.stream().filter(Objects::nonNull).max(Comparator.comparingInt(certificateAppBean -> Integer.valueOf(certificateAppBean.getCertificateLevel()))).orElse(new CertificateAppBean());
+            }
+            if(!PublicUtil.isEmpty(appBean) && Integer.valueOf(pmsCertificateVo.getCertificateLevel()) > (Integer.valueOf(appBean.getCertificateLevel()))){
+                throw new PmsBizException(ErrorCodeEnum.PMS10021035);
             }
         }
-        //判断卖家是否有活动
-        List<PmsCourseProduct> pmsCourseProducts = pmsCourseProductMapper.selectCheckActivity(courseProductDto.getStartTime(), courseProduct.getEndTime(),courseProduct.getId(), loginAuthDto.getUserId());
-        if(!CollectionUtils.isEmpty(pmsCourseProducts)){
-            throw new PmsBizException(ErrorCodeEnum.PMS10021029);
+        PmsCourseProduct courseProduct = new PmsCourseProduct();
+        BeanUtils.copyProperties(courseProductDto, courseProduct);
+        List<Map> relatedProducts = (List<Map>) JSONArray.parse( courseProduct.getRelatedProduct() );
+        //其它装备价格
+        BigDecimal totalRelatedProductPrice = new BigDecimal("0.00");
+        for (Map relatedProduct : relatedProducts) {
+            System.out.println(relatedProduct);
+            System.out.println(Double.valueOf( (String) relatedProduct.get( "price" ) ) );
+            totalRelatedProductPrice = totalRelatedProductPrice.add( BigDecimal.valueOf( Double.valueOf( (String) relatedProduct.get( "price" ) ) ) );
         }
-        int resultInt;
+        courseProduct.setEquipmentPrice( totalRelatedProductPrice );
+        courseProduct.setTotalPrice( courseProduct.getPrice().add( totalRelatedProductPrice ) );
         courseProduct.setUpdateInfo(loginAuthDto);
         courseProduct.setStatus(2);
         courseProduct.setApprovalStatus(1);
-        courseProduct.setUserId(loginAuthDto.getUserId());
-        //TODo 店铺信息待做
-        if(!CollectionUtils.isEmpty(courseProductDto.getContentArrangements())){
-            courseProduct.setContentArrangement(JSONArray.toJSONString(courseProductDto.getContentArrangements()));
-        }
+        int resultInt;
         if (courseProduct.isNew()) {
             if(courseProductDto.getProductType() == 1){
                 courseProduct.setProductName("学证商品");
             }else if(courseProductDto.getProductType() == 2){
                 courseProduct.setProductName("潜水商品");
+            }else {
+                courseProduct.setProductName("组团商品");
             }
+            courseProduct.setUserId(loginAuthDto.getUserId());
+            UmsCoachShop coachShop = coachShopService.findByCoachId(loginAuthDto.getUserId() );
+            courseProduct.setShopId( coachShop.getId() );
             resultInt = pmsCourseProductMapper.insertSelective(courseProduct);
+            productTagService.batchSaveProductTag(courseProduct.getId(), courseProductDto.getTagIds());
         } else {
-            courseProduct.setApprovalStatus(1);
             resultInt = pmsCourseProductMapper.updateByPrimaryKeySelective(courseProduct);
+            if(courseProductDto.getProductType() == 3){
+                productTagService.batchUpdateProductTag(courseProduct.getId(), courseProductDto.getTagIds());
+            }
         }
         return resultInt;
     }
@@ -114,10 +137,10 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     }
 
     @Override
-    public PageInfo<PmsCourseListVo> findCourseProductListByType(BaseQuery baseQuery, Integer type){
+    public PageInfo<PmsCourseListVo> findCourseProductListByType(BaseQuery baseQuery){
         //下架与删除的商品不显示
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
-        List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectCourseProductByType(type);
+        List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectCourseProductByType();
         if(!CollectionUtils.isEmpty(pmsCourseProductVos)){
             for (PmsCourseListVo pmsCourseProductVo : pmsCourseProductVos) {
                 pmsCourseProductVo.setImage(pmsCourseProductVo.getImage().split(",")[0]);
@@ -327,9 +350,9 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     }
 
     @Override
-    public PageInfo<PmsCourseListVo> findSellerCourseProductListByType(LoginAuthDto loginAuthDto, BaseQuery baseQuery, Integer productType) {
+    public PageInfo<PmsCourseListVo> findSellerCourseProductListByType(LoginAuthDto loginAuthDto, BaseQuery baseQuery) {
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
-        List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectSellerCourseProductListByType(loginAuthDto.getUserId(), productType);
+        List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectSellerCourseProductListByType(loginAuthDto.getUserId());
         if(!CollectionUtils.isEmpty(pmsCourseProductVos)){
             for (PmsCourseListVo pmsCourseProductVo : pmsCourseProductVos) {
                 pmsCourseProductVo.setImage(pmsCourseProductVo.getImage().split(",")[0]);
