@@ -6,14 +6,13 @@ import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.dto.FindPasswordDto;
 import com.dmd.mall.model.dto.UmsCoachDto;
 import com.dmd.mall.model.vo.UmsCoachVo;
-import com.dmd.mall.model.vo.UmsMemberVo;
 import com.dmd.mall.service.UmsCoachService;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -72,7 +71,7 @@ public class UmsCoachLoginController extends BaseController {
     @PostMapping(value = "/coachInviteUser/find")
     @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery", paramType = "body")
     public Wrapper findCoachMessageAndCountNum(@RequestBody BaseQuery baseQuery) {
-        PageInfo<UmsMemberVo> pageInfo = coachService.findCoachInviteUserMessage(baseQuery, getLoginAuthDto());
-        return WrapMapper.ok(pageInfo);
+        JSONObject object = coachService.findCoachInviteUserMessage(baseQuery, getLoginAuthDto());
+        return WrapMapper.ok(object);
     }
 }

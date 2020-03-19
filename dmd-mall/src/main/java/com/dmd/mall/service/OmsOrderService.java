@@ -81,7 +81,7 @@ public interface OmsOrderService extends IService<OmsOrder> {
     PageInfo querySellerOrderListWithPage(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer status);
 
     /**
-     * 确认完成订单
+     * 修改订单状态
      * @param loginAuthDto
      * @param orderSn
      * @return
@@ -110,16 +110,6 @@ public interface OmsOrderService extends IService<OmsOrder> {
      * @return
      */
     List<Map> countOrderNum(LoginAuthDto loginAuthDto);
-
-    /**
-     * 分页查询用户积分好礼订单列表
-     * @param loginAuthDto
-     * @param pageNum
-     * @param pageSize
-     * @param status
-     * @return
-     */
-    PageInfo queryIntegralOrderListWithPage(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer status);
 
     /**
      * 根据订单状态查询订单信息

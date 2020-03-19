@@ -48,4 +48,9 @@ public class PmsCertificateVo implements Serializable {
      * 证书下商品数量
      */
     private Long productNum;
+
+    /**
+     * 是否是组团产品(0:否 1:是)
+     */
+    private Integer isGroup;
 }

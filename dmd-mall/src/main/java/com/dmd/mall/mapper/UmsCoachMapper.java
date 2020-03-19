@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UmsCoachMapper extends MyMapper<UmsCoach> {
 
-    UmsCoach selectCoachMessage(Long id);
-
     UmsCoach selectById(Long userId);
+
+    UmsCoach selectByInvitationCode(String invitationCode);
 }

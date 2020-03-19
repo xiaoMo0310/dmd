@@ -274,8 +274,8 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
             logger.error("商品活动已经开始不能购买");
             throw new OmsBizException(ErrorCodeEnum.PMS10021027);
         }
-        //判断商品的人数限制是否已经足够
-        if(product.getStock() == 0){
+        //判断商品的人数限制是否已经足够(只有出团蟾皮你才有人数限制)
+        if(product.getStock() == 0 && product.getProductType() == 3){
             logger.error("商品已售完");
             throw new OmsBizException(ErrorCodeEnum.PMS10021016, product.getId());
         }
@@ -285,7 +285,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         orderDetail.setProductPic(product.getImage());
         orderDetail.setProductName(product.getProductName());
         orderDetail.setProductQuantity(1);
-        orderDetail.setTotalPrice(product.getPrice());
+        orderDetail.setTotalPrice(product.getTotalPrice());
         orderDetail.setProductTitle(product.getTitle());
         //封装商品sku数据
         Integer productType = product.getProductType();
@@ -294,21 +294,9 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
         }else if(productType == 1){
             orderDetail.setProductType(3);
         }
-        Map mapA = new HashMap(0);
-        mapA.put("key","开始时间");
-        mapA.put("value", product.getStartTime());
-        Map mapB = new HashMap(0);
-        mapB.put("key","结束时间");
-        mapB.put("value", product.getEndTime());
-        Map mapC = new HashMap(0);
-        mapC.put("key","最大人数限制");
-        mapC.put("value", product.getNumberLimit());
-        List<Map> arrayList = new ArrayList<>();
-        arrayList.add(mapA);
-        arrayList.add(mapB);
-        arrayList.add(mapC);
-        orderDetail.setProductAttr(JSONArray.toJSONStringWithDateFormat(arrayList, "yyyy-MM-dd HH:mm:ss"));
+        orderDetail.setEquipmentPrice( product.getEquipmentPrice() );
         orderDetail.setProductPrice(product.getPrice());
+        orderDetail.setProductCategoryPrice( product.getRelatedProduct() );
         return orderDetail;
     }
 

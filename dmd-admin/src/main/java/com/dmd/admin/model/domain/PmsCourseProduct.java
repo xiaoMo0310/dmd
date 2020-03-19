@@ -63,8 +63,12 @@ private static final long serialVersionUID = 1L;
     private BigDecimal totalPrice;
 
     @Column(name = "product_type")
-    @ApiModelProperty("产品类型(1:学证 2:潜水 3:组团)")
+    @ApiModelProperty("产品类型(1:学证 2:潜水)")
     private Integer productType;
+
+    @Column(name = "is_group")
+    @ApiModelProperty("是否是组团产品(0:否 1:是)")
+    private Integer isGroup;
 
     @Column(name = "certificate_id")
     @ApiModelProperty("证书id")

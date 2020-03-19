@@ -5,6 +5,7 @@ import com.dmd.core.support.BaseController;
 import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.model.domain.UmsCoachShop;
 import com.dmd.mall.model.dto.UmsCoachShopDto;
+import com.dmd.mall.model.vo.UmsCoachShopVo;
 import com.dmd.mall.service.UmsCoachShopService;
 import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
@@ -41,10 +42,20 @@ public class UmsCoachShopController extends BaseController {
         return handleResult( result );
     }
 
-    @PostMapping("/shop/message/find")
-    @ApiOperation(httpMethod = "GET", value = "查询店铺信息")
+    @PostMapping("/shop/message/findByCoachId")
+    @ApiOperation(httpMethod = "GET", value = "查询店铺信息及粉丝数量")
+    public Wrapper findShopMessageByCoachId() {
+        UmsCoachShopVo umsCoachShop = umsCoachShopService.findShopMessage( getLoginAuthDto() );
+        if(PublicUtil.isEmpty( umsCoachShop )){
+            throw new UmsBizException( "未查询到店铺信息" );
+        }
+        return WrapMapper.ok( umsCoachShop );
+    }
+
+    @PostMapping("/shop/message/findById")
+    @ApiOperation(httpMethod = "GET", value = "根据店铺id查询店铺信息")
     @ApiImplicitParam(name ="shopId", value = "店铺id", dataType = "long", paramType = "query")
-    public Wrapper findLoginUserMessage(@RequestParam Long shopId) {
+    public Wrapper findShopMessageByShopId(@RequestParam Long shopId) {
         UmsCoachShop umsCoachShop = umsCoachShopService.selectByKey( shopId );
         if(PublicUtil.isEmpty( umsCoachShop )){
             throw new UmsBizException( "未查询到店铺信息" );

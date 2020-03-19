@@ -82,7 +82,7 @@ public class UmsMember implements Serializable {
     @ApiModelProperty("微信")
     private String openId;
 
-    @Column(name = "coach_name")
+/*    @Column(name = "coach_name")
     @ApiModelProperty("教练名称")
     private String coachName;
 
@@ -92,7 +92,7 @@ public class UmsMember implements Serializable {
 
     @Column(name = "coach_grade")
     @ApiModelProperty("教练等级")
-    private String coachGrade;
+    private String coachGrade;*/
 
     @Column(name = "invitation_code")
     @ApiModelProperty("邀请码")
@@ -113,39 +113,4 @@ public class UmsMember implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Override
-    public String toString() {
-        return "UmsMember{" +
-                "id=" + id +
-                ", memberLevelId=" + memberLevelId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", phone='" + phone + '\'' +
-                ", status=" + status +
-                ", createTime=" + createTime +
-                ", icon='" + icon + '\'' +
-                ", gender=" + gender +
-                ", birthday=" + birthday +
-                ", city='" + city + '\'' +
-                ", job='" + job + '\'' +
-                ", personalizedSignature='" + personalizedSignature + '\'' +
-                ", sourceType=" + sourceType +
-                ", integration=" + integration +
-                ", growth=" + growth +
-                ", luckeyCount=" + luckeyCount +
-                ", historyIntegration=" + historyIntegration +
-                ", identityCard='" + identityCard + '\'' +
-                ", stature='" + stature + '\'' +
-                ", weight='" + weight + '\'' +
-                ", role='" + role + '\'' +
-                ", openId='" + openId + '\'' +
-                ", coachName='" + coachName + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", coachGrade='" + coachGrade + '\'' +
-                ", invitationCode='" + invitationCode + '\'' +
-                ", personalProfile='" + personalProfile + '\'' +
-                ", loginType='" + loginType + '\'' +
-                '}';
-    }
 }

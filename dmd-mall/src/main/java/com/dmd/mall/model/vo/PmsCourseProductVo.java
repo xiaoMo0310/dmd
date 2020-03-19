@@ -104,4 +104,9 @@ public class PmsCourseProductVo implements Serializable {
     private Date endTime;
 
     private Integer status;
+
+    /**
+     * 是否是组合产品
+     */
+    private Integer isGroup;
 }

@@ -47,6 +47,8 @@ public class OrderCreateVo extends OrderParamDto implements Serializable {
     @Data
     @NoArgsConstructor
     public static class OrderGroupByShop {
+        @ApiModelProperty("卖家ID")
+        private Long sellerId;
         @ApiModelProperty("店铺ID")
         private Long shopId;
         @ApiModelProperty("店铺名称")

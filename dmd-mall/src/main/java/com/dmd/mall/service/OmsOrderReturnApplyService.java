@@ -74,7 +74,7 @@ public interface OmsOrderReturnApplyService extends IService<OmsOrderReturnApply
     PageInfo findOrderReturnApplyMessageByPage(BaseQuery baseQuery, LoginAuthDto loginAuthDto);
 
     /**
-     * 修改退款申请得信息
+     * 修改退款申请信息
      * @param orderReturnApplyDto
      * @param loginAuthDto
      * @return

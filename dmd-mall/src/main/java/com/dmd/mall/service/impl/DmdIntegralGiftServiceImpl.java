@@ -1,6 +1,5 @@
 package com.dmd.mall.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
@@ -119,9 +118,9 @@ public class DmdIntegralGiftServiceImpl extends BaseService<DmdIntegralGift> imp
         orderDetail.setProductType(4);
         orderDetail.setProductQuantity(quantity);
         //封装商品sku数据
-        orderDetail.setProductSkuId(dmdIntegralGiftSpe.getId());
+        /*orderDetail.setProductSkuId(dmdIntegralGiftSpe.getId());
         List<Map> list = this.packageSpecMessage(dmdIntegralGiftSpe);
-        orderDetail.setProductAttr(JSONArray.toJSONString(list));
+        orderDetail.setProductAttr(JSONArray.toJSONString(list));*/
         return orderDetail;
     }
 

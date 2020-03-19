@@ -59,5 +59,8 @@ public class UmsCoachShop extends BaseEntity {
     @ApiModelProperty("自动回复ID")
     private Long replyId;
 
+    @ApiModelProperty("状态(1:正常 2:关闭)")
+    private Integer status;
+
 
 }

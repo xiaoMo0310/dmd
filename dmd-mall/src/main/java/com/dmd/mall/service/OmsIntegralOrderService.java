@@ -4,7 +4,7 @@ import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.mall.model.domain.OmsIntegralOrder;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.dto.OrderParamDto;
-import com.dmd.mall.model.vo.CourseOrderDetailVo;
+import com.dmd.mall.model.vo.IntegralOrderDetailVo;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -40,7 +40,7 @@ public interface OmsIntegralOrderService extends IService<OmsIntegralOrder> {
      * @param orderSn
      * @return
      */
-    CourseOrderDetailVo getUserIntegralOrderDetail(LoginAuthDto loginAuthDto, String orderSn);
+    IntegralOrderDetailVo getUserIntegralOrderDetail(LoginAuthDto loginAuthDto, String orderSn);
 
     /**
      * 查询教练积分订单详情
@@ -48,5 +48,5 @@ public interface OmsIntegralOrderService extends IService<OmsIntegralOrder> {
      * @param orderSn
      * @return
      */
-    CourseOrderDetailVo getSellerIntegralOrderDetail(LoginAuthDto loginAuthDto, String orderSn);
+    IntegralOrderDetailVo getSellerIntegralOrderDetail(LoginAuthDto loginAuthDto, String orderSn);
 }

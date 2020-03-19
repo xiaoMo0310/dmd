@@ -86,6 +86,10 @@ public class CourseProductDto implements Serializable {
     @ApiModelProperty("模板id")
     private Long templateId;
 
+    @ApiModelProperty("是否是组合产品(0:否 1:是)")
+    private Integer isGroup;
+
+    @ApiModelProperty("标签id集合")
     private List<Long> tagIds = new ArrayList<>( 0 );
 
 }

@@ -149,15 +149,15 @@ public class PmsProductServiceImpl extends BaseService<PmsProduct> implements Pm
         orderDetail.setProductPic(product.getPic());
         orderDetail.setProductName(product.getName());
         orderDetail.setProductType(1);
-        orderDetail.setProductBrand(product.getBrandName());
+        //orderDetail.setProductBrand(product.getBrandName());
         orderDetail.setProductQuantity(quantity);
-        orderDetail.setProductCategoryId(product.getProductCategoryId());
+        //orderDetail.setProductCategoryId(product.getProductCategoryId());
         orderDetail.setTotalPrice(BigDecimalUtil.mul(pmsSkuStock.getPrice().doubleValue(), quantity));
         //封装商品sku数据
-        orderDetail.setProductSkuId(pmsSkuStock.getId());
-        orderDetail.setProductAttr(pmsSkuStock.getSpec());
+        //orderDetail.setProductSkuId(pmsSkuStock.getId());
+        //orderDetail.setProductAttr(pmsSkuStock.getSpec());
         orderDetail.setProductPrice(pmsSkuStock.getPrice());
-        orderDetail.setProductSkuCode(pmsSkuStock.getSkuCode());
+        //orderDetail.setProductSkuCode(pmsSkuStock.getSkuCode());
         return orderDetail;
     }
 

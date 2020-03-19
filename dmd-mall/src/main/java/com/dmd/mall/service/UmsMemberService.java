@@ -60,7 +60,7 @@ public interface UmsMemberService {
     UmsMember getCurrentMember();
 
     /**
-     * 扣减用户积分
+     * 修改用户积分
      * @param umsMember
      * @param integration
      * @param operateNote
