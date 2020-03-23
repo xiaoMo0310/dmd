@@ -2,6 +2,7 @@ package com.dmd.mall.web.cms;
 
 import com.dmd.base.result.CommonResult;
 import com.dmd.mall.model.domain.CertificateAppBean;
+import com.dmd.mall.model.domain.PmsCertificate;
 import com.dmd.mall.service.DiveCertificateServuce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -62,6 +63,17 @@ public class DiveCertificateController {
     @ResponseBody
     public CommonResult<List<CertificateAppBean>> queryDiveCertificate(Long userId) {
         List<CertificateAppBean> list = diveCertificateServuce.queryDiveCertificate(userId);
+        return CommonResult.success(list);
+    }
+
+    /**
+     * 查询教练级别说明
+     */
+    @ApiOperation("查询教练级别说明")
+    @RequestMapping(value = "/selectDiveCertificateRank",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<PmsCertificate>> queryDiveCertificateRank() {
+        List<PmsCertificate> list = diveCertificateServuce.queryDiveCertificateRank();
         return CommonResult.success(list);
     }
 }

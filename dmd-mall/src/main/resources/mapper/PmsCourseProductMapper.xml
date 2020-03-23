@@ -388,4 +388,25 @@
         </if>
 
     </select>
+
+    <select id="selectPowerNotesMember" parameterType="map" resultType="java.lang.Long">
+        SELECT
+        DISTINCT oo.member_id
+        FROM
+        pms_course_product pc
+        LEFT JOIN oms_order oo on oo.shop_id = pc.user_id
+        LEFT JOIN oms_order_item oi on oi.order_id = oo.id
+        WHERE
+        pc.user_id = #{userId}
+        AND
+        oi.product_id = #{productId}
+        AND
+        oi.product_type = #{productType}
+        AND
+        pc.product_type = #{productType}
+        AND
+        pc.id = #{productId}
+        AND pc.approval_status = 2
+        AND oo.status not in (0,6)
+    </select>
 </mapper>

@@ -12,6 +12,7 @@ import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.exceptions.PmsBizException;
 import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.PmsCourseProductMapper;
+import com.dmd.mall.mapper.PowerNoteMapper;
 import com.dmd.mall.model.domain.*;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.dto.CourseProductDto;
@@ -49,6 +50,8 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     private UmsMemberService umsMemberService;
     @Autowired
     private PmsPlayAddressService playAddressService;
+    @Autowired
+    private PowerNoteMapper powerNoteMapper;
 
     @Override
     public int saveCourseProductMessage(LoginAuthDto loginAuthDto, CourseProductDto courseProductDto) {
@@ -414,5 +417,16 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
             }
         }
         return powerNotesBeans;
+    }
+
+    @Override
+    public List<PowerNotesMemberVo> selectPowerNotesMember(Long userId, Long productId, Integer productType) {
+        List<Long> list = pmsCourseProductMapper.selectPowerNotesMember(userId, productId, productType);
+        List<PowerNotesMemberVo> objects = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            PowerNotesMemberVo powerNotesMemberVos = powerNoteMapper.selectPowerNotesMemberList(list.get(i));
+            objects.add(powerNotesMemberVos);
+        }
+        return objects;
     }
 }

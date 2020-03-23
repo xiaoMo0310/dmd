@@ -84,4 +84,6 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     void addProwerNotes(PowerNotesBean powerNotesBean);
 
     List<PowerNotesBean> selectPowerNotesPage(PmsCourseProduct pmsCourseProduct);
+
+    List<Long> selectPowerNotesMember(@Param("userId")Long userId,@Param("productId") Long productId, @Param("productType")Integer productType);
 }

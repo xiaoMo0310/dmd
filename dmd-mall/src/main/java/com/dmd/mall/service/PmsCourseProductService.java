@@ -9,10 +9,7 @@ import com.dmd.mall.model.domain.PmsCourseProduct;
 import com.dmd.mall.model.domain.PowerNotesBean;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.dto.CourseProductDto;
-import com.dmd.mall.model.vo.CertificateProductVo;
-import com.dmd.mall.model.vo.DivingProductVo;
-import com.dmd.mall.model.vo.PmsCertificateVo;
-import com.dmd.mall.model.vo.PmsCourseListVo;
+import com.dmd.mall.model.vo.*;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -135,4 +132,6 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
     List<PowerNotesBean> queryPowerNotesCoachPage(Integer pageNum, Integer pageSize, Long userId, PmsCourseProduct pmsCourseProduct);
 
     List<PowerNotesBean> queryPowerNotesCoachToMonth(Long userId);
+
+    List<PowerNotesMemberVo> selectPowerNotesMember(Long userId, Long productId, Integer productType);
 }

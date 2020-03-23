@@ -6,17 +6,16 @@ import com.dmd.core.utils.RequestUtil;
 import com.dmd.mall.model.domain.DynamicBean;
 import com.dmd.mall.model.domain.PmsCourseProduct;
 import com.dmd.mall.model.domain.PowerNotesBean;
+import com.dmd.mall.model.vo.PowerNotesMemberVo;
 import com.dmd.mall.service.PmsCourseProductService;
+import com.dmd.mall.service.PowerNoteService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,6 +38,8 @@ public class PowerNotesController {
     @Autowired
     private PmsCourseProductService pmsCourseProductService;
 
+    @Autowired
+    private PowerNoteService powerNoteService;
 
     /**
      * 教练日程明细查询 改
@@ -146,6 +147,69 @@ public class PowerNotesController {
         List<PowerNotesBean> powerNotesList = pmsCourseProductService.queryPowerNotesCoachToMonth(userId);
         return CommonResult.success(powerNotesList);
     }
+
+    /**
+     * 教练日程详情查询
+     * @param id
+     * @return
+     */
+    @ApiOperation("教练日程详情查询")
+    @RequestMapping(value = "/selectPowerNotesById", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<PowerNotesBean> selectPowerNotesById(@RequestParam Long id) {
+        PowerNotesBean powerNotes = powerNoteService.selectPowerNotesById(id);
+        return CommonResult.success(powerNotes);
+    }
+
+
+    /**
+     * 教练日程详情修改
+     * @param powerNotesBean
+     * @return
+     */
+    @ApiOperation("教练日程详情修改")
+    @RequestMapping(value = "/updatePowerNotesById", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult updatePowerNotesById(PowerNotesBean powerNotesBean) {
+        int count = powerNoteService.updatePowerNotesById(powerNotesBean);
+        if (count > 0) {
+            return CommonResult.success(count,"保存成功");
+        }
+        return CommonResult.failed("保存失败");
+    }
+
+    /**
+     * 教练日程新增
+     * @param powerNotesBean
+     * @return
+     */
+    @ApiOperation("教练日程新增")
+    @RequestMapping(value = "/addDynamic",method = RequestMethod.POST)
+    @ResponseBody                                                       //token获取用户id
+    public CommonResult addDynamic(@RequestBody PowerNotesBean powerNotesBean){
+
+        int count = powerNoteService.addPowerNote(powerNotesBean);
+        if (count > 0) {
+            return CommonResult.success(count,"新增成功");
+        }
+        return CommonResult.failed("新增失败");
+    }
+
+    /**
+     * 教练日程详情涉及学员查询
+     * @param userId
+     * @param productId
+     * @param productType
+     * @return
+     */
+    @ApiOperation("教练日程详情涉及学员查询")
+    @RequestMapping(value = "/selectPowerNotesMember", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<PowerNotesMemberVo>> selectPowerNotesMember(@RequestParam Long userId, @RequestParam Long productId, @RequestParam Integer productType) {
+        List<PowerNotesMemberVo> powerNotes = pmsCourseProductService.selectPowerNotesMember(userId,productId,productType);
+        return CommonResult.success(powerNotes);
+    }
+
 
 
 }

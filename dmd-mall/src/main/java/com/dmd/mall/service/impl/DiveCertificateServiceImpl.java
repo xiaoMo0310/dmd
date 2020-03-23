@@ -143,4 +143,10 @@ public class DiveCertificateServiceImpl implements DiveCertificateServuce{
         List<CertificateAppBean> certificateAppBeans = diveCertificateMapper.queryUserCertificateList(userId);
         return certificateAppBeans;
     }
+
+    @Override
+    public List<PmsCertificate> queryDiveCertificateRank() {
+        List<PmsCertificate> pmsCertificates = pmsCertificateMapper.selectCertificateList();
+        return pmsCertificates;
+    }
 }

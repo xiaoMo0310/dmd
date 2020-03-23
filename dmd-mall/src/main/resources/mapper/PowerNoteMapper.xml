@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmd.mall.mapper.PowerNoteMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="powerMap" type="com.dmd.mall.model.domain.PowerNotesBean">
+        <result column="id" property="id" />
+        <result column="image" property="image" />
+        <result column="title" property="title" />
+        <result column="product_name" property="productName" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="user_id" property="userId" />
+        <result column="product_type" property="productType" />
+        <result column="remarks" property="remarks" />
+        <result column="product_id" property="productId" />
+        <result column="location" property="location" />
+    </resultMap>
+
+
+    <select id="selectPowerNotesById" parameterType="java.lang.Long" resultType="com.dmd.mall.model.domain.PowerNotesBean">
+        SELECT id,image,title,product_name,start_time,end_time,user_id,product_type,remarks,product_id,location
+        FROM pms_power_notes WHERE id = #{value}
+    </select>
+
+    <update id="updatePowerNotesById" parameterType="com.dmd.mall.model.domain.PowerNotesBean">
+        UPDATE pms_power_notes SET
+        image = #{image},
+        title = #{title},
+        product_name = #{productName},
+        start_time = #{startTime},
+        end_time = #{endTime},
+        user_id = #{userId},
+        product_type = #{productType},
+        remarks = #{remarks},
+        product_id = #{productId},
+        location = #{location}
+        WHERE id = #{id}
+    </update>
+
+
+    <insert id="addPowerNote" parameterType="com.dmd.mall.model.domain.PowerNotesBean">
+        INSERT INTO pms_power_notes(
+        image,
+        title,
+        product_name,
+        start_time,
+        end_time,
+        user_id,
+        product_type,
+        remarks,
+        product_id,
+        location
+        )
+        VALUES (
+        #{image,jdbcType=VARCHAR},
+        #{title,jdbcType=VARCHAR},
+        #{productName,jdbcType=VARCHAR},
+        #{startTime,jdbcType=TIMESTAMP},
+        #{endTime,jdbcType=TIMESTAMP},
+        #{userId,jdbcType=BIGINT},
+        #{productType,jdbcType=INTEGER},
+        #{remarks,jdbcType=VARCHAR},
+        #{productId,jdbcType=BIGINT},
+        #{location,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="selectPowerNotesMemberList" parameterType="java.lang.Long" resultType="com.dmd.mall.model.vo.PowerNotesMemberVo">
+        SELECT nick_name AS nickName , phone AS phone , id AS userId FROM ums_member WHERE id = #{value}
+    </select>
+</mapper>

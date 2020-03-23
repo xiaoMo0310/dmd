@@ -1,6 +1,7 @@
 package com.dmd.mall.service;
 
 import com.dmd.mall.model.domain.CertificateAppBean;
+import com.dmd.mall.model.domain.PmsCertificate;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface DiveCertificateServuce {
      * @return
      */
     List<CertificateAppBean> queryUserCertificateList(Long userId);
+
+    List<PmsCertificate> queryDiveCertificateRank();
 }
