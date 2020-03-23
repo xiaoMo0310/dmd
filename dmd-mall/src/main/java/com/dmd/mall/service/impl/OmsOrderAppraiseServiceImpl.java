@@ -54,9 +54,9 @@ public class OmsOrderAppraiseServiceImpl extends BaseService<OmsOrderAppraise> i
     }
 
     @Override
-    public PageInfo findAppraiseMessage(String productId, Integer pageNum, Integer pageSize) {
+    public PageInfo findAppraiseMessage(String productId, String level, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<ProductAppraiseVo> productAppraiseVos = omsOrderAppraiseMapper.selectAppraiseMessageByProductId(productId);
+        List<ProductAppraiseVo> productAppraiseVos = omsOrderAppraiseMapper.selectAppraiseMessageByProductId(productId, level);
         return new PageInfo(productAppraiseVos);
     }
 }

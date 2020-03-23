@@ -54,4 +54,9 @@ private static final long serialVersionUID = 1L;
     private Integer status;
 
 
+    @Column(name = "certificate_type")
+    @ApiModelProperty("证书类型(1:水肺潜水 2:自由潜水)")
+    private Integer certificateType;
+
+
 }

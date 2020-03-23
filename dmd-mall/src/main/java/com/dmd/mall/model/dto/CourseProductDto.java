@@ -80,6 +80,9 @@ public class CourseProductDto implements Serializable {
     @ApiModelProperty("证书id")
     private Long certificateId;
 
+    @ApiModelProperty("证书类型(1:水肺潜水 2:自由潜水)")
+    private Long certificateType;
+
     @ApiModelProperty("地址id")
     private Long addressId;
 

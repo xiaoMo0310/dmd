@@ -27,10 +27,9 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
 
     /**
      * 根据商品类型查询商品信息
-     * @param type
      * @return
      */
-    List<PmsCourseListVo> selectCourseProductByType();
+    List<PmsCourseListVo> selectUserDivingProductList(Integer productType);
 
     /**
      * 根据证书id查询商品的信息
@@ -70,7 +69,7 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
 
     List<PmsCourseProduct> queryPowerNotesCoachPage(PmsCourseProduct pmsCourseProduct);
 
-    List<PmsCourseListVo> selectSellerCourseProductListByType(@Param("userId") Long userId);
+    List<PmsCourseListVo> selectSellerCourseProductList(@Param("userId") Long userId);
 
     List<PmsCourseProduct> selectProductByUserId(@Param("userId") Long userId, @Param("productType") Integer productType);
 
@@ -83,6 +82,8 @@ public interface PmsCourseProductMapper extends MyMapper<PmsCourseProduct> {
     void addProwerNotes(PowerNotesBean powerNotesBean);
 
     List<PowerNotesBean> selectPowerNotesPage(PmsCourseProduct pmsCourseProduct);
+
+    List<PmsCourseListVo> selectNewCourseProductListByType(Integer productType);
 
     List<Long> selectPowerNotesMember(@Param("userId")Long userId,@Param("productId") Long productId, @Param("productType")Integer productType);
 }

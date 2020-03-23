@@ -22,6 +22,7 @@
         <result column="total_price" property="totalPrice" />
         <result column="product_type" property="productType" />
         <result column="certificate_id" property="certificateId" />
+        <result column="certificate_type" property="certificateType" />
         <result column="address_id" property="addressId" />
         <result column="location" property="location" />
         <result column="length_play" property="lengthPlay" />
@@ -49,7 +50,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        product_name, user_id, shop_id, shop_name, title, price, product_type, certificate_id, address_id, location, length_play, is_time_limit, start_time, end_time, number_is_limit, number_limit, product_description, image, status, approval_status, sales, sort, failure_reason, related_product, equipment_price, total_price, is_group
+        product_name, user_id, shop_id, shop_name, title, price, product_type, certificate_id, address_id, location, length_play, is_time_limit, start_time, end_time, number_is_limit, number_limit, product_description, image, status, approval_status, sales, sort, failure_reason, related_product, equipment_price, total_price, is_group, certificate_type
     </sql>
     <update id="updateProductApprovalStatus">
         update pms_course_product

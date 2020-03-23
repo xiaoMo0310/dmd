@@ -40,6 +40,9 @@
         left join ums_member um
         on ooa.user_id = um.id
         where ooa.product_id = #{productId}
+        <if test="level != null">
+            and level = #{level}
+        </if>
         order by update_time
     </select>
 

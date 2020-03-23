@@ -16,6 +16,7 @@
         <result column="english_name" property="englishName" />
         <result column="english_shorthand" property="englishShorthand" />
         <result column="certificate_level" property="certificateLevel" />
+        <result column="certificate_type" property="certificateType" />
         <result column="introduction" property="introduction" />
         <result column="status" property="status" />
     </resultMap>
@@ -29,7 +30,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        chinese_name, english_name, english_shorthand, certificate_level, introduction, status, pic
+        chinese_name, english_name, english_shorthand, certificate_level, introduction, status, pic, certificate_type
     </sql>
     <select id="selectCertificateList" resultType="com.dmd.mall.model.domain.PmsCertificate">
         select <include refid="Base_Column_List"/>

@@ -1,12 +1,11 @@
 package com.dmd.mall.security.filter;
 
 import com.dmd.core.utils.ThreadLocalUtil;
-import com.dmd.mall.security.social.SocialConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,9 +22,11 @@ import java.util.Map;
  */
 @Component
 public class SocialLoginFilter extends OncePerRequestFilter {
+
     private String[] urls={"/oauth/token","/sso/mobile","/sso/login","/auth/weixin"};
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+        System.out.println("登录进来了");
         String loginType=request.getParameter("loginType");
         Map<String,String> map=new HashMap<>();
         if (contain(request.getRequestURI())&& org.apache.commons.lang3.StringUtils.containsIgnoreCase(request.getMethod(),"post")){

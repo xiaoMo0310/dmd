@@ -479,7 +479,7 @@
   </select>
 
   <select id="getByUsernameCoach" resultMap="BaseResultMap">
-    select * from ums_coach where coach_name=#{username}
+    select * from ums_coach where coach_name=#{username} and status = 2
   </select>
   <insert id="insertCoach">
     insert into ums_coach(coach_name,password,status,phone,created_time,update_time)

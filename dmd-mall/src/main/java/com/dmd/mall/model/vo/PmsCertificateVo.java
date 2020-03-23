@@ -50,7 +50,7 @@ public class PmsCertificateVo implements Serializable {
     private Long productNum;
 
     /**
-     * 是否是组团产品(0:否 1:是)
+     *证书类型(1:水肺潜水 2:自由潜水)
      */
-    private Integer isGroup;
+    private Integer certificateType;
 }

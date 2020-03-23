@@ -133,6 +133,10 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("证书id")
     private Long certificateId;
 
+    @Column(name = "certificate_type")
+    @ApiModelProperty("证书类型(1:水肺潜水 2:自由潜水)")
+    private Integer certificateType;
+
     @Column(name = "address_id")
     @ApiModelProperty("地址id")
     private Long addressId;

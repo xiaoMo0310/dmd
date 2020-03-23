@@ -16,6 +16,7 @@ import com.dmd.mall.mapper.PowerNoteMapper;
 import com.dmd.mall.model.domain.*;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.dto.CourseProductDto;
+import com.dmd.mall.model.dto.CourseProductListDto;
 import com.dmd.mall.model.vo.*;
 import com.dmd.mall.service.*;
 import com.github.pagehelper.PageHelper;
@@ -58,6 +59,7 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     private DiveCertificateServuce diveCertificateServuce;
     @Autowired
     private PmsProductTagService productTagService;
+
 
     @Override
     public int saveCourseProductMessage(LoginAuthDto loginAuthDto, CourseProductDto courseProductDto) {
@@ -139,10 +141,10 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     }
 
     @Override
-    public PageInfo<PmsCourseListVo> findCourseProductListByType(BaseQuery baseQuery){
+    public PageInfo<PmsCourseListVo> findUserDivingProductList(CourseProductListDto courseProductListDto){
         //下架与删除的商品不显示
-        PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
-        List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectCourseProductByType();
+        PageHelper.startPage(courseProductListDto.getPageNum(), courseProductListDto.getPageSize());
+        List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectUserDivingProductList(courseProductListDto.getProductType());
         if(!CollectionUtils.isEmpty(pmsCourseProductVos)){
             for (PmsCourseListVo pmsCourseProductVo : pmsCourseProductVos) {
                 pmsCourseProductVo.setImage(pmsCourseProductVo.getImage().split(",")[0]);
@@ -340,9 +342,21 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     }
 
     @Override
-    public PageInfo<PmsCourseListVo> findSellerCourseProductListByType(LoginAuthDto loginAuthDto, BaseQuery baseQuery) {
+    public PageInfo<PmsCourseListVo> findSellerCourseProductList(LoginAuthDto loginAuthDto, BaseQuery baseQuery) {
         PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
-        List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectSellerCourseProductListByType(loginAuthDto.getUserId());
+        List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectSellerCourseProductList(loginAuthDto.getUserId());
+        if(!CollectionUtils.isEmpty(pmsCourseProductVos)){
+            for (PmsCourseListVo pmsCourseProductVo : pmsCourseProductVos) {
+                pmsCourseProductVo.setImage(pmsCourseProductVo.getImage().split(",")[0]);
+            }
+        }
+        return new PageInfo<>(pmsCourseProductVos);
+    }
+
+    @Override
+    public PageInfo<PmsCourseListVo> findNewCourseProductListByType(CourseProductListDto courseProductListDto) {
+        PageHelper.startPage(courseProductListDto.getPageNum(), courseProductListDto.getPageSize());
+        List<PmsCourseListVo> pmsCourseProductVos = pmsCourseProductMapper.selectNewCourseProductListByType(courseProductListDto.getProductType());
         if(!CollectionUtils.isEmpty(pmsCourseProductVos)){
             for (PmsCourseListVo pmsCourseProductVo : pmsCourseProductVos) {
                 pmsCourseProductVo.setImage(pmsCourseProductVo.getImage().split(",")[0]);

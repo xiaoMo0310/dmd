@@ -36,23 +36,23 @@
         <result column="sales" property="sales" />
         <result column="sort" property="sort" />
         <result column="certificate_id" property="certificateId" />
+        <result column="certificate_type" property="certificateType" />
         <result column="address_id" property="addressId" />
         <result column="stock" property="stock" />
     </resultMap>
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="powerMap" type="com.dmd.mall.model.domain.PowerNotesBean">
+    <resultMap id="userCourseProductListMap" type="com.dmd.mall.model.vo.PmsCourseListVo" extends="BaseResultMap">
         <result column="id" property="id" />
-        <result column="image" property="image" />
         <result column="title" property="title" />
-        <result column="product_name" property="productName" />
-        <result column="start_time" property="startTime" />
-        <result column="end_time" property="endTime" />
-        <result column="user_id" property="userId" />
-        <result column="product_type" property="productType" />
-        <result column="remarks" property="remarks" />
-        <result column="product_id" property="productId" />
-        <result column="location" property="location" />
+        <result column="sales" property="sales" />
+        <result column="price" property="price" />
+        <result column="image" property="image" />
+        <result column="status" property="status" />
+        <result column="equipment_price" property="equipmentPrice" />
+        <result column="total_price" property="totalPrice" />
+        <result column="is_group" property="isGroup" />
+        <collection property="tagList" ofType="com.dmd.mall.model.vo.PmsTagVo" columnPrefix="tag_"/>
     </resultMap>
 
 
@@ -65,18 +65,33 @@
         last_operator,
         last_operator_id,
         update_time,
-        product_name, user_id, shop_id, shop_name, title, price, product_type, location, length_play, is_time_limit, start_time, end_time, number_is_limit, number_limit, product_description, image, related_product, status, approval_status, sales, sort, certificate_id, address_id, stock, total_price, equipment_price, is_group
+        product_name, user_id, shop_id, shop_name, title, price, product_type, location, length_play, is_time_limit, start_time, end_time, number_is_limit, number_limit, product_description, image, related_product, status, approval_status, sales, sort, certificate_id, address_id, stock, total_price, equipment_price, is_group, certificate_type
     </sql>
-    <select id="selectCourseProductByType" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
+    <select id="selectUserDivingProductList" resultMap="userCourseProductListMap">
         select
-            uc.id coachId, uc.icon coachIcon, uc.coach_name coachName, uc.coach_grade, psp.id, psp.product_name, psp.title, psp.image, psp.price, psp.location, psp.start_time, psp.end_time
-        from pms_course_product psp, ums_coach uc
-        where uc.id = psp.user_id
-        and uc.status = 2
-        and (psp.product_type = 2 or psp.product_type = 3)
+            psp.id, psp.title, psp.image, psp.price, psp.equipment_price, psp.total_price, psp.sales, psp.status, psp.is_group, pt.id tag_id, pt.tag_name tag_tag_name
+        from pms_course_product psp
+        LEFT JOIN pms_product_tag ppt
+        on ppt.product_id = psp.id
+        LEFT JOIN pms_tag pt
+        ON pt.id = ppt.tag_id
+        where psp.product_type = #{productType}
         and psp.approval_status = 2
         and psp.status not in (2,3)
-        order by sort,psp.update_time desc
+        order by psp.sort,psp.update_time desc
+    </select>
+    <select id="selectNewCourseProductListByType" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
+        select
+            psp.id, psp.title, psp.image, psp.price, psp.equipment_price, psp.total_price, psp.sales, psp.status, psp.is_group, pt.id tag_id, pt.tag_name tag_tag_name
+        from pms_course_product psp
+        LEFT JOIN pms_product_tag ppt
+        on ppt.product_id = psp.id
+        LEFT JOIN pms_tag pt
+        ON pt.id = ppt.tag_id
+        where psp.product_type = #{productType}
+        and psp.approval_status = 2
+        and psp.status not in (2,3)
+        order by psp.sales desc
     </select>
     <select id="selectCoachIdByCertificateId" resultType="java.lang.Long">
         select user_id
@@ -269,16 +284,13 @@
         where status = #{status}
         and approval_status = 2
     </select>
-    <select id="selectSellerCourseProductListByType" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
+    <select id="selectSellerCourseProductList" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
         select
-            uc.id coachId, uc.icon coachIcon, uc.coach_name coachName, uc.coach_grade, psp.id, psp.product_name, psp.title, psp.image, psp.price, psp.location, psp.start_time, psp.end_time
-        from pms_course_product psp, ums_coach uc
-        where uc.id = psp.user_id
-        and uc.status = 2
-        and (psp.product_type = 2 or psp.product_type = 3)
+             psp.id, psp.title, psp.image, psp.price, psp.equipment_price, psp.total_price, psp.sales, psp.status, psp.is_group
+        from pms_course_product psp
+        where psp.product_type = 2
         and psp.user_id = #{userId}
-        and psp.approval_status = 2
-        order by sort,psp.update_time desc
+        order by psp.sort,psp.update_time desc
     </select>
     <select id="selectProductByUserId" resultType="com.dmd.mall.model.domain.PmsCourseProduct">
         select <include refid="Base_Column_List"/>

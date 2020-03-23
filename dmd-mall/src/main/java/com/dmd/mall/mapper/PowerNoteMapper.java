@@ -2,9 +2,11 @@ package com.dmd.mall.mapper;
 
 import com.dmd.mall.model.domain.PowerNotesBean;
 import com.dmd.mall.model.vo.PowerNotesMemberVo;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
-
+@Mapper
+@Component
 public interface PowerNoteMapper {
     PowerNotesBean selectPowerNotesById(Long id);
 

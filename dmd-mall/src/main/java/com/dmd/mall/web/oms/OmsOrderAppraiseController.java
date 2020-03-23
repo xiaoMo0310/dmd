@@ -41,12 +41,14 @@ public class OmsOrderAppraiseController extends BaseController {
     @GetMapping("/appraiseMessage/findList")
     @ApiOperation(httpMethod = "GET", value = "查询商品的评价信息")
     @ApiImplicitParams({@ApiImplicitParam(name ="productId", value = "商品id", dataType = "Long", paramType = "query"),
+                        @ApiImplicitParam(name ="level", value = "评价等级(-1差评 0中评 1好评)", dataType = "String", paramType = "query"),
                         @ApiImplicitParam(name ="pageNum", value = "页数", dataType = "int", paramType = "query"),
                         @ApiImplicitParam(name ="pageSize", value = "每页显示条数", dataType = "int", paramType = "query")})
     public Wrapper findAppraiseMessage(@RequestParam("productId") String productId,
-                                              @RequestParam("pageNum") Integer pageNum,
-                                              @RequestParam("pageSize") Integer pageSize) {
-        PageInfo pageInfo = omsOrderAppraiseService.findAppraiseMessage(productId, pageNum, pageSize);
+                                       @RequestParam("productId") String level,
+                                          @RequestParam("pageNum") Integer pageNum,
+                                          @RequestParam("pageSize") Integer pageSize) {
+        PageInfo pageInfo = omsOrderAppraiseService.findAppraiseMessage(productId, level, pageNum, pageSize);
         return handleResult(pageInfo);
     }
 

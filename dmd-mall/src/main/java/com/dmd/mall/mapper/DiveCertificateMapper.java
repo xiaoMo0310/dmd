@@ -2,7 +2,9 @@ package com.dmd.mall.mapper;
 
 import com.dmd.mall.model.domain.CertificateAppBean;
 import com.dmd.mall.model.domain.DiveCertificateBean;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -13,6 +15,8 @@ import java.util.List;
  * @description:
  * @date 2019/11/413:31
  */
+@Mapper
+@Component
 public interface DiveCertificateMapper {
     List<CertificateAppBean> queryDiveCertificate(@Param("userId")Long userId,@Param("userTypes")Integer userTypes);
 

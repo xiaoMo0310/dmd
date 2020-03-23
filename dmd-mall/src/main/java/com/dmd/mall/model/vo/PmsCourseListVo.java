@@ -1,13 +1,11 @@
 package com.dmd.mall.model.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author YangAnsheng
@@ -25,16 +23,6 @@ public class PmsCourseListVo implements Serializable {
     private Long id;
 
     /**
-     * 产品名称
-     */
-    private String productName;
-
-    /**
-     * 位置
-     */
-    private String location;
-
-    /**
      * 标题
      */
     private String title;
@@ -50,32 +38,15 @@ public class PmsCourseListVo implements Serializable {
     private BigDecimal price;
 
     /**
-     * 教练名称
+     * 其它产品的价格
      */
-    private String coachName;
+    private BigDecimal equipmentPrice;
 
     /**
-     * 教练头像
+     * 产品总的价格
      */
-    private String coachIcon;
+    private BigDecimal totalPrice;
 
-    /**
-     * 教练id
-     */
-    private Long coachId;
-
-    /**
-     * 教练等级
-     */
-    private String coachGrade;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date startTime;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date endTime;
 
     /**
      * 可用积分
@@ -83,10 +54,22 @@ public class PmsCourseListVo implements Serializable {
     private Integer availableIntegral;
 
     /**
-     * 商品状态
+     *  产品状态状态
      */
     private Integer status;
 
-    @ApiModelProperty("是否是组团产品(0:否 1:是)")
+    /**
+     * 是否是组团产品(0:否 1:是)
+     */
     private Integer isGroup;
+
+    /**
+     * 销量
+     */
+    private Integer sales;
+
+    /**
+     * 标签
+     */
+    private List<PmsTagVo> tagList = new ArrayList<>( 0 );
 }

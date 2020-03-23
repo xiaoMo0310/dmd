@@ -1,11 +1,11 @@
 package com.dmd.mall.web.pms;
 
-
 import com.alibaba.fastjson.JSONObject;
 import com.dmd.base.dto.BaseQuery;
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.dto.CourseProductDto;
+import com.dmd.mall.model.dto.CourseProductListDto;
 import com.dmd.mall.model.vo.CertificateProductVo;
 import com.dmd.mall.model.vo.DivingProductVo;
 import com.dmd.mall.model.vo.PmsCertificateVo;
@@ -41,7 +41,7 @@ public class PmsCourseProductController extends BaseController {
     private PmsCourseProductService pmsCourseProductService;
 
     @PostMapping("/courseProduct/save")
-    @ApiOperation(httpMethod = "POST", value = "添加或编辑潜水及学习产品的信息")
+    @ApiOperation(httpMethod = "POST", value = "添加或编辑潜水及学证产品的信息")
     @ApiImplicitParam(name ="courseProductDto", value = "课程产品的信息,修改需要提供id", dataType = "CourseProductDto", paramType = "body")
     public Wrapper saveCourseProductMessage(@RequestBody CourseProductDto courseProductDto) {
         logger.info("saveAttentionMessage - 编辑课程产品的信息. courseProduct={}", courseProductDto);
@@ -57,19 +57,27 @@ public class PmsCourseProductController extends BaseController {
         return WrapMapper.ok(divingProductVo);
     }
 
-    @PostMapping("/divingProductList/find")
-    @ApiOperation(httpMethod = "POST", value = "查询潜水商品的列表信息")
-    @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery", paramType = "body")
-    public Wrapper findDivingProductMessage(@RequestBody BaseQuery baseQuery) {
-        PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findCourseProductListByType(baseQuery);
+    @PostMapping("/user/divingProductList/find")
+    @ApiOperation(httpMethod = "POST", value = "根据类型查询用户端潜水学证商品的列表信息")
+    @ApiImplicitParam(name ="courseProductListDto", value = "分页数据及类型", dataType = "CourseProductListDto", paramType = "body")
+    public Wrapper findDivingProductMessage(@RequestBody CourseProductListDto courseProductListDto) {
+        PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findUserDivingProductList(courseProductListDto);
         return WrapMapper.ok(productList);
     }
 
-    @PostMapping("/divingProductList/findById")
-    @ApiOperation(httpMethod = "POST", value = "查询卖家潜水商品的列表信息")
+    @PostMapping("/seller/divingProductList/find")
+    @ApiOperation(httpMethod = "POST", value = "查询教练端潜水产品的列表信息")
     @ApiImplicitParam(name ="baseQuery", value = "分页数据", dataType = "BaseQuery", paramType = "body")
     public Wrapper findDivingProductList(@RequestBody BaseQuery baseQuery) {
-        PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findSellerCourseProductListByType(getLoginAuthDto(), baseQuery);
+        PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findSellerCourseProductList(getLoginAuthDto(), baseQuery);
+        return WrapMapper.ok(productList);
+    }
+
+    @PostMapping("/user/newDivingProduct/find")
+    @ApiOperation(httpMethod = "POST", value = "根据类型查询用户端热门潜水或者学证产品")
+    @ApiImplicitParam(name ="courseProductListDto", value = "分页数据及类型", dataType = "CourseProductListDto", paramType = "body")
+    public Wrapper findNewDivingProductList(@RequestBody CourseProductListDto courseProductListDto) {
+        PageInfo<PmsCourseListVo> productList = pmsCourseProductService.findNewCourseProductListByType(courseProductListDto);
         return WrapMapper.ok(productList);
     }
 

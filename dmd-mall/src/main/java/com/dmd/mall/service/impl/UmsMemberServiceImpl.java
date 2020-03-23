@@ -90,7 +90,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     @Override
     public UmsMember getByUsername(String username) {
         UmsMemberExample example = new UmsMemberExample();
-        example.createCriteria().andUsernameEqualTo(username);
+        example.createCriteria().andUsernameEqualTo(username).andStatusEqualTo( 2 );
         List<UmsMember> memberList = memberMapper.selectByExample(example);
         if (!CollectionUtils.isEmpty(memberList)) {
             return memberList.get(0);
@@ -177,7 +177,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     public CommonResult generateAuthCode(String telephone,HttpServletRequest request) {
         Preconditions.checkArgument(StringUtils.isNotEmpty(telephone), "手机号码不能为空");
         String smsCode = RandomStringUtils.randomNumeric(6);
-        //验证码绑定设备id并存储到redis
+        //验证码绑定设备id并存储到redis  todo 验证码死的
         ValidateCode validateCode=new ValidateCode("666666",AUTH_CODE_EXPIRE_SECONDS);
         validateCodeRepository.save(new ServletWebRequest(request),validateCode);//保存验证码到redis
 //        SmsCode smsCode=new SmsCode();

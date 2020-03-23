@@ -27,9 +27,10 @@ public interface OmsOrderAppraiseService extends IService<OmsOrderAppraise> {
     /**
      * 查询商品评价的消息
      * @param productId
+     * @param level
      * @param pageNum
      * @param pageSize
      * @return
      */
-    PageInfo findAppraiseMessage(String productId, Integer pageNum, Integer pageSize);
+    PageInfo findAppraiseMessage(String productId, String level, Integer pageNum, Integer pageSize);
 }

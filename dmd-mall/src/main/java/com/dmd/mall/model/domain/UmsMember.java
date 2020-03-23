@@ -82,7 +82,7 @@ public class UmsMember implements Serializable {
     @ApiModelProperty("微信")
     private String openId;
 
-/*    @Column(name = "coach_name")
+    @Column(name = "coach_name")
     @ApiModelProperty("教练名称")
     private String coachName;
 
@@ -92,7 +92,7 @@ public class UmsMember implements Serializable {
 
     @Column(name = "coach_grade")
     @ApiModelProperty("教练等级")
-    private String coachGrade;*/
+    private String coachGrade;
 
     @Column(name = "invitation_code")
     @ApiModelProperty("邀请码")

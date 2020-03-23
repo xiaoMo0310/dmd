@@ -15,7 +15,7 @@ spring:
         login-username: druid
         login-password: druid
   redis:
-    host: 106.54.138.242 # Redis服务器地址
+    host: localhost # Redis服务器地址
     database: 0 # Redis数据库索引（默认为0）
     port: 6379 # Redis服务器连接端口
     password: 123456 # Redis服务器连接密码（默认为空）
@@ -26,10 +26,14 @@ spring:
         max-idle: 8 # 连接池中的最大空闲连接
         min-idle: 0 # 连接池中的最小空闲连接
     timeout: 3000ms # 连接超时时间（毫秒）
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 10MB
 dmd:
   uploadfile:
     extension: txt,gif,jpg,png,zip,rar,jpeg #使用逗号隔开的字符串，精确匹配例如：txt,jpg,png,zip
-    prefix: http://192.168.0.246
+    prefix: http://localhost
     attachmentPath: D:\home\ #要保存文件的父路径 D:\
   swagger:
     enable: true

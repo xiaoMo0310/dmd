@@ -137,6 +137,10 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("排序")
     private Integer sort;
 
+    @Column(name = "certificate_type")
+    @ApiModelProperty("证书类型(1:水肺潜水 2:自由潜水)")
+    private Integer certificateType;
+
 
 
 

@@ -9,6 +9,11 @@ import com.dmd.mall.model.domain.PmsCourseProduct;
 import com.dmd.mall.model.domain.PowerNotesBean;
 import com.dmd.mall.model.dto.CertificateProductDto;
 import com.dmd.mall.model.dto.CourseProductDto;
+import com.dmd.mall.model.dto.CourseProductListDto;
+import com.dmd.mall.model.vo.CertificateProductVo;
+import com.dmd.mall.model.vo.DivingProductVo;
+import com.dmd.mall.model.vo.PmsCertificateVo;
+import com.dmd.mall.model.vo.PmsCourseListVo;
 import com.dmd.mall.model.vo.*;
 import com.github.pagehelper.PageInfo;
 
@@ -42,10 +47,23 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
     /**
      * 分页查询产品列表信息
      *
-     * @param baseQuery
+     * @param courseProductListDto
      * @return
      */
-    PageInfo<PmsCourseListVo> findCourseProductListByType(BaseQuery baseQuery);
+    PageInfo<PmsCourseListVo> findUserDivingProductList(CourseProductListDto courseProductListDto);
+
+    /**
+     * 查询卖家潜水商品列表信息
+     * @param loginAuthDto
+     * @return
+     */
+    PageInfo<PmsCourseListVo> findSellerCourseProductList(LoginAuthDto loginAuthDto, BaseQuery baseQuery);
+    /**
+     * 根据类型查询用户端热门潜水或者学证产品
+     * @param courseProductListDto
+     * @return
+     */
+    PageInfo<PmsCourseListVo> findNewCourseProductListByType(CourseProductListDto courseProductListDto);
 
     /**
      * 查询学证产品的详细信息
@@ -111,13 +129,6 @@ public interface PmsCourseProductService extends IService<PmsCourseProduct> {
      */
     int updateCourseProductStatus(Long id, Integer status);
 
-    /**
-     * 查询卖家潜水商品列表信息
-     * @param loginAuthDto
-     * @param baseQuery
-     * @return
-     */
-    PageInfo<PmsCourseListVo> findSellerCourseProductListByType(LoginAuthDto loginAuthDto, BaseQuery baseQuery);
 
     /**
      * 查询卖家所有的学证商品证书信息

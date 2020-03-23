@@ -4,6 +4,7 @@ import com.dmd.mall.model.domain.OmsOrderAppraise;
 import com.dmd.core.mybatis.MyMapper;
 import com.dmd.mall.model.vo.ProductAppraiseVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,5 +21,5 @@ import java.util.List;
 @Component
 public interface OmsOrderAppraiseMapper extends MyMapper<OmsOrderAppraise> {
 
-    List<ProductAppraiseVo> selectAppraiseMessageByProductId(String productId);
+    List<ProductAppraiseVo> selectAppraiseMessageByProductId(@Param( "productId" ) String productId, @Param( "level" ) String level);
 }
