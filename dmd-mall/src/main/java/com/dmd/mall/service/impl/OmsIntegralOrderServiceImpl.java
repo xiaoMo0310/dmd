@@ -12,12 +12,11 @@ import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.OmsIntegralOrderMapper;
 import com.dmd.mall.model.domain.*;
 import com.dmd.mall.model.dto.OrderParamDto;
-import com.dmd.mall.model.vo.CourseOrderDetailVo;
+import com.dmd.mall.model.vo.IntegralOrderDetailVo;
 import com.dmd.mall.model.vo.OrderCreateVo;
 import com.dmd.mall.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -72,8 +70,8 @@ public class OmsIntegralOrderServiceImpl extends BaseService<OmsIntegralOrder> i
             throw new PmsBizException(ErrorCodeEnum.PMS10021026);
         }
 
-        //封装积分好礼订单详情数据
-        OmsOrderItem orderItem = integralGiftService.createIntegralOrderItem(integralGift, orderParamDto.getProductSkuId(), orderParamDto.getQuantity());
+        /*//封装积分好礼订单详情数据
+        OmsOrderItem orderItem = integralGiftService.createIntegralOrderItem(integralGift, orderParamDto.getProductSkuId(), orderParamDto.getQuantity());*/
 
         //判单商品的积分和使用的商品积分相同
         /*if(!orderParamDto.getUseIntegration().equals(integralGift.getIntegral() * orderParamDto.getQuantity())){
@@ -106,63 +104,63 @@ public class OmsIntegralOrderServiceImpl extends BaseService<OmsIntegralOrder> i
         //扣减积分
         if(loginAuthDto.getUserType().equals("member")){
             //扣减用户积分
-            umsMemberService.updateIntegration(umsMember, useIntegration, "积分兑换商品扣减积分", 1);
+            umsMemberService.updateIntegration(umsMember, -useIntegration, "积分兑换商品扣减积分", 1);
         }else if(loginAuthDto.getUserType().equals("coach")){
             //扣减教练积分
-            umsCoachService.updateIntegration(umsCoach, useIntegration, "积分兑换商品扣减积分", 1);
+            umsCoachService.updateIntegration(umsCoach, -useIntegration, "积分兑换商品扣减积分", 1);
         }
         //减库存
-        reduceIntegralProductInventory(loginAuthDto,orderItem.getProductSkuId(), orderItem.getProductQuantity());
+        reduceIntegralProductInventory(loginAuthDto,order.getProductSkuId(), order.getProductQuantity());
     }
 
     @Override
     public PageInfo queryIntegralOrderListWithPage(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer status) {
         //查询该用户下的的订单
         PageHelper.startPage(pageNum, pageSize);
-        List<CourseOrderDetailVo> courseOrderDetailVos = null;
+        List<IntegralOrderDetailVo> integralOrderDetailVos = null;
         if(status == 2){
             List<Integer> statusList = Arrays.asList(1, 2);
-            courseOrderDetailVos = omsIntegralOrderMapper.selectIntegralOrderByStatus(loginAuthDto.getUserId(), loginAuthDto.getUserType(), statusList);
+            integralOrderDetailVos = omsIntegralOrderMapper.selectIntegralOrderByStatus(loginAuthDto.getUserId(), loginAuthDto.getUserType(), statusList);
         }else {
-            courseOrderDetailVos = omsIntegralOrderMapper.selectUserOrderByStatus(loginAuthDto.getUserId(), loginAuthDto.getUserType(), status);
+            integralOrderDetailVos = omsIntegralOrderMapper.selectUserOrderByStatus(loginAuthDto.getUserId(), loginAuthDto.getUserType(), status);
         }
         //截取图片 获取尺码数据
-        if(!CollectionUtils.isEmpty(courseOrderDetailVos)){
-            courseOrderDetailVos.forEach(courseOrderDetailVo -> {
-                courseOrderDetailVo.setProductPic(courseOrderDetailVo.getProductPic().split(",")[0]);
-                List<Map> maps = (List<Map>) JSONArray.parse(courseOrderDetailVo.getSpec());
+        /*if(!CollectionUtils.isEmpty(integralOrderDetailVos)){
+            integralOrderDetailVos.forEach(integralOrderDetailVo -> {
+                integralOrderDetailVo.setProductPic(integralOrderDetailVo.getProductPic().split(",")[0]);
+                List<Map> maps = (List<Map>) JSONArray.parse(integralOrderDetailVo.getSpec());
                 List<Map> sizeList = maps.stream().filter(map -> map.get("key").equals("尺码")).collect(Collectors.toList());
                 if(!CollectionUtils.isEmpty(sizeList)){
-                    courseOrderDetailVo.setSizeSpec((String) sizeList.get(0).get("value"));
+                    integralOrderDetailVo.setSizeSpec((String) sizeList.get(0).get("value"));
                 }
             });
-        }
-        PageInfo<CourseOrderDetailVo> orderDetailVoPageInfo = new PageInfo<>(courseOrderDetailVos);
+        }*/
+        PageInfo<IntegralOrderDetailVo> orderDetailVoPageInfo = new PageInfo<>(integralOrderDetailVos);
         return orderDetailVoPageInfo;
     }
 
     @Override
-    public CourseOrderDetailVo getUserIntegralOrderDetail(LoginAuthDto loginAuthDto, String orderSn) {
+    public IntegralOrderDetailVo getUserIntegralOrderDetail(LoginAuthDto loginAuthDto, String orderSn) {
         //获取当前登录人信息
         UmsMember umsMember = umsMemberService.selectByLoginAuthDto(loginAuthDto);
-        CourseOrderDetailVo courseOrderDetailVo = omsIntegralOrderMapper.selectUserIntegralOrderByOrderSn(umsMember.getId(), orderSn);
-        if(courseOrderDetailVo == null){
+        IntegralOrderDetailVo integralOrderDetailVo = omsIntegralOrderMapper.selectUserIntegralOrderByOrderSn(umsMember.getId(), orderSn);
+        if(integralOrderDetailVo == null){
             throw new OmsBizException(ErrorCodeEnum.OMS10031020);
         }
-        courseOrderDetailVo.setProductPic(courseOrderDetailVo.getProductPic().split(",")[0]);
-        courseOrderDetailVo.setPhone(umsMember.getPhone());
-        return courseOrderDetailVo;
+        integralOrderDetailVo.setProductPic(integralOrderDetailVo.getProductPic().split(",")[0]);
+        integralOrderDetailVo.setPhone(umsMember.getPhone());
+        return integralOrderDetailVo;
     }
 
     @Override
-    public CourseOrderDetailVo getSellerIntegralOrderDetail(LoginAuthDto loginAuthDto, String orderSn) {
+    public IntegralOrderDetailVo getSellerIntegralOrderDetail(LoginAuthDto loginAuthDto, String orderSn) {
         UmsCoach umsCoach = umsCoachService.selectByLoginAuthDto(loginAuthDto);
-        CourseOrderDetailVo courseOrderDetailVo = omsIntegralOrderMapper.selectSellerIntegralOrderByOrderSn(umsCoach.getId(), orderSn);
-        if(courseOrderDetailVo == null){
+        IntegralOrderDetailVo integralOrderDetailVo = omsIntegralOrderMapper.selectSellerIntegralOrderByOrderSn(umsCoach.getId(), orderSn);
+        if(integralOrderDetailVo == null){
             throw new OmsBizException(ErrorCodeEnum.OMS10031020);
         }
-        courseOrderDetailVo.setProductPic(courseOrderDetailVo.getProductPic().split(",")[0]);
-        return courseOrderDetailVo;
+        integralOrderDetailVo.setProductPic(integralOrderDetailVo.getProductPic().split(",")[0]);
+        return integralOrderDetailVo;
     }
 
     /**
@@ -193,7 +191,6 @@ public class OmsIntegralOrderServiceImpl extends BaseService<OmsIntegralOrder> i
         order.setUserType(userType);
         order.setFreightAmount(postage);
         order.setUseIntegration(orderCreateVo.getUseIntegration());
-        order.setOrderType(0);
         order.setSourceType(1);
         order.setMemberId(loginAuthDto.getUserId());
         order.setShopId(shopId);
@@ -204,7 +201,7 @@ public class OmsIntegralOrderServiceImpl extends BaseService<OmsIntegralOrder> i
         order.setStatus(OmsApiConstant.OrderStatusEnum.PAID.getCode());
         order.setPayType(3);
         order.setPaymentTime(new Date());
-        order.setOrderType(2);
+        order.setOrderType(1);
         //封装积分商品收货地址信息
         addOrderShippingMessage(order, orderCreateVo.getShippingId());
         order.setRemark(remark);
@@ -231,7 +228,7 @@ public class OmsIntegralOrderServiceImpl extends BaseService<OmsIntegralOrder> i
         order.setProductPic(integralGift.getPicture());
         order.setProductName(integralGift.getName());
         order.setProductTitle(integralGift.getName());
-        order.setProductType(4);
+        order.setProductType(1);
         order.setProductQuantity(quantity);
         //封装商品sku数据
         order.setProductSkuId(dmdIntegralGiftSpe.getId());

@@ -7,9 +7,8 @@ import com.dmd.mall.model.domain.UmsCoach;
 import com.dmd.mall.model.dto.UmsCoachDto;
 import com.dmd.mall.model.dto.UmsCoachRegisterDto;
 import com.dmd.mall.model.vo.UmsCoachVo;
-import com.dmd.mall.model.vo.UmsMemberVo;
 import com.dmd.wrapper.Wrapper;
-import com.github.pagehelper.PageInfo;
+import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -98,5 +97,12 @@ public interface UmsCoachService extends IService<UmsCoach> {
      * @param loginAuthDto
      * @return
      */
-    PageInfo<UmsMemberVo> findCoachInviteUserMessage(BaseQuery baseQuery, LoginAuthDto loginAuthDto);
+    JSONObject findCoachInviteUserMessage(BaseQuery baseQuery, LoginAuthDto loginAuthDto);
+
+    /**
+     * 根据邀请码查询教练信息
+     * @param invitationCode
+     * @return
+     */
+    UmsCoach selectCoachMessageByInvitationCode(String invitationCode);
 }

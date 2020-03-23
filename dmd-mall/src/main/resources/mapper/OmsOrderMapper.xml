@@ -13,6 +13,7 @@
     <result column="update_time" property="updateTime" />
         <result column="order_sn" property="orderSn" />
         <result column="member_id" property="memberId" />
+        <result column="seller_id" property="sellerId" />
         <result column="shop_id" property="shopId" />
         <result column="member_username" property="memberUsername" />
         <result column="total_amount" property="totalAmount" />
@@ -66,19 +67,19 @@
         source_type, status, order_type, delivery_company, delivery_sn,
         integration, promotion_info, is_invoice, invoice_id, remark, confirm_status,
          delete_status, use_integration, payment_time, delivery_time, receive_time, end_time, close_time, approval_status, failure_reason, user_type,
-         receiver_name, receiver_mobile_no, province_name, city_name, district_name, detail_address, receiver_zip_code
+         receiver_name, receiver_mobile_no, province_name, city_name, district_name, detail_address, receiver_zip_code, seller_id
     </sql>
     <sql id="Course_Product_Order_List">
         uc.coach_name userName, uc.icon userIcon, uc.coach_Grade, uc.id userId, uc.nick_name, oo.order_sn, oo.total_amount, oo.id orderId,
         oo.pay_amount, oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
         oo.status, oo.order_type, ooi.id orderItmeId, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity,
-         ooi.product_attr spec, ooi.product_type, ooi.product_id, ooi.real_amount, ooi.product_name
+         ooi.equipment_price, ooi.product_category_price, ooi.product_type, ooi.product_id, ooi.real_amount, ooi.product_name
     </sql>
     <sql id="Seller_Course_Product_Order_List">
         um.username userName, um.icon userIcon, um.id userId, um.nick_name, oo.order_sn, oo.total_amount, oo.id orderId,
         oo.pay_amount, oo.integration_amount, oo.pay_type, oo.payment_time, oo.close_time, oo.created_time, oo.end_time,
         oo.status, oo.order_type, ooi.id orderItmeId, ooi.product_pic, ooi.product_title, ooi.product_price, ooi.product_quantity,
-        ooi.product_attr spec, ooi.product_type, ooi.product_id, ooi.real_amount, ooi.product_name
+        ooi.equipment_price, ooi.product_category_price, ooi.product_type, ooi.product_id, ooi.real_amount, ooi.product_name
     </sql>
     <select id="selectByUserId" resultMap="BaseResultMap" parameterType="long">
         SELECT
@@ -93,7 +94,7 @@
     <select id="selectUserOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
         SELECT <include refid="Course_Product_Order_List"/>
         FROM oms_order oo
-        left join ums_coach uc on oo.shop_id = uc.id
+        left join ums_coach uc on oo.seller_id = uc.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
         where oo.member_id = #{userId}
@@ -108,7 +109,7 @@
         left join ums_member um on oo.member_id = um.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
-        where oo.shop_id = #{coachId}
+        where oo.seller_id = #{coachId}
         and oo.status = #{status}
         and oo.order_type = 1
         order by oo.update_time desc
@@ -116,7 +117,7 @@
     <select id="selectUserOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
         SELECT <include refid="Course_Product_Order_List"/>
         FROM oms_order oo
-        left join ums_coach uc on oo.shop_id = uc.id
+        left join ums_coach uc on oo.seller_id = uc.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
         where oo.member_id = #{userId} and oo.order_sn = #{orderSn}
@@ -127,7 +128,7 @@
         left join ums_member um on oo.member_id = um.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
-        where oo.shop_id = #{coachId} and oo.order_sn = #{orderSn}
+        where oo.seller_id = #{coachId} and oo.order_sn = #{orderSn}
     </select>
     <select id="selectByUserIdAndOrderId" resultType="com.dmd.mall.model.domain.OmsOrder">
         SELECT
@@ -156,7 +157,7 @@
     <select id="selectIntegralOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
         SELECT <include refid="Course_Product_Order_List"/>
         FROM oms_order oo
-        left join ums_coach uc on oo.shop_id = uc.id
+        left join ums_coach uc on oo.seller_id = uc.id
         left join oms_order_item ooi
         on oo.id = ooi.order_id
         where oo.member_id = #{userId}

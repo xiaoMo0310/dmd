@@ -16,6 +16,7 @@
         <result column="logo" property="logo" />
         <result column="telephone" property="telephone" />
         <result column="level" property="level" />
+        <result column="status" property="status" />
         <result column="introduction" property="introduction" />
         <result column="announcement" property="announcement" />
         <result column="qualification" property="qualification" />
@@ -32,7 +33,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        coach_id, name, logo, telephone, level, introduction, announcement, qualification, is_auto_reply, reply_id
+        coach_id, name, logo, telephone, level, introduction, announcement, qualification, is_auto_reply, reply_id, status
     </sql>
     <select id="selectByCoachId" resultType="com.dmd.mall.model.domain.UmsCoachShop">
         SELECT <include refid="Base_Column_List"/>

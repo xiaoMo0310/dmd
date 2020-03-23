@@ -143,11 +143,14 @@ public class CourseOrderDetailVo implements Serializable {
     private Date closeTime;
 
     /**
-     * 规格信息
+     * 其它产品价格
      */
-    private String spec;
+    private BigDecimal equipmentPrice;
 
-    private String sizeSpec;
+    /**
+     * 关联的产品
+     */
+    private String productCategoryPrice;
 
     /**
      * 商品数量

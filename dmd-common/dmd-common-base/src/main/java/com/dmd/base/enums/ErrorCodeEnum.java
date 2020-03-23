@@ -443,6 +443,14 @@ public enum ErrorCodeEnum {
 	 * PMS 10021033error code enum.
 	 */
 	PMS10021033(10021033, "产品已售完"),
+	/**
+	 * PMS 10021034error code enum.
+	 */
+	PMS10021034(10021034, "请先上传教练证书信息"),
+	/**
+	 * PMS 10021035error code enum.
+	 */
+	PMS10021035(10021035, "不能发布高于自己证书等级的产品"),
 // 1003 订单中心
 	/**
 	 * OMS 10031001 error code enum.

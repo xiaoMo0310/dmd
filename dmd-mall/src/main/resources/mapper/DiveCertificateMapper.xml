@@ -116,7 +116,7 @@
         FROM dmd_dive_certificate_app da
         LEFT JOIN
         pms_certificate pc ON da.certificate_id = pc.id
-        WHERE da.user_id = #{userId} and da.status = 1
+        WHERE da.user_id = #{userId} and user_type = #{userType} and da.status = 1
     </select>
 
     <update id="updateCertificate" parameterType="com.dmd.mall.model.domain.CertificateAppBean">

@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.domain.OmsOrder;
-import com.dmd.mall.model.dto.OrderParamDto;
 import com.dmd.mall.model.dto.PmsCourseOrderDto;
 import com.dmd.mall.model.vo.CourseOrderDetailVo;
 import com.dmd.mall.model.vo.OrderCreateResultVo;
@@ -30,14 +29,6 @@ public interface OmsOrderService extends IService<OmsOrder> {
      * @param orderCreateVo
      */
     OrderCreateResultVo createOrder(LoginAuthDto loginAuthDto, OrderCreateVo orderCreateVo);
-
-    /**
-     * 创建积分订单
-     * @param loginAuthDto
-     * @param orderParamDto
-     * @return
-     */
-    void createIntegralOrder(LoginAuthDto loginAuthDto, OrderParamDto orderParamDto);
 
     /**
      * 创建潜水学证商品订单
@@ -90,7 +81,7 @@ public interface OmsOrderService extends IService<OmsOrder> {
     PageInfo querySellerOrderListWithPage(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer status);
 
     /**
-     * 确认完成订单
+     * 修改订单状态
      * @param loginAuthDto
      * @param orderSn
      * @return
@@ -119,16 +110,6 @@ public interface OmsOrderService extends IService<OmsOrder> {
      * @return
      */
     List<Map> countOrderNum(LoginAuthDto loginAuthDto);
-
-    /**
-     * 分页查询用户积分好礼订单列表
-     * @param loginAuthDto
-     * @param pageNum
-     * @param pageSize
-     * @param status
-     * @return
-     */
-    PageInfo queryIntegralOrderListWithPage(LoginAuthDto loginAuthDto, Integer pageNum, Integer pageSize, Integer status);
 
     /**
      * 根据订单状态查询订单信息

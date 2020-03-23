@@ -139,8 +139,13 @@ public class DiveCertificateServiceImpl implements DiveCertificateServuce{
     }
 
     @Override
-    public List<CertificateAppBean> queryUserCertificateList(Long userId) {
-        List<CertificateAppBean> certificateAppBeans = diveCertificateMapper.queryUserCertificateList(userId);
+    public List<CertificateAppBean> queryUserCertificateList(Long userId, String userType) {
+        List<CertificateAppBean> certificateAppBeans;
+        if(userType.equals( "member" )){
+            certificateAppBeans = diveCertificateMapper.queryUserCertificateList(userId, 1);
+        }else {
+            certificateAppBeans = diveCertificateMapper.queryUserCertificateList(userId, 2);
+        }
         return certificateAppBeans;
     }
 

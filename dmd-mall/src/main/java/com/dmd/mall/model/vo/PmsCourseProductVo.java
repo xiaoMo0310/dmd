@@ -44,6 +44,21 @@ public class PmsCourseProductVo implements Serializable {
     private BigDecimal price;
 
     /**
+     * 关联产品(格式[{"parentId":22,id":33,"text":"眼镜","price":"200"}])
+     */
+    private String relatedProduct;
+
+    /**
+     * 产品总的价格
+     */
+    private BigDecimal equipmentPrice;
+
+    /**
+     * 产品总的价格
+     */
+    private BigDecimal totalPrice;
+
+    /**
      * 产品类型(1:学证 2:潜水)
      */
     private Integer productType;
@@ -59,21 +74,6 @@ public class PmsCourseProductVo implements Serializable {
     private String lengthPlay;
 
     /**
-     * 费用包含
-     */
-    private String costIncludes;
-
-    /**
-     * 费用不含
-     */
-    private String costNotIncludes;
-
-    /**
-     * 购买须知
-     */
-    private String purchaseNotes;
-
-    /**
      * 产品介绍
      */
     private String productDescription;
@@ -82,11 +82,6 @@ public class PmsCourseProductVo implements Serializable {
      * 产品图片(多个使用 , 隔开)
      */
     private String image;
-
-    /**
-     * 内容安排(数据格式 [{"day01":"内容"}, {"day02":"内容"}])
-     */
-    private String contentArrangement;
 
     @ApiModelProperty("销量")
     private Integer sales;
@@ -109,4 +104,9 @@ public class PmsCourseProductVo implements Serializable {
     private Date endTime;
 
     private Integer status;
+
+    /**
+     * 是否是组合产品
+     */
+    private Integer isGroup;
 }

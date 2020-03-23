@@ -4,6 +4,7 @@ import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.mall.model.domain.UmsCoachShop;
 import com.dmd.core.support.IService;
 import com.dmd.mall.model.dto.UmsCoachShopDto;
+import com.dmd.mall.model.vo.UmsCoachShopVo;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +20,7 @@ public interface UmsCoachShopService extends IService<UmsCoachShop> {
     /**
      * 根据教练id查询店铺信息
      * @param userId
+     * @param loginAuthDto
      * @return
      */
     UmsCoachShop findByCoachId(Long coachId);
@@ -37,5 +39,6 @@ public interface UmsCoachShopService extends IService<UmsCoachShop> {
      * @param loginAuthDto
      * @return
      */
-    UmsCoachShop findShopMessage(LoginAuthDto loginAuthDto);
+    UmsCoachShopVo findShopMessage(LoginAuthDto loginAuthDto);
+
 }

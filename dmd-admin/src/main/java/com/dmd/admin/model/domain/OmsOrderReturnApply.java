@@ -79,13 +79,13 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("商品标题")
     private String productTitle;
 
-    @Column(name = "product_brand")
-    @ApiModelProperty("商品品牌")
-    private String productBrand;
+    @Column(name = "equipment_price")
+    @ApiModelProperty("其它产品价格")
+    private BigDecimal equipmentPrice;
 
-    @Column(name = "product_attr")
-    @ApiModelProperty("商品销售属性：颜色：红色；尺码：xl;")
-    private String productAttr;
+    @Column(name = "related_product")
+    @ApiModelProperty("关联产品(格式[{\"parentId\":22,id\":33,\"text\":\"眼镜\",\"price\":\"200\"}])")
+    private String relatedProduct;
 
     @Column(name = "product_count")
     @ApiModelProperty("退货数量")

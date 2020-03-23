@@ -8,11 +8,14 @@ import com.dmd.core.support.BaseService;
 import com.dmd.mall.constant.OmsApiConstant;
 import com.dmd.mall.exceptions.OmsBizException;
 import com.dmd.mall.mapper.OmsOrderReturnApplyMapper;
+import com.dmd.mall.model.domain.OmsOrder;
 import com.dmd.mall.model.domain.OmsOrderReturnApply;
+import com.dmd.mall.model.domain.UmsMember;
 import com.dmd.mall.model.dto.OrderReturnApplyDto;
 import com.dmd.mall.model.vo.CourseOrderDetailVo;
 import com.dmd.mall.service.OmsOrderReturnApplyService;
 import com.dmd.mall.service.OmsOrderService;
+import com.dmd.mall.service.UmsMemberService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,8 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
     private OmsOrderReturnApplyMapper omsOrderReturnApplyMapper;
     @Autowired
     private OmsOrderService omsOrderService;
+    @Autowired
+    private UmsMemberService umsMemberService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -69,7 +74,8 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
         omsOrderReturnApply.setReturnPhone(userOrderDetail.getPhone());
         omsOrderReturnApply.setStatus(0);
         omsOrderReturnApply.setProductCount(userOrderDetail.getProductQuantity());
-        omsOrderReturnApply.setProductAttr(userOrderDetail.getSpec());
+        omsOrderReturnApply.setEquipment_price(userOrderDetail.getEquipmentPrice());
+        omsOrderReturnApply.setRelatedProduct( userOrderDetail.getProductCategoryPrice() );
         omsOrderReturnApply.setProductRealPrice(userOrderDetail.getRealAmount());
         omsOrderReturnApply.setUpdateInfo(loginAuthDto);
         int data = omsOrderReturnApplyMapper.insertSelective(omsOrderReturnApply);
@@ -112,12 +118,18 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateOmsReturnStatus(LoginAuthDto loginAuthDto, Long returnOrderId, Integer status) {
         OmsOrderReturnApply orderReturnApply = new OmsOrderReturnApply();
         orderReturnApply.setId(returnOrderId);
-        orderReturnApply.setStatus(1);
+        orderReturnApply.setStatus(status);
+        if(status == 2){
+            //返还积分
+            returnIntegration( returnOrderId );
+        }
         return omsOrderReturnApplyMapper.updateByPrimaryKeySelective(orderReturnApply);
     }
+
 
     @Override
     public PageInfo findOrderReturnApplyMessageByPage(BaseQuery baseQuery, LoginAuthDto loginAuthDto) {
@@ -130,6 +142,25 @@ public class OmsOrderReturnApplyServiceImpl extends BaseService<OmsOrderReturnAp
         OmsOrderReturnApply omsOrderReturnApply = new OmsOrderReturnApply();
         BeanUtils.copyProperties(orderReturnApplyDto, omsOrderReturnApply);
         omsOrderReturnApply.setId(orderReturnApplyDto.getReturnApplyId());
+        omsOrderReturnApply.setUpdateInfo( loginAuthDto );
+        //退还积分
+        if(orderReturnApplyDto.getStatus() == 2){
+            returnIntegration(orderReturnApplyDto.getReturnApplyId());
+        }
         return omsOrderReturnApplyMapper.updateByPrimaryKeySelective(omsOrderReturnApply);
+    }
+
+    /**
+     * 退还积分
+     * @param returnOrderId
+     */
+    private void returnIntegration(Long returnOrderId) {
+        OmsOrderReturnApply omsOrderReturnApply = omsOrderReturnApplyMapper.selectByPrimaryKey( returnOrderId );
+        if(omsOrderReturnApply.getStatus() != 1){
+            return;
+        }
+        OmsOrder order = omsOrderService.getOmsOrderByOrderSn( omsOrderReturnApply.getOrderSn() );
+        UmsMember umsMember = umsMemberService.getById( order.getMemberId() );
+        umsMemberService.updateIntegration( umsMember, order.getUseIntegration(), "订单"+order.getOrderSn()+"退还", 0);
     }
 }

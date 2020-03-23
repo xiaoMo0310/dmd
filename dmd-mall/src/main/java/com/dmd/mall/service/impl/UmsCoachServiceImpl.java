@@ -11,6 +11,7 @@ import com.dmd.core.support.BaseService;
 import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.UmsCoachMapper;
 import com.dmd.mall.model.domain.UmsCoach;
+import com.dmd.mall.model.domain.UmsCoachRebate;
 import com.dmd.mall.model.dto.UmsCoachDto;
 import com.dmd.mall.model.dto.UmsCoachRegisterDto;
 import com.dmd.mall.model.vo.UmsCoachVo;
@@ -24,6 +25,7 @@ import com.dmd.wrapper.WrapMapper;
 import com.dmd.wrapper.Wrapper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,8 @@ import org.springframework.web.context.request.ServletWebRequest;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <p>
@@ -59,10 +63,12 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
     private UmsFavoritesService umsFavoritesService;
     @Autowired
     private PmsCourseProductService courseProductService;
+    @Autowired
+    private UmsCoachRebateService coachRebateService;
 
     @Override
     public UmsCoachVo selectCoachMessage(Long id) {
-        UmsCoach umsCoach = umsCoachMapper.selectCoachMessage(id);
+        UmsCoach umsCoach = umsCoachMapper.selectById(id);
         if(umsCoach == null){
             throw new UmsBizException(ErrorCodeEnum.UMS10015010, id);
         }
@@ -159,16 +165,15 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
     }
 
     @Override
-    public void updateIntegration(UmsCoach umsCoach, Integer integration, String operateNote, int changeType) {
+    public synchronized void updateIntegration(UmsCoach umsCoach, Integer integration, String operateNote, int changeType) {
         Preconditions.checkArgument(umsCoach != null, "用户信息不能为空");
-        Preconditions.checkArgument(integration != 0, "要消费的积分不能为空");
         //判断用户积分是否充足
-        if(umsCoach.getIntegration() < integration){
+        if(umsCoach.getIntegration() < -integration && changeType == 1){
             throw new UmsBizException(ErrorCodeEnum.OMS10031015);
         }
         Integer totalIntegration = umsCoach.getIntegration();
         umsCoach.setHistoryIntegration(totalIntegration);
-        umsCoach.setIntegration(totalIntegration - integration);
+        umsCoach.setIntegration(totalIntegration + integration);
         umsCoachMapper.updateByPrimaryKeySelective(umsCoach);
         //记录日志totalIntegration
         coachIntegrationLogService.updateIntegrationAndAddLog(umsCoach, integration, totalIntegration, operateNote, changeType);
@@ -199,9 +204,28 @@ public class UmsCoachServiceImpl extends BaseService<UmsCoach> implements UmsCoa
     }
 
     @Override
-    public PageInfo<UmsMemberVo> findCoachInviteUserMessage(BaseQuery baseQuery, LoginAuthDto loginAuthDto) {
+    public JSONObject findCoachInviteUserMessage(BaseQuery baseQuery, LoginAuthDto loginAuthDto) {
         UmsCoachVo coach = this.findUmsCoachByCoachId(loginAuthDto);
-        return memberService.findCoachInviteUser(baseQuery, coach.getInvitationCode());
+        PageInfo<UmsMemberVo> umsMemberVoPageInfo = memberService.findCoachInviteUser( baseQuery, coach.getInvitationCode() );
+        umsMemberVoPageInfo.getList().forEach( umsMemberVo -> {
+            //查询教练的佣金信息
+            List<UmsCoachRebate> coachRebates = coachRebateService.selectByCoachAndUserId(umsMemberVo.getUserId(), coach.getId());
+            //计算用户总提供佣金
+            BigDecimal contribution = coachRebates.stream().map( UmsCoachRebate::getRebateAmount ).reduce( BigDecimal.ZERO, BigDecimal::add );
+            umsMemberVo.setContribution( contribution );
+        });
+        //统计教练所有的佣金
+        BigDecimal totalContribution = coachRebateService.countCoachRebateByCoachId(coach.getId());
+        JSONObject object = new JSONObject();
+        object.put( "list", umsMemberVoPageInfo.getList() );
+        object.put( "total", umsMemberVoPageInfo.getTotal() );
+        object.put( "totalContribution", totalContribution );
+        return object;
+    }
+
+    @Override
+    public UmsCoach selectCoachMessageByInvitationCode(String invitationCode) {
+        return umsCoachMapper.selectByInvitationCode(invitationCode);
     }
 
     private Wrapper verification(String telephone,String oldPassword,String newPassword,String confirmPassword){

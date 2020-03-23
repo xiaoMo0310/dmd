@@ -22,7 +22,11 @@ public interface DiveCertificateServuce {
      * @param userId
      * @return
      */
+
     List<CertificateAppBean> queryUserCertificateList(Long userId);
 
     List<PmsCertificate> queryDiveCertificateRank();
+
+    List<CertificateAppBean> queryUserCertificateList(Long userId, String userType);
+
 }

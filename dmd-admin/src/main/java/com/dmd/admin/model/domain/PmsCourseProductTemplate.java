@@ -54,7 +54,7 @@ private static final long serialVersionUID = 1L;
     private String divingTime;
 
     @Column(name = "related_product")
-    @ApiModelProperty("关联产品(格式[{\"id\":33,\"text\":\"眼镜\",\"price\":\"200\"}])")
+    @ApiModelProperty("关联产品(格式[{\"parentId\":22,id\":33,\"text\":\"眼镜\",\"price\":\"200\"}])")
     private String relatedProduct;
 
     @Column(name = "product_price")
@@ -68,6 +68,10 @@ private static final long serialVersionUID = 1L;
     @Column(name = "total_price")
     @ApiModelProperty("产品总的价格")
     private BigDecimal totalPrice;
+
+    @Column(name = "diving_image")
+    @ApiModelProperty("潜水图片")
+    private String divingImage;
 
     @Column(name = "diving_description")
     @ApiModelProperty("潜水点描述")

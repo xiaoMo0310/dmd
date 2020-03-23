@@ -17,7 +17,10 @@
         <result column="shop_name" property="shopName" />
         <result column="title" property="title" />
         <result column="price" property="price" />
+        <result column="equipment_price" property="equipmentPrice" />
+        <result column="total_price" property="totalPrice" />
         <result column="product_type" property="productType" />
+        <result column="is_group" property="isGroup" />
         <result column="location" property="location" />
         <result column="length_play" property="lengthPlay" />
         <result column="is_time_limit" property="isTimeLimit" />
@@ -25,12 +28,9 @@
         <result column="end_time" property="endTime" />
         <result column="number_is_limit" property="numberIsLimit" />
         <result column="number_limit" property="numberLimit" />
-        <result column="cost_includes" property="costIncludes" />
-        <result column="cost_not_includes" property="costNotIncludes" />
-        <result column="purchase_notes" property="purchaseNotes" />
+        <result column="related_product" property="relatedProduct" />
         <result column="product_description" property="productDescription" />
         <result column="image" property="image" />
-        <result column="content_arrangement" property="contentArrangement" />
         <result column="status" property="status" />
         <result column="approval_status" property="approvalStatus" />
         <result column="sales" property="sales" />
@@ -65,7 +65,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        product_name, user_id, shop_id, shop_name, title, price, product_type, location, length_play, is_time_limit, start_time, end_time, number_is_limit, number_limit, cost_includes, cost_not_includes, purchase_notes, product_description, image, content_arrangement, status, approval_status, sales, sort, certificate_id, address_id, stock
+        product_name, user_id, shop_id, shop_name, title, price, product_type, location, length_play, is_time_limit, start_time, end_time, number_is_limit, number_limit, product_description, image, related_product, status, approval_status, sales, sort, certificate_id, address_id, stock, total_price, equipment_price, is_group
     </sql>
     <select id="selectCourseProductByType" resultType="com.dmd.mall.model.vo.PmsCourseListVo">
         select
@@ -73,7 +73,7 @@
         from pms_course_product psp, ums_coach uc
         where uc.id = psp.user_id
         and uc.status = 2
-        and psp.product_type = #{type}
+        and (psp.product_type = 2 or psp.product_type = 3)
         and psp.approval_status = 2
         and psp.status not in (2,3)
         order by sort,psp.update_time desc
@@ -275,7 +275,7 @@
         from pms_course_product psp, ums_coach uc
         where uc.id = psp.user_id
         and uc.status = 2
-        and psp.product_type = #{productType}
+        and (psp.product_type = 2 or psp.product_type = 3)
         and psp.user_id = #{userId}
         and psp.approval_status = 2
         order by sort,psp.update_time desc

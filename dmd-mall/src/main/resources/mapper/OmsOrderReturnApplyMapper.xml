@@ -23,8 +23,8 @@
         <result column="product_pic" property="productPic" />
         <result column="product_name" property="productName" />
         <result column="product_title" property="productTitle" />
-        <result column="product_brand" property="productBrand" />
-        <result column="product_attr" property="productAttr" />
+        <result column="related_product" property="relatedProduct" />
+        <result column="equipment_price" property="equipment_price" />
         <result column="product_count" property="productCount" />
         <result column="product_price" property="productPrice" />
         <result column="product_real_price" property="productRealPrice" />
@@ -50,7 +50,7 @@
         last_operator_id,
         update_time,
         order_id, shipping_id, product_id, order_sn, member_username, return_amount, return_name, return_phone, status, product_pic,
-        product_name, product_brand, product_attr, product_count, product_price, product_real_price, reason, description, proof_pics,
+        product_name, equipment_price, related_product, product_count, product_price, product_real_price, reason, description, proof_pics,
         handle_time, handle_note, handle_man, receive_man, receive_time, receive_note, product_title, failure_reason
     </sql>
     <select id="selectByOrderSn" resultType="com.dmd.mall.model.domain.OmsOrderReturnApply">

@@ -22,4 +22,5 @@ public interface UmsCoachShopMapper extends MyMapper<UmsCoachShop> {
      * @return
      */
     UmsCoachShop selectByCoachId(Long coachId);
+
 }

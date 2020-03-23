@@ -71,7 +71,7 @@
         oo.end_time,oo.status, oo.order_type, oo.product_pic, oo.product_title, oo.product_price, oo.product_quantity,oo.product_attr spec,
         oo.product_type, oo.product_id,oo.product_name
     </sql>
-    <select id="selectIntegralOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+    <select id="selectIntegralOrderByStatus" resultType="com.dmd.mall.model.vo.IntegralOrderDetailVo">
         SELECT <include refid="Integral_Product_Order_List"/>
         FROM oms_integral_order oo
         where oo.member_id = #{userId}
@@ -82,7 +82,7 @@
         </foreach>
         order by oo.update_time desc
     </select>
-    <select id="selectUserOrderByStatus" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+    <select id="selectUserOrderByStatus" resultType="com.dmd.mall.model.vo.IntegralOrderDetailVo">
         SELECT <include refid="Integral_Product_Order_List"/>
         FROM oms_integral_order oo
         where oo.member_id = #{userId}
@@ -91,12 +91,12 @@
         order by oo.update_time desc
     </select>
 
-    <select id="selectUserIntegralOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+    <select id="selectUserIntegralOrderByOrderSn" resultType="com.dmd.mall.model.vo.IntegralOrderDetailVo">
         SELECT <include refid="Integral_Product_Order_List"/>
         FROM oms_integral_order oo
         where oo.member_id = #{userId} and oo.order_sn = #{orderSn}
     </select>
-    <select id="selectSellerIntegralOrderByOrderSn" resultType="com.dmd.mall.model.vo.CourseOrderDetailVo">
+    <select id="selectSellerIntegralOrderByOrderSn" resultType="com.dmd.mall.model.vo.IntegralOrderDetailVo">
         SELECT <include refid="Integral_Product_Order_List"/>
         FROM oms_integral_order oo
         where oo.shop_id = #{coachId} and oo.order_sn = #{orderSn}

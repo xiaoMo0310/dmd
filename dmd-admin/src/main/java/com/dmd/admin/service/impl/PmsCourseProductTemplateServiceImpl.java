@@ -3,8 +3,8 @@ package com.dmd.admin.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.dmd.admin.mapper.PmsCourseProductTemplateMapper;
 import com.dmd.admin.model.domain.PmsCourseProductTemplate;
+import com.dmd.admin.model.dto.PmsCourseProductTemplateDto;
 import com.dmd.admin.service.PmsCourseProductTemplateService;
-import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.BaseService;
 import com.github.pagehelper.PageHelper;
@@ -60,15 +60,17 @@ public class PmsCourseProductTemplateServiceImpl extends BaseService<PmsCoursePr
 
 
     @Override
-    public PageInfo<PmsCourseProductTemplate> getTemplateList(BaseQuery baseQuery) {
-        PageHelper.startPage( baseQuery.getPageNum(), baseQuery.getPageSize(), baseQuery.getOrderBy() );
-        List<PmsCourseProductTemplate> courseProductTemplates = courseProductTemplateMapper.selectByUserId(0L);
+    public PageInfo<PmsCourseProductTemplate> getTemplateList(PmsCourseProductTemplateDto courseProductTemplateDto) {
+        PageHelper.startPage( courseProductTemplateDto.getPageNum(), courseProductTemplateDto.getPageSize(), courseProductTemplateDto.getOrderBy() );
+        List<PmsCourseProductTemplate> courseProductTemplates = courseProductTemplateMapper.selectByUserId(courseProductTemplateDto);
         return new PageInfo<>( courseProductTemplates );
     }
 
     @Override
-    public int deleteCourseProductTemplate(Long id) {
-        return courseProductTemplateMapper.deleteByPrimaryKey( id );
+    public int deleteCourseProductTemplate(List<Long> ids) {
+        Example example = new Example( PmsCourseProductTemplate.class );
+        example.createCriteria().andIn( "id", ids );
+        return courseProductTemplateMapper.deleteByExample( example );
     }
 
     @Override

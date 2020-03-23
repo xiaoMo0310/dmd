@@ -1,6 +1,7 @@
 package com.dmd.mall.service.impl;
 
 import com.dmd.BeanUtils;
+import com.dmd.base.dto.BaseQuery;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.base.enums.ErrorCodeEnum;
 import com.dmd.core.support.BaseService;
@@ -8,11 +9,17 @@ import com.dmd.mall.exceptions.UmsBizException;
 import com.dmd.mall.mapper.UmsCoachShopMapper;
 import com.dmd.mall.model.domain.UmsCoachShop;
 import com.dmd.mall.model.dto.UmsCoachShopDto;
+import com.dmd.mall.model.vo.UmsCoachShopVo;
+import com.dmd.mall.model.vo.UmsCoachVo;
+import com.dmd.mall.model.vo.UmsMemberVo;
 import com.dmd.mall.security.redis.ValidateCodeRepository;
 import com.dmd.mall.security.sms.ValidateCode;
 import com.dmd.mall.security.sms.ValidateCodeException;
+import com.dmd.mall.service.UmsCoachService;
 import com.dmd.mall.service.UmsCoachShopService;
+import com.dmd.mall.service.UmsMemberService;
 import com.dmd.mall.util.CodeValidateUtil;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +43,10 @@ public class UmsCoachShopServiceImpl extends BaseService<UmsCoachShop> implement
     private UmsCoachShopMapper umsCoachShopMapper;
     @Autowired
     private ValidateCodeRepository validateCodeRepository;
+    @Autowired
+    private UmsMemberService umsMemberService;
+    @Autowired
+    private UmsCoachService umsCoachService;
 
     @Override
     public UmsCoachShop findByCoachId(Long coachId) {
@@ -70,7 +81,17 @@ public class UmsCoachShopServiceImpl extends BaseService<UmsCoachShop> implement
     }
 
     @Override
-    public UmsCoachShop findShopMessage(LoginAuthDto loginAuthDto) {
-        return null;
+    public UmsCoachShopVo findShopMessage(LoginAuthDto loginAuthDto) {
+        if(!loginAuthDto.getUserType().equals( "coach" )){
+            throw new UmsBizException( ErrorCodeEnum.UMS10011023 );
+        }
+        UmsCoachShop umsCoachShop = umsCoachShopMapper.selectByCoachId( loginAuthDto.getUserId() );
+        UmsCoachShopVo umsCoachShopVo = new UmsCoachShopVo();
+        BeanUtils.copyProperties( umsCoachShop, umsCoachShopVo );
+        UmsCoachVo coach = umsCoachService.findUmsCoachByCoachId( loginAuthDto );
+        //统计教练粉丝数
+        PageInfo<UmsMemberVo> coachInviteUser = umsMemberService.findCoachInviteUser( new BaseQuery(), coach.getInvitationCode() );
+        umsCoachShopVo.setFansNumber( coachInviteUser.getTotal() );
+        return umsCoachShopVo;
     }
 }

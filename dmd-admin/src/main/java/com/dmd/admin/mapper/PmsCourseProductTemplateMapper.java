@@ -1,6 +1,7 @@
 package com.dmd.admin.mapper;
 
 import com.dmd.admin.model.domain.PmsCourseProductTemplate;
+import com.dmd.admin.model.dto.PmsCourseProductTemplateDto;
 import com.dmd.core.mybatis.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -19,5 +20,5 @@ import java.util.List;
 @Component
 public interface PmsCourseProductTemplateMapper extends MyMapper<PmsCourseProductTemplate> {
 
-    List<PmsCourseProductTemplate> selectByUserId(long userId);
+    List<PmsCourseProductTemplate> selectByUserId(PmsCourseProductTemplateDto courseProductTemplateDto);
 }

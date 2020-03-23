@@ -37,10 +37,11 @@
         update_time,
         user_id, shop_id, product_name, address_id, play_address, diving_time, related_product, product_price, equipment_price, total_price, diving_description, show_status, sort
     </sql>
-    <select id="selectTemplateByShopId" resultType="com.dmd.mall.model.domain.PmsCourseProductTemplate">
+    <select id="selectTemplateByShopId" resultType="com.dmd.mall.model.vo.PmsCourseProductTemplateVo">
         select <include refid="Base_Column_List"/>
         from pms_course_product_template
         where shop_id = #{shopId}
+        and show_status = 1
         order by sort dedc
     </select>
 

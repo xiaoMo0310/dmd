@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -23,19 +24,16 @@ public class CourseProductDto implements Serializable {
     private static final long serialVersionUID = -1130544620904518196L;
     private Long Id;
 
-    @ApiModelProperty("商品名称")
+    @ApiModelProperty("产品名称")
     private String productName;
 
     @ApiModelProperty("卖家id")
     private Long userId;
 
-    @ApiModelProperty("标题")
-    private String title;
-
     @ApiModelProperty("产品的价格")
     private BigDecimal price;
 
-    @ApiModelProperty("产品类型(1:学证 2:潜水)")
+    @ApiModelProperty("产品类型(1:学证 2:潜水 3:组团)")
     private Integer productType;
 
     @ApiModelProperty("地点")
@@ -66,23 +64,15 @@ public class CourseProductDto implements Serializable {
     @ApiModelProperty("库存")
     private Integer stock;
 
-    @ApiModelProperty("费用包含")
-    private String costIncludes;
-
-    @ApiModelProperty("费用不含")
-    private String costNotIncludes;
-
-    @ApiModelProperty("购买须知")
-    private String purchaseNotes;
-
     @ApiModelProperty("产品介绍")
     private String productDescription;
 
     @ApiModelProperty("产品图片(多个使用 , 隔开)")
     private String image;
 
-    @ApiModelProperty("内容安排(数据格式 [{\"date\":\"第1天\",\"message\":\"内容\"},{\"date\":\"第2天\",\"message\":\"内容\"}]")
-    private List contentArrangements = new ArrayList<>(0);
+    @Column(name = "related_product")
+    @ApiModelProperty("关联产品(格式[{\"parentId\":22,id\":33,\"text\":\"眼镜\",\"price\":\"200\"}])")
+    private String relatedProduct;
 
     @ApiModelProperty("排序")
     private Integer sort;
@@ -92,5 +82,14 @@ public class CourseProductDto implements Serializable {
 
     @ApiModelProperty("地址id")
     private Long addressId;
+
+    @ApiModelProperty("模板id")
+    private Long templateId;
+
+    @ApiModelProperty("是否是组合产品(0:否 1:是)")
+    private Integer isGroup;
+
+    @ApiModelProperty("标签id集合")
+    private List<Long> tagIds = new ArrayList<>( 0 );
 
 }

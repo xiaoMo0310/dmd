@@ -17,20 +17,20 @@
         <result column="product_pic" property="productPic" />
         <result column="product_name" property="productName" />
         <result column="product_type" property="productType" />
-        <result column="product_brand" property="productBrand" />
-        <result column="product_sn" property="productSn" />
         <result column="product_price" property="productPrice" />
+        <result column="equipment_price" property="equipmentPrice" />
         <result column="product_quantity" property="productQuantity" />
         <result column="total_price" property="totalPrice" />
-        <result column="product_sku_id" property="productSkuId" />
-        <result column="product_sku_code" property="productSkuCode" />
-        <result column="product_category_id" property="productCategoryId" />
+        <result column="product_category_price" property="productCategoryPrice" />
         <result column="integration_amount" property="integrationAmount" />
         <result column="real_amount" property="realAmount" />
-        <result column="product_attr" property="productAttr" />
         <result column="product_title" property="productTitle" />
     </resultMap>
 
+    <!--<resultMap id="orderDetailResultMap" type="com.dmd.admin.model.dto.OmsOrderDetail" extends="BaseResultMap">
+        <collection property="orderItemList" resultMap="com.dmd.admin.mapper.OmsOrderItemMapper.BaseResultMap" columnPrefix="item_"/>
+        <collection property="historyList" resultMap="com.dmd.admin.mapper.OmsOrderOperateHistoryMapper.BaseResultMap" columnPrefix="history_"/>
+    </resultMap>-->
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,
@@ -40,7 +40,7 @@
         last_operator,
         last_operator_id,
         update_time,
-        order_id, order_sn, product_id, product_pic, product_name, product_brand, product_sn, product_price, product_quantity, product_sku_id, product_sku_code, product_category_id, integration_amount, real_amount, product_attr, total_price totalPrice, product_type productType, product_title
+        order_id, order_sn, product_id, product_pic, product_name, product_price, product_quantity, product_category_id, integration_amount, real_amount, total_price totalPrice, product_type productType, product_title, equipment_price
     </sql>
 
     <select id="getListByOrderNoUserId" parameterType="map" resultMap="BaseResultMap">

@@ -3,6 +3,7 @@ package com.dmd.mall.mapper;
 import com.dmd.core.mybatis.MyMapper;
 import com.dmd.mall.model.domain.OmsIntegralOrder;
 import com.dmd.mall.model.vo.CourseOrderDetailVo;
+import com.dmd.mall.model.vo.IntegralOrderDetailVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -21,11 +22,11 @@ import java.util.List;
 @Component
 public interface OmsIntegralOrderMapper extends MyMapper<OmsIntegralOrder> {
 
-    List<CourseOrderDetailVo> selectIntegralOrderByStatus(@Param("userId") Long userId, @Param("userType") String userType, @Param("statusList") List<Integer> statusList);
+    List<IntegralOrderDetailVo> selectIntegralOrderByStatus(@Param("userId") Long userId, @Param("userType") String userType, @Param("statusList") List<Integer> statusList);
 
-    List<CourseOrderDetailVo> selectUserOrderByStatus(@Param("userId") Long userId,@Param("userType") String userType, @Param("status") Integer status);
+    List<IntegralOrderDetailVo> selectUserOrderByStatus(@Param("userId") Long userId,@Param("userType") String userType, @Param("status") Integer status);
 
-    CourseOrderDetailVo selectUserIntegralOrderByOrderSn(@Param("userId") Long userId, @Param("orderSn") String orderSn);
+    IntegralOrderDetailVo selectUserIntegralOrderByOrderSn(@Param("userId") Long userId, @Param("orderSn") String orderSn);
 
-    CourseOrderDetailVo selectSellerIntegralOrderByOrderSn(@Param("coachId") Long coachId,@Param("orderSn") String orderSn);
+    IntegralOrderDetailVo selectSellerIntegralOrderByOrderSn(@Param("coachId") Long coachId,@Param("orderSn") String orderSn);
 }

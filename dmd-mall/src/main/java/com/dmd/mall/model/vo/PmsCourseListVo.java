@@ -1,6 +1,7 @@
 package com.dmd.mall.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -85,4 +86,7 @@ public class PmsCourseListVo implements Serializable {
      * 商品状态
      */
     private Integer status;
+
+    @ApiModelProperty("是否是组团产品(0:否 1:是)")
+    private Integer isGroup;
 }

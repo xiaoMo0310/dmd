@@ -50,6 +50,13 @@ public class OmsOrderAppraiseController extends BaseController {
         return handleResult(pageInfo);
     }
 
+    @GetMapping("/appraise/order/delete")
+    @ApiOperation(httpMethod = "GET", value = "删除订单评价")
+    @ApiImplicitParam(name ="id", value = "评价id", dataType = "long", paramType = "query")
+    public Wrapper deleteProductAppraise(@RequestParam Long id) {
+        int result = omsOrderAppraiseService.deleteByKey( id );
+        return handleResult(result);
+    }
 
 
 }

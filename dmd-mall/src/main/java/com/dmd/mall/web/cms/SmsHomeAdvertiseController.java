@@ -31,7 +31,7 @@ public class SmsHomeAdvertiseController extends BaseController {
     @Autowired
     private SmsHomeAdvertiseService smsHomeAdvertiseService;
 
-     @GetMapping("/advertisePic/find")
+    @GetMapping("/advertisePic/find")
     @ApiOperation(httpMethod = "GET", value = "根据显示位置查询图片")
     @ApiImplicitParam(name ="type", value = "轮播位置：1->app首页轮播；2->app商场轮播图；3->启动页 4->引导页", dataType = "int", paramType = "query")
     public Wrapper findAdvertisePicList(@RequestParam("type") Integer type) {

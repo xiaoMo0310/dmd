@@ -1,7 +1,7 @@
 package com.dmd.admin.service;
 
 import com.dmd.admin.model.domain.PmsCourseProductTemplate;
-import com.dmd.base.dto.BaseQuery;
+import com.dmd.admin.model.dto.PmsCourseProductTemplateDto;
 import com.dmd.base.dto.LoginAuthDto;
 import com.dmd.core.support.IService;
 import com.github.pagehelper.PageInfo;
@@ -31,14 +31,14 @@ public interface PmsCourseProductTemplateService extends IService<PmsCourseProdu
      * @param baseQuery
      * @return
      */
-    PageInfo<PmsCourseProductTemplate> getTemplateList(BaseQuery baseQuery);
+    PageInfo<PmsCourseProductTemplate> getTemplateList(PmsCourseProductTemplateDto courseProductTemplateDto);
 
     /**
      * 删除模板
      * @param id
      * @return
      */
-    int deleteCourseProductTemplate(Long id);
+    int deleteCourseProductTemplate(List<Long> ids);
 
     /**
      * 修改显示状态

@@ -3,7 +3,7 @@ package com.dmd.mall.web.oms;
 
 import com.dmd.core.support.BaseController;
 import com.dmd.mall.model.dto.OrderParamDto;
-import com.dmd.mall.model.vo.CourseOrderDetailVo;
+import com.dmd.mall.model.vo.IntegralOrderDetailVo;
 import com.dmd.mall.model.vo.OrderCreateResultVo;
 import com.dmd.mall.service.OmsIntegralOrderService;
 import com.dmd.wrapper.WrapMapper;
@@ -57,16 +57,16 @@ public class OmsIntegralOrderController extends BaseController {
     @ApiOperation(httpMethod = "GET", value = "查询用户积分订单详情")
     @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "Long", paramType = "query")
     public Wrapper queryUserIntegralOrderDetail(@RequestParam("orderSn") String orderSn) {
-        CourseOrderDetailVo courseOrderDetailVo = omsIntegralOrderService.getUserIntegralOrderDetail(getLoginAuthDto(), orderSn);
-        return WrapMapper.ok(courseOrderDetailVo);
+        IntegralOrderDetailVo integralOrderDetailVo = omsIntegralOrderService.getUserIntegralOrderDetail(getLoginAuthDto(), orderSn);
+        return WrapMapper.ok(integralOrderDetailVo);
     }
 
     @GetMapping("/orderDetail/sellerIntegral/query")
     @ApiOperation(httpMethod = "GET", value = "查询卖家积分订单详情")
     @ApiImplicitParam(name ="orderSn", value = "订单编号", dataType = "Long", paramType = "query")
     public Wrapper querySellerIntegralOrderDetail(@RequestParam("orderSn") String orderSn) {
-        CourseOrderDetailVo courseOrderDetailVo = omsIntegralOrderService.getSellerIntegralOrderDetail(getLoginAuthDto(), orderSn);
-        return WrapMapper.ok(courseOrderDetailVo);
+        IntegralOrderDetailVo integralOrderDetailVo = omsIntegralOrderService.getSellerIntegralOrderDetail(getLoginAuthDto(), orderSn);
+        return WrapMapper.ok(integralOrderDetailVo);
     }
 
 }

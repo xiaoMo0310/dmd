@@ -49,14 +49,6 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("商品名称")
     private String productName;
 
-    @Column(name = "product_brand")
-    @ApiModelProperty("商品品牌")
-    private String productBrand;
-
-    @Column(name = "product_sn")
-    @ApiModelProperty("商品编码")
-    private String productSn;
-
     @Column(name = "product_type")
     @ApiModelProperty("商品类型(1:普通商品 2:潜水商品 3:课程商品 4:积分商品)")
     private Integer productType;
@@ -64,6 +56,10 @@ private static final long serialVersionUID = 1L;
     @Column(name = "product_price")
     @ApiModelProperty("销售价格")
     private BigDecimal productPrice;
+
+    @Column(name = "equipment_price")
+    @ApiModelProperty(value = "其它装备价格")
+    private BigDecimal equipmentPrice;
 
     @Column(name = "product_quantity")
     @ApiModelProperty("购买数量")
@@ -73,17 +69,9 @@ private static final long serialVersionUID = 1L;
     @ApiModelProperty("总的价格")
     private BigDecimal totalPrice;
 
-    @Column(name = "product_sku_id")
-    @ApiModelProperty("商品sku编号")
-    private Long productSkuId;
-
-    @Column(name = "product_sku_code")
-    @ApiModelProperty("商品sku条码")
-    private String productSkuCode;
-
-    @Column(name = "product_category_id")
-    @ApiModelProperty("商品分类id")
-    private Long productCategoryId;
+    @Column(name = "product_category_price")
+    @ApiModelProperty("商品分类价格(格式[{\"parentId\":22,id\":33,\"text\":\"眼镜\",\"price\":\"200\"}])")
+    private String productCategoryPrice;
 
     @Column(name = "integration_amount")
     @ApiModelProperty("积分优惠分解金额")
@@ -92,10 +80,6 @@ private static final long serialVersionUID = 1L;
     @Column(name = "real_amount")
     @ApiModelProperty("该商品经过优惠后的分解金额")
     private BigDecimal realAmount;
-
-    @Column(name = "product_attr")
-    @ApiModelProperty("商品销售属性:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]")
-    private String productAttr;
 
     @Column(name = "product_title")
     @ApiModelProperty("商品标题")
