@@ -54,13 +54,10 @@ public class PmsCourseProductServiceImpl extends BaseService<PmsCourseProduct> i
     @Autowired
     private PmsPlayAddressService playAddressService;
     @Autowired
-<<<<<<< HEAD
     private PowerNoteMapper powerNoteMapper;
-=======
     private DiveCertificateServuce diveCertificateServuce;
     @Autowired
     private PmsProductTagService productTagService;
->>>>>>> origin/master
 
     @Override
     public int saveCourseProductMessage(LoginAuthDto loginAuthDto, CourseProductDto courseProductDto) {

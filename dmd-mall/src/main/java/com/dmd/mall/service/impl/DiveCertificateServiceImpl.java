@@ -138,6 +138,7 @@ public class DiveCertificateServiceImpl implements DiveCertificateServuce{
         return count;
     }
 
+
     @Override
     public List<CertificateAppBean> queryUserCertificateList(Long userId, String userType) {
         List<CertificateAppBean> certificateAppBeans;

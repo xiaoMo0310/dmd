@@ -17,14 +17,6 @@ public interface DiveCertificateServuce {
 
     int addDiveCertificate(CertificateAppBean certificateAppBean);
 
-    /**
-     * 查询用户的证书信息
-     * @param userId
-     * @return
-     */
-
-    List<CertificateAppBean> queryUserCertificateList(Long userId);
-
     List<PmsCertificate> queryDiveCertificateRank();
 
     List<CertificateAppBean> queryUserCertificateList(Long userId, String userType);
